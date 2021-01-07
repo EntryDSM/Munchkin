@@ -1,0 +1,151 @@
+buildscript {
+    ext {
+        dependencyManagementVersion = '1.0.10.RELEASE'
+        springBootVersion = '2.2.1.RELEASE'
+    }
+
+    repositories {
+        maven { url "https://plugins.gradle.org/m2/" }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+        }
+        dependencies {
+
+        }
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        implementation 'org.slf4j:slf4j-api'
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    compileJava.options.encoding = 'UTF-8'
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+project(':main') {
+    apply plugin: 'org.springframework.boot'
+
+    dependencies {
+        compile project(':user')
+        compile project(':admin')
+        compile project(':notification')
+        compile project(':application')
+        compile project(':score')
+        compile project(':school')
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+    }
+}
+
+project(':common') {
+    dependencies {
+        compile 'org.springframework:spring-context'
+        compile 'org.springframework:spring-context-support'
+        compile 'org.springframework.boot:spring-boot-starter-web'
+    }
+}
+
+project(':user') {
+    dependencies {
+        compile project(':common')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+}
+
+project(':admin') {
+    dependencies {
+        compile project(':common')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+}
+
+project(':notification') {
+    dependencies {
+        compile project(':common')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+}
+
+project(':application') {
+    dependencies {
+        compile project(':common')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+}
+
+project(':score') {
+    dependencies {
+        compile project(':common')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+}
+
+project(':school') {
+    dependencies {
+        compile project(':common')
+
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+}
