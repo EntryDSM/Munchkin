@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = "kr.hs.entrydsm.main.integrate")
+@ComponentScan(basePackages = "kr.hs.entrydsm.main.integrate", lazyInit = true)
 public class MunchkinApplication {
 
     public static final String PROPS_CONFIG_NAME = "spring.config.name: main, user, admin, notification, application, score, school";
