@@ -5,14 +5,12 @@ import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Lazy
 @Component
 public class AdminIntegrateUserService implements ApplicantRepository {
 
