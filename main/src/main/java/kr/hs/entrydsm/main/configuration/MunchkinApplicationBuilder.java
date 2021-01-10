@@ -18,14 +18,17 @@ public class MunchkinApplicationBuilder {
 
     public MunchkinApplicationBuilder(Class<?> mainClass) {
         springBuilder = new SpringApplicationBuilder()
-                .sources(mainClass);
+                .sources(mainClass)
+                .sources(MunchkinConfiguration.class);
+
     }
 
     public MunchkinApplicationBuilder properties(String properties) {
-        springBuilder.properties(properties);
+        springBuilder = springBuilder.properties(properties);
         return this;
     }
 
+    @SneakyThrows
     public SpringApplication build(String... args) {
         registerModules();
         return springBuilder.build(args);
