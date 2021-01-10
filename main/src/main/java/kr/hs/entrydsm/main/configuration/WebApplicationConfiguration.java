@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @RequiredArgsConstructor
 @EnableAutoConfiguration
-public class WebApplicationConfigure {
+public class WebApplicationConfiguration {
 
     private final ConfigurableListableBeanFactory beanFactory;
     private final ApplicationContext context;

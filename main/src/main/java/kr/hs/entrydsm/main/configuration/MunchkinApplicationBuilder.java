@@ -36,7 +36,7 @@ public class MunchkinApplicationBuilder {
 
     public void registerModules() {
         getModuleConfiguration().forEach(this::registerDependency);
-        springBuilder = springBuilder.sibling(WebApplicationConfigure.class).web(WebApplicationType.SERVLET);
+        springBuilder = springBuilder.sibling(WebApplicationConfiguration.class).web(WebApplicationType.SERVLET);
     }
 
     private void registerDependency(Class<?> module) {
