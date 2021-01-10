@@ -1,1 +1,13 @@
-server.port: 8888
+server:
+  port: 8888
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+spring:
+  datasource:
+    url: ${MYSQL_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
