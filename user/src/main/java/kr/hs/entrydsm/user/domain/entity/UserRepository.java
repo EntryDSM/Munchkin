@@ -1,10 +1,13 @@
 package kr.hs.entrydsm.user.domain.entity;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository {
-    Optional<User> findByReceiptCode(Integer receiptCode);
-    List<User> findAll();
-    User save(User user);
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+    Optional<User> findByReceiptCode(long receiptCode);
+    List<User> findAllBy();
 }

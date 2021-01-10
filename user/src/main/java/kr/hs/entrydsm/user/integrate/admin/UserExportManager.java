@@ -21,7 +21,7 @@ public class UserExportManager implements UserExportRepository {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll();
+        return userRepository.findAllBy();
     }
 
 }
