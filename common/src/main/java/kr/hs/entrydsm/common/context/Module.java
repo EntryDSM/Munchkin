@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.common.module.info;
+package kr.hs.entrydsm.common.context;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ModuleNameInfo {
+public class Module {
 
     private String name;
 
