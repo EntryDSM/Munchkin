@@ -1,9 +1,8 @@
 package kr.hs.entrydsm.application.domain.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Digits;
@@ -23,9 +22,9 @@ public class QualificationExamApplication {
     @Digits(integer = 3, fraction = 2)
     private BigDecimal averageScore;
 
-    @CreatedDate
+    @Column
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @Column
     private LocalDateTime modifiedAt;
 }

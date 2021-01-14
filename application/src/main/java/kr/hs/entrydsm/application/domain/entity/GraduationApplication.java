@@ -1,8 +1,6 @@
 package kr.hs.entrydsm.application.domain.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,9 +56,9 @@ public class GraduationApplication {
     @Column(length = 5)
     private String techAndHomeScore;
 
-    @CreatedDate
+    @Column
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
+    @Column
     private LocalDateTime modifiedAt;
 }
