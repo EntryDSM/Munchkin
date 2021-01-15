@@ -1,7 +1,7 @@
-package kr.hs.entrydsm.score.infrastructure.springdatajpa;
+package kr.hs.entrydsm.score.infrastructure.database;
 
-import kr.hs.entrydsm.score.domain.entity.Score;
-import kr.hs.entrydsm.score.domain.repository.ScoreRepository;
+import kr.hs.entrydsm.score.entity.Score;
+import kr.hs.entrydsm.score.entity.ScoreRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
