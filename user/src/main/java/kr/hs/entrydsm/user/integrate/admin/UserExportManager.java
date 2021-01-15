@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.user.integrate.admin;
 
 import kr.hs.entrydsm.user.domain.entity.User;
-import kr.hs.entrydsm.user.domain.entity.UserRepository;
+import kr.hs.entrydsm.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
