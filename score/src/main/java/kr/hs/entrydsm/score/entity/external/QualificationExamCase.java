@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.score.domain.entity.external;
+package kr.hs.entrydsm.score.entity.external;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
-package kr.hs.entrydsm.score.domain.entity.external;
+package kr.hs.entrydsm.score.entity.external;
 
-import kr.hs.entrydsm.score.domain.entity.external.enumeration.ApplicationType;
-import kr.hs.entrydsm.score.domain.entity.external.enumeration.EducationalStatus;
+import kr.hs.entrydsm.score.entity.external.enumeration.ApplicationType;
+import kr.hs.entrydsm.score.entity.external.enumeration.EducationalStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
