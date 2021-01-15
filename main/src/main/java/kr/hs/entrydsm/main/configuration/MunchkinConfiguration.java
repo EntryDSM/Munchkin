@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EntityScan("kr.hs.entrydsm.*.domain.entity")
-@EnableJpaRepositories("kr.hs.entrydsm.*.domain.entity")
+@EnableJpaRepositories("kr.hs.entrydsm.*.infrastructure.springdatajpa")
 @SpringBootConfiguration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "kr.hs.entrydsm.main.integrate", lazyInit = true)
