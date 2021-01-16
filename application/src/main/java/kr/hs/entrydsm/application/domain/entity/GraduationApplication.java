@@ -35,25 +35,25 @@ public class GraduationApplication {
 
     private Integer earlyLeaveCount;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String koreanScore;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String socialScore;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String historyScore;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String mathScore;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String scienceScore;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String englishScore;
 
-    @Column(length = 5)
+    @Column(length = 6)
     private String techAndHomeScore;
 
     @Column
