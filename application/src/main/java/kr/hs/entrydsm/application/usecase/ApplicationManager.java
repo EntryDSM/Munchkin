@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.usecase;
 
-import kr.hs.entrydsm.application.integrate.UserDocsManager;
+import kr.hs.entrydsm.application.integrate.UserDocsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationManager implements ApplicationProcessing {
 
-    private final UserDocsManager userDocsManager;
+    private final UserDocsService userDocsService;
 
     @Override
     public void writeSelfIntroduce(Long receiptCode, String content) {
-        userDocsManager.writeSelfIntroduce(receiptCode, content);
+        userDocsService.writeSelfIntroduce(receiptCode, content);
     }
 
     @Override
     public void writeStudyPlan(Long receiptCode, String content) {
-        userDocsManager.writeStudyPlan(receiptCode, content);
+        userDocsService.writeStudyPlan(receiptCode, content);
     }
 }
