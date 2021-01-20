@@ -19,4 +19,14 @@ public class ApplicationManager implements ApplicationProcessing {
     public void writeStudyPlan(Long receiptCode, String content) {
         userDocsService.writeStudyPlan(receiptCode, content);
     }
+
+    @Override
+    public String getSelfIntroduce(Long receiptCode) {
+        return userDocsService.readSelfIntroduce(receiptCode);
+    }
+
+    @Override
+    public String getStudyPlan(Long receiptCode) {
+        return userDocsService.readStudyPlan(receiptCode);
+    }
 }
