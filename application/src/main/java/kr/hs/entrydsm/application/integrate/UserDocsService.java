@@ -6,7 +6,7 @@ public interface UserDocsService {
 
     void writeStudyPlan(Long receiptCode, String content);
 
-    String readSelfIntroduce(Long receiptCode);
+    String getSelfIntroduce(Long receiptCode);
 
-    String readStudyPlan(Long receiptCode);
+    String getStudyPlan(Long receiptCode);
 }

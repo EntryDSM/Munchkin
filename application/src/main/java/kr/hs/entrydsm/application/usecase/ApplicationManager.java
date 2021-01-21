@@ -22,11 +22,11 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public String getSelfIntroduce(Long receiptCode) {
-        return userDocsService.readSelfIntroduce(receiptCode);
+        return userDocsService.getSelfIntroduce(receiptCode);
     }
 
     @Override
     public String getStudyPlan(Long receiptCode) {
-        return userDocsService.readStudyPlan(receiptCode);
+        return userDocsService.getStudyPlan(receiptCode);
     }
 }
