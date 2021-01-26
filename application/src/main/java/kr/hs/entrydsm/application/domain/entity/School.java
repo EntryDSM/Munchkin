@@ -14,15 +14,15 @@ import javax.persistence.Id;
 public class School {
 
     @Id
-    @Column(length = 7)
+    @Column(length = 7, nullable = false)
     private String code;
 
-    @Column(length = 30)
+    @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String information;
 
-    @Column(length = 150)
+    @Column(length = 150, nullable = false)
     private String address;
 }
