@@ -1,7 +1,11 @@
 package kr.hs.entrydsm.application.usecase;
 
+import kr.hs.entrydsm.application.domain.entity.School;
+import kr.hs.entrydsm.application.domain.repository.SchoolRepository;
 import kr.hs.entrydsm.application.integrate.UserDocsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationManager implements ApplicationProcessing {
 
     private final UserDocsService userDocsService;
+    private final SchoolRepository schoolRepository;
 
     @Override
     public void writeSelfIntroduce(Long receiptCode, String content) {
@@ -28,5 +33,10 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public String getStudyPlan(Long receiptCode) {
         return userDocsService.getStudyPlan(receiptCode);
+    }
+
+    @Override
+    public Page<School> getSchoolsByInformation(String information, Pageable pageable) {
+        return schoolRepository.findByInformationContains(information, pageable);
     }
 }
