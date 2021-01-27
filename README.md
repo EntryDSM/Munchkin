@@ -38,7 +38,7 @@ Entry5.0을 마치고 진행한 회고에서 애플리케이션의 문제보다�
 
 ## **구현**
 ### **애플리케이션 분해**
-우선 도메인 지향적 모듈화를 위해 기획에서 도메인을 도출하고, 각 도메인마다 하나의 모듈을 구축하여 최종적으로 6개의 모듈의 서비스가 상호작용하며 Entry6.0을 구성합니다.
+우선 도메인 지향적 모듈화를 위해 기획에서 도메인을 도출하고, 각 도메인마다 하나의 모듈을 구축하여 최종적으로 5개의 모듈의 서비스가 상호작용하며 Entry6.0을 구성합니다.
 
 - **지원자** : *입학전형 시스템의 주체이며, 지원 서비스를 통해 원서를 접수합니다.*
 - **관리자** : *접수된 원서를 확인하고 상태 서비스를 통해 지원자를 관리합니다.*
@@ -56,13 +56,13 @@ Entry5.0을 마치고 진행한 회고에서 애플리케이션의 문제보다�
             ㄴ java
                 ㄴ kr.hs.entrydsm.<domain>
                     ㄴ presenter
-                        ㄴ controller
-                        ㄴ request
-                        ㄴ response
-                    ㄴ application
+                        ㄴ web
+                    ㄴ usecase
+                        ㄴ dto
+                        ㄴ exception
                     ㄴ domain
                         ㄴ entity
-                        ㄴ usecase
+                        ㄴ repository
                     ㄴ infrastructure
                     ㄴ integrate
                         ㄴ <other domains>
@@ -71,11 +71,11 @@ Entry5.0을 마치고 진행한 회고에서 애플리케이션의 문제보다�
             ㄴ resources
         ㄴ test
 ```
-- presenter 계층에서는 요청에 대한 핸들러를 호출하여 응답 객체를 구성하고 처리합니다.
-- application 계층에서는 핸들러의 내부 로직을 구성합니다.
-- domain 계층의 entity에는 도메인의 속성과 행위를 정의합니다. usecase에는 도메인에서 일어날 수 있는 행위 시나리오에 대해서 정의합니다.
-- infrastructure 계층에서는 서비스가 운영되는 인프라에 대한 부분을 구성합니다.
-- integrate 계층에서는 모듈과의 상호작용을 위한 로직을 구성합니다.
+- presenter 계층은 애플리케이션의 최외곽 계층으로, 외부와의 상호작용을 담당합니다. 주로 `@RestController` 어노테이션이 붙은 클래스가 위치합니다.
+- usecase 계층에서는 애플리케이션의 핵심 비즈니스 로직이 위치합니다. 애플리케이션의 `@Service` 어노테이션이 붙은 클래스와, 해당 클래스의 인터페이스 및 DTO, 로직 처리 중 발생할 수 있는 exception이 위치합니다.
+- domain 계층에서는 도메인의 속성과 행위를 정의합니다. `@Entity` 어노테이션이 붙은 클래스와 `@Repository` 어노테이션이 붙은 클래스의 인터페이스가 위치합니다.
+- infrastructure 계층에서는 서비스가 운영되는 인프라에 대한 부분을 구성합니다. DB 관련 로직이 위치합니다.
+- integrate 계층에서는 모듈과의 상호작용을 위한 로직을 구성합니다. 다른 컨텍스트와의 공유를 필요로 하는 domain이 위치합니다.
 - \<domain>ModuleConfiguration 클래스에서는 모듈의 설정사항을 구성하고 컨텍스트에 빈을 등록하는 역할을 수행합니다. 공통 모듈의 ModuleConfiguration 추상 클래스를 상속받아 구현합니다.
 - Enable\<domain>Module 어노테이션에서는 \<domain>ModuleConfiguration 클래스를 Import하여 어노테이션화합니다.
 
