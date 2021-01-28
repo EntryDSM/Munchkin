@@ -21,4 +21,10 @@ public class Notification {
     @Column(nullable = false)
     private String content;
 
+    public Notification update(Type type, String content) {
+        this.type=type;
+        this.content=content;
+        return this;
+    }
+
 }
