@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@IdClass(ScheduleId.class)
 @Entity(name = "tbl_schedule")
 public class Schedule {
 
@@ -19,7 +20,7 @@ public class Schedule {
     private String year;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Id
     private Type type;
 
     @Column(nullable = false)
