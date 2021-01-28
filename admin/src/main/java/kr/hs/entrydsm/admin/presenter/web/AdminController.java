@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.presenter.controller;
+package kr.hs.entrydsm.admin.presenter.web;
 
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
