@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 @Getter
 @Builder
@@ -18,7 +15,7 @@ import javax.persistence.Enumerated;
 public class Notification {
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Id
     private Type type;
 
     @Column(nullable = false)
