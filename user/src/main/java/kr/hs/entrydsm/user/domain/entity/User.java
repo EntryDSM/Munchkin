@@ -78,4 +78,7 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Status status;
+
 }
