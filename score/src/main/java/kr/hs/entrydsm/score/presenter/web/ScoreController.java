@@ -7,16 +7,14 @@ import kr.hs.entrydsm.score.usecase.dto.QueryQualificationExamResponse;
 import kr.hs.entrydsm.score.usecase.dto.UpdateGraduationRequest;
 import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Published
-@RestController("/score")
+@RestController
+@RequestMapping("/score")
 public class ScoreController {
     private final ScoreService scoreService;
 
