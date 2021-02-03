@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.user.infrastructure.springdatajpa;
+package kr.hs.entrydsm.user.infrastructure.database;
 
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.domain.repository.UserRepository;
