@@ -16,7 +16,8 @@ import javax.persistence.*;
 public class Admin {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(length = 8)
+    private String id;
 
     @Column(length = 60, nullable = false)
     private String password;
