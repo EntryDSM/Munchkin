@@ -11,7 +11,7 @@ public enum ErrorCode {
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
 
     INVALID_TOKEN(401, "ADMIN401-0","This token is invalid"),
-    USER_NOT_FOUND(404, "ADMIN404-0","The user does not exist"),
+    ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
     APPLICATION_NOT_FOUND(404, "ADMIN404-1","The application could not be found");
 
     private final int status;
