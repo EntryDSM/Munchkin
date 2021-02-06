@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class RefreshToken implements Serializable {
 
     @Id
-    private String email;
+    private String id;
 
     @Indexed
     private String refreshToken;
