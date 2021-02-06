@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Applicant {
+
     private long receiptCode;
+
     private String name;
+
 }
