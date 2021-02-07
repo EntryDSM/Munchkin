@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application.integrate;
+package kr.hs.entrydsm.application.integrate.user;
 
 public interface UserDocsService {
 
