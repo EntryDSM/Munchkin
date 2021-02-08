@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Applicant {
 
+    //공통
     private long receiptCode;
 
     private String name;
@@ -23,11 +24,11 @@ public class Applicant {
 
     private LocalDate birthDate;
 
-    private String schoolName;
+    private boolean isPaid;
 
-    private String educationalStatus;
+    private boolean isPrintedArrived;
 
-    private String applicationType;
+    private boolean isSubmit;
 
     private String address;
 
@@ -41,6 +42,20 @@ public class Applicant {
 
     private String homeTel;
 
+    private String educationalStatus;
+
+    private String applicationType;
+
+    private String selfIntroduce; //자기소개서
+
+    private String studyPlan; //학업계획서
+
+    //검정고시 O
+    private Integer averageScore;
+
+    //검정고시 X
+    private String schoolName;
+
     private Integer volunteerTime; //봉사 시간
 
     private Integer conversionScore; //총 점수
@@ -52,16 +67,6 @@ public class Applicant {
     private Integer earlyLeaveCount; //조퇴
 
     private Integer latenessCount; //지각
-
-    private String selfIntroduce; //자기소개서
-
-    private String studyPlan; //학업계획서
-
-    private boolean isPaid;
-
-    private boolean isPrintedArrived;
-
-    private boolean isSubmit;
 
     public void updateStatus(boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         this.isPrintedArrived = isPrintedArrived;
