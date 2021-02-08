@@ -22,6 +22,13 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .map(user -> Applicant.builder()
                         .receiptCode(user.getReceiptCode())
                         .name(user.getName())
+                        .isDaejeon(user.isDaejeon())
+                        .applicationType(String.valueOf(user.getApplicationType()))
+                        .build())
+                .map(status -> Applicant.builder()
+                        .isPaid(status.isPaid())
+                        .isPrintedArrived(status.isPrintedArrived())
+                        .isSubmit(status.isSubmit())
                         .build())
                 .collect(Collectors.toList());
     }
