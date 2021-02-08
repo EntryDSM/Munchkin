@@ -1,10 +1,13 @@
 package kr.hs.entrydsm.admin.usecase;
 
+import kr.hs.entrydsm.admin.domain.entity.Admin;
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
+import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.security.auth.AuthenticationFacade;
 import kr.hs.entrydsm.admin.usecase.dto.*;
+import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFinalSubmitted;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
@@ -26,14 +29,18 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
-        if(!authenticationFacade.isLogin()) {
-            throw new UserNotAccessibleException();
-        }
+        Admin admin = adminRepository.findById(authenticationFacade.getUserId())
+                .orElseThrow(AdminNotFoundException::new);
 
         Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
 
         if(applicant != null) {
-            applicant.updateStatus(isPrintedArrived, isPaid, isSubmit);
+            if(admin.getPermission() == Permission.OFFICE) { //행정실은 원서료 납부만 수정 가능
+                applicant.updateIsPaid(isPaid);
+            }
+            else { //교무실은 모든 권한 有
+                applicant.updateStatus(isPrintedArrived, isPaid, isSubmit);
+            }
         }
         else {
             throw new ApplicantNotFoundException();

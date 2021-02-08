@@ -69,4 +69,8 @@ public class Applicant {
         this.isSubmit = isSubmit;
     }
 
+    public void updateIsPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
+
 }
