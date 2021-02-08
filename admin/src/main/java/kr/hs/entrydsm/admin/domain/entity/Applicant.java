@@ -17,6 +17,8 @@ public class Applicant {
 
     private String name;
 
+    private boolean isDaejeon;
+
     private String photo_file_name;
 
     private LocalDate birthDate;
