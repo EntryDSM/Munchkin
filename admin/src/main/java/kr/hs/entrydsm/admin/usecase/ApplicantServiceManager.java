@@ -4,9 +4,8 @@ import kr.hs.entrydsm.admin.domain.entity.Applicant;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.security.auth.AuthenticationFacade;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantDetailResponse;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantsInformationResponse;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantsResponse;
+import kr.hs.entrydsm.admin.usecase.dto.*;
+import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFinalSubmitted;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +60,7 @@ public class ApplicantServiceManager implements ApplicantService {
                             .receiptCode(applicant.getReceiptCode())
                             .name(applicant.getName())
                             .isDaejeon(applicant.isDaejeon())
+                            .applicationType(applicant.getApplicationType())
                             .isPrintedArrived(applicant.isPrintedArrived())
                             .isPaid(applicant.isPaid())
                             .isSubmit(applicant.isSubmit())
@@ -80,6 +80,52 @@ public class ApplicantServiceManager implements ApplicantService {
         if(!authenticationFacade.isLogin()) {
             throw new UserNotAccessibleException();
         }
-        return null;
+
+        Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
+        if(applicant == null) {
+            throw new ApplicantNotFoundException();
+        }
+        if(applicant.isSubmit() == false) {
+            //최종 제출하지 않은 사용자는 지원자의 전화번호, 부모님의 전화번호, 집 전화번호, (학교 전화번호)만 보여줘야 한다.
+            throw new ApplicantNotFinalSubmitted();
+        }
+
+        Status status = new Status().builder()
+                .isPaid(applicant.isPaid())
+                .isPrintedArrived(applicant.isPrintedArrived())
+                .isSubmit(applicant.isSubmit())
+                .build();
+
+        Evaluation evaluation = new Evaluation().builder()
+                .volunteerTime(applicant.getVolunteerTime())
+                .conversionScore(applicant.getConversionScore())
+                .dayAbsenceCount(applicant.getDayAbsenceCount())
+                .latenessCount(applicant.getLatenessCount())
+                .earlyLeaveCount(applicant.getEarlyLeaveCount())
+                .lectureAbsenceCount(applicant.getLectureAbsenceCount())
+                .selfIntroduce(applicant.getSelfIntroduce())
+                .studyPlan(applicant.getStudyPlan())
+                .build();
+
+        PersonalData personalData = new PersonalData().builder()
+                .name(applicant.getName())
+                .photoFileName(applicant.getPhotoFileName())
+                .address(applicant.getAddress())
+                .detailAddress(applicant.getDetailAddress())
+                .birthDate(applicant.getBirthDate())
+                .schoolName(applicant.getSchoolName())
+                .educationalStatus(applicant.getEducationalStatus())
+                .applicationType(applicant.getApplicationType())
+                .telephoneNumber(applicant.getTelephoneNumber())
+                .parentTel(applicant.getParentTel())
+                .schoolTel(applicant.getSchoolTel())
+                .homeTel(applicant.getHomeTel())
+                .build();
+
+        return ApplicantDetailResponse.builder()
+                .status(status)
+                .evaluation(evaluation)
+                .personalData(personalData)
+                .build();
     }
 }
