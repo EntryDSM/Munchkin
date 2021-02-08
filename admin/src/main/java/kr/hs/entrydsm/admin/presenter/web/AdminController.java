@@ -27,7 +27,7 @@ public class AdminController {
     }
 
     @GetMapping("/applicants")
-    public List<ApplicantsResponse> getApplicants(@RequestParam(required = true) Integer size,
+    public ApplicantsResponse getApplicants(@RequestParam(required = true) Integer size,
                                                   @RequestParam(required = true) Integer page,
                                                  @RequestParam(required = false, name = "is-daejeon") boolean isDaejeon,
                                                  @RequestParam(required = false, name = "is-nationwide") boolean isNationwide,

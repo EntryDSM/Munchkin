@@ -43,7 +43,7 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
-    public List<ApplicantsResponse> getApplicants(Integer size, Integer page, boolean isDaejeon, boolean isNationwide,
+    public ApplicantsResponse getApplicants(Integer size, Integer page, boolean isDaejeon, boolean isNationwide,
                                                   boolean isPrintedArrived, boolean isPaid, boolean isCommon,
                                                   boolean isMeiseter, boolean isSocial, Integer recieptCode,
                                                   String schoolName, String telephoneNumber, String name) {
@@ -68,7 +68,7 @@ public class ApplicantServiceManager implements ApplicantService {
             );
         }
 
-        return (List<ApplicantsResponse>) ApplicantsResponse.builder()
+        return  ApplicantsResponse.builder()
                 .totalElements((int)applicants.getTotalElements())
                 .totalPages(applicants.getTotalPages())
                 .applicantsInformationResponses(applicantsInformationResponses)
