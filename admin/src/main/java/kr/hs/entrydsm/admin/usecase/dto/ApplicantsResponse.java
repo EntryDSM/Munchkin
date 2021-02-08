@@ -3,22 +3,16 @@ package kr.hs.entrydsm.admin.usecase.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @Builder
-public class ApplicantsResponse {
+public class ApplicantsResponse extends PageResponse {
 
-    private Integer receiptCode;
+    private List<ApplicantsInformationResponse> applicantsInformationResponses;
 
-    private String name;
-
-    private Boolean isDaejeon;
-
-    private String applicationType; // enum 클래스를 가져와야 할까요?
-
-    private Boolean isArrived;
-
-    private Boolean isPaid;
-
-    private Boolean isFinalSubmit;
-
+    public ApplicantsResponse(Integer totalElements, Integer totalPages, List<ApplicantsInformationResponse> applicantsInformationResponses) {
+        super(totalElements, totalPages);
+        this.applicantsInformationResponses = applicantsInformationResponses;
+    }
 }
