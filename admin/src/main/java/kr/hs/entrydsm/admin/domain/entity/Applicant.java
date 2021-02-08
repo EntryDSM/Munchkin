@@ -32,8 +32,6 @@ public class Applicant {
 
     private String address;
 
-    private String detailAddress;
-
     private String telephoneNumber;
 
     private String parentTel;

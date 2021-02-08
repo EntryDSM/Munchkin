@@ -27,4 +27,6 @@ public class Evaluation {
     
     private String studyPlan; //학업계획서
 
+    private Integer averageScore; //검정고시 총 점수
+
 }

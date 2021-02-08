@@ -17,4 +17,6 @@ public class ApplicantInfo {
 
     private String homeTel;
 
+    private String schoolTel;
+
 }

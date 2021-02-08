@@ -13,4 +13,6 @@ public class ApplicantDetailResponse {
 
     private Status status;
 
+    private ApplicantInfo applicantInfo;
+
 }

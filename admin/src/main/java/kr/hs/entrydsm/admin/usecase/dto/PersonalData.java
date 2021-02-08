@@ -27,8 +27,6 @@ public class PersonalData {
 
     private String address;
 
-    private String detailAddress;
-
     private String telephoneNumber;
 
     private String parentTel;
