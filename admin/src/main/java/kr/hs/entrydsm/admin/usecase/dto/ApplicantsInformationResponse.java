@@ -7,7 +7,7 @@ import lombok.Getter;
 @Builder
 public class ApplicantsInformationResponse {
 
-    private Integer receiptCode;
+    private Long receiptCode;
 
     private String name;
 

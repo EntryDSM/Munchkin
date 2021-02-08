@@ -82,7 +82,7 @@ project(':common') {
         compile 'org.springframework:spring-context-support'
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-        compile 'org.springframework.boot:spring-boot-starter-security'
+//        compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.springframework.boot:spring-boot-starter-validation'
 
         compile 'mysql:mysql-connector-java'
@@ -101,6 +101,7 @@ project(':admin') {
         compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
         testImplementation 'com.h2database:h2'
         compile 'org.springframework.boot:spring-boot-starter-data-redis'
+        compile 'org.springframework.boot:spring-boot-starter-security'
     }
 }
 

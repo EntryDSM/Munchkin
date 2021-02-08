@@ -5,10 +5,7 @@ import kr.hs.entrydsm.admin.usecase.dto.ApplicantDetailResponse;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicantsResponse;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -28,7 +25,8 @@ public class AdminController {
     }
 
     @GetMapping("/applicants")
-    public List<ApplicantsResponse> getApplicants(Pageable page,
+    public ApplicantsResponse getApplicants(@RequestParam(required = true) Integer size,
+                                                  @RequestParam(required = true) Integer page,
                                                  @RequestParam(required = false, name = "is-daejeon") boolean isDaejeon,
                                                  @RequestParam(required = false, name = "is-nationwide") boolean isNationwide,
                                                  @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived,
@@ -40,7 +38,7 @@ public class AdminController {
                                                  @RequestParam(required = false, name = "school-name") String schoolName,
                                                  @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
                                                  @RequestParam(required = false) String name) {
-        return applicantService.getApplicants(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon,
+        return applicantService.getApplicants(size, page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon,
                 isMeiseter, isSocial, recieptCode, schoolName, telephoneNumber, name);
     }
 

@@ -1,10 +1,14 @@
 package kr.hs.entrydsm.admin.usecase.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Evaluation {
 
     private Integer volunteerTime; //봉사 시간
@@ -22,5 +26,7 @@ public class Evaluation {
     private String selfIntroduce; //자기소개서
     
     private String studyPlan; //학업계획서
+
+    private Integer averageScore; //검정고시 총 점수
 
 }
