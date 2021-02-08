@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.admin.domain.entity;
 
 import kr.hs.entrydsm.admin.domain.entity.enums.Type;
+import kr.hs.entrydsm.admin.usecase.dto.ScheduleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 public class Schedule {
 
     @Id
+    @Column(length = 4)
     private String year;
 
     @Enumerated(EnumType.STRING)
@@ -26,5 +28,11 @@ public class Schedule {
 
     @Column(nullable = false)
     private LocalDate date;
+
+    public void update(ScheduleRequest scheduleRequest) {
+        this.year = scheduleRequest.getYear();
+        this.type = scheduleRequest.getType();
+        this.date = LocalDate.parse(scheduleRequest.getDate());
+    }
 
 }
