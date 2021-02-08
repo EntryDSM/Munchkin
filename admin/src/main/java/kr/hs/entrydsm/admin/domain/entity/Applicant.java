@@ -61,4 +61,10 @@ public class Applicant {
 
     private boolean isSubmit;
 
+    public void updateStatus(boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
+        this.isPrintedArrived = isPrintedArrived;
+        this.isPaid = isPaid;
+        this.isSubmit = isSubmit;
+    }
+
 }
