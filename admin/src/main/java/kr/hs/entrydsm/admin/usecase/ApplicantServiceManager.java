@@ -114,6 +114,10 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
 
         Evaluation evaluation;
+        evaluation = new Evaluation().builder()
+                .selfIntroduce(applicant.getSelfIntroduce())
+                .studyPlan(applicant.getStudyPlan())
+                .build();
 
         PersonalData personalData = new PersonalData().builder()
                 .name(applicant.getName())
@@ -140,8 +144,6 @@ public class ApplicantServiceManager implements ApplicantService {
                     .latenessCount(applicant.getLatenessCount())
                     .earlyLeaveCount(applicant.getEarlyLeaveCount())
                     .lectureAbsenceCount(applicant.getLectureAbsenceCount())
-                    .selfIntroduce(applicant.getSelfIntroduce())
-                    .studyPlan(applicant.getStudyPlan())
                     .build();
         }
 
