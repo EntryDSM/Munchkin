@@ -101,6 +101,7 @@ project(':admin') {
         compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
         testImplementation 'com.h2database:h2'
         compile 'org.springframework.boot:spring-boot-starter-data-redis'
+        compile 'org.springframework.boot:spring-boot-starter-security'
     }
 }
 
