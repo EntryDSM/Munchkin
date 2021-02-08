@@ -5,10 +5,8 @@ import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -17,21 +15,19 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final UserExportRepository userExportRepository;
 
     @Override
-    public List<Applicant> findAll() {
-        return userExportRepository.findAll().stream()
+    public Page<Applicant> findAll() {
+        return (Page<Applicant>) userExportRepository.findAll().stream()
                 .map(user -> Applicant.builder()
                         .receiptCode(user.getReceiptCode())
                         .name(user.getName())
                         .isDaejeon(user.isDaejeon())
                         .applicationType(String.valueOf(user.getApplicationType()))
-                        .build())
-                .map(status -> Applicant.builder()
-                        .isPaid(status.isPaid())
-                        .isPrintedArrived(status.isPrintedArrived())
-                        .isSubmit(status.isSubmit())
-                        .build())
-                .collect(Collectors.toList());
+                        .isPaid(user.getStatus().isPaid())
+                        .isPrintedArrived(user.getStatus().isPrintedArrived())
+                        .isSubmit(user.getStatus().isSubmit())
+                        .build());
     }
+
 
     @Override
     public Applicant findByReceiptCode(int receiptCode) {

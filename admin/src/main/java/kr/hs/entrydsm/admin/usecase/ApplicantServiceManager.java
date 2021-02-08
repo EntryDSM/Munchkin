@@ -10,6 +10,7 @@ import kr.hs.entrydsm.admin.usecase.dto.ApplicantsResponse;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,9 +51,10 @@ public class ApplicantServiceManager implements ApplicantService {
             throw new UserNotAccessibleException();
         }
 
-        List<Applicant> applicants = applicantRepository.findAll();
+        Page<Applicant> applicants = applicantRepository.findAll();
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
 
+        
         for (Applicant applicant : applicants) {
             applicantsInformationResponses.add(
                     ApplicantsInformationResponse.builder()
@@ -67,8 +69,8 @@ public class ApplicantServiceManager implements ApplicantService {
         }
 
         return (List<ApplicantsResponse>) ApplicantsResponse.builder()
-                .totalElements(applicants.size())
-                .totalPages((int) Math.ceil(applicants.size()/size))
+                .totalElements((int)applicants.getTotalElements())
+                .totalPages(applicants.getTotalPages())
                 .applicantsInformationResponses(applicantsInformationResponses)
                 .build();
     }
