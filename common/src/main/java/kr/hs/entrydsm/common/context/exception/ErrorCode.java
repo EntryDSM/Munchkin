@@ -15,7 +15,8 @@ public enum ErrorCode {
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
     APPLICATION_NOT_FOUND(404, "ADMIN404-1","The application could not be found"),
     APPLICANT_NOT_FOUND(404, "ADMIN404-2","The applicant does not exist"),
-    NOT_ACCESSIBLE(401, "ADMIN401-2","Check the token");
+    NOT_ACCESSIBLE(401, "ADMIN401-2","Check the token"),
+    NOT_FINAL_SUBMITTED(423,"ADMIN423-0", "Application not final submitted");
 
     private final int status;
     private final String code;
