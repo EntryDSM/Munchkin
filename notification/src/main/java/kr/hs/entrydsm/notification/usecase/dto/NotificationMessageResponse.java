@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticationMessageResponse {
+public class NotificationMessageResponse {
 
     private Type type;
 

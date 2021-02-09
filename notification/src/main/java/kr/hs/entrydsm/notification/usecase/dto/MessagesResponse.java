@@ -7,8 +7,8 @@ import java.util.List;
 
 @Getter
 @Builder
-public class MesagesResponse {
+public class MessagesResponse {
 
-    List<NoticationMessageResponse> messageResponses;
+    List<NotificationMessageResponse> messageResponses;
 
 }
