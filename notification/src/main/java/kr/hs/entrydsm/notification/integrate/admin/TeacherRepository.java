@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.notification.domain.integrate.admin;
+package kr.hs.entrydsm.notification.integrate.admin;
 
 import kr.hs.entrydsm.notification.domain.entity.Teacher;
 
