@@ -42,9 +42,6 @@ public class AdminServiceManager implements AdminService {
 
     @Override
     public ScheduleResponse getSchedules() {
-        if(!authenticationFacade.isLogin())
-            throw new UserNotAccessibleException();
-
         List<Schedule> schedule = scheduleRepository.findAllBy();
         List<Schedules> schedules = new ArrayList<>();
 
