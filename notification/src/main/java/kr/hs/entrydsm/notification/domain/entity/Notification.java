@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.notification.domain.entity;
 
+import kr.hs.entrydsm.notification.usecase.dto.UpdateMessageRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,9 +22,9 @@ public class Notification {
     @Column(nullable = false)
     private String content;
 
-    public Notification update(Type type, String content) {
-        this.type=type;
-        this.content=content;
+    public Notification update(UpdateMessageRequest messageRequest) {
+        this.type=Type.valueOf(messageRequest.getType());
+        this.content= messageRequest.getContent();
         return this;
     }
 
