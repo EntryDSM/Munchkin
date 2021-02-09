@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateMassageRequest {
+public class UpdateMessageRequest {
 
     private String type;
 
