@@ -52,7 +52,7 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override
     public ApplicantsResponse getApplicants(Pageable page, boolean isDaejeon, boolean isNationwide,
                                             boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                                            boolean isMeiseter, boolean isSocial, Integer recieptCode,
+                                            boolean isMeister, boolean isSocial, Integer recieptCode,
                                             String schoolName, String telephoneNumber, String name) {
         if(!authenticationFacade.isLogin()) {
             throw new UserNotAccessibleException();
