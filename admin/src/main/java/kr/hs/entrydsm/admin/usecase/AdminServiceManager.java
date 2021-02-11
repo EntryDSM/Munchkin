@@ -26,13 +26,14 @@ public class AdminServiceManager implements AdminService {
 
     private final AuthenticationFacade authenticationFacade;
 
+    //스케줄 관련 api
     @Override
     public void updateSchedules(ScheduleRequest scheduleRequest) {
         Admin admin = adminRepository.findById(authenticationFacade.getUserId())
                 .orElseThrow(AdminNotFoundException::new);
         Schedule schedule = new Schedule();
 
-        if(admin.getPermission() == Permission.TEACHER) {
+        if(admin.getPermission().equals(Permission.TEACHER)) {
             schedule.update(scheduleRequest);
         }
         else {
@@ -45,7 +46,7 @@ public class AdminServiceManager implements AdminService {
         List<Schedule> schedule = scheduleRepository.findAllBy();
         List<Schedules> schedules = new ArrayList<>();
 
-        for(Schedule s : schedule) {
+        for (Schedule s : schedule) {
             schedules.add(
                     Schedules.builder()
                             .year(s.getYear())
@@ -58,6 +59,6 @@ public class AdminServiceManager implements AdminService {
         return ScheduleResponse.builder()
                 .schedules(schedules)
                 .build();
-
     }
+
 }

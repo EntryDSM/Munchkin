@@ -8,7 +8,6 @@ import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.security.auth.AuthenticationFacade;
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFinalSubmitted;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +34,7 @@ public class ApplicantServiceManager implements ApplicantService {
         Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
 
         if(applicant != null) {
-            if(admin.getPermission() == Permission.OFFICE) { //행정실은 원서료 납부만 수정 가능
+            if(admin.getPermission().equals(Permission.TEACHER)) { //행정실은 원서료 납부만 수정 가능
                 applicant.updateIsPaid(isPaid);
             }
             else { //교무실은 모든 권한 有
@@ -147,12 +146,11 @@ public class ApplicantServiceManager implements ApplicantService {
                     .build();
         }
 
-
-
         return ApplicantDetailResponse.builder()
                 .status(status)
                 .evaluation(evaluation)
                 .personalData(personalData)
                 .build();
     }
+
 }
