@@ -20,7 +20,7 @@ public class TokenFilter implements HandlerMethodArgumentResolver {
         if (parameter.hasParameterAnnotation(AccessToken.class)) {
             String authorization = webRequest.getHeader("Authorization");
             assert authorization != null;
-            return authorization.substring(authorization.indexOf(" "));
+            return authorization.substring(authorization.indexOf(" ") + 1);
         }
         return null;
     }
