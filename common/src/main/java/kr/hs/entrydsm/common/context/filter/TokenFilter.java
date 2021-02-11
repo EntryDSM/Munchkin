@@ -18,7 +18,9 @@ public class TokenFilter implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         if (parameter.hasParameterAnnotation(AccessToken.class)) {
-            return webRequest.getHeader("Authorization");
+            String authorization = webRequest.getHeader("Authorization");
+            assert authorization != null;
+            return authorization.substring(authorization.indexOf(" "));
         }
         return null;
     }
