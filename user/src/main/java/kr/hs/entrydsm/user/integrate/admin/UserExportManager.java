@@ -3,6 +3,7 @@ package kr.hs.entrydsm.user.integrate.admin;
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,9 +28,6 @@ public class UserExportManager implements UserExportRepository {
     @Override
     public void changeExamCode(long receiptCode, String examCode) {
     }
-    //위에거 Page로 바꿔주세오..
-
-
 
 
 }
