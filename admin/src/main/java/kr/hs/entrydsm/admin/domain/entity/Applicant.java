@@ -48,6 +48,10 @@ public class Applicant {
 
     private String studyPlan; //학업계획서
 
+    private String examCode; // 수험번호
+
+    private String postCode;
+
     //검정고시 O
     private Integer averageScore;
 
@@ -74,6 +78,10 @@ public class Applicant {
 
     public void updateIsPaid(boolean isPaid) {
         this.isPaid = isPaid;
+    }
+
+    public void updateExamCode(String examCode) {
+        this.examCode = examCode;
     }
 
 }
