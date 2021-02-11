@@ -22,4 +22,10 @@ public class NotificationIntegrateAdminService implements TeacherRepository {
                 .build();
     }
 
+    @Override
+    public boolean isTeacher() {
+        return adminExportRepository.isTeacher();
+    }
+
+
 }
