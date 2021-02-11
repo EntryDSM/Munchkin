@@ -9,5 +9,5 @@ public interface ApplicantRepository {
     Page<Applicant> findAll();
     Applicant findByReceiptCode(int receiptCode);
     void changeExamCode(long receiptCode, String examCode);
-    List<Applicant> findAllUser();
+    List<Applicant> findAllIsSubmitTrue();
 }
