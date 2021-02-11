@@ -18,7 +18,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
     @Override
     public Page<Applicant> findAll() {
-        return userExportRepository.findAll().stream()
+        return (Page<Applicant>) userExportRepository.findAll().stream()
                 .map(user -> Applicant.builder()
                         .receiptCode(user.getReceiptCode())
                         .name(user.getName())
@@ -62,7 +62,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
     @Override
     public List<Applicant> findAllUser() {
-        return userExportRepository.findAllUser().stream()
+        return (List<Applicant>) userExportRepository.findAll().stream()
                 .map(user -> Applicant.builder()
                         .receiptCode(user.getReceiptCode())
                         .name(user.getName())
