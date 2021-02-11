@@ -11,10 +11,15 @@ import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +31,9 @@ public class ApplicantServiceManager implements ApplicantService {
     private final AdminRepository adminRepository;
 
     private final AuthenticationFacade authenticationFacade;
+
+    @Value("${kakao.restapi.key}")
+    private String restApiKey;
 
     @Override
     public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
@@ -154,4 +162,37 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
     }
 
+    @Override
+    public void saveExamCode() throws Exception {
+        List<Applicant> applicants = applicantRepository.findAllIsSubmitTrue();
+        String examCode = null;
+        final String[] schoolCoordinates = {"36.3914787","127.3611611"};
+
+        for(Applicant applicant : applicants) {
+            String first = applicant.getApplicationType().equals("COMMON")?"1":applicant.getApplicationType().equals("MEISTER")?"2":"3";
+            String second = applicant.isDaejeon()?"1":"2";
+            String distanceRank = "";
+
+            examCode = first + second + distanceRank;
+            applicantRepository.changeExamCode(applicant.getReceiptCode(), examCode);
+        }
+    }
+
+    private ResponseEntity<String> getSearchPlaceByKeyword(String searchKeyword) throws Exception {
+        String queryString = "?query="+ URLEncoder.encode(searchKeyword, "UTF-8");
+        final String API_SERVER_HOST = "https://dapi.kakao.com";
+        final String SEARCH_PLACE_KEYWORD_PATH = "/v2/local/search/keyword.json";
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("Authorization", "KakaoAK " + restApiKey);
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+
+        URI url = URI.create(API_SERVER_HOST+SEARCH_PLACE_KEYWORD_PATH+queryString);
+        RequestEntity<String> rq = new RequestEntity<>(headers, HttpMethod.GET, url);
+        ResponseEntity<String> re = restTemplate.exchange(rq, String.class);
+
+        return re;
+    }
 }

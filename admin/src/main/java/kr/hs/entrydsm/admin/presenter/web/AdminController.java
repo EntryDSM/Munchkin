@@ -9,10 +9,8 @@ import kr.hs.entrydsm.admin.usecase.dto.ScheduleResponse;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 @RequiredArgsConstructor
 @Published
@@ -64,7 +62,5 @@ public class AdminController {
     public ScheduleResponse getSchedules() {
         return adminService.getSchedules();
     }
-
-    //
 
 }

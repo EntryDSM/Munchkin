@@ -10,4 +10,5 @@ public interface ApplicantService {
                                      boolean isPaid, boolean isCommon, boolean isMeister, boolean isSocial,
                                      Integer recieptCode, String schoolName, String telephoneNumber, String name);
     ApplicantDetailResponse getDetail(Integer recieptCode);
+    void saveExamCode() throws Exception;
 }
