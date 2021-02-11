@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserExportRepository {
     User findByReceiptCode(int receiptCode);
     List<User> findAll();
+    void changeExamCode(long receiptCode, String examCode);
 }

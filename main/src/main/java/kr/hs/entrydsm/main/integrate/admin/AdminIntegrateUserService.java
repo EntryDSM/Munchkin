@@ -51,4 +51,11 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                     .build();
     }
 
+    @Override
+    public void changeExamCode(long receiptCode, String examCode) {
+        User user = userExportRepository.findByReceiptCode((int)receiptCode);
+
+        userExportRepository.changeExamCode(user.getReceiptCode(), examCode);
+    }
+
 }

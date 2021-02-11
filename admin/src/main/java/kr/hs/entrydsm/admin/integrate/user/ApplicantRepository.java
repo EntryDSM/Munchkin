@@ -6,4 +6,5 @@ import org.springframework.data.domain.Page;
 public interface ApplicantRepository {
     Page<Applicant> findAll();
     Applicant findByReceiptCode(int receiptCode);
+    void changeExamCode(long receiptCode, String examCode);
 }
