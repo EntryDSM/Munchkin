@@ -61,21 +61,8 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     }
 
     @Override
-    public List<Applicant> findAllUser() {
-        return (List<Applicant>) userExportRepository.findAll().stream()
-                .map(user -> Applicant.builder()
-                        .receiptCode(user.getReceiptCode())
-                        .name(user.getName())
-                        .isDaejeon(user.isDaejeon())
-                        .applicationType(String.valueOf(user.getApplicationType()))
-                        .isPaid(user.getStatus().isPaid())
-                        .isPrintedArrived(user.getStatus().isPrintedArrived())
-                        .isSubmit(user.getStatus().isSubmit())
-                        .examCode(user.getStatus().getExamCode())
-                        .address(user.getAddress())
-                        .postCode(user.getPostCode())
-                        .build());
+    public List<Applicant> findAllIsSubmitTrue() {
+        return null;
     }
-
 
 }

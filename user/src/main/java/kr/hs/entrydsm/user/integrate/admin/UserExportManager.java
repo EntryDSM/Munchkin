@@ -21,7 +21,7 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public List<User> findAll() {
+    public Page<User> findAll() {
         return userRepository.findAllBy();
     }
 
@@ -29,5 +29,9 @@ public class UserExportManager implements UserExportRepository {
     public void changeExamCode(long receiptCode, String examCode) {
     }
 
+    @Override
+    public List<User> findAllIsSubmitTrue() {
+        return null;
+    }
 
 }
