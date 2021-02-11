@@ -6,6 +6,7 @@ import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -15,7 +16,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final UserExportRepository userExportRepository;
 
     @Override
-    public Page<Applicant> findAll() {
+    public Page<Applicant> findAll(Pageable page) {
         return (Page<Applicant>) userExportRepository.findAll().stream()
                 .map(user -> Applicant.builder()
                         .receiptCode(user.getReceiptCode())

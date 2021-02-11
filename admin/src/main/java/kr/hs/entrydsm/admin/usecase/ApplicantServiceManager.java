@@ -13,6 +13,7 @@ import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -49,15 +50,15 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
-    public ApplicantsResponse getApplicants(Integer size, Integer page, boolean isDaejeon, boolean isNationwide,
-                                                  boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                                                  boolean isMeiseter, boolean isSocial, Integer recieptCode,
-                                                  String schoolName, String telephoneNumber, String name) {
+    public ApplicantsResponse getApplicants(Pageable page, boolean isDaejeon, boolean isNationwide,
+                                            boolean isPrintedArrived, boolean isPaid, boolean isCommon,
+                                            boolean isMeiseter, boolean isSocial, Integer recieptCode,
+                                            String schoolName, String telephoneNumber, String name) {
         if(!authenticationFacade.isLogin()) {
             throw new UserNotAccessibleException();
         }
 
-        Page<Applicant> applicants = applicantRepository.findAll();
+        Page<Applicant> applicants = applicantRepository.findAll(page);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
 
         
