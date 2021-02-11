@@ -24,4 +24,12 @@ public class UserExportManager implements UserExportRepository {
         return userRepository.findAllBy();
     }
 
+    @Override
+    public void changeExamCode(long receiptCode, String examCode) {
+    }
+    //위에거 Page로 바꿔주세오..
+
+
+
+
 }

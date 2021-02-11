@@ -1,10 +1,10 @@
 package kr.hs.entrydsm.admin.integrate.user;
 
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ApplicantRepository {
-    List<Applicant> findAll();
+    Page<Applicant> findAll();
     Applicant findByReceiptCode(int receiptCode);
+    void changeExamCode(long receiptCode, String examCode);
 }
