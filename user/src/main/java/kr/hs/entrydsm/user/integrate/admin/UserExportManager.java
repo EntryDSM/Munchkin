@@ -21,17 +21,12 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public Page<User> findAll() {
+    public List<User> findAll() {
         return userRepository.findAllBy();
     }
 
     @Override
     public void changeExamCode(long receiptCode, String examCode) {
-    }
-    //위에거 Page로 바꿔주세오..
-
-    @Override
-    public List<User> findAllUser() {
     }
 
 
