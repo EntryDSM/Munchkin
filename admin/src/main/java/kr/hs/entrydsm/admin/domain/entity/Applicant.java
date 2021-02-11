@@ -50,6 +50,8 @@ public class Applicant {
 
     private String examCode; // 수험번호
 
+    private String postCode;
+
     //검정고시 O
     private Integer averageScore;
 

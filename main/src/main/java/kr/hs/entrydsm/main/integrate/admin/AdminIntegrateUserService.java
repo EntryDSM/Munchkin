@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Component
 public class AdminIntegrateUserService implements ApplicantRepository {
@@ -16,7 +18,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
     @Override
     public Page<Applicant> findAll() {
-        return (Page<Applicant>) userExportRepository.findAll().stream()
+        return userExportRepository.findAll().stream()
                 .map(user -> Applicant.builder()
                         .receiptCode(user.getReceiptCode())
                         .name(user.getName())
@@ -57,5 +59,23 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
         userExportRepository.changeExamCode(user.getReceiptCode(), examCode);
     }
+
+    @Override
+    public List<Applicant> findAllUser() {
+        return userExportRepository.findAllUser().stream()
+                .map(user -> Applicant.builder()
+                        .receiptCode(user.getReceiptCode())
+                        .name(user.getName())
+                        .isDaejeon(user.isDaejeon())
+                        .applicationType(String.valueOf(user.getApplicationType()))
+                        .isPaid(user.getStatus().isPaid())
+                        .isPrintedArrived(user.getStatus().isPrintedArrived())
+                        .isSubmit(user.getStatus().isSubmit())
+                        .examCode(user.getStatus().getExamCode())
+                        .address(user.getAddress())
+                        .postCode(user.getPostCode())
+                        .build());
+    }
+
 
 }
