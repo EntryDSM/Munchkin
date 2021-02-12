@@ -8,6 +8,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    UNAUTHENTICATED(401, "COMMON401-0", "UnAuthenticated"),
+    NOT_FOUND(404, "COMMON404-0", "Not Found"),
+
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
 
     INVALID_TOKEN(401, "ADMIN401-0","This token is invalid"),
