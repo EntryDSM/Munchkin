@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Getter
-public class applicant {
+public class Applicant {
 
     private long receiptCode;
 
