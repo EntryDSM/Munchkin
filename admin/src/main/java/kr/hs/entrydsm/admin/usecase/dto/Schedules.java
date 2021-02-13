@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Getter
 @Builder
-public class ScheduleRequest {
+public class Schedules {
 
     private String year;
 

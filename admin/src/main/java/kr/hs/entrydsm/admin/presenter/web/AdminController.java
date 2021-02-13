@@ -1,13 +1,16 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
+import kr.hs.entrydsm.admin.usecase.AdminService;
 import kr.hs.entrydsm.admin.usecase.ApplicantService;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantDetailResponse;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantsResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
+import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 
 @RequiredArgsConstructor
 @Published
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final ApplicantService applicantService;
+    private final AdminService adminService;
 
+    //지원자
     @PatchMapping("/{reciept-code}")
     public void updateStatus(@PathVariable(name = "reciept-code") Integer recieptCode,
                              @RequestParam(required = false) boolean isPrintedArrived,
@@ -47,5 +52,15 @@ public class AdminController {
         return applicantService.getDetail(recieptCode);
     }
 
+    //전형 일자
+    @PatchMapping("/schedules")
+    public void updateSchedules(@RequestBody @Validated ScheduleRequest scheduleRequest) {
+        adminService.updateSchedules(scheduleRequest);
+    }
+
+    @GetMapping("/schedules")
+    public ScheduleResponse getSchedules() {
+        return adminService.getSchedules();
+    }
 
 }

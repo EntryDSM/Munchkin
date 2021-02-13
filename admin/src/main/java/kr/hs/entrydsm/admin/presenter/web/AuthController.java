@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
 import kr.hs.entrydsm.admin.usecase.AuthService;
-import kr.hs.entrydsm.admin.usecase.dto.AccessTokenResponse;
-import kr.hs.entrydsm.admin.usecase.dto.SignInRequest;
-import kr.hs.entrydsm.admin.usecase.dto.TokenResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
+import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.TokenResponse;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
