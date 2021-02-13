@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.admin.usecase;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hs.entrydsm.admin.domain.entity.Admin;
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
 import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
@@ -35,8 +37,8 @@ public class ApplicantServiceManager implements ApplicantService {
 
     private final AuthenticationFacade authenticationFacade;
 
-    private final double endX = 36.39181879;
-    private final double endY = 127.36332440;
+    private final double endX = 127.363585;
+    private final double endY = 36.391636;
 
     @Value("${tmap.app.key}")
     private String appKey;
@@ -171,81 +173,112 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override
     public void saveExamCode() throws Exception {
         List<Applicant> applicants = applicantRepository.findAllIsSubmitTrue();
+        String examCode = null;
         List<Applicant> applicantSort = applicants;
+        int commonDaejeon = 0, commonNationwide = 0, meisterDaejeon = 0, meisterNationwide = 0, socialDaejeon = 0, socialNationwide = 0;
 
         //첫번째, 두번째 자리 채우기
-        for(Applicant applicant : applicants) {
-            String first = applicant.getApplicationType().equals("COMMON")?"1":applicant.getApplicationType().equals("MEISTER")?"2":"3";
-            String second = applicant.isDaejeon()?"1":"2";
+        for (Applicant applicant : applicants) {
+            String first = applicant.getApplicationType().equals("COMMON") ? "1" : applicant.getApplicationType().equals("MEISTER") ? "2" : "3";
+            String second = applicant.isDaejeon() ? "1" : "2";
 
-            applicant.updateExamCode(first + second);
+            examCode = first + second;
         }
 
-        for(Applicant applicant : applicants) {
-            CoordinateResponse coordinateResponse = coordinate(applicant.getAddress());
+        for (Applicant applicant : applicants) {
+            Coordinate coordinate = getCoordinate(applicant.getAddress());
             RouteGuidanceRequest request = new RouteGuidanceRequest().builder()
                     .endX(endX)
                     .endY(endY)
-                    .startX(coordinateResponse.getLat())
-                    .startY(coordinateResponse.getLon())
+                    .startX(Double.parseDouble(coordinate.getLon()))
+                    .startY(Double.parseDouble(coordinate.getLat()))
                     .build();
             RouteGuidanceResponse distance = routeGuidance(request);
-            applicant.updateDistance(distance.getTotalDistance());
+            applicant.updateDistance(distance.getProperties().getTotalDistance());
         }
 
-        //앞 자리로 분류해서 거리가 먼 순서대로 정렬
-
-        /*Collections.sort(applicantSort, (o1, o2) -> {
-            if(o1.getDistance()>o2.getDistance()) {
+        Collections.sort(applicantSort, (o1, o2) -> {
+            if (o1.getDistance() > o2.getDistance()) {
                 return -1; //음수일 때 자리를 바꾸지 않는다.
-            }else if(o1.getDistance()<o2.getDistance()) {
+            } else if (o1.getDistance() < o2.getDistance()) {
                 return 1; // 양수일 때 자리를 바꾸고
-            }else {
+            } else {
                 return 0;
             }
         });
 
-        int i = 0;
         for(Applicant applicant : applicantSort) {
-            applicant.updateExamCode(examCode + String.format("%03d",i++));
+            int i = 0;
+            if(applicant.getExamCode().startsWith("11")) {
+                commonDaejeon++;
+                i = commonDaejeon;
+            } else if(applicant.getExamCode().startsWith("12")) {
+                commonNationwide++;
+                i = commonNationwide;
+            } else if(applicant.getExamCode().startsWith("21")) {
+                meisterDaejeon++;
+                i = meisterDaejeon;
+            } else if(applicant.getExamCode().startsWith("22")) {
+                meisterNationwide++;
+                i = meisterNationwide;
+            } else if(applicant.getExamCode().startsWith("31")) {
+                socialDaejeon++;
+                i = socialDaejeon;
+            } else if(applicant.getExamCode().startsWith("32")) {
+                socialNationwide++;
+                i = socialNationwide;
+            }
+
+            applicant.updateExamCode(examCode + String.format("%03d", i));
             applicantRepository.changeExamCode(applicant.getReceiptCode(), applicant.getExamCode());
-        }*/
+        }
     }
 
-    private CoordinateResponse coordinate(String address) throws UnsupportedEncodingException, URISyntaxException {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String query = "&addressFlag=F00" + "&format=json";
-
-        headers.add("Accept-Language", "ko");
-        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
-
-        URI url = new URI("https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=" + appKey + "&addr=" + URLEncoder.encode(address,"UTF-8") + query);
-
-        RequestEntity<String> rq = new RequestEntity<>(headers, HttpMethod.GET, url);
-        ResponseEntity<CoordinateResponse> responseEntity = restTemplate.exchange(rq, CoordinateResponse.class);
-
-        return responseEntity.getBody();
-    }
-
-    private RouteGuidanceResponse routeGuidance(RouteGuidanceRequest request) throws Exception {
+    private Coordinate getCoordinate (String address) throws URISyntaxException, UnsupportedEncodingException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
-        String body = "endX=" + request.getEndX()
-                + "&endY=" + request.getEndY()
-                + "&startX=" + request.getStartX()
-                + "&startY=" + request.getStartY()
-                + "&totalValue=" + 2;
+        headers.add("Accept-Language", "ko");
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE
+                + ";charset=UTF-8");
+
+        URI url = new URI("https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey="
+                + appKey + "&addr=" + URLEncoder.encode(address,"UTF-8") + "&addressFlag=F00&format=json");
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Map> response = restTemplate.getForObject(url, Map.class);
+
+        Map<String, Map> coordinate =
+                mapper.readValue(mapper.writeValueAsString(response.get("coordinateInfo")), Map.class);
+        List<Coordinate> info = Arrays.asList(mapper.readValue(mapper.writeValueAsString(coordinate.get("coordinate")), Coordinate[].class));
+
+        return info.get(0);
+    }
+
+    private RouteGuidanceResponse routeGuidance(RouteGuidanceRequest request) throws URISyntaxException, JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+
+        RouteBody routeBody = RouteBody.builder()
+                .endX(request.getEndX())
+                .endY(request.getEndY())
+                .startX(request.getStartX())
+                .startY(request.getStartY())
+                .totalValue(2)
+                .build();
 
         headers.add("Accept-Language", "ko");
-        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+        headers.add("appKey",appKey);
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 
-        URI url = URI.create("https://apis.openapi.sk.com/tmap/routes?version=1&format=json");
-        HttpEntity entity = new HttpEntity(body, headers);
+        URI url = new URI("https://apis.openapi.sk.com/tmap/routes?version=1");
 
-        ResponseEntity<RouteGuidanceResponse> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, RouteGuidanceResponse.class);
+        ObjectMapper mapper = new ObjectMapper();
+        HttpEntity<RouteBody> rq = new HttpEntity<>(routeBody, headers);
+        Map<String, Map> response = restTemplate.postForObject(url, rq, Map.class);
 
-        return responseEntity.getBody();
+        List<RouteGuidanceResponse> map =
+                Arrays.asList(mapper.readValue(mapper.writeValueAsString(response.get("features")), RouteGuidanceResponse[].class));
+        return map.get(0);
     }
 }
