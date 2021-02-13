@@ -11,3 +11,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET_KEY:dGVzdA==}
+    exp:
+      access: ${JWT_ACCESS_EXP:3600}
+      refresh: ${JWT_REFRESH_EXP:3600}
+    header: ${JWT_HEADER:Authorization}
+    prefix: ${JWT_PREFIX:Bearer}
