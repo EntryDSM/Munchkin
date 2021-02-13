@@ -6,8 +6,11 @@ import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,9 +20,13 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final UserExportRepository userExportRepository;
 
     @Override
-    public Page<Applicant> findAll() {
-        return (Page<Applicant>) userExportRepository.findAll().stream()
-                .map(user -> Applicant.builder()
+    public Page<Applicant> findAll(Pageable pageable) {
+        Page<User> users = userExportRepository.findAll(pageable);
+        long totalElements = users.getTotalElements();
+        List<Applicant> applicants = new ArrayList<>();
+        for (User user : users) {
+            applicants.add(
+                    Applicant.builder()
                         .receiptCode(user.getReceiptCode())
                         .name(user.getName())
                         .isDaejeon(user.isDaejeon())
@@ -27,7 +34,10 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                         .isPaid(user.getStatus().isPaid())
                         .isPrintedArrived(user.getStatus().isPrintedArrived())
                         .isSubmit(user.getStatus().isSubmit())
-                        .build());
+                    .build()
+            );
+        }
+        return new PageImpl<>(applicants, pageable, totalElements);
     }
 
 
