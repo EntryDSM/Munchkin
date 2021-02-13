@@ -78,6 +78,7 @@ project(':main') {
 
 project(':common') {
     dependencies {
+        compile 'io.jsonwebtoken:jjwt:0.9.1'
         compile 'org.springframework:spring-context'
         compile 'org.springframework:spring-context-support'
         compile 'org.springframework.boot:spring-boot-starter-web'
