@@ -3,6 +3,8 @@ package kr.hs.entrydsm.user.integrate.admin;
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,8 +22,17 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAllBy();
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAllBy(pageable);
+    }
+
+    @Override
+    public void changeExamCode(long receiptCode, String examCode) {
+    }
+
+    @Override
+    public List<User> findAllIsSubmitTrue() {
+        return null;
     }
 
 }
