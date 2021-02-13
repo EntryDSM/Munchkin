@@ -2,10 +2,10 @@ package kr.hs.entrydsm.admin.presenter.web;
 
 import kr.hs.entrydsm.admin.usecase.AdminService;
 import kr.hs.entrydsm.admin.usecase.ApplicantService;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantDetailResponse;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantsResponse;
-import kr.hs.entrydsm.admin.usecase.dto.ScheduleRequest;
-import kr.hs.entrydsm.admin.usecase.dto.ScheduleResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
+import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

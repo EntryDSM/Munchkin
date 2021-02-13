@@ -70,6 +70,8 @@ public class Applicant {
 
     private Integer latenessCount; //지각
 
+    private double distance; // 학교까지의 거리
+
     public void updateStatus(boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         this.isPrintedArrived = isPrintedArrived;
         this.isPaid = isPaid;
@@ -82,6 +84,10 @@ public class Applicant {
 
     public void updateExamCode(String examCode) {
         this.examCode = examCode;
+    }
+
+    public void updateDistance(double distance) {
+        this.distance = distance;
     }
 
 }

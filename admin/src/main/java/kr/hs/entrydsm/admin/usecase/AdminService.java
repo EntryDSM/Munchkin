@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.usecase;
 
-import kr.hs.entrydsm.admin.usecase.dto.ScheduleRequest;
-import kr.hs.entrydsm.admin.usecase.dto.ScheduleResponse;
+import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 
 public interface AdminService {
     void updateSchedules(ScheduleRequest scheduleRequest);

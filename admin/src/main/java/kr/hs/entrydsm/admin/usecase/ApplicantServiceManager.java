@@ -7,6 +7,8 @@ import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.security.auth.AuthenticationFacade;
 import kr.hs.entrydsm.admin.usecase.dto.*;
+import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
@@ -18,10 +20,11 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -32,8 +35,11 @@ public class ApplicantServiceManager implements ApplicantService {
 
     private final AuthenticationFacade authenticationFacade;
 
-    @Value("${kakao.restapi.key}")
-    private String restApiKey;
+    private final double endX = 36.39181879;
+    private final double endY = 127.36332440;
+
+    @Value("${tmap.app.key}")
+    private String appKey;
 
     @Override
     public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
@@ -165,34 +171,81 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override
     public void saveExamCode() throws Exception {
         List<Applicant> applicants = applicantRepository.findAllIsSubmitTrue();
-        String examCode = null;
-        final String[] schoolCoordinates = {"36.3914787","127.3611611"};
+        List<Applicant> applicantSort = applicants;
 
+        //첫번째, 두번째 자리 채우기
         for(Applicant applicant : applicants) {
             String first = applicant.getApplicationType().equals("COMMON")?"1":applicant.getApplicationType().equals("MEISTER")?"2":"3";
             String second = applicant.isDaejeon()?"1":"2";
-            String distanceRank = "";
 
-            examCode = first + second + distanceRank;
-            applicantRepository.changeExamCode(applicant.getReceiptCode(), examCode);
+            applicant.updateExamCode(first + second);
         }
+
+        for(Applicant applicant : applicants) {
+            CoordinateResponse coordinateResponse = coordinate(applicant.getAddress());
+            RouteGuidanceRequest request = new RouteGuidanceRequest().builder()
+                    .endX(endX)
+                    .endY(endY)
+                    .startX(coordinateResponse.getLat())
+                    .startY(coordinateResponse.getLon())
+                    .build();
+            RouteGuidanceResponse distance = routeGuidance(request);
+            applicant.updateDistance(distance.getTotalDistance());
+        }
+
+        //앞 자리로 분류해서 거리가 먼 순서대로 정렬
+
+        /*Collections.sort(applicantSort, (o1, o2) -> {
+            if(o1.getDistance()>o2.getDistance()) {
+                return -1; //음수일 때 자리를 바꾸지 않는다.
+            }else if(o1.getDistance()<o2.getDistance()) {
+                return 1; // 양수일 때 자리를 바꾸고
+            }else {
+                return 0;
+            }
+        });
+
+        int i = 0;
+        for(Applicant applicant : applicantSort) {
+            applicant.updateExamCode(examCode + String.format("%03d",i++));
+            applicantRepository.changeExamCode(applicant.getReceiptCode(), applicant.getExamCode());
+        }*/
     }
 
-    private ResponseEntity<String> getSearchPlaceByKeyword(String searchKeyword) throws Exception {
-        String queryString = "?query="+ URLEncoder.encode(searchKeyword, "UTF-8");
-        final String API_SERVER_HOST = "https://dapi.kakao.com";
-        final String SEARCH_PLACE_KEYWORD_PATH = "/v2/local/search/keyword.json";
+    private CoordinateResponse coordinate(String address) throws UnsupportedEncodingException, URISyntaxException {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String query = "&addressFlag=F00" + "&format=json";
+
+        headers.add("Accept-Language", "ko");
+        headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+
+        URI url = new URI("https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=" + appKey + "&addr=" + URLEncoder.encode(address,"UTF-8") + query);
+
+        RequestEntity<String> rq = new RequestEntity<>(headers, HttpMethod.GET, url);
+        ResponseEntity<CoordinateResponse> responseEntity = restTemplate.exchange(rq, CoordinateResponse.class);
+
+        return responseEntity.getBody();
+    }
+
+    private RouteGuidanceResponse routeGuidance(RouteGuidanceRequest request) throws Exception {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
-        headers.add("Authorization", "KakaoAK " + restApiKey);
-        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        String body = "endX=" + request.getEndX()
+                + "&endY=" + request.getEndY()
+                + "&startX=" + request.getStartX()
+                + "&startY=" + request.getStartY()
+                + "&totalValue=" + 2;
+
+        headers.add("Accept-Language", "ko");
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
-        URI url = URI.create(API_SERVER_HOST+SEARCH_PLACE_KEYWORD_PATH+queryString);
-        RequestEntity<String> rq = new RequestEntity<>(headers, HttpMethod.GET, url);
-        ResponseEntity<String> re = restTemplate.exchange(rq, String.class);
+        URI url = URI.create("https://apis.openapi.sk.com/tmap/routes?version=1&format=json");
+        HttpEntity entity = new HttpEntity(body, headers);
 
-        return re;
+        ResponseEntity<RouteGuidanceResponse> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, RouteGuidanceResponse.class);
+
+        return responseEntity.getBody();
     }
 }
