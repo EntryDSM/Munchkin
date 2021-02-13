@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.common.context.filter.token;
+package kr.hs.entrydsm.common.context.auth.token;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

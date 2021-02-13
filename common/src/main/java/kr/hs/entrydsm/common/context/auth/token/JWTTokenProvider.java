@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.common.context.filter.token;
+package kr.hs.entrydsm.common.context.auth.token;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
