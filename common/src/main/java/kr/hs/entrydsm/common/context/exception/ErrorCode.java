@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    INVALID_TOKEN(400, "COMMON400-0", "Invalid Token"),
     UNAUTHENTICATED(401, "COMMON401-0", "UnAuthenticated"),
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
 
@@ -16,7 +17,12 @@ public enum ErrorCode {
     INVALID_TOKEN(401, "ADMIN401-0","This token is invalid"),
     EXPIRED_TOKEN(401, "ADMIN401-1","Token is Expired"),
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
-    APPLICATION_NOT_FOUND(404, "ADMIN404-1","The application could not be found");
+    APPLICATION_NOT_FOUND(404, "ADMIN404-1","The application could not be found"),
+    APPLICANT_NOT_FOUND(404, "ADMIN404-2","The applicant does not exist"),
+    NOT_ACCESSIBLE(401, "ADMIN401-2","Check the token"),
+    NOT_FINAL_SUBMITTED(423,"ADMIN423-0", "Application not final submitted"),
+
+    TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist");
 
     private final int status;
     private final String code;
