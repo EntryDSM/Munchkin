@@ -1,13 +1,19 @@
 package kr.hs.entrydsm.main.configuration;
 
+import kr.hs.entrydsm.main.MunchkinApplication;
 import lombok.SneakyThrows;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.ComponentScanBeanDefinitionParser;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class MunchkinApplicationBuilder {
 
@@ -64,18 +70,42 @@ public class MunchkinApplicationBuilder {
 
     @SneakyThrows
     private static List<Class<?>> getModuleConfiguration() {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        ClassLoader classLoader = MunchkinApplication.class.getClassLoader();
         assert classLoader != null;
 
         String path = MODULE_CONFIGURATION_PATH.replace('.', '/');
-        URL directoryUrl = classLoader.getResource(path);
-        assert directoryUrl != null;
-
-        File directory = new File(directoryUrl.toURI());
-        return new ArrayList<>(findClasses(directory, MODULE_CONFIGURATION_PATH));
+        URL modulePathUrl = classLoader.getResource(path);
+        assert modulePathUrl != null;
+        File pathDirectory = new File(modulePathUrl.getFile());
+        if (pathDirectory.isDirectory()) {
+            return findClassesFromDirectory(pathDirectory, MODULE_CONFIGURATION_PATH);
+        } else {
+            String pathString = pathDirectory.getPath();
+            pathString = pathString.substring(pathString.indexOf(":") + 1, pathString.indexOf("!"));
+            return findClassesFromJar(pathString);
+        }
     }
 
-    private static List<Class<?>> findClasses(File directory, String packageName) throws ClassNotFoundException {
+    private static List<Class<?>> findClassesFromJar(String filePath) throws ClassNotFoundException {
+        List<Class<?>> classes = new ArrayList<>();
+        try {
+            ZipInputStream zis = new ZipInputStream(new FileInputStream(filePath));
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null) {
+                String fileName = entry.getName().replace("/", ".");
+                if (!fileName.endsWith(".class")) continue;
+                if (!fileName.contains(MODULE_CONFIGURATION_PATH)) continue;
+                fileName = fileName.substring(fileName.indexOf(MODULE_CONFIGURATION_PATH), fileName.lastIndexOf("."));
+                classes.add(Class.forName(fileName));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return classes;
+    }
+
+
+    private static List<Class<?>> findClassesFromDirectory(File directory, String packageName) throws ClassNotFoundException {
         List<Class<?>> classes = new ArrayList<>();
         if (!directory.exists()) {
             return classes;
@@ -84,7 +114,7 @@ public class MunchkinApplicationBuilder {
         for (File file : Objects.requireNonNull(files)) {
             if (file.isDirectory()) {
                 assert !file.getName().contains(".");
-                classes.addAll(findClasses(file, packageName + "." + file.getName()));
+                classes.addAll(findClassesFromDirectory(file, packageName + "." + file.getName()));
             } else if (file.getName().endsWith(".class")) {
                 classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
             }
