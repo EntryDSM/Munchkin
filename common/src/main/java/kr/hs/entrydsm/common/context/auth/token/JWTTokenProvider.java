@@ -22,8 +22,11 @@ public class JWTTokenProvider {
     @Value("${auth.jwt.exp.refresh}")
     private Long refreshTokenExpiration;
 
-    @Value("${auth.jwt.header}")
-    private String header;
+    @Value("${auth.jwt.header.access}")
+    private String accessTokenHeader;
+
+    @Value("${auth.jwt.header.refresh}")
+    private String refreshTokenHeader;
 
     @Value("${auth.jwt.prefix}")
     private String prefix;
@@ -48,12 +51,16 @@ public class JWTTokenProvider {
                 .compact();
     }
 
-    public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(header);
+    public String resolveAccessToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(accessTokenHeader);
         if (bearerToken != null && bearerToken.startsWith(prefix)) {
             return bearerToken.substring(prefix.length() + 1);
         }
         return null;
+    }
+
+    public String resoleRefreshToken(HttpServletRequest request) {
+        return request.getHeader(refreshTokenHeader);
     }
 
     public boolean validateToken(String token) {
@@ -64,6 +71,16 @@ public class JWTTokenProvider {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public long parseAccessToken(String token) {
+        return Long.parseLong(Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().getSubject());
+    }
+
+    public boolean isRefreshToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().get("type").equals("refresh_token");
     }
 
 }
