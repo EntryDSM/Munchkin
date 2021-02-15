@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface UserRepository {
     Optional<User> findByReceiptCode(long receiptCode);
     Page<User> findAllBy(Pageable pageable);
+    Optional<User> findByTelephoneNumber(String telephoneNumber);
 }
