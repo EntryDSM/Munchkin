@@ -7,7 +7,7 @@ import kr.hs.entrydsm.common.context.exception.ErrorCode;
 import kr.hs.entrydsm.common.context.exception.MunchkinException;
 import kr.hs.entrydsm.main.security.auth.UserAuthentication;
 import kr.hs.entrydsm.user.domain.entity.User;
-import kr.hs.entrydsm.user.infrastructure.database.UserManager;
+import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -18,14 +18,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class JWTTokenHandler implements HandlerInterceptor {
 
     private final JWTTokenProvider tokenProvider;
-    private final UserManager userManager;
+    private final UserRepositoryManager userRepositoryManager;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -46,7 +45,7 @@ public class JWTTokenHandler implements HandlerInterceptor {
             String token = tokenProvider.resolveAccessToken(request);
             if (tokenProvider.validateToken(token)) {
                 long receiptCode = tokenProvider.parseAccessToken(token);
-                User user = userManager.findByReceiptCode(receiptCode)
+                User user = userRepositoryManager.findByReceiptCode(receiptCode)
                         .orElseThrow(() -> new MunchkinException(ErrorCode.NOT_FOUND));
                 SecurityContext securityContext = SecurityContextHolder.getContext();
                 Authentication authentication = new UserAuthentication(user);
