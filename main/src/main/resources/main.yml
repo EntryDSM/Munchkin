@@ -7,3 +7,14 @@ spring:
   datasource:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET_KEY:dGVzdA==}
+    exp:
+      access: ${JWT_ACCESS_EXP:3600}
+      refresh: ${JWT_REFRESH_EXP:3600}
+    header:
+      access: ${JWT_HEADER:Authorization}
+      refresh: ${JWT_REFRESH_HEADER:X-Refresh-Token}
+    prefix: ${JWT_PREFIX:Bearer} 
