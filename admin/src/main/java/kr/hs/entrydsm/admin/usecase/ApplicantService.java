@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.usecase;
 
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantDetailResponse;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantsResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
 import org.springframework.data.domain.Pageable;
 
 public interface ApplicantService {
@@ -10,4 +10,5 @@ public interface ApplicantService {
                                      boolean isPaid, boolean isCommon, boolean isMeister, boolean isSocial,
                                      Integer recieptCode, String schoolName, String telephoneNumber, String name);
     ApplicantDetailResponse getDetail(Integer recieptCode);
+    void saveExamCode() throws Exception;
 }

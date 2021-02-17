@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.domain.entity;
 
 import kr.hs.entrydsm.admin.domain.entity.enums.Type;
-import kr.hs.entrydsm.admin.usecase.dto.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
