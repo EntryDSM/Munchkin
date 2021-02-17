@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase.dto;
+package kr.hs.entrydsm.admin.usecase.dto.request;
 
 import kr.hs.entrydsm.admin.domain.entity.enums.Type;
 import lombok.Builder;
