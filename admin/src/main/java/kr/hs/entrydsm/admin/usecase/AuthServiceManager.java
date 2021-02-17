@@ -4,12 +4,12 @@ import kr.hs.entrydsm.admin.domain.entity.Admin;
 import kr.hs.entrydsm.admin.domain.entity.RefreshToken;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.RefreshTokenRepository;
+import kr.hs.entrydsm.admin.security.JwtTokenProvider;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.TokenResponse;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
-import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +23,7 @@ public class AuthServiceManager implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final JWTTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${auth.jwt.exp.refresh}")
     private Long refreshExp;
@@ -37,12 +37,12 @@ public class AuthServiceManager implements AuthService {
                 .filter(user -> passwordEncoder.matches(signInRequest.getPassword(), user.getPassword()))
                 .map(Admin::getId)
                 .map(adminId -> {
-                    String refreshToken = jwtTokenProvider.generateAdminRefreshToken(adminId);
+                    String refreshToken = jwtTokenProvider.generateRefreshToken(adminId);
                     return new RefreshToken(adminId.toString(), refreshToken, refreshExp);
                 })
                 .map(refreshTokenRepository::save)
                 .map(refreshToken -> {
-                    String accessToken = jwtTokenProvider.generateAdminAccessToken(refreshToken.getId());
+                    String accessToken = jwtTokenProvider.generateAccessToken(refreshToken.getId());
                     return new TokenResponse(accessToken, refreshToken.getRefreshToken(), accessExp);
                 })
                 .orElseThrow(AdminNotFoundException::new);
@@ -56,7 +56,7 @@ public class AuthServiceManager implements AuthService {
 
         return refreshTokenRepository.findByRefreshToken(receivedToken)
                 .map(refreshToken ->
-                        new AccessTokenResponse(jwtTokenProvider.generateAdminAccessToken(refreshToken.getId())))
+                        new AccessTokenResponse(jwtTokenProvider.generateAccessToken(refreshToken.getId())))
                 .orElseThrow(AdminNotFoundException::new);
     }
 }
