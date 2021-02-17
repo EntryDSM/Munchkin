@@ -6,10 +6,8 @@ import kr.hs.entrydsm.notification.usecase.NotificationService;
 import kr.hs.entrydsm.notification.usecase.dto.MessagesResponse;
 import kr.hs.entrydsm.notification.usecase.dto.UpdateMessageRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/notification")
@@ -20,8 +18,9 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @AdminJWTRequired
-    @PostMapping
-    public void updateMessage(UpdateMessageRequest messageRequest) {
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateMessage(@RequestBody UpdateMessageRequest messageRequest) {
         notificationService.updateMessage(messageRequest);
     }
 
