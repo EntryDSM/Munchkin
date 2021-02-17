@@ -5,6 +5,5 @@ import kr.hs.entrydsm.common.context.beans.Published;
 
 @Published
 public interface AdminExportRepository {
-    Admin findById(String id);
-    boolean isTeacher();
+    Admin findById(String userId);
 }
