@@ -24,7 +24,8 @@ public enum ErrorCode {
     NOT_ACCESSIBLE(401, "ADMIN401-2","Check the token"),
     NOT_FINAL_SUBMITTED(423,"ADMIN423-0", "Application not final submitted"),
 
-    TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist");
+    TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist"),
+    NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority");
 
     private final int status;
     private final String code;

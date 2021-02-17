@@ -11,6 +11,7 @@ import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.admin.usecase.dto.Schedules;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,12 @@ public class AdminServiceManager implements AdminService {
     private final AdminRepository adminRepository;
     private final ScheduleRepository scheduleRepository;
 
-    private final AuthenticationFacade authenticationFacade;
+    private final AuthenticationManager authenticationManager;
 
     //스케줄 관련 api
     @Override
     public void updateSchedules(ScheduleRequest scheduleRequest) {
-        Admin admin = adminRepository.findById(authenticationFacade.getUserId())
+        Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
         Schedule schedule = new Schedule();
 

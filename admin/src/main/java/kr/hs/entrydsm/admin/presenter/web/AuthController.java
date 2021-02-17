@@ -4,6 +4,7 @@ import kr.hs.entrydsm.admin.usecase.AuthService;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.TokenResponse;
+import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class AuthController {
         return authService.login(signInRequest);
     }
 
+    @AdminJWTRequired
     @PutMapping
     public AccessTokenResponse tokenRefresh(@RequestHeader("X-Refresh-Token") String refreshToken) {
         return authService.tokenRefresh(refreshToken);

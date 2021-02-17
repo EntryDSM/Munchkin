@@ -37,7 +37,7 @@ public class AuthServiceManager implements AuthService {
                 .filter(user -> passwordEncoder.matches(signInRequest.getPassword(), user.getPassword()))
                 .map(Admin::getId)
                 .map(adminId -> {
-                    String refreshToken = jwtTokenProvider.generateRefreshToken(adminId.toString());
+                    String refreshToken = jwtTokenProvider.generateRefreshToken(adminId);
                     return new RefreshToken(adminId.toString(), refreshToken, refreshExp);
                 })
                 .map(refreshTokenRepository::save)
