@@ -42,12 +42,6 @@ public class ApplicantServiceManager implements ApplicantService {
     @Value("${tmap.app.key}")
     private String appKey;
 
-    private final double endX = 127.363585;
-    private final double endY = 36.391636;
-
-    @Value("${tmap.app.key}")
-    private String appKey;
-
     @Override
     public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())

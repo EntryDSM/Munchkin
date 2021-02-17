@@ -5,7 +5,6 @@ import kr.hs.entrydsm.admin.domain.entity.Schedule;
 import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.domain.repository.ScheduleRepository;
-import kr.hs.entrydsm.admin.security.auth.AuthenticationFacade;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.admin.usecase.dto.Schedules;
