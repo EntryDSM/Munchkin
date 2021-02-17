@@ -9,16 +9,13 @@ import org.springframework.stereotype.Component;
 public class AuthenticationManager {
 
     public long getUserReceiptCode() {
-        return (long) getAuthentication().getPrincipal();
+        SecurityContext securityContext = getSecurityContext();
+        Authentication authentication = securityContext.getAuthentication();
+        return (long) authentication.getPrincipal();
     }
 
-    public String getAdminId() {
-        return (String) getAuthentication().getPrincipal();
-    }
-
-    private Authentication getAuthentication() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return securityContext.getAuthentication();
+    private SecurityContext getSecurityContext() {
+        return SecurityContextHolder.getContext();
     }
 
 }
