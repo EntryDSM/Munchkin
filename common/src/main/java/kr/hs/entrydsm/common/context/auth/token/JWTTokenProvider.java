@@ -78,6 +78,11 @@ public class JWTTokenProvider {
                 .parseClaimsJws(token).getBody().getSubject());
     }
 
+    public String parseAdminToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().getSubject();
+    }
+
     public boolean isRefreshToken(String token) {
         return Jwts.parser().setSigningKey(secretKey)
                 .parseClaimsJws(token).getBody().get("type").equals("refresh_token");
