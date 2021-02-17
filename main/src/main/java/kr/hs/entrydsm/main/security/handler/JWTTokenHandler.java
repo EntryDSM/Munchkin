@@ -1,10 +1,15 @@
 package kr.hs.entrydsm.main.security.handler;
 
+import kr.hs.entrydsm.admin.domain.entity.Admin;
+import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
+import kr.hs.entrydsm.admin.infrastructure.database.AdminRepositoryManager;
+import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
 import kr.hs.entrydsm.common.context.auth.token.RefreshRequired;
 import kr.hs.entrydsm.common.context.exception.ErrorCode;
 import kr.hs.entrydsm.common.context.exception.MunchkinException;
+import kr.hs.entrydsm.main.security.auth.AdminAuthentication;
 import kr.hs.entrydsm.main.security.auth.UserAuthentication;
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
@@ -25,6 +30,7 @@ public class JWTTokenHandler implements HandlerInterceptor {
 
     private final JWTTokenProvider tokenProvider;
     private final UserRepositoryManager userRepositoryManager;
+    private final AdminRepositoryManager adminRepositoryManager;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -53,6 +59,22 @@ public class JWTTokenHandler implements HandlerInterceptor {
                 return true;
             }
             throw new MunchkinException(ErrorCode.UNAUTHENTICATED);
+        }
+
+        boolean adminJwtRequired = false;
+        if (handlerMethod.hasMethodAnnotation(AdminJWTRequired.class) || handlerClass.getDeclaredAnnotation(AdminJWTRequired.class) != null) {
+            adminJwtRequired = true;
+        }if (adminJwtRequired) {
+            String token = tokenProvider.resolveAccessToken(request);
+            if (tokenProvider.validateToken(token)) {
+                String adminId = tokenProvider.parseAdminToken(token);
+                Admin admin = adminRepositoryManager.findById(adminId)
+                        .orElseThrow(() -> new MunchkinException(ErrorCode.NOT_FOUND));
+                SecurityContext securityContext = SecurityContextHolder.getContext();
+                Authentication authentication = new AdminAuthentication(admin);
+                securityContext.setAuthentication(authentication);
+                return true;
+            }
         }
 
         boolean refreshRequired = false;
