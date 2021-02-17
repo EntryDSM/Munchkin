@@ -78,6 +78,26 @@ public class JWTTokenProvider {
                 .parseClaimsJws(token).getBody().getSubject());
     }
 
+    public String generateAdminAccessToken(String id) {
+        return Jwts.builder()
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000))
+                .setSubject(id)
+                .claim("type", "access_token")
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
+    public String generateAdminRefreshToken(String id) {
+        return Jwts.builder()
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration * 1000))
+                .setSubject(id)
+                .claim("type", "refresh_token")
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
     public String parseAdminToken(String token) {
         return Jwts.parser().setSigningKey(secretKey)
                 .parseClaimsJws(token).getBody().getSubject();
