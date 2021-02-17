@@ -21,15 +21,6 @@ public class JwtTokenProvider {
     @Value("${auth.jwt.exp.refresh}")
     private Long refreshTokenExpiration;
 
-    @Value("${auth.jwt.header.access}")
-    private String accessTokenHeader;
-
-    @Value("${auth.jwt.header.refresh}")
-    private String refreshTokenHeader;
-
-    @Value("${auth.jwt.prefix}")
-    private String prefix;
-
     public String generateAccessToken(String id) {
         return Jwts.builder()
                 .setIssuedAt(new Date())
