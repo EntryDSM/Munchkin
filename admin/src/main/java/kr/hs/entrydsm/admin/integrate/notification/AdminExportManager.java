@@ -6,6 +6,7 @@ import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+
 @RequiredArgsConstructor
 @Repository
 public class AdminExportManager implements AdminExportRepository {

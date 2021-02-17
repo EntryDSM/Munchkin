@@ -8,6 +8,7 @@ import kr.hs.entrydsm.notification.usecase.dto.MessagesResponse;
 import kr.hs.entrydsm.notification.usecase.dto.NotificationMessageResponse;
 import kr.hs.entrydsm.notification.usecase.dto.UpdateMessageRequest;
 import kr.hs.entrydsm.notification.usecase.exception.TypeNotFoundException;
+import kr.hs.entrydsm.notification.usecase.exception.UserNotAuthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,15 @@ public class NotificationServiceManager implements NotificationService {
 
     @Override
     public void updateMessage(UpdateMessageRequest messageRequest) {
-        //permission이 teacher라면 허용, 아니라면 오류
         Notification notification = notificationRepository.findByType(Type.valueOf(messageRequest.getType()))
                 .orElseThrow(TypeNotFoundException::new);
+        if(teacherRepository.isTeacher()){
+            notification.update(messageRequest);
+        }
+        else {
+            throw new UserNotAuthorizedException();
+        }
 
-        notification.update(messageRequest);
     }
 
     @Override

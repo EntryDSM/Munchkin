@@ -7,13 +7,12 @@ import kr.hs.entrydsm.admin.domain.entity.Applicant;
 import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.admin.security.auth.AuthenticationFacade;
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -35,7 +34,7 @@ public class ApplicantServiceManager implements ApplicantService {
     private final ApplicantRepository applicantRepository;
     private final AdminRepository adminRepository;
 
-    private final AuthenticationFacade authenticationFacade;
+    private final AuthenticationManager authenticationManager;
 
     private final double endX = 127.363585;
     private final double endY = 36.391636;
@@ -45,7 +44,7 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
-        Admin admin = adminRepository.findById(authenticationFacade.getUserId())
+        Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
         Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
@@ -69,9 +68,8 @@ public class ApplicantServiceManager implements ApplicantService {
                                             boolean isPrintedArrived, boolean isPaid, boolean isCommon,
                                             boolean isMeister, boolean isSocial, Integer recieptCode,
                                             String schoolName, String telephoneNumber, String name) {
-        if(!authenticationFacade.isLogin()) {
-            throw new UserNotAccessibleException();
-        }
+        adminRepository.findById(authenticationManager.getAdminId())
+                .orElseThrow(AdminNotFoundException::new);
 
         Page<Applicant> applicants = applicantRepository.findAll(page);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
@@ -100,9 +98,8 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public ApplicantDetailResponse getDetail(Integer recieptCode) {
-        if(!authenticationFacade.isLogin()) {
-            throw new UserNotAccessibleException();
-        }
+        adminRepository.findById(authenticationManager.getAdminId())
+                .orElseThrow(AdminNotFoundException::new);
 
         Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
         if(applicant == null) {
