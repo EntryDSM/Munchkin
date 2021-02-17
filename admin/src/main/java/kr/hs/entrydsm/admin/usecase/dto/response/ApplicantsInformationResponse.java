@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase.dto;
+package kr.hs.entrydsm.admin.usecase.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
