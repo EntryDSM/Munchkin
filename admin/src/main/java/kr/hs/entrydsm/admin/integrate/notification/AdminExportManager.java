@@ -14,8 +14,8 @@ public class AdminExportManager implements AdminExportRepository {
     private final AdminRepository adminRepository;
 
     @Override
-    public Admin findById(String id) {
-        return adminRepository.findById(id)
+    public Admin findById(String userId) {
+        return adminRepository.findById(userId)
                 .orElseThrow(AdminNotFoundException::new);
     }
 
