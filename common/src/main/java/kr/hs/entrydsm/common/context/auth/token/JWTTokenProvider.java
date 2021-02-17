@@ -31,7 +31,7 @@ public class JWTTokenProvider {
     @Value("${auth.jwt.prefix}")
     private String prefix;
 
-    public String generateAccessToken(Integer receiptCode) {
+    public String generateAccessToken(Long receiptCode) {
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000))
@@ -41,7 +41,7 @@ public class JWTTokenProvider {
                 .compact();
     }
 
-    public String generateRefreshToken(Integer receiptCode) {
+    public String generateRefreshToken(Long receiptCode) {
         return Jwts.builder()
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration * 1000))
@@ -76,6 +76,11 @@ public class JWTTokenProvider {
     public long parseAccessToken(String token) {
         return Long.parseLong(Jwts.parser().setSigningKey(secretKey)
                 .parseClaimsJws(token).getBody().getSubject());
+    }
+
+    public String parseAdminToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean isRefreshToken(String token) {
