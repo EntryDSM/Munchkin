@@ -1,17 +1,22 @@
-package kr.hs.entrydsm.common.context.auth.token;
+package kr.hs.entrydsm.admin.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import kr.hs.entrydsm.admin.security.auth.AuthDetails;
+import kr.hs.entrydsm.admin.security.auth.AuthDetailsService;
+import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-@Component
 @RequiredArgsConstructor
-public class JWTTokenProvider {
+@Component
+public class JwtTokenProvider {
 
     @Value("${auth.jwt.secret}")
     private String secretKey;
@@ -22,45 +27,40 @@ public class JWTTokenProvider {
     @Value("${auth.jwt.exp.refresh}")
     private Long refreshTokenExpiration;
 
-    @Value("${auth.jwt.header.access}")
-    private String accessTokenHeader;
-
-    @Value("${auth.jwt.header.refresh}")
-    private String refreshTokenHeader;
+    @Value("${auth.jwt.header}")
+    private String header;
 
     @Value("${auth.jwt.prefix}")
     private String prefix;
 
-    public String generateAccessToken(Long receiptCode) {
+    private final AuthDetailsService authDetailsService;
+
+    public String generateAccessToken(String email) {
         return Jwts.builder()
                 .setIssuedAt(new Date())
+                .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration * 1000))
-                .setSubject(receiptCode.toString())
                 .claim("type", "access_token")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    public String generateRefreshToken(Long receiptCode) {
+    public String generateRefreshToken(String email) {
         return Jwts.builder()
                 .setIssuedAt(new Date())
+                .setSubject(email)
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration * 1000))
-                .setSubject(receiptCode.toString())
                 .claim("type", "refresh_token")
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
-    public String resolveAccessToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(accessTokenHeader);
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(header);
         if (bearerToken != null && bearerToken.startsWith(prefix)) {
-            return bearerToken.substring(prefix.length() + 1);
+            return bearerToken.substring(7);
         }
         return null;
-    }
-
-    public String resoleRefreshToken(HttpServletRequest request) {
-        return request.getHeader(refreshTokenHeader);
     }
 
     public boolean validateToken(String token) {
@@ -69,23 +69,29 @@ public class JWTTokenProvider {
                     .parseClaimsJws(token).getBody().getSubject();
             return true;
         } catch (Exception e) {
-            return false;
+            throw new InvalidTokenException();
         }
     }
 
-    public long parseAccessToken(String token) {
-        return Long.parseLong(Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(token).getBody().getSubject());
+    public String getEmail(String token) {
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        } catch (Exception e) {
+            throw new InvalidTokenException();
+        }
     }
 
-    public String parseAdminToken(String token) {
-        return Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(token).getBody().getSubject();
+    public Authentication getAuthentication(String token) {
+        AuthDetails authDetails = authDetailsService.loadUserByUsername(getEmail(token));
+        return new UsernamePasswordAuthenticationToken(authDetails, "", authDetails.getAuthorities());
     }
 
     public boolean isRefreshToken(String token) {
-        return Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(token).getBody().get("type").equals("refresh_token");
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("type").equals("refresh_token");
+        } catch (Exception e) {
+            throw new InvalidTokenException();
+        }
     }
 
 }
