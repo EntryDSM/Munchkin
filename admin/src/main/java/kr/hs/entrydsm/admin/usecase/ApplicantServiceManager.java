@@ -171,7 +171,8 @@ public class ApplicantServiceManager implements ApplicantService {
     public void saveExamCode() throws Exception {
         List<Applicant> applicants = applicantRepository.findAllIsSubmitTrue();
         String examCode = null;
-        List<Applicant> applicantSort = applicants;
+        List<Applicant> applicantSort = new ArrayList<>();
+        applicantSort.addAll(applicants);
         int commonDaejeon = 0, commonNationwide = 0, meisterDaejeon = 0, meisterNationwide = 0, socialDaejeon = 0, socialNationwide = 0;
 
         //첫번째, 두번째 자리 채우기
