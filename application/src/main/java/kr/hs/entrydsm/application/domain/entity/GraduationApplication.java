@@ -8,14 +8,9 @@ import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "tbl_graduation_application")
-public class GraduationApplication {
-
-    @Id
-    private Long receiptCode;
+public class GraduationApplication extends Application {
 
     private Boolean isGraduated;
 
@@ -56,9 +51,8 @@ public class GraduationApplication {
     @Column(length = 6)
     private String techAndHomeScore;
 
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime modifiedAt;
+    @Override
+    public boolean isGraduation() {
+        return true;
+    }
 }
