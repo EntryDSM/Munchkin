@@ -2,11 +2,13 @@ package kr.hs.entrydsm.application.integrate.admin;
 
 import kr.hs.entrydsm.application.domain.entity.Application;
 import kr.hs.entrydsm.application.domain.entity.GraduationApplication;
+import kr.hs.entrydsm.application.domain.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.domain.repository.ApplicationRepository;
-import kr.hs.entrydsm.application.domain.repository.SchoolRepository;
-import kr.hs.entrydsm.common.context.GraduationReportCard;
-import kr.hs.entrydsm.common.context.QualificationReportCard;
-import kr.hs.entrydsm.common.context.ReportCard;
+import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
+import kr.hs.entrydsm.common.model.GraduationReportCard;
+import kr.hs.entrydsm.common.model.QualificationReportCard;
+import kr.hs.entrydsm.common.model.ReportCard;
+import kr.hs.entrydsm.common.model.Scores;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,31 +17,35 @@ import org.springframework.stereotype.Service;
 public class ApplicationExportManager implements ApplicationExportRepository {
 
     private final ApplicationRepository applicationRepository;
-    private final SchoolRepository schoolRepository;
+    private final ScoreCalculator scoreCalculator;
 
     @Override
     public ReportCard getReportCardByReceiptCode(long receiptCode) {
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(); // TODO add exception
 
-        if (application.isGraduation()) { // TODO score service required, school repository required
+        Scores scores = scoreCalculator.getScores(application.getReceiptCode());
+
+        if (application.isGraduation()) {
+            GraduationApplication graduationApplication = (GraduationApplication) application;
             return GraduationReportCard.builder()
-                    .receiptCode(application.getReceiptCode())
-                    .attendanceScore()
-                    .gradeScore()
-                    .attendanceScore()
-                    .volunteerScore()
-                    .schoolName()
-                    .isGraduated(((GraduationApplication) application).getIsGraduated())
+                    .receiptCode(graduationApplication.getReceiptCode())
+                    .attendanceScore(scores.getAttendanceScore())
+                    .gradeScore(scores.getGradeScore())
+                    .volunteerScore(scores.getVolunteerScore())
+                    .totalScore(scores.getTotalScore())
+                    .schoolName(graduationApplication.getSchoolName())
+                    .isGraduated(graduationApplication.getIsGraduated())
                     .build();
         } else {
+            QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
             return QualificationReportCard.builder()
                     .receiptCode(application.getReceiptCode())
-                    .attendanceScore()
-                    .gradeScore()
-                    .averageScore()
-                    .volunteerScore()
-                    .totalScore()
+                    .attendanceScore(scores.getAttendanceScore())
+                    .gradeScore(scores.getGradeScore())
+                    .averageScore(qualificationExamApplication.getAverageScore())
+                    .volunteerScore(scores.getVolunteerScore())
+                    .totalScore(scores.getTotalScore())
                     .build();
         }
     }
