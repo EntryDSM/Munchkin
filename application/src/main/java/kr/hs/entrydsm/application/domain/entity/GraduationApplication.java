@@ -13,7 +13,7 @@ public class GraduationApplication extends Application {
     private Boolean isGraduated;
 
     @ManyToOne
-    @JoinColumn("school_code")
+    @JoinColumn(name = "school_code")
     private School school;
 
     @Column(length = 11)
