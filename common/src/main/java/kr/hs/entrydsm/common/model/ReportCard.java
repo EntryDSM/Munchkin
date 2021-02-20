@@ -31,4 +31,6 @@ public abstract class ReportCard {
     public final int getAttendanceScore() {
         return scores.getAttendanceScore();
     }
+
+    public abstract boolean isGraduation();
 }

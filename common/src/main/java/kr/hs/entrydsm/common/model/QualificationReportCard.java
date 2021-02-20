@@ -15,4 +15,9 @@ public class QualificationReportCard extends ReportCard {
         super(receiptCode, scores);
         this.averageScore = averageScore;
     }
+
+    @Override
+    public boolean isGraduation() {
+        return false;
+    }
 }

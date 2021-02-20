@@ -15,4 +15,9 @@ public class GraduationReportCard extends ReportCard {
         this.isGraduated = isGraduated;
         this.schoolName = schoolName;
     }
+
+    @Override
+    public boolean isGraduation() {
+        return true;
+    }
 }
