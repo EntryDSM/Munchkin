@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.common.context;
+package kr.hs.entrydsm.common.model;
 
 import java.math.BigDecimal;
 
