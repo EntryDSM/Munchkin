@@ -6,5 +6,5 @@ import kr.hs.entrydsm.common.context.beans.Published;
 @Published
 public interface ApplicationExportRepository {
 
-    ReportCard getReportCardByReceiptCode(long receiptCode);
+    ReportCard getReportCard(long receiptCode);
 }

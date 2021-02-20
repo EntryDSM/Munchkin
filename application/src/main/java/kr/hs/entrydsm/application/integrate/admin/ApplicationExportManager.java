@@ -20,7 +20,7 @@ public class ApplicationExportManager implements ApplicationExportRepository {
     private final ScoreCalculator scoreCalculator;
 
     @Override
-    public ReportCard getReportCardByReceiptCode(long receiptCode) {
+    public ReportCard getReportCard(long receiptCode) {
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(); // TODO add exception
 
