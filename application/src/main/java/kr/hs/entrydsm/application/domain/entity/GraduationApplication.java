@@ -2,9 +2,7 @@ package kr.hs.entrydsm.application.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,8 +12,9 @@ public class GraduationApplication extends Application {
 
     private Boolean isGraduated;
 
-    @Column(length = 7)
-    private String schoolCode;
+    @ManyToOne
+    @JoinColumn("school_code")
+    private School school;
 
     @Column(length = 11)
     private String schoolTel;
@@ -54,5 +53,9 @@ public class GraduationApplication extends Application {
     @Override
     public boolean isGraduation() {
         return true;
+    }
+
+    public String getSchoolName() {
+        return school.getName();
     }
 }

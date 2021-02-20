@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
 
-    @Digits(integer = 3, fraction = 2)
     private BigDecimal averageScore;
 
     @Override
