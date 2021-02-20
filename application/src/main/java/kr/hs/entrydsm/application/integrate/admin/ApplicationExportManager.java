@@ -26,10 +26,14 @@ public class ApplicationExportManager implements ApplicationExportRepository {
 
         Scores scores = scoreCalculator.getScores(application.getReceiptCode());
 
+        return createReportCard(application, scores);
+    }
+
+    private ReportCard createReportCard(Application application, Scores scores) {
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
             return GraduationReportCard.builder()
-                    .receiptCode(receiptCode)
+                    .receiptCode(application.getReceiptCode())
                     .scores(scores)
                     .schoolName(graduationApplication.getSchoolName())
                     .isGraduated(graduationApplication.getIsGraduated())
@@ -37,7 +41,7 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         } else {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
             return QualificationReportCard.builder()
-                    .receiptCode(receiptCode)
+                    .receiptCode(application.getReceiptCode())
                     .scores(scores)
                     .averageScore(qualificationExamApplication.getAverageScore())
                     .build();
