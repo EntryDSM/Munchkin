@@ -2,25 +2,19 @@ package kr.hs.entrydsm.application.domain.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "tbl_graduation_application")
-public class GraduationApplication {
-
-    @Id
-    private Long receiptCode;
+public class GraduationApplication extends Application {
 
     private Boolean isGraduated;
 
-    @Column(length = 7)
-    private String schoolCode;
+    @ManyToOne
+    @JoinColumn(name = "school_code")
+    private School school;
 
     @Column(length = 11)
     private String schoolTel;
@@ -56,9 +50,12 @@ public class GraduationApplication {
     @Column(length = 6)
     private String techAndHomeScore;
 
-    @Column
-    private LocalDateTime createdAt;
+    @Override
+    public boolean isGraduation() {
+        return true;
+    }
 
-    @Column
-    private LocalDateTime modifiedAt;
+    public String getSchoolName() {
+        return school.getName();
+    }
 }

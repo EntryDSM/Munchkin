@@ -8,9 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface SchoolRepositoryManager extends CrudRepository<School, String>, SchoolRepository {
 
     @Override
     Page<School> findByInformationContains(String information, Pageable pageable);
+
+    @Override
+    Optional<School> findByCode(String code);
 }
