@@ -1,16 +1,18 @@
 package kr.hs.entrydsm.common.model;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
+@Getter
 public class QualificationReportCard extends ReportCard {
 
-    private BigDecimal averageScore;
+    private final BigDecimal averageScore;
 
     @Builder
-    protected QualificationReportCard(long receiptCode, BigDecimal totalScore, BigDecimal volunteerScore, BigDecimal gradeScore, int attendanceScore, BigDecimal averageScore) {
-        super(receiptCode, totalScore, volunteerScore, gradeScore, attendanceScore);
+    public QualificationReportCard(long receiptCode, Scores scores, BigDecimal averageScore) {
+        super(receiptCode, scores);
         this.averageScore = averageScore;
     }
 }

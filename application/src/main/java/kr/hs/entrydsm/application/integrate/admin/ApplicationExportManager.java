@@ -29,23 +29,17 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
             return GraduationReportCard.builder()
-                    .receiptCode(graduationApplication.getReceiptCode())
-                    .attendanceScore(scores.getAttendanceScore())
-                    .gradeScore(scores.getGradeScore())
-                    .volunteerScore(scores.getVolunteerScore())
-                    .totalScore(scores.getTotalScore())
+                    .receiptCode(receiptCode)
+                    .scores(scores)
                     .schoolName(graduationApplication.getSchoolName())
                     .isGraduated(graduationApplication.getIsGraduated())
                     .build();
         } else {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
             return QualificationReportCard.builder()
-                    .receiptCode(application.getReceiptCode())
-                    .attendanceScore(scores.getAttendanceScore())
-                    .gradeScore(scores.getGradeScore())
+                    .receiptCode(receiptCode)
+                    .scores(scores)
                     .averageScore(qualificationExamApplication.getAverageScore())
-                    .volunteerScore(scores.getVolunteerScore())
-                    .totalScore(scores.getTotalScore())
                     .build();
         }
     }

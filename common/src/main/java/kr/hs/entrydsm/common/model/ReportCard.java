@@ -4,17 +4,31 @@ import java.math.BigDecimal;
 
 public abstract class ReportCard {
 
-    private long receiptCode;
-    private BigDecimal totalScore;
-    private BigDecimal volunteerScore;
-    private BigDecimal gradeScore;
-    private int attendanceScore;
+    private final long receiptCode;
+    private final Scores scores;
 
-    protected ReportCard(long receiptCode, BigDecimal totalScore, BigDecimal volunteerScore, BigDecimal gradeScore, int attendanceScore) {
+    protected ReportCard(long receiptCode, Scores scores) {
         this.receiptCode = receiptCode;
-        this.totalScore = totalScore;
-        this.volunteerScore = volunteerScore;
-        this.gradeScore = gradeScore;
-        this.attendanceScore = attendanceScore;
+        this.scores = scores;
+    }
+
+    public final long getReceiptCode() {
+        return receiptCode;
+    }
+
+    public final BigDecimal getTotalScore() {
+        return scores.getTotalScore();
+    }
+
+    public final BigDecimal getVolunteerScore() {
+        return scores.getVolunteerScore();
+    }
+
+    public final BigDecimal getGradeScore() {
+        return scores.getGradeScore();
+    }
+
+    public final int getAttendanceScore() {
+        return scores.getAttendanceScore();
     }
 }

@@ -1,17 +1,17 @@
 package kr.hs.entrydsm.common.model;
 
 import lombok.Builder;
+import lombok.Getter;
 
-import java.math.BigDecimal;
-
+@Getter
 public class GraduationReportCard extends ReportCard {
 
-    private boolean isGraduated;
-    private String schoolName;
+    private final boolean isGraduated;
+    private final String schoolName;
 
     @Builder
-    public GraduationReportCard(long receiptCode, BigDecimal totalScore, BigDecimal volunteerScore, BigDecimal gradeScore, int attendanceScore, boolean isGraduated, String schoolName) {
-        super(receiptCode, totalScore, volunteerScore, gradeScore, attendanceScore);
+    public GraduationReportCard(long receiptCode, Scores scores, boolean isGraduated, String schoolName) {
+        super(receiptCode, scores);
         this.isGraduated = isGraduated;
         this.schoolName = schoolName;
     }
