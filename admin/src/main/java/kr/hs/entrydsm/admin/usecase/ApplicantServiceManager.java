@@ -47,19 +47,7 @@ public class ApplicantServiceManager implements ApplicantService {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
 
-        if(applicant != null) {
-            if(admin.getPermission().equals(Permission.TEACHER)) { //행정실은 원서료 납부만 수정 가능
-                applicant.updateIsPaid(isPaid);
-            }
-            else { //교무실은 모든 권한 有
-                applicant.updateStatus(isPrintedArrived, isPaid, isSubmit);
-            }
-        }
-        else {
-            throw new ApplicantNotFoundException();
-        }
         //공지메세지에서 보내주기
     }
 
@@ -101,70 +89,7 @@ public class ApplicantServiceManager implements ApplicantService {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
-        if(applicant == null) {
-            throw new ApplicantNotFoundException();
-        }
-        if(applicant.isSubmit() == false) {
-            //최종 제출하지 않은 사용자는 지원자의 전화번호, 부모님의 전화번호, 집 전화번호, (학교 전화번호)만 보여줘야 한다.
-            ApplicantInfo applicantInfo = new ApplicantInfo().builder()
-                    .applicantTel(applicant.getTelephoneNumber())
-                    .homeTel(applicant.getHomeTel())
-                    .parentTel(applicant.getParentTel())
-                    .schoolTel(applicant.getSchoolTel())
-                    .build();
-
-            return ApplicantDetailResponse.builder()
-                    .applicantInfo(applicantInfo)
-                    .build();
-            //throw new ApplicantNotFinalSubmitted();
-        }
-
-        Status status = new Status().builder()
-                .isPaid(applicant.isPaid())
-                .isPrintedArrived(applicant.isPrintedArrived())
-                .isSubmit(applicant.isSubmit())
-                .build();
-
-        Evaluation evaluation;
-        evaluation = new Evaluation().builder()
-                .selfIntroduce(applicant.getSelfIntroduce())
-                .studyPlan(applicant.getStudyPlan())
-                .build();
-
-        PersonalData personalData = new PersonalData().builder()
-                .name(applicant.getName())
-                .photoFileName(applicant.getPhotoFileName())
-                .birthDate(applicant.getBirthDate())
-                .schoolName(applicant.getSchoolName())
-                .educationalStatus(applicant.getEducationalStatus())
-                .applicationType(applicant.getApplicationType())
-                .telephoneNumber(applicant.getTelephoneNumber())
-                .parentTel(applicant.getParentTel())
-                .schoolTel(applicant.getSchoolTel())
-                .homeTel(applicant.getHomeTel())
-                .build();
-
-        if(applicant.getEducationalStatus() == "QUALIFICATION_EXAM") {
-            evaluation = Evaluation.builder()
-                    .averageScore(applicant.getAverageScore())
-                    .build();
-        }else {
-            evaluation = Evaluation.builder()
-                    .volunteerTime(applicant.getVolunteerTime())
-                    .conversionScore(applicant.getConversionScore())
-                    .dayAbsenceCount(applicant.getDayAbsenceCount())
-                    .latenessCount(applicant.getLatenessCount())
-                    .earlyLeaveCount(applicant.getEarlyLeaveCount())
-                    .lectureAbsenceCount(applicant.getLectureAbsenceCount())
-                    .build();
-        }
-
-        return ApplicantDetailResponse.builder()
-                .status(status)
-                .evaluation(evaluation)
-                .personalData(personalData)
-                .build();
+        return null;
     }
 
     @Override

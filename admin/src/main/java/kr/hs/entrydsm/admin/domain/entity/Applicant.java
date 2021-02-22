@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -60,7 +61,7 @@ public class Applicant {
 
     private Integer volunteerTime; //봉사 시간
 
-    private Integer conversionScore; //총 점수
+    private BigDecimal conversionScore; //총 점수
 
     private Integer dayAbsenceCount; //무단 결석
 
@@ -69,6 +70,8 @@ public class Applicant {
     private Integer earlyLeaveCount; //조퇴
 
     private Integer latenessCount; //지각
+
+    private boolean isGraduated; // 졸업 여부
 
     private double distance; // 학교까지의 거리
 
