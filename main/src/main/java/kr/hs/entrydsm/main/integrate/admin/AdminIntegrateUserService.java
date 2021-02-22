@@ -44,6 +44,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
         }
         return new PageImpl<>(applicants, pageable, totalElements);*/
         return null;
+
     }
 
     @Override
@@ -56,7 +57,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     public List<Applicant> findAllIsSubmitTrue() {
         return null;
     }
-
+  
     @Override
     public void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
@@ -98,6 +99,5 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .conversionScore(null)
                 .build();
     }
-
 
 }

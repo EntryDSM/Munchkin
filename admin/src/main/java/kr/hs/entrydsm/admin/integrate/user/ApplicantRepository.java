@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ApplicantRepository {
+
     Page<Applicant> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
                             boolean isPrintedArrived, boolean isPaid, boolean isCommon,
                             boolean isMeister, boolean isSocial, int receiptCode,
@@ -15,4 +16,5 @@ public interface ApplicantRepository {
     List<Applicant> findAllIsSubmitTrue();
     Applicant getUserInfo(long receiptCode);
     void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit);
+
 }

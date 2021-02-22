@@ -18,6 +18,7 @@ public class PersonalData {
 
     private String name;
 
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
