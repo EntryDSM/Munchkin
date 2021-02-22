@@ -65,8 +65,6 @@ public class Applicant {
     private Integer volunteerTime; //봉사 시간
 
     private BigDecimal conversionScore; //총 점수
-  
-    private Integer conversionScore; //총 점수
 
     private Integer dayAbsenceCount; //무단 결석
 
@@ -79,12 +77,6 @@ public class Applicant {
     private boolean isGraduated; // 졸업 여부
 
     private double distance; // 학교까지의 거리
-
-    public void updateStatus(boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
-        this.isPrintedArrived = isPrintedArrived;
-        this.isPaid = isPaid;
-        this.isSubmit = isSubmit;
-    }
 
     public void updateIsPaid(boolean isPaid) {
         this.isPaid = isPaid;
