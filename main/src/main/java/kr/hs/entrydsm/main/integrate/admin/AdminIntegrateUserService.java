@@ -2,6 +2,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.user.domain.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +19,14 @@ import java.util.List;
 public class AdminIntegrateUserService implements ApplicantRepository {
 
     private final UserExportRepository userExportRepository;
+    private final ApplicationExportRepository applicationExportRepository;
 
     @Override
-    public Page<Applicant> findAll(Pageable pageable) {
-        Page<User> users = userExportRepository.findAll(pageable);
+    public Page<Applicant> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
+                                   boolean isPrintedArrived, boolean isPaid, boolean isCommon,
+                                   boolean isMeister, boolean isSocial, int receiptCode,
+                                   String schoolName, String telephoneNumber, String name) {
+        /*Page<User> users = userExportRepository.findAll(page);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
         for (User user : users) {
@@ -37,42 +42,62 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                     .build()
             );
         }
-        return new PageImpl<>(applicants, pageable, totalElements);
-    }
+        return new PageImpl<>(applicants, pageable, totalElements);*/
+        return null;
 
-
-    @Override
-    public Applicant findByReceiptCode(int receiptCode) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
-        //검정고시 + 졸업 지원자들 정보
-        return Applicant.builder()
-                    .receiptCode(user.getReceiptCode())
-                    .name(user.getName())
-                    .photoFileName(user.getPhotoFileName())
-                    .applicationType(String.valueOf(user.getApplicationType()))
-                    .address(user.getAddress())
-                    .birthDate(user.getBirthday())
-                    .isPaid(user.getStatus().isPaid())
-                    .isPrintedArrived(user.getStatus().isPrintedArrived())
-                    .isSubmit(user.getStatus().isSubmit())
-                    .telephoneNumber(user.getTelephoneNumber())
-                    .parentTel(user.getParentTel())
-                    .homeTel(user.getHomeTel())
-                    .selfIntroduce(user.getSelfIntroduce())
-                    .studyPlan(user.getStudyPlan())
-                    .build();
     }
 
     @Override
     public void changeExamCode(long receiptCode, String examCode) {
         User user = userExportRepository.findByReceiptCode((int)receiptCode);
-
         userExportRepository.changeExamCode(user.getReceiptCode(), examCode);
     }
 
     @Override
     public List<Applicant> findAllIsSubmitTrue() {
         return null;
+    }
+  
+    @Override
+    public void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
+        User user = userExportRepository.findByReceiptCode(receiptCode);
+        // 상태 정보 수정 method
+        // userExportRepository.method(user.getReceiptCode(), isPrintedArrived, isPaid, isSubmit);
+    }
+
+    //지원자 목록, 상세 보기
+    @Override
+    public Applicant getUserInfo(long receiptCode) {
+        User user = userExportRepository.findByReceiptCode((int) receiptCode);
+
+        return Applicant.builder()
+                .receiptCode(user.getReceiptCode())
+                .name(user.getName())
+                .photoFileName(user.getPhotoFileName())
+                .applicationType(String.valueOf(user.getApplicationType()))
+                .address(user.getAddress())
+                .detailAddress(null)
+                .birthDate(user.getBirthday())
+                .isPaid(user.getStatus().isPaid())
+                .isPrintedArrived(user.getStatus().isPrintedArrived())
+                .isSubmit(user.getStatus().isSubmit())
+                .telephoneNumber(user.getTelephoneNumber())
+                .parentTel(user.getParentTel())
+                .homeTel(user.getHomeTel())
+                .selfIntroduce(user.getSelfIntroduce())
+                .studyPlan(user.getStudyPlan())
+                //수정 필요
+                .averageScore(null) // 검정고시 평균 점수
+                .isGraduated(false) // 검x 졸업 여부
+                .volunteerTime(null) // 검X 봉사점수
+                .schoolTel(null) //검x 학교 전화번호
+                .schoolName(null) // 검x 학교 이름
+                .latenessCount(null) // 지각 횟수
+                .earlyLeaveCount(null) // 조퇴 횟수
+                .lectureAbsenceCount(null) // 무단 결과
+                .dayAbsenceCount(null) // 무단 결석
+                .conversionScore(null)
+                .build();
     }
 
 }
