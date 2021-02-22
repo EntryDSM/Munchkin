@@ -6,6 +6,7 @@ import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
+import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ public class AdminController {
     private final AdminService adminService;
 
     //지원자
+    @AdminJWTRequired
     @PatchMapping("/{reciept-code}")
     public void updateStatus(@PathVariable(name = "reciept-code") Integer recieptCode,
                              @RequestParam(required = false) boolean isPrintedArrived,
@@ -30,6 +32,7 @@ public class AdminController {
         applicantService.updateStatus(recieptCode, isPrintedArrived, isPaid, isSubmit);
     }
 
+    @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
                                             @RequestParam(required = false, name = "is-daejeon") boolean isDaejeon,
@@ -47,6 +50,7 @@ public class AdminController {
                 isMeister, isSocial, recieptCode, schoolName, telephoneNumber, name);
     }
 
+    @AdminJWTRequired
     @GetMapping("/{reciept-code}")
     public ApplicantDetailResponse getDetail(@PathVariable(name = "reciept-code") Integer recieptCode) {
         return applicantService.getDetail(recieptCode);
@@ -58,6 +62,7 @@ public class AdminController {
         adminService.updateSchedules(scheduleRequest);
     }
 
+    @AdminJWTRequired
     @GetMapping("/schedules")
     public ScheduleResponse getSchedules() {
         return adminService.getSchedules();

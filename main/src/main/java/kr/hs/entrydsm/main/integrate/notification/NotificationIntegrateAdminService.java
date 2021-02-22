@@ -14,8 +14,8 @@ public class NotificationIntegrateAdminService implements TeacherRepository {
     private final AdminExportRepository adminExportRepository;
 
     @Override
-    public Teacher findById(String id) {
-        Admin admin = adminExportRepository.findById(id);
+    public Teacher findById(String userId) {
+        Admin admin = adminExportRepository.findById(userId);
         return Teacher.builder()
                 .id(admin.getId())
                 .permission(String.valueOf(admin.getPermission()))
