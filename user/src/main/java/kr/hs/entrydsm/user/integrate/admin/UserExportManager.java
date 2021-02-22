@@ -22,8 +22,11 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
-        return userRepository.findAllBy(pageable);
+    public Page<User> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
+                              boolean isPrintedArrived, boolean isPaid, boolean isCommon,
+                              boolean isMeister, boolean isSocial, int receiptCode,
+                              String schoolName, String telephoneNumber, String name) {
+        return null;
     }
 
     @Override

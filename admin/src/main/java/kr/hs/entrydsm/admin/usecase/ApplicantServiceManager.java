@@ -4,14 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hs.entrydsm.admin.domain.entity.Admin;
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
-import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,6 +46,12 @@ public class ApplicantServiceManager implements ApplicantService {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
+        if(admin.getPermission().equals("TEACHER")) {
+            applicantRepository.changeStatus(receiptCode, isPrintedArrived, isPaid, isSubmit);
+        }
+        else {
+            throw new UserNotAccessibleException();
+        }
 
         //공지메세지에서 보내주기
     }
@@ -59,9 +64,8 @@ public class ApplicantServiceManager implements ApplicantService {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        Page<Applicant> applicants = applicantRepository.findAll(page);
+        Page<Applicant> applicants = applicantRepository.findAll(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon, isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
-
         
         for (Applicant applicant : applicants) {
             applicantsInformationResponses.add(

@@ -22,8 +22,11 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final ApplicationExportRepository applicationExportRepository;
 
     @Override
-    public Page<Applicant> findAll(Pageable pageable) {
-        Page<User> users = userExportRepository.findAll(pageable);
+    public Page<Applicant> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
+                                   boolean isPrintedArrived, boolean isPaid, boolean isCommon,
+                                   boolean isMeister, boolean isSocial, int receiptCode,
+                                   String schoolName, String telephoneNumber, String name) {
+        /*Page<User> users = userExportRepository.findAll(page);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
         for (User user : users) {
@@ -39,7 +42,8 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                     .build()
             );
         }
-        return new PageImpl<>(applicants, pageable, totalElements);
+        return new PageImpl<>(applicants, pageable, totalElements);*/
+        return null;
     }
 
     @Override
@@ -56,7 +60,8 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     @Override
     public void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        userExportRepository.method(user.getReceiptCode(), isPrintedArrived, isPaid, isSubmit);
+        // 상태 정보 수정 method
+        // userExportRepository.method(user.getReceiptCode(), isPrintedArrived, isPaid, isSubmit);
     }
 
     //지원자 목록, 상세 보기
