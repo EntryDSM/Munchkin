@@ -38,6 +38,7 @@ public class ApplicationExportManager implements ApplicationExportRepository {
                     .schoolName(graduationApplication.getSchoolName())
                     .isGraduated(graduationApplication.getIsGraduated())
                     .schoolTel(graduationApplication.getSchoolTel())
+                    .volunteerTime(graduationApplication.getVolunteerTime())
                     .latenessCount(graduationApplication.getLatenessCount())
                     .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
                     .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
