@@ -10,4 +10,6 @@ public interface ApplicantRepository {
     Page<Applicant> findAll(Pageable page);
     void changeExamCode(long receiptCode, String examCode);
     List<Applicant> findAllIsSubmitTrue();
+    Applicant getUserInfo(long receiptCode);
+    void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit);
 }

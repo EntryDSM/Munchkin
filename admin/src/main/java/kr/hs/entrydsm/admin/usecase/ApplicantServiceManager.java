@@ -89,7 +89,47 @@ public class ApplicantServiceManager implements ApplicantService {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        return null;
+        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+
+        Status status = Status.builder()
+                .isPaid(applicant.isPaid())
+                .isPrintedArrived(applicant.isPrintedArrived())
+                .isSubmit(applicant.isSubmit())
+                .build();
+
+        PersonalData personalData = PersonalData.builder()
+                .name(applicant.getName())
+                .birthDate(applicant.getBirthDate())
+                .isGraduated(applicant.isGraduated())
+                .applicationType(applicant.getApplicationType())
+                .photoFileName(applicant.getPhotoFileName())
+                .schoolName(applicant.getSchoolName())
+                .schoolTel(applicant.getSchoolTel())
+                .address(applicant.getAddress())
+                .detailAddress(applicant.getDetailAddress())
+                .educationalStatus(applicant.getEducationalStatus())
+                .telephoneNumber(applicant.getTelephoneNumber())
+                .homeTel(applicant.getHomeTel())
+                .parentTel(applicant.getParentTel())
+                .build();
+
+        Evaluation evaluation = Evaluation.builder()
+                .studyPlan(applicant.getStudyPlan())
+                .selfIntroduce(applicant.getSelfIntroduce())
+                .averageScore(applicant.getAverageScore())
+                .volunteerTime(applicant.getVolunteerTime())
+                .conversionScore(applicant.getAverageScore())
+                .lectureAbsenceCount(applicant.getLectureAbsenceCount())
+                .earlyLeaveCount(applicant.getEarlyLeaveCount())
+                .latenessCount(applicant.getLatenessCount())
+                .dayAbsenceCount(applicant.getDayAbsenceCount())
+                .build();
+
+        return ApplicantDetailResponse.builder()
+                .status(status)
+                .personalData(personalData)
+                .evaluation(evaluation)
+                .build();
     }
 
     @Override

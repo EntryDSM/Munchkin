@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.admin.usecase.dto.response;
 
-import kr.hs.entrydsm.admin.usecase.dto.ApplicantInfo;
 import kr.hs.entrydsm.admin.usecase.dto.Evaluation;
 import kr.hs.entrydsm.admin.usecase.dto.PersonalData;
 import kr.hs.entrydsm.admin.usecase.dto.Status;
@@ -16,7 +15,5 @@ public class ApplicantDetailResponse {
     private PersonalData personalData;
 
     private Status status;
-
-    private ApplicantInfo applicantInfo;
 
 }
