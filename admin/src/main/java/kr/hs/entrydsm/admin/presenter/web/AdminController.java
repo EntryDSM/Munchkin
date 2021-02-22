@@ -25,7 +25,7 @@ public class AdminController {
     //지원자
     @AdminJWTRequired
     @PatchMapping("/{reciept-code}")
-    public void updateStatus(@PathVariable(name = "reciept-code") Integer recieptCode,
+    public void updateStatus(@PathVariable(name = "reciept-code") int recieptCode,
                              @RequestParam(required = false) boolean isPrintedArrived,
                              @RequestParam(required = false) boolean isPaid,
                              @RequestParam(required = false) boolean isSubmit) {
@@ -42,7 +42,7 @@ public class AdminController {
                                             @RequestParam(required = false, name = "is-common") boolean isCommon,
                                             @RequestParam(required = false, name = "is-meiseter") boolean isMeister,
                                             @RequestParam(required = false, name = "is-social") boolean isSocial,
-                                            @RequestParam(required = false, name = "reciept-code") Integer recieptCode,
+                                            @RequestParam(required = false, name = "reciept-code") int recieptCode,
                                             @RequestParam(required = false, name = "school-name") String schoolName,
                                             @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
                                             @RequestParam(required = false) String name) {
@@ -52,7 +52,7 @@ public class AdminController {
 
     @AdminJWTRequired
     @GetMapping("/{reciept-code}")
-    public ApplicantDetailResponse getDetail(@PathVariable(name = "reciept-code") Integer recieptCode) {
+    public ApplicantDetailResponse getDetail(@PathVariable(name = "reciept-code") int recieptCode) {
         return applicantService.getDetail(recieptCode);
     }
 

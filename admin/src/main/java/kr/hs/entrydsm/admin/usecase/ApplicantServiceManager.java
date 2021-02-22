@@ -43,7 +43,7 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override
-    public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
+    public void updateStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
@@ -54,7 +54,7 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override
     public ApplicantsResponse getApplicants(Pageable page, boolean isDaejeon, boolean isNationwide,
                                             boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                                            boolean isMeister, boolean isSocial, Integer recieptCode,
+                                            boolean isMeister, boolean isSocial, int receiptCode,
                                             String schoolName, String telephoneNumber, String name) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
@@ -85,7 +85,7 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
-    public ApplicantDetailResponse getDetail(Integer recieptCode) {
+    public ApplicantDetailResponse getDetail(int receiptCode) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
