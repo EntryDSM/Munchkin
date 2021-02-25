@@ -12,6 +12,7 @@ public class GraduationApplication extends Application {
 
     private Boolean isGraduated;
 
+    @Getter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name = "school_code")
     private School school;

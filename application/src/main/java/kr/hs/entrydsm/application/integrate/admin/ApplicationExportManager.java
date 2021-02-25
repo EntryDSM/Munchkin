@@ -42,6 +42,12 @@ public class ApplicationExportManager implements ApplicationExportRepository {
                     .scores(scores)
                     .schoolName(graduationApplication.getSchoolName())
                     .isGraduated(graduationApplication.getIsGraduated())
+                    .schoolTel(graduationApplication.getSchoolTel())
+                    .volunteerTime(graduationApplication.getVolunteerTime())
+                    .latenessCount(graduationApplication.getLatenessCount())
+                    .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
+                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
+                    .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
                     .build();
         } else {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
