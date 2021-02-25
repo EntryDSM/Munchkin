@@ -19,11 +19,6 @@ public class ApplicationExportManager implements ApplicationExportRepository {
     private final ApplicationRepository applicationRepository;
     private final ScoreCalculator scoreCalculator;
 
-    public Application getInfo(long receiptCode) {
-        return applicationRepository.findByReceiptCode(receiptCode)
-                .orElseThrow();
-    }
-
     @Override
     public ReportCard getReportCard(long receiptCode) {
         Application application = applicationRepository.findByReceiptCode(receiptCode)

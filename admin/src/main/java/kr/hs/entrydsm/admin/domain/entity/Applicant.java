@@ -57,7 +57,7 @@ public class Applicant {
     private String postCode;
 
     //검정고시 O
-    private Integer averageScore;
+    private BigDecimal averageScore;
 
     //검정고시 X
     private String schoolName;
