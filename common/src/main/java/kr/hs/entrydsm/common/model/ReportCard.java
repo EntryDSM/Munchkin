@@ -52,4 +52,20 @@ public class ReportCard {
         this.lectureAbsenceCount = null;
         this.dayAbsenceCount = null;
     }
+
+    public BigDecimal getTotalScore() {
+        return scores.getTotalScore();
+    }
+
+    public BigDecimal getVolunteerScore() {
+        return scores.getVolunteerScore();
+    }
+
+    public BigDecimal getGradeScore() {
+        return scores.getGradeScore();
+    }
+
+    public int attendanceScore() {
+        return scores.getAttendanceScore();
+    }
 }
