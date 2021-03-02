@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.notification.usecase;
 
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
-import kr.hs.entrydsm.notification.domain.entity.Notification;
-import kr.hs.entrydsm.notification.domain.entity.Teacher;
-import kr.hs.entrydsm.notification.domain.entity.Type;
+import kr.hs.entrydsm.notification.entity.Notification;
+import kr.hs.entrydsm.notification.entity.Teacher;
+import kr.hs.entrydsm.notification.entity.Type;
 import kr.hs.entrydsm.notification.integrate.admin.TeacherRepository;
-import kr.hs.entrydsm.notification.domain.repository.NotificationRepository;
+import kr.hs.entrydsm.notification.entity.NotificationRepository;
 import kr.hs.entrydsm.notification.usecase.dto.MessagesResponse;
 import kr.hs.entrydsm.notification.usecase.dto.NotificationMessageResponse;
 import kr.hs.entrydsm.notification.usecase.dto.UpdateMessageRequest;

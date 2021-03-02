@@ -1,10 +1,10 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
-import kr.hs.entrydsm.admin.domain.entity.Applicant;
+import kr.hs.entrydsm.admin.entity.Applicant;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.common.model.ReportCard;
-import kr.hs.entrydsm.user.domain.entity.User;
+import kr.hs.entrydsm.user.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

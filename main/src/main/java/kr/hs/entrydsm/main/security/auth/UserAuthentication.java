@@ -1,10 +1,9 @@
 package kr.hs.entrydsm.main.security.auth;
 
-import kr.hs.entrydsm.user.domain.entity.User;
+import kr.hs.entrydsm.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;

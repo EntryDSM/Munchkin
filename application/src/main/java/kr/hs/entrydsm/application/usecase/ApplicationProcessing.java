@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.usecase;
 
-import kr.hs.entrydsm.application.domain.entity.School;
+import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import org.springframework.data.domain.Page;

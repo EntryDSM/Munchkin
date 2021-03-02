@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.main.integrate.notification;
 
-import kr.hs.entrydsm.admin.domain.entity.Admin;
+import kr.hs.entrydsm.admin.entity.Admin;
 import kr.hs.entrydsm.admin.integrate.notification.AdminExportRepository;
-import kr.hs.entrydsm.notification.domain.entity.Teacher;
+import kr.hs.entrydsm.notification.entity.Teacher;
 import kr.hs.entrydsm.notification.integrate.admin.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

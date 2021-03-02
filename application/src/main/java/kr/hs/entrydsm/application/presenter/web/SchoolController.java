@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.application.presenter.web;
 
-import kr.hs.entrydsm.application.domain.entity.School;
-import kr.hs.entrydsm.application.domain.repository.SchoolRepository;
+import kr.hs.entrydsm.application.entity.School;
+import kr.hs.entrydsm.application.entity.SchoolRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

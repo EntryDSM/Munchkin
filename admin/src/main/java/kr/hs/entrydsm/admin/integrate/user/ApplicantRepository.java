@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.integrate.user;
 
-import kr.hs.entrydsm.admin.domain.entity.Applicant;
+import kr.hs.entrydsm.admin.entity.Applicant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

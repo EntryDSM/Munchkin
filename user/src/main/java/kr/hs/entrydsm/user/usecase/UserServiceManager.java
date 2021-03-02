@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.user.usecase;
 
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
-import kr.hs.entrydsm.user.domain.entity.User;
-import kr.hs.entrydsm.user.domain.repository.UserRepository;
+import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.UserRepository;
 import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;

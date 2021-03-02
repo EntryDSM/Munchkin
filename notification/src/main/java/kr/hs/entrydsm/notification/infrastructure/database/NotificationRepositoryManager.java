@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.notification.infrastructure.database;
 
-import kr.hs.entrydsm.notification.domain.entity.Notification;
-import kr.hs.entrydsm.notification.domain.entity.Type;
-import kr.hs.entrydsm.notification.domain.repository.NotificationRepository;
+import kr.hs.entrydsm.notification.entity.Notification;
+import kr.hs.entrydsm.notification.entity.Type;
+import kr.hs.entrydsm.notification.entity.NotificationRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

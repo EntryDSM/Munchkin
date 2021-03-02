@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.infrastructure.database;
 
-import kr.hs.entrydsm.admin.domain.entity.RefreshToken;
+import kr.hs.entrydsm.admin.entity.RefreshToken;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

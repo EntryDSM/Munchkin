@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.application.usecase;
 
-import kr.hs.entrydsm.application.domain.entity.School;
-import kr.hs.entrydsm.application.domain.repository.SchoolRepository;
+import kr.hs.entrydsm.application.entity.School;
+import kr.hs.entrydsm.application.entity.SchoolRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.integrate.user.UserDocsService;
 import kr.hs.entrydsm.application.usecase.dto.Application;

@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.main.security.auth;
 
-import kr.hs.entrydsm.admin.domain.entity.Admin;
+import kr.hs.entrydsm.admin.entity.Admin;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

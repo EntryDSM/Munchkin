@@ -1,10 +1,10 @@
 package kr.hs.entrydsm.admin.usecase;
 
-import kr.hs.entrydsm.admin.domain.entity.Admin;
-import kr.hs.entrydsm.admin.domain.entity.Schedule;
-import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
-import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
-import kr.hs.entrydsm.admin.domain.repository.ScheduleRepository;
+import kr.hs.entrydsm.admin.entity.Admin;
+import kr.hs.entrydsm.admin.entity.Schedule;
+import kr.hs.entrydsm.admin.entity.enums.Permission;
+import kr.hs.entrydsm.admin.entity.AdminRepository;
+import kr.hs.entrydsm.admin.entity.ScheduleRepository;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.admin.usecase.dto.Schedules;

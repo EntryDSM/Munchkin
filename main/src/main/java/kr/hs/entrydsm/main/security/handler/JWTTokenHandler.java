@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.main.security.handler;
 
-import kr.hs.entrydsm.admin.domain.entity.Admin;
-import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
+import kr.hs.entrydsm.admin.entity.Admin;
 import kr.hs.entrydsm.admin.infrastructure.database.AdminRepositoryManager;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
@@ -11,7 +10,7 @@ import kr.hs.entrydsm.common.context.exception.ErrorCode;
 import kr.hs.entrydsm.common.context.exception.MunchkinException;
 import kr.hs.entrydsm.main.security.auth.AdminAuthentication;
 import kr.hs.entrydsm.main.security.auth.UserAuthentication;
-import kr.hs.entrydsm.user.domain.entity.User;
+import kr.hs.entrydsm.user.entity.User;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
