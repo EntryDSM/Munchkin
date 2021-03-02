@@ -8,6 +8,10 @@ spring:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+
 auth:
   jwt:
     secret: ${JWT_SECRET_KEY:dGVzdA==}

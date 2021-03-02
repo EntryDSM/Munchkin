@@ -25,11 +25,12 @@ public class AdminController {
     //지원자
     @AdminJWTRequired
     @PatchMapping("/{reciept-code}")
-    public void updateStatus(@PathVariable(name = "reciept-code") Integer recieptCode,
+
+    public void updateStatus(@PathVariable(name = "reciept-code") int receiptCode,
                              @RequestParam(required = false) boolean isPrintedArrived,
                              @RequestParam(required = false) boolean isPaid,
                              @RequestParam(required = false) boolean isSubmit) {
-        applicantService.updateStatus(recieptCode, isPrintedArrived, isPaid, isSubmit);
+        applicantService.updateStatus(receiptCode, isPrintedArrived, isPaid, isSubmit);
     }
 
     @AdminJWTRequired
@@ -42,17 +43,17 @@ public class AdminController {
                                             @RequestParam(required = false, name = "is-common") boolean isCommon,
                                             @RequestParam(required = false, name = "is-meiseter") boolean isMeister,
                                             @RequestParam(required = false, name = "is-social") boolean isSocial,
-                                            @RequestParam(required = false, name = "reciept-code") Integer recieptCode,
+                                            @RequestParam(required = false, name = "reciept-code") int receiptCode,
                                             @RequestParam(required = false, name = "school-name") String schoolName,
                                             @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
                                             @RequestParam(required = false) String name) {
         return applicantService.getApplicants(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon,
-                isMeister, isSocial, recieptCode, schoolName, telephoneNumber, name);
+                isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
     }
 
     @AdminJWTRequired
-    @GetMapping("/{reciept-code}")
-    public ApplicantDetailResponse getDetail(@PathVariable(name = "reciept-code") Integer recieptCode) {
+    @GetMapping("/{receipt-code}")
+    public ApplicantDetailResponse getDetail(@PathVariable(name = "receipt-code") int recieptCode) {
         return applicantService.getDetail(recieptCode);
     }
 

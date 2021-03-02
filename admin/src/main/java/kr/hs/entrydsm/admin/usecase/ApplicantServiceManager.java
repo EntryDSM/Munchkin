@@ -4,14 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hs.entrydsm.admin.domain.entity.Admin;
 import kr.hs.entrydsm.admin.domain.entity.Applicant;
-import kr.hs.entrydsm.admin.domain.entity.enums.Permission;
 import kr.hs.entrydsm.admin.domain.repository.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.ApplicantNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,37 +42,30 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override
-    public void updateStatus(Integer recieptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
+    public void updateStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
-
-        if(applicant != null) {
-            if(admin.getPermission().equals(Permission.TEACHER)) { //행정실은 원서료 납부만 수정 가능
-                applicant.updateIsPaid(isPaid);
-            }
-            else { //교무실은 모든 권한 有
-                applicant.updateStatus(isPrintedArrived, isPaid, isSubmit);
-            }
+        if(admin.getPermission().equals("TEACHER")) {
+            applicantRepository.changeStatus(receiptCode, isPrintedArrived, isPaid, isSubmit);
         }
         else {
-            throw new ApplicantNotFoundException();
+            throw new UserNotAccessibleException();
         }
+
         //공지메세지에서 보내주기
     }
 
     @Override
     public ApplicantsResponse getApplicants(Pageable page, boolean isDaejeon, boolean isNationwide,
                                             boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                                            boolean isMeister, boolean isSocial, Integer recieptCode,
+                                            boolean isMeister, boolean isSocial, int receiptCode,
                                             String schoolName, String telephoneNumber, String name) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        Page<Applicant> applicants = applicantRepository.findAll(page);
+        Page<Applicant> applicants = applicantRepository.findAll(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon, isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
-
         
         for (Applicant applicant : applicants) {
             applicantsInformationResponses.add(
@@ -97,73 +89,50 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
-    public ApplicantDetailResponse getDetail(Integer recieptCode) {
+    public ApplicantDetailResponse getDetail(int receiptCode) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        Applicant applicant = applicantRepository.findByReceiptCode(recieptCode);
-        if(applicant == null) {
-            throw new ApplicantNotFoundException();
-        }
-        if(applicant.isSubmit() == false) {
-            //최종 제출하지 않은 사용자는 지원자의 전화번호, 부모님의 전화번호, 집 전화번호, (학교 전화번호)만 보여줘야 한다.
-            ApplicantInfo applicantInfo = new ApplicantInfo().builder()
-                    .applicantTel(applicant.getTelephoneNumber())
-                    .homeTel(applicant.getHomeTel())
-                    .parentTel(applicant.getParentTel())
-                    .schoolTel(applicant.getSchoolTel())
-                    .build();
+        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
 
-            return ApplicantDetailResponse.builder()
-                    .applicantInfo(applicantInfo)
-                    .build();
-            //throw new ApplicantNotFinalSubmitted();
-        }
-
-        Status status = new Status().builder()
+        Status status = Status.builder()
                 .isPaid(applicant.isPaid())
                 .isPrintedArrived(applicant.isPrintedArrived())
                 .isSubmit(applicant.isSubmit())
                 .build();
 
-        Evaluation evaluation;
-        evaluation = new Evaluation().builder()
-                .selfIntroduce(applicant.getSelfIntroduce())
-                .studyPlan(applicant.getStudyPlan())
-                .build();
-
-        PersonalData personalData = new PersonalData().builder()
+        PersonalData personalData = PersonalData.builder()
                 .name(applicant.getName())
-                .photoFileName(applicant.getPhotoFileName())
                 .birthDate(applicant.getBirthDate())
-                .schoolName(applicant.getSchoolName())
-                .educationalStatus(applicant.getEducationalStatus())
+                .isGraduated(applicant.isGraduated())
                 .applicationType(applicant.getApplicationType())
-                .telephoneNumber(applicant.getTelephoneNumber())
-                .parentTel(applicant.getParentTel())
+                .photoFileName(applicant.getPhotoFileName())
+                .schoolName(applicant.getSchoolName())
                 .schoolTel(applicant.getSchoolTel())
+                .address(applicant.getAddress())
+                .detailAddress(applicant.getDetailAddress())
+                .educationalStatus(applicant.getEducationalStatus())
+                .telephoneNumber(applicant.getTelephoneNumber())
                 .homeTel(applicant.getHomeTel())
+                .parentTel(applicant.getParentTel())
                 .build();
 
-        if(applicant.getEducationalStatus() == "QUALIFICATION_EXAM") {
-            evaluation = Evaluation.builder()
-                    .averageScore(applicant.getAverageScore())
-                    .build();
-        }else {
-            evaluation = Evaluation.builder()
-                    .volunteerTime(applicant.getVolunteerTime())
-                    .conversionScore(applicant.getConversionScore())
-                    .dayAbsenceCount(applicant.getDayAbsenceCount())
-                    .latenessCount(applicant.getLatenessCount())
-                    .earlyLeaveCount(applicant.getEarlyLeaveCount())
-                    .lectureAbsenceCount(applicant.getLectureAbsenceCount())
-                    .build();
-        }
+        Evaluation evaluation = Evaluation.builder()
+                .studyPlan(applicant.getStudyPlan())
+                .selfIntroduce(applicant.getSelfIntroduce())
+                .averageScore(applicant.getAverageScore())
+                .volunteerTime(applicant.getVolunteerTime())
+                .conversionScore(applicant.getAverageScore())
+                .lectureAbsenceCount(applicant.getLectureAbsenceCount())
+                .earlyLeaveCount(applicant.getEarlyLeaveCount())
+                .latenessCount(applicant.getLatenessCount())
+                .dayAbsenceCount(applicant.getDayAbsenceCount())
+                .build();
 
         return ApplicantDetailResponse.builder()
                 .status(status)
-                .evaluation(evaluation)
                 .personalData(personalData)
+                .evaluation(evaluation)
                 .build();
     }
 
@@ -171,7 +140,8 @@ public class ApplicantServiceManager implements ApplicantService {
     public void saveExamCode() throws Exception {
         List<Applicant> applicants = applicantRepository.findAllIsSubmitTrue();
         String examCode = null;
-        List<Applicant> applicantSort = applicants;
+        List<Applicant> applicantSort = new ArrayList<>();
+        applicantSort.addAll(applicants);
         int commonDaejeon = 0, commonNationwide = 0, meisterDaejeon = 0, meisterNationwide = 0, socialDaejeon = 0, socialNationwide = 0;
 
         //첫번째, 두번째 자리 채우기

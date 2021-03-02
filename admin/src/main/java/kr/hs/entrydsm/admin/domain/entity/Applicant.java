@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -32,6 +34,8 @@ public class Applicant {
 
     private String address;
 
+    private String detailAddress;
+
     private String telephoneNumber;
 
     private String parentTel;
@@ -53,14 +57,14 @@ public class Applicant {
     private String postCode;
 
     //검정고시 O
-    private Integer averageScore;
+    private BigDecimal averageScore;
 
     //검정고시 X
     private String schoolName;
 
     private Integer volunteerTime; //봉사 시간
 
-    private Integer conversionScore; //총 점수
+    private BigDecimal conversionScore; //총 점수
 
     private Integer dayAbsenceCount; //무단 결석
 
@@ -70,13 +74,9 @@ public class Applicant {
 
     private Integer latenessCount; //지각
 
-    private double distance; // 학교까지의 거리
+    private boolean isGraduated; // 졸업 여부
 
-    public void updateStatus(boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
-        this.isPrintedArrived = isPrintedArrived;
-        this.isPaid = isPaid;
-        this.isSubmit = isSubmit;
-    }
+    private double distance; // 학교까지의 거리
 
     public void updateIsPaid(boolean isPaid) {
         this.isPaid = isPaid;
