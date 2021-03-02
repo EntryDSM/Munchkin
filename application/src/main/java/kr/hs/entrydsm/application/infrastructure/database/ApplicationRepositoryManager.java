@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.infrastructure.database;
 
+import kr.hs.entrydsm.application.domain.entity.Applicant;
 import kr.hs.entrydsm.application.domain.entity.Application;
 import kr.hs.entrydsm.application.domain.repository.ApplicationRepository;
 import org.springframework.data.repository.CrudRepository;
@@ -11,5 +12,5 @@ import java.util.Optional;
 public interface ApplicationRepositoryManager<T extends Application> extends ApplicationRepository, CrudRepository<T, Long> {
 
     @Override
-    Optional<Application> findByReceiptCode(Long receiptCode);
+    Applicant findByReceiptCode(Long receiptCode);
 }
