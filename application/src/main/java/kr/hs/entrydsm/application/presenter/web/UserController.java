@@ -3,7 +3,10 @@ package kr.hs.entrydsm.application.presenter.web;
 import kr.hs.entrydsm.application.domain.entity.Applicant;
 import kr.hs.entrydsm.application.infrastructure.database.ApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.SchoolRepositoryManager;
+import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.Application;
+import kr.hs.entrydsm.application.usecase.dto.Information;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,27 +15,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/application/users")
 public class UserController {
 
-    private final SchoolRepositoryManager schoolRepositoryManager;
-    private final ApplicationRepositoryManager applicationRepositoryManager;
+    private final ApplicationProcessing applicationProcessing;
 
     @PatchMapping("/type")
     public void selectType(@RequestBody Application application){
-        applicationRepositoryManager.save(application);
+        applicationProcessing.writeApplicationType(1L, application);
     }
 
     @GetMapping("/type")
-    public Applicant getType(){
-        return applicationRepositoryManager.findByReceiptCode(1L);
+    public Application getType(){
+        return applicationProcessing.getApplicationType(1L);
     }
 
     @PatchMapping("/")
-    public void insertInfo(@RequestBody Applicant applicant){
-        applicationRepositoryManager.save(applicant);
+    public void insertInfo(@RequestBody Information information){
+        applicationProcessing.writeInformation(1L, information);
     }
 
     @GetMapping("/")
-    public Applicant getInfo(){
-        return applicationRepositoryManager.findByReceiptCode(1L);
+    public Information getInfo(){
+        return applicationProcessing.getInformation(1L);
     }
 
 }
