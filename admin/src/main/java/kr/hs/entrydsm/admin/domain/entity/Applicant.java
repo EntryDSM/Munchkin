@@ -62,7 +62,7 @@ public class Applicant {
     //검정고시 X
     private String schoolName;
 
-    private BigDecimal volunteerTime; //봉사 시간
+    private Integer volunteerTime; //봉사 시간
 
     private BigDecimal conversionScore; //총 점수
 

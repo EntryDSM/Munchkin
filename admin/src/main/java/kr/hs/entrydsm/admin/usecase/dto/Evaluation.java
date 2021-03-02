@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Evaluation {
 
-    private BigDecimal volunteerTime; //봉사 시간
+    private Integer volunteerTime; //봉사 시간
 
     private BigDecimal conversionScore; //총 점수
 
