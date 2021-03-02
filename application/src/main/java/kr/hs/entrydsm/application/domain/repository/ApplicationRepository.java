@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface ApplicationRepository {
 
-    Applicant findByReceiptCode(Long receiptCode);
+    Optional<Application> findByReceiptCode(Long receiptCode);
 }
