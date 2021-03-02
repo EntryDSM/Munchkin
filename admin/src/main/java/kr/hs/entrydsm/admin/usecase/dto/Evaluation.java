@@ -5,15 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Evaluation {
 
-    private Integer volunteerTime; //봉사 시간
+    private BigDecimal volunteerTime; //봉사 시간
 
-    private Integer conversionScore; //총 점수
+    private BigDecimal conversionScore; //총 점수
 
     private Integer dayAbsenceCount; //무단 결석
 
@@ -27,6 +29,6 @@ public class Evaluation {
     
     private String studyPlan; //학업계획서
 
-    private Integer averageScore; //검정고시 총 점수
+    private BigDecimal averageScore; //검정고시 총 점수
 
 }
