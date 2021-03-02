@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,6 +8,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Applicant {
 
     private long receiptCode;
