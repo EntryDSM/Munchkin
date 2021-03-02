@@ -5,8 +5,6 @@ import kr.hs.entrydsm.application.domain.entity.GraduationApplication;
 import kr.hs.entrydsm.application.domain.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.domain.repository.ApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
-import kr.hs.entrydsm.common.model.GraduationReportCard;
-import kr.hs.entrydsm.common.model.QualificationReportCard;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.common.model.Scores;
 import lombok.RequiredArgsConstructor;
@@ -32,21 +30,21 @@ public class ApplicationExportManager implements ApplicationExportRepository {
     private ReportCard createReportCard(Application application, Scores scores) {
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
-            return GraduationReportCard.builder()
+            return ReportCard.graduationBuilder()
                     .receiptCode(application.getReceiptCode())
                     .scores(scores)
-                    .schoolName(graduationApplication.getSchoolName())
                     .isGraduated(graduationApplication.getIsGraduated())
                     .schoolTel(graduationApplication.getSchoolTel())
+                    .schoolName(graduationApplication.getSchoolName())
                     .volunteerTime(graduationApplication.getVolunteerTime())
                     .latenessCount(graduationApplication.getLatenessCount())
                     .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
-                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
                     .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
+                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
                     .build();
         } else {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
-            return QualificationReportCard.builder()
+            return ReportCard.qualificationBuilder()
                     .receiptCode(application.getReceiptCode())
                     .scores(scores)
                     .averageScore(qualificationExamApplication.getAverageScore())
