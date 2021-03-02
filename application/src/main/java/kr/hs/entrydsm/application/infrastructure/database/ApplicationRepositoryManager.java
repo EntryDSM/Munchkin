@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface ApplicationRepositoryManager<T extends Application> extends ApplicationRepository, CrudRepository<T, Long> {
 
     @Override
-    Applicant findByReceiptCode(Long receiptCode);
+    Optional<Application> findByReceiptCode(Long receiptCode);
 }
