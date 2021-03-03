@@ -2,7 +2,7 @@ package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.domain.entity.School;
 import kr.hs.entrydsm.application.domain.repository.SchoolRepository;
-import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.application.integrate.user.ApplicantExportRepository;
 import kr.hs.entrydsm.application.integrate.user.UserDocsService;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationManager implements ApplicationProcessing {
 
     private final UserDocsService userDocsService;
-    private final ApplicantRepository applicantRepository;
+    private final ApplicantExportRepository applicantRepository;
     private final SchoolRepository schoolRepository;
 
     @Override
