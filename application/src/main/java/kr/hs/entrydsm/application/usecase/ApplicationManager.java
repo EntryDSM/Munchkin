@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationManager implements ApplicationProcessing {
 
     private final UserDocsService userDocsService;
-    private final ApplicantRepository applicantRepository;
+    private final ApplicantExportRepository applicantRepository;
     private final SchoolRepository schoolRepository;
 
     @Override
