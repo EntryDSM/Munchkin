@@ -5,7 +5,7 @@ import kr.hs.entrydsm.application.usecase.dto.Information;
 import kr.hs.entrydsm.common.context.beans.Published;
 
 @Published
-public interface ApplicantRepository {
+public interface ApplicantExportRepository {
     void writeApplicationType(Long receiptCode, Application application);
     void writeInformation(Long receiptCode, Information information);
     Application getApplicationType(Long receiptCode);

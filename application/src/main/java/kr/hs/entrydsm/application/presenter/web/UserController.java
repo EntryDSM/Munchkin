@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application.presenter.web;
 
-import kr.hs.entrydsm.application.domain.entity.Applicant;
-import kr.hs.entrydsm.application.infrastructure.database.ApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.SchoolRepositoryManager;
-import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
