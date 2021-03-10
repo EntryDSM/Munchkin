@@ -1,15 +1,14 @@
-package kr.hs.entrydsm.application.integrate.user;
+package kr.hs.entrydsm.main.integrate.application;
 
+import kr.hs.entrydsm.application.integrate.user.ApplicantExportService;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
-import lombok.RequiredArgsConstructor;
+import kr.hs.entrydsm.common.context.beans.Published;
 import org.springframework.stereotype.Service;
 
+@Published
 @Service
-@RequiredArgsConstructor
-public class ApplicantExportManager implements ApplicantExportRepository {
-
-
+public class ApplicationIntegrateApplicantService implements ApplicantExportService {
     @Override
     public void writeApplicationType(Long receiptCode, Application application) {
 
