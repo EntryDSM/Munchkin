@@ -103,6 +103,8 @@ project(':admin') {
         testImplementation 'com.h2database:h2'
         compile 'org.springframework.boot:spring-boot-starter-data-redis'
         compile 'org.springframework.boot:spring-boot-starter-security'
+        compile 'org.apache.poi:poi:3.16'
+        compile 'org.apache.poi:poi-ooxml:3.16'
     }
 }
 
