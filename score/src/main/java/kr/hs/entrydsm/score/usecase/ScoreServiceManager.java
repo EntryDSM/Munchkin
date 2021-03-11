@@ -77,6 +77,6 @@ public class ScoreServiceManager implements ScoreService {
     }
 
     private Scorer scorer() {
-        return scorerRepository.findByReceiptCode(TEMP_AUTHENTICATION).orElseThrow();
+        return scorerRepository.findByReceiptCode(TEMP_AUTHENTICATION);
     }
 }
