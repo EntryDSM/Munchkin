@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.admin.security;
 
+import kr.hs.entrydsm.admin.AdminModuleConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +9,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
-@EnableRedisRepositories
+@EnableRedisRepositories(basePackageClasses = AdminModuleConfiguration.class)
 @Configuration
 public class RedisRepositoryConfig {
 

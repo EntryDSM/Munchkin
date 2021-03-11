@@ -4,6 +4,6 @@ import kr.hs.entrydsm.admin.EnableAdminModule;
 import kr.hs.entrydsm.main.configuration.DependentModule;
 
 @EnableAdminModule
-@DependentModule(UserConfiguration.class)
+@DependentModule(ApplicationConfiguration.class)
 public class AdminConfiguration {
 }

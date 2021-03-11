@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/auth")
 @Published
 @RestController
-public class AuthController {
+public class AdminAuthController {
 
     private final AuthService authService;
 
