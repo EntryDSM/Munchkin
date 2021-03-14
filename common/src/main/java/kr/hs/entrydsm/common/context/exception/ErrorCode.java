@@ -24,7 +24,7 @@ public enum ErrorCode {
     NOT_FINAL_SUBMITTED(423,"ADMIN423-0", "Application not final submitted"),
 
     TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist"),
-    NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority");
+    NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority"),
 
     APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found");
 
