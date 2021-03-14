@@ -2,10 +2,8 @@ package kr.hs.entrydsm.application.integrate.user;
 
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
-import kr.hs.entrydsm.common.context.beans.Published;
 
-@Published
-public interface ApplicantExportRepository {
+public interface ApplicantExportService {
     void writeApplicationType(Long receiptCode, Application application);
     void writeInformation(Long receiptCode, Information information);
     Application getApplicationType(Long receiptCode);

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationManager implements ApplicationProcessing {
 
     private final UserDocsService userDocsService;
-    private final ApplicantExportRepository applicantRepository;
+    private final ApplicantExportService applicantExportService;
     private final SchoolRepository schoolRepository;
 
     @Override
@@ -46,21 +46,21 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public void writeApplicationType(Long receiptCode, Application applicationRequest) {
-        applicantRepository.writeApplicationType(receiptCode, applicationRequest);
+        applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
     @Override
     public void writeInformation(Long receiptCode, Information information) {
-        applicantRepository.writeInformation(receiptCode, information);
+        applicantExportService.writeInformation(receiptCode, information);
     }
 
     @Override
     public Application getApplicationType(Long receiptCode) {
-        return applicantRepository.getApplicationType(receiptCode);
+        return applicantExportService.getApplicationType(receiptCode);
     }
 
     @Override
     public Information getInformation(Long receiptCode) {
-        return applicantRepository.getInformation(receiptCode);
+        return applicantExportService.getInformation(receiptCode);
     }
 }

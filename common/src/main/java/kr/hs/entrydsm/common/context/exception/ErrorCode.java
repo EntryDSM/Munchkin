@@ -19,13 +19,14 @@ public enum ErrorCode {
     INVALID_ADMIN_TOKEN(401, "ADMIN401-0","This token is invalid"),
     EXPIRED_TOKEN(401, "ADMIN401-1","Token is Expired"),
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
-    APPLICATION_NOT_FOUND(404, "ADMIN404-1","The application could not be found"),
-    APPLICANT_NOT_FOUND(404, "ADMIN404-2","The applicant does not exist"),
+    APPLICANT_NOT_FOUND(404, "ADMIN404-1","The applicant does not exist"),
     NOT_ACCESSIBLE(401, "ADMIN401-2","Check the token"),
     NOT_FINAL_SUBMITTED(423,"ADMIN423-0", "Application not final submitted"),
 
     TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist"),
     NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority");
+
+    APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found");
 
     private final int status;
     private final String code;

@@ -5,6 +5,7 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.entity.ApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
+import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.common.model.Scores;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,12 @@ public class ApplicationExportManager implements ApplicationExportRepository {
 
     @Override
     public ReportCard getReportCard(long receiptCode) {
-//        Application application = applicationRepository.findByReceiptCode(receiptCode)
-//                .orElseThrow(); // TODO add exception
-//
-//        Scores scores = scoreCalculator.getScores(application.getReceiptCode());
-//
-//        return createReportCard(application, scores);
-        return null;
+        Application application = applicationRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(ApplicationNotFoundException::new);
+
+        Scores scores = scoreCalculator.getScores(application.getReceiptCode());
+
+        return createReportCard(application, scores);
     }
 
     private ReportCard createReportCard(Application application, Scores scores) {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application/users")
-public class UserController {
+public class ApplicationUserController {
 
     private final ApplicationProcessing applicationProcessing;
 
