@@ -1,3 +1,5 @@
 munchkin:
   admin-module:
     name: 'Admin Module'
+    admission-ticket-path: '../../../admission_ticket.xlsx'
+    applicant-information-path: '../../../applicant-information.xlsx'
