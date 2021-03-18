@@ -17,7 +17,7 @@ public class AdmissionTicket {
     @Value("${munchkin.applicant-information-path}")
     private String path;
 
-    protected Workbook getWorkbook() {
+    public Workbook getWorkbook() {
         return workbook;
     }
 
