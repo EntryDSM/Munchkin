@@ -29,7 +29,7 @@ public class ExcelServiceManager implements ExcelService {
         //admissionTicket에 넣어주기
         AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
         admissionTicket.format(0,0);
-        admissionTicket.getWorkbook().write(new FileOutputStream("./"+name+" 수험표.xlsx"));
+        admissionTicket.getWorkbook().write(new FileOutputStream("./"+name+" 수험표.xls"));
     }
 
 }
