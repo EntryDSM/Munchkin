@@ -17,8 +17,24 @@ public class AdmissionTicket {
     @Value("${munchkin.applicant-information-path}")
     private String path;
 
+    private String examCode;
+    private String name;
+    private String middleSchool;
+    private String area;
+    private String applicationType;
+    private String receiptCode;
+
     public Workbook getWorkbook() {
         return workbook;
+    }
+
+    public AdmissionTicket(String examCode, String name, String middleSchool, String area, String applicationType, String receiptCode) {
+        this.examCode = examCode;
+        this.name = name;
+        this.middleSchool = middleSchool;
+        this.area = area;
+        this.applicationType = applicationType;
+        this.receiptCode = receiptCode;
     }
 
     public void format(int rowIndex, int colIndex) {
@@ -34,12 +50,13 @@ public class AdmissionTicket {
         merge(titleAddress, title, alignCenter);
         mergeCell(new CellRangeAddress(rowIndex + 2, rowIndex + 13, colIndex, colIndex + 1));
         String[] attributes = {"수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"};
+        String[] studentInfo = {examCode, name, middleSchool, area, applicationType, receiptCode};
         for (int i = rowIndex + 1 ; i <= rowIndex + attributes.length * 2 ; i += 2) {
             merge(new CellRangeAddress(i + 1, i + 2, colIndex + 2, colIndex + 3),
                     attributes[(i - rowIndex) / 2],
                     alignCenter);
             merge(new CellRangeAddress(i + 1, i + 2, colIndex + 4, colIndex + 5),
-                    "",
+                    studentInfo[(i - rowIndex) / 2],
                     alignCenter);
         }
         HSSFRichTextString bottom = new HSSFRichTextString("대덕소프트웨어마이스터고등학교장");
