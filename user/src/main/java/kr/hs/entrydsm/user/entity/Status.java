@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -14,12 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "tbl_status")
-public class Status implements Serializable {
+public class Status {
 
     @Id
-    @OneToOne
-    @JoinColumn(name = "receipt_code")
-    private User user;
+    private long receiptCode;
 
     private boolean isPaid;
 
