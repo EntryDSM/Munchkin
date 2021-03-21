@@ -13,6 +13,7 @@ public enum ErrorCode {
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
 
     USER_NOT_FOUND(404, "USER404-0", "User Not Found"),
+    INVALID_AUTH_CODE(403, "USER403-1", "Invalid Auth Code"),
 
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
 
