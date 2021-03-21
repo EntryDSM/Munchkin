@@ -8,9 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -74,11 +76,15 @@ public class User {
     @Column(length = 1600)
     private String studyPlan;
 
-    @CreatedBy
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @Transient
+    @OneToOne(mappedBy = "receiptCode", cascade = CascadeType.ALL)
     private Status status;
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
 }
