@@ -41,8 +41,8 @@ public class UserServiceManager implements UserService {
         String password = signupRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
-//        authCodeRepository.findByPhoneNumberAndCode(phoneNumber, code)
-//                .orElseThrow(InvalidAuthCodeException::new);
+        authCodeRepository.findByPhoneNumberAndCode(phoneNumber, code)
+                .orElseThrow(InvalidAuthCodeException::new);
 
         User user = userRepository.save(
                 User.builder()
