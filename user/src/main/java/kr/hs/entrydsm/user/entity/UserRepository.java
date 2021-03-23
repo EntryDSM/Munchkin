@@ -10,4 +10,5 @@ public interface UserRepository {
     Page<User> findAllBy(Pageable pageable);
     Optional<User> findByTelephoneNumber(String telephoneNumber);
     User save(User user);
+    boolean existsByTelephoneNumber(String phoneNumber);
 }
