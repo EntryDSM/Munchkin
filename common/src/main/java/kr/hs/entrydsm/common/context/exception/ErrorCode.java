@@ -12,8 +12,10 @@ public enum ErrorCode {
     UNAUTHENTICATED(401, "COMMON401-0", "UnAuthenticated"),
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
 
+    INVALID_AUTH_CODE(403, "USER403-0", "Invalid Auth Code"),
+    AUTH_CODE_REQUEST_OVER_LIMIT(403, "USER403-1", "Auth Code Request Over Limit"),
     USER_NOT_FOUND(404, "USER404-0", "User Not Found"),
-    INVALID_AUTH_CODE(403, "USER403-1", "Invalid Auth Code"),
+    USER_ALREADY_EXISTS(409, "USER409-0", "User Already Exists"),
 
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
 
