@@ -24,8 +24,8 @@ public class AdminExcelController {
     }
 
     @GetMapping("/excel/applicantInfo")
-    public void createApplicantInformaion() {
-
+    public void createApplicantInformation() {
+        excelService.createApplicantInformation();
     }
 
 }
