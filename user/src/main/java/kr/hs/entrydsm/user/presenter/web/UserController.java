@@ -8,10 +8,7 @@ import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -33,7 +30,7 @@ public class UserController {
         userService.sendAuthCode(phoneNumberRequest);
     }
 
-    @PostMapping("/phone/verify")
+    @PutMapping("/phone/verify")
     public void verifyAuthCode(@RequestBody AuthCodeRequest authCodeRequest) {
         userService.verifyAuthCode(authCodeRequest);
     }
