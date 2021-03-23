@@ -1,9 +1,10 @@
-package kr.hs.entrydsm.user.entity;
+package kr.hs.entrydsm.user.entity.user;
 
-import kr.hs.entrydsm.user.entity.enumeration.ApplicationRemark;
-import kr.hs.entrydsm.user.entity.enumeration.ApplicationType;
-import kr.hs.entrydsm.user.entity.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.entity.enumeration.Sex;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
+import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
+import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
+import kr.hs.entrydsm.user.entity.status.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

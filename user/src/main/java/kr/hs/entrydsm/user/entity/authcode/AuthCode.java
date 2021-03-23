@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.user.entity;
+package kr.hs.entrydsm.user.entity.authcode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +16,23 @@ public class AuthCode {
 
     private String code;
 
+    private boolean isVerified;
+
     @TimeToLive
     private long ttl;
 
     public AuthCode updateAuthCode(String code, long ttl) {
         this.code = code;
         this.ttl = ttl;
+        return this;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public AuthCode verify() {
+        this.isVerified = true;
         return this;
     }
 

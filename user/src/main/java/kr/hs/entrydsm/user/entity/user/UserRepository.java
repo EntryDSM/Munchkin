@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.user.entity;
+package kr.hs.entrydsm.user.entity.user;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

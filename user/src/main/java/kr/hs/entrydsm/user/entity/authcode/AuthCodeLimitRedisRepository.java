@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.user.entity;
+package kr.hs.entrydsm.user.entity.authcode;
 
 import java.util.Optional;
 

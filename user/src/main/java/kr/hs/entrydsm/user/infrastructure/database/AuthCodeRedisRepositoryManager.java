@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.user.infrastructure.database;
 
-import kr.hs.entrydsm.user.entity.AuthCode;
-import kr.hs.entrydsm.user.entity.AuthCodeRedisRepository;
+import kr.hs.entrydsm.user.entity.authcode.AuthCode;
+import kr.hs.entrydsm.user.entity.authcode.AuthCodeRedisRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
