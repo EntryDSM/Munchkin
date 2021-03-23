@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RequestMapping("/user/auth")
 @Published
@@ -20,7 +22,7 @@ public class UserAuthController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<AccessTokenResponse> auth(@RequestBody AccountRequest accountRequest) {
+    public ResponseEntity<AccessTokenResponse> auth(@RequestBody @Valid AccountRequest accountRequest) {
         return userService.auth(accountRequest);
     }
 
