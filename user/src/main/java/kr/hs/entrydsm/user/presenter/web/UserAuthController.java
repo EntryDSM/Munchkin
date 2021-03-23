@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.user.presenter.web;
 
 import kr.hs.entrydsm.common.context.beans.Published;
-import kr.hs.entrydsm.user.usecase.UserService;
+import kr.hs.entrydsm.user.usecase.UserAuthService;
 import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +19,11 @@ import javax.validation.Valid;
 @RestController
 public class UserAuthController {
 
-    private final UserService userService;
+    private final UserAuthService userAuthService;
 
     @PostMapping
     public ResponseEntity<AccessTokenResponse> auth(@RequestBody @Valid AccountRequest accountRequest) {
-        return userService.auth(accountRequest);
+        return userAuthService.auth(accountRequest);
     }
 
 }

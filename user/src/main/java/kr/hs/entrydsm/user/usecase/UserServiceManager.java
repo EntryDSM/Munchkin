@@ -30,7 +30,7 @@ import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
-public class UserServiceManager implements UserService {
+public class UserServiceManager implements UserAuthService, UserService {
 
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
