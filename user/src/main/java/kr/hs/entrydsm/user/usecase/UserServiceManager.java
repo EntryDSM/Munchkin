@@ -5,6 +5,8 @@ import kr.hs.entrydsm.user.entity.authcode.AuthCode;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimit;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimitRedisRepository;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeRedisRepository;
+import kr.hs.entrydsm.user.entity.refreshtoken.RefreshToken;
+import kr.hs.entrydsm.user.entity.refreshtoken.RefreshTokenRepository;
 import kr.hs.entrydsm.user.entity.status.Status;
 import kr.hs.entrydsm.user.entity.status.StatusRepository;
 import kr.hs.entrydsm.user.entity.user.User;
@@ -33,6 +35,7 @@ import java.util.Random;
 public class UserServiceManager implements UserAuthService, UserService {
 
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final StatusRepository statusRepository;
     private final AuthCodeRedisRepository authCodeRepository;
     private final AuthCodeLimitRedisRepository authCodeLimitRepository;
@@ -136,6 +139,10 @@ public class UserServiceManager implements UserAuthService, UserService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Set-Cookie",
                 String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/", refreshToken, getExpireDateByString()));
+
+        refreshTokenRepository.findById(receiptCode)
+                .or(() -> Optional.of(new RefreshToken(receiptCode, refreshToken, refreshTokenExpiration)))
+                .ifPresent(token -> refreshTokenRepository.save(token.update(refreshToken, refreshTokenExpiration)));
 
         return ResponseEntity.ok()
                 .headers(headers)
