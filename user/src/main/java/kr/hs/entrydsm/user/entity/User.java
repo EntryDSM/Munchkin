@@ -9,10 +9,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
