@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
-import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
 @AllArgsConstructor
@@ -15,10 +14,15 @@ public class AuthCode {
     @Id
     private final String phoneNumber;
 
-    @Indexed
-    private final String code;
+    private String code;
 
     @TimeToLive
     private long ttl;
+
+    public AuthCode updateAuthCode(String code, long ttl) {
+        this.code = code;
+        this.ttl = ttl;
+        return this;
+    }
 
 }
