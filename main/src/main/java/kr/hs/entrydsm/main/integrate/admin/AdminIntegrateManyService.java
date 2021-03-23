@@ -58,14 +58,14 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
                             .dayAbsenceCount(null) //무단 결석
                             .lectureAbsenceCount(null) //무단 결과
                             .latenessCount(null) //지각
-                            .earlyLeaveCound(null) //조퇴
+                            .earlyLeaveCount(null) //조퇴
                             .conversionScore(null) //교과 성적 환산 점수
                             .attendanceScore(null) //출석 점수
                             .totalScoreFirstRound(null) //1차 전형 총점
                             .build()
             );
         }
-        return null;
+        return excelApplicants;
     }
 
 }

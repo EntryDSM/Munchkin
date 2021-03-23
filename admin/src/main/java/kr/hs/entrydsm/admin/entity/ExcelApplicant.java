@@ -74,7 +74,7 @@ public class ExcelApplicant {
 
     private String latenessCount; //지각
 
-    private String earlyLeaveCound; //조퇴
+    private String earlyLeaveCount; //조퇴
 
     private String conversionScore; //교과 성적 환산 점수
 
