@@ -65,6 +65,11 @@ public class UserServiceManager implements UserAuthService, UserService {
     }
 
     @Override
+    public ResponseEntity<AccessTokenResponse> refreshToken(String refreshToken) {
+        return null;
+    }
+
+    @Override
     public ResponseEntity<AccessTokenResponse> registerUser(SignupRequest signupRequest) {
         String phoneNumber = signupRequest.getPhoneNumber();
         String code = signupRequest.getCode();

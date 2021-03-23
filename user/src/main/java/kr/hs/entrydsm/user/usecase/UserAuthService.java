@@ -6,4 +6,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserAuthService {
     ResponseEntity<AccessTokenResponse> auth(AccountRequest accountRequest);
+    ResponseEntity<AccessTokenResponse> refreshToken(String refreshToken);
 }
