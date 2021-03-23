@@ -93,7 +93,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(32).setCellValue(historyScore[4]); //역사 3학년 1학기
             row.createCell(33).setCellValue(historyScore[5]); //역사 3학년 2학기
 
-            String[] mathScore = excelApplicants.get(i-1).getMathGrade().split("").;
+            String[] mathScore = excelApplicants.get(i-1).getMathGrade().split("");
 
             row.createCell(34).setCellValue(mathScore[0]); //수학 1학년 1학기
             row.createCell(35).setCellValue(mathScore[1]); //수학 1학년 2학기
