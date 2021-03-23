@@ -1,16 +1,20 @@
 package kr.hs.entrydsm.user.usecase;
 
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
-import kr.hs.entrydsm.user.entity.*;
+import kr.hs.entrydsm.user.entity.authcode.AuthCode;
+import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimit;
+import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimitRedisRepository;
+import kr.hs.entrydsm.user.entity.authcode.AuthCodeRedisRepository;
+import kr.hs.entrydsm.user.entity.status.Status;
+import kr.hs.entrydsm.user.entity.status.StatusRepository;
+import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.user.UserRepository;
 import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.AuthCodeRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
-import kr.hs.entrydsm.user.usecase.exception.AuthCodeRequestOverLimitException;
-import kr.hs.entrydsm.user.usecase.exception.InvalidAuthCodeException;
-import kr.hs.entrydsm.user.usecase.exception.UserAlreadyExistsException;
-import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;
+import kr.hs.entrydsm.user.usecase.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -19,9 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
@@ -73,6 +74,7 @@ public class UserServiceManager implements UserService {
 
         authCodeRepository.findById(phoneNumber)
                 .filter(authCode -> authCode.getCode().equals(code))
+                .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
         User user = userRepository.save(
@@ -105,13 +107,22 @@ public class UserServiceManager implements UserService {
 
         String randomCode = randomCode();
         authCodeRepository.findById(phoneNumber)
-                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, authCodeTtl)))
+                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
                 .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)));
     }
 
     @Override
     public void verifyAuthCode(AuthCodeRequest authCodeRequest) {
+        String phoneNumber = authCodeRequest.getPhoneNumber();
+        String code = authCodeRequest.getCode();;
 
+        authCodeRepository.findById(phoneNumber)
+                .filter(authCode -> authCode.getCode().equals(code))
+                .map(authCode -> {
+                    if (authCode.isVerified()) throw new AuthCodeAlreadyVerifiedException();
+                    return authCodeRepository.save(authCode.verify());
+                })
+                .orElseThrow(InvalidAuthCodeException::new);
     }
 
     private ResponseEntity<AccessTokenResponse> getAccessToken(long receiptCode) {

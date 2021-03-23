@@ -7,6 +7,7 @@ import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<AccessTokenResponse> registerUser(@RequestBody @Valid SignupRequest signupRequest) {
         return userService.registerUser(signupRequest);
