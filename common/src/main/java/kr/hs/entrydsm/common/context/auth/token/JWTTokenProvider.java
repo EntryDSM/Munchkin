@@ -59,10 +59,6 @@ public class JWTTokenProvider {
         return null;
     }
 
-    public String resoleRefreshToken(HttpServletRequest request) {
-        return request.getHeader(refreshTokenHeader);
-    }
-
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey)
