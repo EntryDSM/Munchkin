@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.user.usecase;
 
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
 import kr.hs.entrydsm.user.entity.authcode.AuthCode;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimit;
@@ -16,6 +17,7 @@ import kr.hs.entrydsm.user.usecase.dto.request.AuthCodeRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
+import kr.hs.entrydsm.user.usecase.dto.response.UserStatusResponse;
 import kr.hs.entrydsm.user.usecase.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +35,8 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Service
 public class UserServiceManager implements UserAuthService, UserService {
+
+    private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -96,12 +100,14 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .telephoneNumber(phoneNumber)
                         .name(name)
                         .password(encodedPassword)
+                        .selfIntroduce("")
+                        .studyPlan("")
                         .build()
         );
 
         statusRepository.save(
                 Status.builder()
-                        .receiptCode(user.getReceiptCode())
+                        .user(user)
                         .isPaid(false)
                         .isPrintedArrived(false)
                         .isSubmit(false)
@@ -109,6 +115,25 @@ public class UserServiceManager implements UserAuthService, UserService {
         );
 
         return getAccessToken(user.getReceiptCode());
+    }
+
+    @Override
+    public UserStatusResponse getUserStatus() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        User user = userRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(UserNotFoundException::new);
+        Status status = user.getStatus();
+
+        return UserStatusResponse.builder()
+                    .name(user.getName())
+                    .phoneNumber(user.getTelephoneNumber())
+                    .isSubmit(status.isSubmit())
+                    .isPaid(status.isPaid())
+                    .isPrintedArrived(status.isPrintedArrived())
+                    .applicationType(user.getApplicationType())
+                    .selfIntroduce(user.getSelfIntroduce().length())
+                    .studyPlan(user.getStudyPlan().length())
+                    .build();
     }
 
     @Override

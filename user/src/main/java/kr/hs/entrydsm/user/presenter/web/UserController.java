@@ -1,11 +1,13 @@
 package kr.hs.entrydsm.user.presenter.web;
 
+import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.user.usecase.UserService;
 import kr.hs.entrydsm.user.usecase.dto.request.AuthCodeRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
+import kr.hs.entrydsm.user.usecase.dto.response.UserStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,12 @@ public class UserController {
     @PostMapping
     public ResponseEntity<AccessTokenResponse> registerUser(@RequestBody @Valid SignupRequest signupRequest) {
         return userService.registerUser(signupRequest);
+    }
+
+    @JWTRequired
+    @GetMapping("/status")
+    public UserStatusResponse getUserStatus() {
+        return userService.getUserStatus();
     }
 
     @PostMapping("/phone/verify")
