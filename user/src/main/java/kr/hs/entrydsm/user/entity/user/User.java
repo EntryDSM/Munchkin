@@ -1,10 +1,10 @@
 package kr.hs.entrydsm.user.entity.user;
 
+import kr.hs.entrydsm.user.entity.status.Status;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
 import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
-import kr.hs.entrydsm.user.entity.status.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -78,12 +78,8 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Transient
-    @OneToOne(mappedBy = "receiptCode", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Status status;
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 
 }

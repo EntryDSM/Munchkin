@@ -1,13 +1,12 @@
 package kr.hs.entrydsm.user.entity.status;
 
+import kr.hs.entrydsm.user.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,6 +18,11 @@ public class Status {
 
     @Id
     private long receiptCode;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "receipt_code")
+    private User user;
 
     private boolean isPaid;
 
