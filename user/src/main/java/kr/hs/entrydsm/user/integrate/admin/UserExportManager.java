@@ -38,4 +38,9 @@ public class UserExportManager implements UserExportRepository {
         return null;
     }
 
+    @Override
+    public List<User> findAllForExcel() {
+        return null;
+    }
+
 }
