@@ -93,6 +93,7 @@ project(':common') {
 project(':user') {
     dependencies {
         compile project(':common')
+        compile 'org.springframework.boot:spring-boot-starter-data-redis'
     }
 }
 

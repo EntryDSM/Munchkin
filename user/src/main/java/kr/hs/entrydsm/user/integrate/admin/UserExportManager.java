@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.user.integrate.admin;
 
-import kr.hs.entrydsm.user.entity.User;
-import kr.hs.entrydsm.user.entity.UserRepository;
+import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
