@@ -47,4 +47,20 @@ public class Applicant {
     public boolean isFemale() {
         return sex.equals("female");
     }
+
+    public boolean hasSchoolInfo() {
+        return !isEducationalStatusEmpty() && !isQualificationExam();
+    }
+
+    private boolean isEducationalStatusEmpty() {
+        return educationalStatus == null;
+    }
+
+    private boolean isQualificationExam() {
+        return educationalStatus.equals("QUALIFICATION_EXAM");
+    }
+
+    public boolean isHomeTelEmpty() {
+        return homeTel == null;
+    }
 }

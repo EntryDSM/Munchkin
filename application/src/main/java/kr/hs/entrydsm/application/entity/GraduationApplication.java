@@ -58,4 +58,8 @@ public class GraduationApplication extends Application {
     public String getSchoolName() {
         return school.getName();
     }
+
+    public String getSchoolCode() {
+        return school.getCode();
+    }
 }

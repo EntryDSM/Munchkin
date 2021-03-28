@@ -1,8 +1,7 @@
 package kr.hs.entrydsm.application;
 
-import kr.hs.entrydsm.application.entity.Applicant;
-import kr.hs.entrydsm.application.entity.Application;
-import kr.hs.entrydsm.application.entity.ApplicationRepository;
+import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.time.format.DateTimeFormatter;
@@ -12,7 +11,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PdfDataConverter {
 
-    private final ApplicationRepository applicationRepository;
+    private final GraduationApplicationRepository graduationRepository;
 
     private final Map<String, Object> values = new HashMap<>();
 
@@ -21,6 +20,7 @@ public class PdfDataConverter {
         setPersonalInfo(applicant);
         setGenderInfo(applicant);
         setSchoolInfo(applicant);
+        setPhoneNumber(applicant);
 
         return values;
     }
@@ -54,7 +54,40 @@ public class PdfDataConverter {
     }
 
     private void setSchoolInfo(Applicant applicant) {
+        if (applicant.hasSchoolInfo()) {
+            GraduationApplication application = graduationRepository.findByReceiptCode(applicant.getReceiptCode())
+                    .orElseThrow(ApplicationNotFoundException::new);
+            values.put("schoolCode", setBlankIfNull(application.getSchoolCode()));
+            //values.put("schoolClass", setBlankIfNull(application.getSchoolClass()));
+            values.put("schoolTel", toFormattedPhoneNumber(application.getSchoolTel()));
+            values.put("schoolName", setBlankIfNull(application.getSchoolName()));
+        } else {
+            values.putAll(emptySchoolInfo());
+        }
+    }
 
+    private void setPhoneNumber(Applicant applicant) {
+        values.put("applicantTel", toFormattedPhoneNumber(applicant.getTelephoneNumber()));
+        values.put("parentTel", toFormattedPhoneNumber(applicant.getParentTel()));
+        String homeTel = applicant.isHomeTelEmpty() ? "없음" : toFormattedPhoneNumber(applicant.getHomeTel());
+        values.put("homeTel", toFormattedPhoneNumber(homeTel));
+    }
+
+    private Map<String, Object> emptySchoolInfo() {
+        return Map.of(
+                "schoolCode", "",
+                "schoolClass", "",
+                "schoolTel", "",
+                "schoolName", ""
+        );
+    }
+
+    private String toFormattedPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isBlank()) {
+            return "";
+        } else {
+            return phoneNumber.replace("-", " - ");
+        }
     }
 
     private String setBlankIfNull(String input) {
