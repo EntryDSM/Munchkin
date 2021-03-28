@@ -39,4 +39,12 @@ public class Applicant {
     private String photoFileName;
 
     private String homeTel;
+
+    public boolean isMale() {
+        return sex.equals("male");
+    }
+
+    public boolean isFemale() {
+        return sex.equals("female");
+    }
 }
