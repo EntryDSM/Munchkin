@@ -28,21 +28,21 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
         for(User user : users) {
             excelApplicants.add(
                     ExcelApplicant.builder()
-                            .examCode(null) //수험번호
-                            .receiptCode(null) //접수 번호
-                            .applicationType(null) //전형 유형
-                            .applicationRemrk(null) //추가 유형
-                            .area(null) //지역
-                            .name(null) //이름
-                            .birthDay(null) //생년월일
-                            .address(null) //주소
+                            .examCode(null) //수험번호 (user)    //user아니면 application에서 필요함
+                            .receiptCode(null) //접수 번호 (user)
+                            .applicationType(null) //전형 유형 (user)
+                            .applicationRemrk(null) //추가 유형 (user)
+                            .area(null) //지역 (user)
+                            .name(null) //이름 (user)
+                            .birthDay(null) //생년월일 (user)
+                            .address(null) //주소 (user)
                             .middleSchool(null) //출신학교
                             .middleSchoolStudentNumber(null) //중학교 학번 (반으로 분류)
-                            .telephoneNumber(null) //학생 전화번호
-                            .studyPlan(null) //자기소개서
-                            .selfIntroduce(null) //학업 계획서
-                            .parentName(null) //보호자 이름
-                            .parentTel(null) //보호자 전화번호
+                            .telephoneNumber(null) //학생 전화번호 (user)
+                            .studyPlan(null) //자기소개서 (user)
+                            .selfIntroduce(null) //학업 계획서 (user)
+                            .parentName(null) //보호자 이름 (user)
+                            .parentTel(null) //보호자 전화번호 (user)
                             .koreanGrade(null) //국어 점수
                             .socialGrade(null) //사회 점수
                             .historyGrade(null) //역사 점수
