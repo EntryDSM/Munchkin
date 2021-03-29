@@ -11,16 +11,10 @@ import java.time.LocalDateTime;
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Application {
+public abstract class Application extends BaseTimeEntity {
 
     @Id
     private Long receiptCode;
-
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime modifiedAt;
 
     public abstract boolean isGraduation();
 }
