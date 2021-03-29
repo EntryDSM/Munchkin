@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -13,6 +14,8 @@ import java.math.BigDecimal;
 public class QualificationExamApplication extends Application {
 
     private BigDecimal averageScore;
+
+    private LocalDate qualifiedAt;
 
     @Override
     public boolean isGraduation() {

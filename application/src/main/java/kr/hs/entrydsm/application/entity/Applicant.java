@@ -59,11 +59,19 @@ public class Applicant {
         return educationalStatus == null;
     }
 
-    private boolean isQualificationExam() {
-        return educationalStatus.equals("QUALIFICATION_EXAM");
-    }
-
     public boolean isHomeTelEmpty() {
         return homeTel == null;
+    }
+
+    public boolean isQualificationExam() {
+        return educationalStatus.equals(EducationalStatus.QUALIFICATION_EXAM);
+    }
+
+    public boolean isGraduate() {
+        return educationalStatus.equals(EducationalStatus.GRADUATE);
+    }
+
+    public boolean isProspectiveGraduate() {
+        return educationalStatus.equals(EducationalStatus.PROSPECTIVE_GRADUATE);
     }
 }

@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application;
 
-import kr.hs.entrydsm.application.entity.Applicant;
-import kr.hs.entrydsm.application.entity.GraduationApplication;
-import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
-import kr.hs.entrydsm.application.entity.QualificationExamApplicationRepository;
+import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +22,8 @@ public class PdfDataConverter {
         setGenderInfo(applicant);
         setSchoolInfo(applicant);
         setPhoneNumber(applicant);
+        setGraduationClassification(applicant);
+        setUserType(applicant);
 
         return values;
     }
@@ -81,10 +80,15 @@ public class PdfDataConverter {
         values.putAll(emptyGraduationClassification());
 
         switch (applicant.getEducationalStatus()) {
-            case "QUALIFICATION_EXAM":
-                // TODO 검정고시 합격 날짜 필요
+            case EducationalStatus.QUALIFICATION_EXAM:
+                qualificationExamRepository.findByReceiptCode(applicant.getReceiptCode())
+                        .filter(qualificationExam -> qualificationExam.getQualifiedAt() != null)
+                        .ifPresent(qualificationExam -> {
+                            values.put("qualificationExamPassedYear", String.valueOf(qualificationExam.getQualifiedAt().getYear()));
+                            values.put("qualificationExamPassedMonth", String.valueOf(qualificationExam.getQualifiedAt().getMonthValue()));
+                        });
                 break;
-            case "GRADUATE":
+            case EducationalStatus.GRADUATE:
                 graduationRepository.findByReceiptCode(applicant.getReceiptCode())
                         .filter(graduation -> graduation.getGraduateAt() != null)
                         .ifPresent(graduation -> {
@@ -92,7 +96,7 @@ public class PdfDataConverter {
                             values.put("graduateMonth", String.valueOf(graduation.getGraduateAt().getMonthValue()));
                         });
                 break;
-            case "PROSPECTIVE_GRADUATE":
+            case EducationalStatus.PROSPECTIVE_GRADUATE:
                 graduationRepository.findByReceiptCode(applicant.getReceiptCode())
                         .filter(graduation -> graduation.getGraduateAt() != null)
                         .ifPresent(graduation -> {
@@ -100,6 +104,14 @@ public class PdfDataConverter {
                         });
                 break;
         }
+    }
+
+    private void setUserType(Applicant applicant) {
+        values.put("isQualificationExam", toBallotBox(applicant.isQualificationExam()));
+        values.put("isGraduate", toBallotBox(applicant.isGraduate()));
+        values.put("isProspectiveGraduate", toBallotBox(applicant.isProspectiveGraduate()));
+        values.put("isDaejeon", toBallotBox(applicant.isDaejeon()));
+        values.put("isNotDaejeon", toBallotBox(!applicant.isDaejeon()));
     }
 
     private Map<String, Object> emptySchoolInfo() {
