@@ -44,11 +44,11 @@ public class Applicant {
     private String homeTel;
 
     public boolean isMale() {
-        return sex.equals("male");
+        return sex.equals("MALE");
     }
 
     public boolean isFemale() {
-        return sex.equals("female");
+        return sex.equals("FEMALE");
     }
 
     public boolean hasSchoolInfo() {
