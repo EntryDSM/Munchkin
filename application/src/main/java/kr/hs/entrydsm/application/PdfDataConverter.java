@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application;
 
-import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.entity.Applicant;
+import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.entity.QualificationExamApplicationRepository;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
