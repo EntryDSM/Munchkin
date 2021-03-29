@@ -3,6 +3,7 @@ package kr.hs.entrydsm.application.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -10,6 +11,9 @@ import javax.persistence.*;
 public class GraduationApplication extends Application {
 
     private Boolean isGraduated;
+
+    @Column(length = 5)
+    private String studentNumber;
 
     @Getter(AccessLevel.NONE)
     @ManyToOne
@@ -50,6 +54,8 @@ public class GraduationApplication extends Application {
     @Column(length = 6)
     private String techAndHomeScore;
 
+    private LocalDate graduateAt;
+
     @Override
     public boolean isGraduation() {
         return true;
@@ -61,5 +67,14 @@ public class GraduationApplication extends Application {
 
     public String getSchoolCode() {
         return school.getCode();
+    }
+
+    public String getSchoolClass() {
+        String schoolClass = null;
+        if (studentNumber != null && !studentNumber.isBlank()) {
+            int classNumber = Integer.parseInt(studentNumber.substring(1, 3));
+            schoolClass = Integer.toString(classNumber);
+        }
+        return schoolClass;
     }
 }
