@@ -16,4 +16,5 @@ public interface UserExportRepository {
                        String schoolName, String telephoneNumber, String name);
     void changeExamCode(long receiptCode, String examCode);
     List<User> findAllIsSubmitTrue();
+    List<User> findAllForExcel();
 }
