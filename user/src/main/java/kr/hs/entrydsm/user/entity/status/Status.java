@@ -35,4 +35,8 @@ public class Status {
     @Column(columnDefinition = "char(5)")
     private String examCode;
 
+    public void setExamCode(String examCode) {
+        this.examCode = examCode;
+    }
+
 }

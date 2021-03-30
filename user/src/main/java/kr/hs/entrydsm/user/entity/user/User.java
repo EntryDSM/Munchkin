@@ -82,4 +82,9 @@ public class User {
     @PrimaryKeyJoinColumn
     private Status status;
 
+    public User setExamCode(String examCode) {
+        status.setExamCode(examCode);
+        return this;
+    }
+
 }
