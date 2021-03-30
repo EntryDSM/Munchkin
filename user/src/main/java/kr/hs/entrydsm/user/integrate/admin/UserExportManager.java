@@ -5,9 +5,9 @@ import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.infrastructure.database.StatusRepositoryManager;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -28,19 +28,32 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public Page<User> findAll(Pageable page, long receiptCode,
+    public Page<User> findAll(Pageable page, Long receiptCode,
                               boolean isDaejeon, boolean isNationwide,
-                              String telephoneNumber, String name,
+                              @NonNull String telephoneNumber, @NonNull String name,
                               boolean isCommon, boolean isMeister, boolean isSocial,
                               boolean isPrintedArrived, boolean isPaid) {
-        return userRepository.findAllBy(PageRequest.of(0, 10));
+
+        String receiptCodeQuery = "%%";
+        if (receiptCode != null) receiptCodeQuery = receiptCode.toString();
+
+        String isDaejeonQuery = "null";
+        if (isDaejeon) isDaejeonQuery = "1";
+        if (isNationwide) isDaejeonQuery = "0";
+        if (isDaejeon && isNationwide) isDaejeonQuery = "%%";
+
+        String telephoneNumberQuery = "%" + telephoneNumber + "%";
+        String nameQuery = "%" + name + "%";
+
+        return userRepository.findAllByUserInfo(receiptCodeQuery, isDaejeonQuery, telephoneNumberQuery,
+                nameQuery, isCommon, isMeister, isSocial, isPrintedArrived, isPaid, page);
     }
 
     @Override
     public void changeExamCode(long receiptCode, String examCode) {
         userRepository.findByReceiptCode(receiptCode)
                 .map(user -> user.setExamCode(examCode))
-                .ifPresent(user -> userRepository.save(user));
+                .ifPresent(userRepository::save);
     }
 
     @Override
