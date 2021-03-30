@@ -19,8 +19,7 @@ public class Status {
     @Id
     private long receiptCode;
 
-    @OneToOne
-    @MapsId
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receipt_code")
     private User user;
 
