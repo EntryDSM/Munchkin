@@ -153,7 +153,7 @@ public class UserServiceManager implements UserAuthService, UserService {
     @Override
     public void verifyAuthCode(AuthCodeRequest authCodeRequest) {
         String phoneNumber = authCodeRequest.getPhoneNumber();
-        String code = authCodeRequest.getCode();;
+        String code = authCodeRequest.getCode();
 
         authCodeRepository.findById(phoneNumber)
                 .filter(authCode -> authCode.getCode().equals(code))
