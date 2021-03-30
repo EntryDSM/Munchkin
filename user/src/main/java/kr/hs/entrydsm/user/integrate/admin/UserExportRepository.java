@@ -10,10 +10,11 @@ import java.util.List;
 @Published
 public interface UserExportRepository {
     User findByReceiptCode(int receiptCode);
-    Page<User> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
-                       boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                       boolean isMeister, boolean isSocial, int receiptCode,
-                       String schoolName, String telephoneNumber, String name);
+    Page<User> findAll(Pageable page, long receiptCode,
+                       boolean isDaejeon, boolean isNationwide,
+                       String telephoneNumber, String name,
+                       boolean isCommon, boolean isMeister, boolean isSocial,
+                       boolean isPrintedArrived, boolean isPaid);
     void changeExamCode(long receiptCode, String examCode);
     List<User> findAllIsSubmitTrue();
 }
