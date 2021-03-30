@@ -78,8 +78,13 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Status status;
+
+    public User setExamCode(String examCode) {
+        status.setExamCode(examCode);
+        return this;
+    }
 
 }
