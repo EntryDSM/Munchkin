@@ -55,7 +55,7 @@ public class Applicant {
         return !isEducationalStatusEmpty() && !isQualificationExam();
     }
 
-    private boolean isEducationalStatusEmpty() {
+    public boolean isEducationalStatusEmpty() {
         return educationalStatus == null;
     }
 
@@ -73,5 +73,25 @@ public class Applicant {
 
     public boolean isProspectiveGraduate() {
         return educationalStatus.equals(EducationalStatus.PROSPECTIVE_GRADUATE);
+    }
+
+    public boolean isNationalMerit() {
+        return applicationRemark.equals("NATIONAL_MERIT");
+    }
+
+    public boolean isPrivilegedAdmission() {
+        return applicationRemark.equals("PRIVILEGED_ADMISSION");
+    }
+
+    public boolean isCommonApplicationType() {
+        return applicationType.equals("COMMON");
+    }
+
+    public boolean isMeisterApplicationType() {
+        return applicationType.equals("MEISTER");
+    }
+
+    public boolean isSocialApplicationType() {
+        return applicationType.equals("SOCIAL");
     }
 }
