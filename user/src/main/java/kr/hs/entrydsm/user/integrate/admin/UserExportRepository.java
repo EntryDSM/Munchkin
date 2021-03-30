@@ -17,4 +17,5 @@ public interface UserExportRepository {
                        boolean isPrintedArrived, boolean isPaid);
     void changeExamCode(long receiptCode, String examCode);
     List<User> findAllIsSubmitTrue();
+    List<User> findAllForExcel();
 }

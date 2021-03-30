@@ -17,4 +17,6 @@ public interface UserRepositoryManager extends CrudRepository<User, Long>, UserR
 
     @Override
     User save(User user);
+
+    List<User> findAllBy();
 }
