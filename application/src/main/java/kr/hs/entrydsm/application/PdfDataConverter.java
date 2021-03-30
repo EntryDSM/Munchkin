@@ -1,9 +1,11 @@
 package kr.hs.entrydsm.application;
 
+import com.itextpdf.io.IOException;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +26,18 @@ public class PdfDataConverter {
         setPhoneNumber(applicant);
         setGraduationClassification(applicant);
         setUserType(applicant);
+        setGradeScore(applicant);
+        setLocalDate();
+        setIntroduction(applicant);
+        setParentInfo(applicant);
+
+        if (isRecommendationsRequired(applicant)) {
+            setRecommendations(applicant);
+        }
+
+        if (applicant.getPhotoFileName() != null && !applicant.getPhotoFileName().isBlank()) {
+            setBase64Image(applicant);
+        }
 
         return values;
     }
@@ -112,6 +126,45 @@ public class PdfDataConverter {
         values.put("isProspectiveGraduate", toBallotBox(applicant.isProspectiveGraduate()));
         values.put("isDaejeon", toBallotBox(applicant.isDaejeon()));
         values.put("isNotDaejeon", toBallotBox(!applicant.isDaejeon()));
+        values.put("isNationalMerit", toBallotBox(applicant.isNationalMerit()));
+        values.put("isPrivilegedAdmission", toBallotBox(applicant.isPrivilegedAdmission()));
+        values.put("isCommon", toBallotBox(applicant.isCommonApplicationType()));
+        values.put("isMeister", toBallotBox(applicant.isMeisterApplicationType()));
+        values.put("isSocialMerit", toBallotBox(applicant.isSocialApplicationType()));
+    }
+
+    private void setGradeScore(Applicant applicant) {
+        // TODO score 통합
+    }
+
+    private void setLocalDate() {
+        LocalDateTime now = LocalDateTime.now();
+        values.put("year", String.valueOf(now.getYear()));
+        values.put("month", String.valueOf(now.getMonthValue()));
+        values.put("day", String.valueOf(now.getDayOfMonth()));
+    }
+
+    private void setIntroduction(Applicant applicant) {
+        // TODO applicant 데이터 추가
+    }
+
+    private void setParentInfo(Applicant applicant) {
+        values.put("parentName", applicant.getParentName());
+    }
+
+    private void setRecommendations(Applicant applicant) {
+        values.put("isDaejeonAndMeister", markIfTrue(applicant.isDaejeon() && applicant.isMeisterApplicationType()));
+        values.put("isDaejeonAndSocialMerit", markIfTrue(applicant.isDaejeon() && applicant.isSocialApplicationType()));
+        values.put("isNotDaejeonAndMeister", markIfTrue(!applicant.isDaejeon() && applicant.isMeisterApplicationType()));
+        values.put("isNotDaejeonAndSocialMerit", markIfTrue(!applicant.isDaejeon() && applicant.isSocialApplicationType()));
+    }
+
+    private void setBase64Image(Applicant applicant) throws IOException {
+        // TODO 이미지 서비스 필요 요망
+    }
+
+    private String markIfTrue(boolean isTrue) {
+        return isTrue ? "◯" : "";
     }
 
     private Map<String, Object> emptySchoolInfo() {
@@ -131,6 +184,10 @@ public class PdfDataConverter {
                 "graduateMonth", "__",
                 "prospectiveGraduateMonth", "__"
         );
+    }
+
+    private boolean isRecommendationsRequired(Applicant applicant) {
+        return !applicant.isEducationalStatusEmpty() && !applicant.isCommonApplicationType() && !applicant.isProspectiveGraduate();
     }
 
     private String toFormattedPhoneNumber(String phoneNumber) {
