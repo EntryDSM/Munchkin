@@ -52,7 +52,9 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(0).setCellValue(excelApplicants.get(i-1).getExamCode()); //수험번호
             row.createCell(1).setCellValue(excelApplicants.get(i-1).getReceiptCode()); //접수번호
             row.createCell(2).setCellValue(excelApplicants.get(i-1).getApplicationType()); //전형 유형
-            row.createCell(3).setCellValue(excelApplicants.get(i-1).getArea()); //지역
+
+            String area = excelApplicants.get(i-1).getArea().equals("1")?"대전":"전국";
+            row.createCell(3).setCellValue(area); //지역
             row.createCell(4).setCellValue(excelApplicants.get(i-1).getApplicationRemrk()); //추가유형
             row.createCell(5).setCellValue(excelApplicants.get(i-1).getName()); //성명
             row.createCell(6).setCellValue(excelApplicants.get(i-1).getBirthDay()); //생년월일
