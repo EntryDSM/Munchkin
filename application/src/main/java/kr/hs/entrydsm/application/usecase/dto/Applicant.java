@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto;
 
+import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,4 +35,33 @@ public class Applicant {
     private String conversionScore;
     private String attendanceScore;
     private String totalScoreFirstRound;
+
+    public void setGraduationApplication(GraduationApplication graduationApplication){
+        this.schoolName = graduationApplication.getSchoolName();
+        this.receiptCode = graduationApplication.getReceiptCode();
+        this.studentNumber = graduationApplication.getStudentNumber();
+        this.volunteerTime = graduationApplication.getVolunteerTime();
+        this.dayAbsenceCount = graduationApplication.getDayAbsenceCount();
+        this.lectureAbsenceCount = graduationApplication.getLectureAbsenceCount();
+        this.latenessCount = graduationApplication.getLatenessCount();
+        this.earlyLeaveCount = graduationApplication.getEarlyLeaveCount();
+        this.koreanScore = graduationApplication.getKoreanScore();
+        this.socialScore = graduationApplication.getSocialScore();
+        this.historyScore = graduationApplication.getHistoryScore();
+        this.mathScore = graduationApplication.getMathScore();
+        this.scienceScore = graduationApplication.getScienceScore();
+        this.englishScore = graduationApplication.getEnglishScore();
+        this.techAndHomeScore = graduationApplication.getTechAndHomeScore();
+    }
+
+    public void setScore(Score score){
+        this.totalFirstGradeScores = score.getTotalFirstGradeScores();
+        this.totalSecondGradeScores = score.getTotalSecondGradeScores();
+        this.totalThirdGradeScores = score.getTotalThirdGradeScores();
+        this.volunteerScore = score.getVolunteerScore();
+        this.conversionScore = score.getConversionScore();
+        this.attendanceScore = score.getAttendanceScore();
+        this.totalScoreFirstRound = score.getTotalScoreFirstRound();
+    }
+
 }
