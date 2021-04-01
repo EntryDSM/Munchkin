@@ -19,4 +19,5 @@ public interface UserRepositoryManager extends CrudRepository<User, Long>, UserR
     User save(User user);
 
     List<User> findAllBy();
+    long countAllBy();
 }
