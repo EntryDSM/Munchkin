@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.application.integrate.admin;
 
 import kr.hs.entrydsm.application.entity.Application;
+import kr.hs.entrydsm.application.entity.ApplicationRepository;
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
-import kr.hs.entrydsm.application.entity.ApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.common.model.ReportCard;
