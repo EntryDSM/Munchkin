@@ -1,22 +1,33 @@
 package kr.hs.entrydsm.application.integrate.admin;
 
-import kr.hs.entrydsm.application.entity.Application;
-import kr.hs.entrydsm.application.entity.ApplicationRepository;
-import kr.hs.entrydsm.application.entity.GraduationApplication;
-import kr.hs.entrydsm.application.entity.QualificationExamApplication;
+import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
+import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.common.model.Scores;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ApplicationExportManager implements ApplicationExportRepository {
 
     private final ApplicationRepository applicationRepository;
+    private final GraduationApplicationRepository graduationApplicationRepository;
     private final ScoreCalculator scoreCalculator;
+
+    @Override
+    public List<GraduationApplication> getApplicants() {
+        List<GraduationApplication> result = new ArrayList<>();
+        graduationApplicationRepository.findAll().forEach(result::add);
+        result.sort(Comparator.comparing(Application::getReceiptCode));
+        return result;
+    }
 
     @Override
     public ReportCard getReportCard(long receiptCode) {
