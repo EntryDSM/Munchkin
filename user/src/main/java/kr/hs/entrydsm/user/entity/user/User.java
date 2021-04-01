@@ -1,14 +1,15 @@
-package kr.hs.entrydsm.user.entity;
+package kr.hs.entrydsm.user.entity.user;
 
-import kr.hs.entrydsm.user.entity.enumeration.ApplicationRemark;
-import kr.hs.entrydsm.user.entity.enumeration.ApplicationType;
-import kr.hs.entrydsm.user.entity.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.entity.enumeration.Sex;
+import kr.hs.entrydsm.user.entity.status.Status;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
+import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
+import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -74,11 +75,29 @@ public class User {
     @Column(length = 1600)
     private String studyPlan;
 
-    @CreatedBy
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Status status;
+
+    public String getExamCode() {
+        return status.getExamCode();
+    }
+
+    public User setExamCode(String examCode) {
+        status.setExamCode(examCode);
+        return this;
+    }
+
+    public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
+                                      boolean isDaejeon, ApplicationRemark applicationRemark) {
+        this.educationalStatus = educationalStatus;
+        this.applicationType = applicationType;
+        this.isDaejeon = isDaejeon;
+        this.applicationRemark = applicationRemark;
+        return this;
+    }
 
 }
