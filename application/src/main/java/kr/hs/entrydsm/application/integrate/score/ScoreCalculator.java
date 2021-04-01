@@ -6,6 +6,6 @@ import kr.hs.entrydsm.common.model.Scores;
 import java.util.List;
 
 public interface ScoreCalculator {
-    List<Score> getAll();
+    Iterable<Score> getAll();
     Scores getScores(Long receiptCode);
 }

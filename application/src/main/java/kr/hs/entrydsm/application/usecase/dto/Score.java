@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class Score {
+    private Long receiptCode;
     private String totalFirstGradeScores; //1학년 성적 총합
     private String totalSecondGradeScores; //2학년 성적 총합
     private String totalThirdGradeScores; //3학년 성적 총합
