@@ -142,12 +142,10 @@ public class UserServiceManager implements UserAuthService, UserService {
     }
 
     @Override
-    public void sendAuthCode(PhoneNumberRequest phoneNumberRequest) {
-        String phoneNumber = phoneNumberRequest.getPhoneNumber();
-        boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
-
-        if (isRegisteredUser) throw new UserAlreadyExistsException();
-        sendRandomCode(phoneNumber);
+    public void changePassword(AccountRequest accountRequest) {
+        String phoneNumber = accountRequest.getPhoneNumber();
+        String password = accountRequest.getPassword();
+        String encodedPassword = passwordEncoder.encode(password);
     }
 
     @Override
@@ -156,6 +154,15 @@ public class UserServiceManager implements UserAuthService, UserService {
         boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
 
         if (!isRegisteredUser) throw new UserNotFoundException();
+        sendRandomCode(phoneNumber);
+    }
+
+    @Override
+    public void sendAuthCode(PhoneNumberRequest phoneNumberRequest) {
+        String phoneNumber = phoneNumberRequest.getPhoneNumber();
+        boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
+
+        if (isRegisteredUser) throw new UserAlreadyExistsException();
         sendRandomCode(phoneNumber);
     }
 
