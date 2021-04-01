@@ -1,13 +1,15 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
-import kr.hs.entrydsm.admin.entity.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +24,13 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final ApplicationExportRepository applicationExportRepository;
 
     @Override
-    public Page<Applicant> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
-                                   boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                                   boolean isMeister, boolean isSocial, int receiptCode,
-                                   String schoolName, String telephoneNumber, String name) {
-        Page<User> users = userExportRepository.findAll(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon, isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
-        long totalElements = users.getTotalElements();
+    public Page<Applicant> findAll(Pageable page, Long receiptCode,
+                                   boolean isDaejeon, boolean isNationwide,
+                                   String telephoneNumber, String name,
+                                   boolean isCommon, boolean isMeister, boolean isSocial,
+                                   boolean isPrintedArrived, boolean isPaid) {
+        long totalStudent = userExportRepository.getTotalStudent();
+        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived, isPaid);
         List<Applicant> applicants = new ArrayList<>();
         for (User user : users) {
             applicants.add(
@@ -42,7 +45,8 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                     .build()
             );
         }
-        return null;
+
+        return new PageImpl<>(applicants, page, totalStudent);
 
     }
 
