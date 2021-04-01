@@ -40,6 +40,11 @@ public class UserController {
         userService.sendAuthCode(phoneNumberRequest);
     }
 
+    @PostMapping("/password/phone/verify")
+    public void sendPasswordAuthCode(@RequestBody @Valid PhoneNumberRequest phoneNumberRequest) {
+        userService.sendPasswordAuthCode(phoneNumberRequest);
+    }
+
     @PutMapping("/phone/verify")
     public void verifyAuthCode(@RequestBody AuthCodeRequest authCodeRequest) {
         userService.verifyAuthCode(authCodeRequest);

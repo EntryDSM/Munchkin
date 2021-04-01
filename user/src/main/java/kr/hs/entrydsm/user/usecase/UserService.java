@@ -11,5 +11,6 @@ public interface UserService {
     ResponseEntity<AccessTokenResponse> registerUser(SignupRequest signupRequest);
     UserStatusResponse getUserStatus();
     void sendAuthCode(PhoneNumberRequest phoneNumberRequest);
+    void sendPasswordAuthCode(PhoneNumberRequest phoneNumberRequest);
     void verifyAuthCode(AuthCodeRequest authCodeRequest);
 }

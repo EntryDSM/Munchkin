@@ -158,6 +158,11 @@ public class UserServiceManager implements UserAuthService, UserService {
     }
 
     @Override
+    public void sendPasswordAuthCode(PhoneNumberRequest phoneNumberRequest) {
+        
+    }
+
+    @Override
     public void verifyAuthCode(AuthCodeRequest authCodeRequest) {
         String phoneNumber = authCodeRequest.getPhoneNumber();
         String code = authCodeRequest.getCode();
