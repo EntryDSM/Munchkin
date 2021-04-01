@@ -3,7 +3,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.entity.ExcelApplicant;
 import kr.hs.entrydsm.admin.integrate.user.ExcelApplicantRepository;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
-import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,21 +28,21 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
         for(User user : users) {
             excelApplicants.add(
                     ExcelApplicant.builder()
-                            .examCode(null) //수험번호
-                            .receiptCode(null) //접수 번호
-                            .applicationType(null) //전형 유형
-                            .applicationRemrk(null) //추가 유형
-                            .area(null) //지역
-                            .name(null) //이름
-                            .birthDay(null) //생년월일
-                            .address(null) //주소
+                            .examCode(user.getExamCode()) //수험번호
+                            .receiptCode(String.valueOf(user.getReceiptCode())) //접수 번호
+                            .applicationType(user.getApplicationType().toString()) //전형 유형
+                            .applicationRemrk(user.getApplicationRemark().toString()) //추가 유형
+                            .area(String.valueOf(user.isDaejeon())) //지역
+                            .name(user.getName()) //이름
+                            .birthDay(user.getBirthday().toString()) //생년월일
+                            .address(user.getAddress()) //주소
                             .middleSchool(null) //출신학교
                             .middleSchoolStudentNumber(null) //중학교 학번 (반으로 분류)
-                            .telephoneNumber(null) //학생 전화번호
-                            .studyPlan(null) //자기소개서
-                            .selfIntroduce(null) //학업 계획서
-                            .parentName(null) //보호자 이름
-                            .parentTel(null) //보호자 전화번호
+                            .telephoneNumber(user.getTelephoneNumber()) //학생 전화번호
+                            .studyPlan(user.getStudyPlan()) //자기소개서
+                            .selfIntroduce(user.getSelfIntroduce()) //학업 계획서
+                            .parentName(user.getParentName()) //보호자 이름
+                            .parentTel(user.getParentTel()) //보호자 전화번호
                             .koreanGrade(null) //국어 점수
                             .socialGrade(null) //사회 점수
                             .historyGrade(null) //역사 점수
