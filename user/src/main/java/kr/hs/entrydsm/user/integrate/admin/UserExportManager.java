@@ -69,8 +69,8 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public List<User> findAllForExcel() {
-        return null;
+    public long getTotalStudent() {
+        return userRepository.countAllBy();
     }
 
 }

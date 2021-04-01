@@ -18,4 +18,5 @@ public interface UserExportRepository {
     void changeExamCode(long receiptCode, String examCode);
     List<User> findAllIsSubmitTrue();
     List<User> findAllForExcel();
+    long getTotalStudent();
 }
