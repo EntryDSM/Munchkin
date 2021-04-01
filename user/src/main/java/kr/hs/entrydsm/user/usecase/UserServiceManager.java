@@ -146,20 +146,17 @@ public class UserServiceManager implements UserAuthService, UserService {
         String phoneNumber = phoneNumberRequest.getPhoneNumber();
         boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
 
-        if (isRegisteredUser)throw new UserAlreadyExistsException();
-        if (isOverRequestLimit(phoneNumber)) throw new AuthCodeRequestOverLimitException();
-
-        String randomCode = randomCode();
-        String content = authCodeSmsContent.replace("%code%", randomCode);
-        authCodeRepository.findById(phoneNumber)
-                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
-                .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
-                .ifPresent(authCode -> messageSender.sendMessage(phoneNumber, content));
+        if (isRegisteredUser) throw new UserAlreadyExistsException();
+        sendRandomCode(phoneNumber);
     }
 
     @Override
     public void sendPasswordAuthCode(PhoneNumberRequest phoneNumberRequest) {
-        
+        String phoneNumber = phoneNumberRequest.getPhoneNumber();
+        boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
+
+        if (!isRegisteredUser) throw new UserNotFoundException();
+        sendRandomCode(phoneNumber);
     }
 
     @Override
@@ -205,6 +202,17 @@ public class UserServiceManager implements UserAuthService, UserService {
             stringBuilder.append(random.nextInt(10));
         }
         return stringBuilder.toString();
+    }
+
+    private void sendRandomCode(String phoneNumber) {
+        if (isOverRequestLimit(phoneNumber)) throw new AuthCodeRequestOverLimitException();
+
+        String randomCode = randomCode();
+        String content = authCodeSmsContent.replace("%code%", randomCode);
+        authCodeRepository.findById(phoneNumber)
+                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
+                .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
+                .ifPresent(authCode -> messageSender.sendMessage(phoneNumber, content));
     }
 
     private boolean isOverRequestLimit(String phoneNumber) {
