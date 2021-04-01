@@ -2,6 +2,7 @@ package kr.hs.entrydsm.user.usecase;
 
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
+import kr.hs.entrydsm.common.context.sms.MessageSender;
 import kr.hs.entrydsm.user.entity.authcode.AuthCode;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimit;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimitRedisRepository;
@@ -46,6 +47,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final JWTTokenProvider tokenProvider;
+    private final MessageSender messageSender;
 
     @Value("${authcode.length}")
     private int authCodeLength;
@@ -58,6 +60,9 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Value("${authcode.limit-ttl}")
     private int authCodeLimitTtl;
+
+    @Value("${authcode.sms-content}")
+    private String authCodeSmsContent;
 
     @Value("${auth.jwt.exp.refresh}")
     private long refreshTokenExpiration;
@@ -145,9 +150,11 @@ public class UserServiceManager implements UserAuthService, UserService {
         if (isOverRequestLimit(phoneNumber)) throw new AuthCodeRequestOverLimitException();
 
         String randomCode = randomCode();
+        String content = authCodeSmsContent.replace("%code%", randomCode);
         authCodeRepository.findById(phoneNumber)
                 .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
-                .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)));
+                .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
+                .ifPresent(authCode -> messageSender.sendMessage(phoneNumber, content));
     }
 
     @Override
