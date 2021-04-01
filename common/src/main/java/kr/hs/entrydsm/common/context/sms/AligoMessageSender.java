@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.common.sms;
+package kr.hs.entrydsm.common.context.sms;
 
 import org.springframework.stereotype.Component;
 
