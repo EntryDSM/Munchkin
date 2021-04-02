@@ -14,13 +14,9 @@ public class SignupRequest extends AccountRequest {
     @Pattern(regexp = "[곽-힇]{2,10}")
     private String name;
 
-    @Pattern(regexp = "\\d{6}")
-    private String code;
-
-    public SignupRequest(String phoneNumber, String password, String name, String code) {
+    public SignupRequest(String phoneNumber, String password, String name) {
         super(phoneNumber, password);
         this.name = name;
-        this.code = code;
     }
 
 }

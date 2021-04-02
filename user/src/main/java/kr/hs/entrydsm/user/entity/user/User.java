@@ -91,6 +91,11 @@ public class User {
         return this;
     }
 
+    public User changePassword(String encodedPassword) {
+        this.password = encodedPassword;
+        return this;
+    }
+
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
                                       boolean isDaejeon, ApplicationRemark applicationRemark) {
         this.educationalStatus = educationalStatus;

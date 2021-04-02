@@ -90,13 +90,11 @@ public class UserServiceManager implements UserAuthService, UserService {
     @Override
     public ResponseEntity<AccessTokenResponse> registerUser(SignupRequest signupRequest) {
         String phoneNumber = signupRequest.getPhoneNumber();
-        String code = signupRequest.getCode();
         String name = signupRequest.getName();
         String password = signupRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
         authCodeRepository.findById(phoneNumber)
-                .filter(authCode -> authCode.getCode().equals(code))
                 .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
@@ -146,6 +144,14 @@ public class UserServiceManager implements UserAuthService, UserService {
         String phoneNumber = accountRequest.getPhoneNumber();
         String password = accountRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
+
+        authCodeRepository.findById(phoneNumber)
+                .filter(AuthCode::isVerified)
+                .orElseThrow(InvalidAuthCodeException::new);
+
+        userRepository.findByTelephoneNumber(phoneNumber)
+                .map(user -> user.changePassword(encodedPassword))
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
