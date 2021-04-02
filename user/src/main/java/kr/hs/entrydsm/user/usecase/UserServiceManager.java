@@ -2,6 +2,7 @@ package kr.hs.entrydsm.user.usecase;
 
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
+import kr.hs.entrydsm.common.context.sms.MessageSender;
 import kr.hs.entrydsm.user.entity.authcode.AuthCode;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimit;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimitRedisRepository;
@@ -46,6 +47,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final JWTTokenProvider tokenProvider;
+    private final MessageSender messageSender;
 
     @Value("${authcode.length}")
     private int authCodeLength;
@@ -58,6 +60,9 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Value("${authcode.limit-ttl}")
     private int authCodeLimitTtl;
+
+    @Value("${authcode.sms-content}")
+    private String authCodeSmsContent;
 
     @Value("${auth.jwt.exp.refresh}")
     private long refreshTokenExpiration;
@@ -85,13 +90,11 @@ public class UserServiceManager implements UserAuthService, UserService {
     @Override
     public ResponseEntity<AccessTokenResponse> registerUser(SignupRequest signupRequest) {
         String phoneNumber = signupRequest.getPhoneNumber();
-        String code = signupRequest.getCode();
         String name = signupRequest.getName();
         String password = signupRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
         authCodeRepository.findById(phoneNumber)
-                .filter(authCode -> authCode.getCode().equals(code))
                 .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
@@ -137,17 +140,36 @@ public class UserServiceManager implements UserAuthService, UserService {
     }
 
     @Override
+    public void changePassword(AccountRequest accountRequest) {
+        String phoneNumber = accountRequest.getPhoneNumber();
+        String password = accountRequest.getPassword();
+        String encodedPassword = passwordEncoder.encode(password);
+
+        authCodeRepository.findById(phoneNumber)
+                .filter(AuthCode::isVerified)
+                .orElseThrow(InvalidAuthCodeException::new);
+
+        userRepository.findByTelephoneNumber(phoneNumber)
+                .map(user -> user.changePassword(encodedPassword))
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public void sendPasswordAuthCode(PhoneNumberRequest phoneNumberRequest) {
+        String phoneNumber = phoneNumberRequest.getPhoneNumber();
+        boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
+
+        if (!isRegisteredUser) throw new UserNotFoundException();
+        sendRandomCode(phoneNumber);
+    }
+
+    @Override
     public void sendAuthCode(PhoneNumberRequest phoneNumberRequest) {
         String phoneNumber = phoneNumberRequest.getPhoneNumber();
         boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
 
-        if (isRegisteredUser)throw new UserAlreadyExistsException();
-        if (isOverRequestLimit(phoneNumber)) throw new AuthCodeRequestOverLimitException();
-
-        String randomCode = randomCode();
-        authCodeRepository.findById(phoneNumber)
-                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
-                .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)));
+        if (isRegisteredUser) throw new UserAlreadyExistsException();
+        sendRandomCode(phoneNumber);
     }
 
     @Override
@@ -193,6 +215,17 @@ public class UserServiceManager implements UserAuthService, UserService {
             stringBuilder.append(random.nextInt(10));
         }
         return stringBuilder.toString();
+    }
+
+    private void sendRandomCode(String phoneNumber) {
+        if (isOverRequestLimit(phoneNumber)) throw new AuthCodeRequestOverLimitException();
+
+        String randomCode = randomCode();
+        String content = authCodeSmsContent.replace("%code%", randomCode);
+        authCodeRepository.findById(phoneNumber)
+                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
+                .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
+                .ifPresent(authCode -> messageSender.sendMessage(phoneNumber, content));
     }
 
     private boolean isOverRequestLimit(String phoneNumber) {

@@ -3,6 +3,7 @@ package kr.hs.entrydsm.user.presenter.web;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.user.usecase.UserService;
+import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.AuthCodeRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
@@ -33,6 +34,16 @@ public class UserController {
     @GetMapping("/status")
     public UserStatusResponse getUserStatus() {
         return userService.getUserStatus();
+    }
+
+    @PutMapping("/password")
+    public void changePassword(@RequestBody @Valid AccountRequest accountRequest) {
+
+    }
+
+    @PostMapping("/password/phone/verify")
+    public void sendPasswordAuthCode(@RequestBody @Valid PhoneNumberRequest phoneNumberRequest) {
+        userService.sendPasswordAuthCode(phoneNumberRequest);
     }
 
     @PostMapping("/phone/verify")
