@@ -34,7 +34,7 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
             Applicant applicant = applicants.get(i);
             excelApplicants.add(
                     ExcelApplicant.builder()
-                            .examCode() //수험번호
+                            .examCode(applicant.getExamCode()) //수험번호
                             .receiptCode(String.valueOf(applicant.getReceiptCode())) //접수 번호
                             .applicationType(user.getApplicationType().toString()) //전형 유형
                             .applicationRemrk(user.getApplicationRemark().toString()) //추가 유형

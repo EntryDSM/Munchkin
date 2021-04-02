@@ -28,6 +28,7 @@ public class Applicant {
     private String scienceScore;
     private String englishScore;
     private String techAndHomeScore;
+    private String examCode;
     private String totalFirstGradeScores;
     private String totalSecondGradeScores;
     private String totalThirdGradeScores;
