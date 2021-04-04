@@ -145,7 +145,9 @@ public class PdfDataConverter {
     }
 
     private void setIntroduction(Applicant applicant) {
-        // TODO applicant 데이터 추가
+        values.put("selfIntroduction", setBlankIfNull(applicant.getSelfIntroduce()));
+        values.put("studyPlan", setBlankIfNull(applicant.getStudyPlan()));
+        values.put("newLineChar", "\n");
     }
 
     private void setParentInfo(Applicant applicant) {

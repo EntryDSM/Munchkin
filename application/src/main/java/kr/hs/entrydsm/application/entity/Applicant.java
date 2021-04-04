@@ -43,6 +43,10 @@ public class Applicant {
 
     private String homeTel;
 
+    private String selfIntroduce;
+
+    private String studyPlan;
+
     public boolean isMale() {
         return sex.equals("MALE");
     }
