@@ -36,7 +36,7 @@ public class PdfConfig {
         return templateEngine;
     }
 
-    public static ConverterProperties converterProperties() {
+    public static ConverterProperties createConverterProperties() {
         ConverterProperties properties = new ConverterProperties();
         FontProvider fontProvider = new DefaultFontProvider(false, false, false);
 
