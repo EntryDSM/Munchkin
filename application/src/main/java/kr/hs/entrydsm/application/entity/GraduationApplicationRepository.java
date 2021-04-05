@@ -5,5 +5,5 @@ import java.util.Optional;
 public interface GraduationApplicationRepository {
     Iterable<GraduationApplication> findAll();
     Optional<GraduationApplication> findByReceiptCode(Long receiptCode);
-    void save(GraduationApplication graduationApplication);
+    GraduationApplication save(GraduationApplication graduationApplication);
 }
