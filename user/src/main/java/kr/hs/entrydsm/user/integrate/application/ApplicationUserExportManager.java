@@ -9,6 +9,8 @@ import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+
 @Repository
 @RequiredArgsConstructor
 public class ApplicationUserExportManager implements ApplicationUserExportRepository {
@@ -30,6 +32,20 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
                         ApplicationType.valueOf(applicationType),
                         isDaejeon,
                         ApplicationRemark.valueOf(applicationRemark)
+                )
+        );
+    }
+
+    @Override
+    public void changeInformation(long receiptCode, String name, String sex, LocalDate birthday,
+                                  String parentName, String parentTel, String telephoneNumber, String homeTel,
+                                  String address, String postCode, String photoFileName) {
+        User user = findByReceiptCode(receiptCode);
+        userRepository.save(
+                user.updateUserInformation(
+                        name, sex, birthday,
+                        parentName, parentTel, telephoneNumber, homeTel,
+                        address, postCode, photoFileName
                 )
         );
     }

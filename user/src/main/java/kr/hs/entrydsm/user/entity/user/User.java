@@ -105,4 +105,20 @@ public class User {
         return this;
     }
 
+    public User updateUserInformation(String name, String sex, LocalDate birthday,
+                                      String parentName, String parentTel, String telephoneNumber, String homeTel,
+                                      String address, String postCode, String photoFileName) {
+        this.name = name;
+        this.sex = Sex.valueOf(sex);
+        this.birthday = birthday;
+        this.parentName = parentName;
+        this.parentTel = parentTel;
+        this.telephoneNumber = telephoneNumber;
+        this.homeTel = homeTel;
+        this.address = address;
+        this.postCode = postCode;
+        this.photoFileName = photoFileName;
+        return this;
+    }
+
 }
