@@ -2,13 +2,16 @@ package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.entity.ExcelApplicant;
 import kr.hs.entrydsm.admin.integrate.user.ExcelApplicantRepository;
+import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
+import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.user.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,10 +25,13 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
     @Override
     public List<ExcelApplicant> findAllForExcel() {
         List<User> users = userExportRepository.findAllForExcel();
-        //List<Applicant> applicants = applicationExportRepository
+        List<Applicant> applicants = applicationExportRepository.getApplicants();
+
 
         List<ExcelApplicant> excelApplicants = new ArrayList<>();
-        for(User user : users) {
+        for(int i=0,size=users.size(); i<size; i++) {
+            User user = users.get(i);
+            Applicant applicant = applicants.get(i);
             excelApplicants.add(
                     ExcelApplicant.builder()
                             .examCode(null) //수험번호
