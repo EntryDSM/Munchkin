@@ -25,7 +25,10 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
 
     @Override
     public void writeInformation(Long receiptCode, Information information) {
-
+        userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
+                information.getBirthday(), information.getParentName(), information.getParentTel(),
+                information.getTelephoneNumber(), information.getHomeTel(), information.getAddress(),
+                information.getPostCode(), information.getPhotoFileName());
     }
 
     @Override
