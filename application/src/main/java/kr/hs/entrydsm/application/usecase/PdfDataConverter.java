@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application;
+package kr.hs.entrydsm.application.usecase;
 
 import com.itextpdf.io.IOException;
 import kr.hs.entrydsm.application.entity.*;

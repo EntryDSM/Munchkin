@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application;
+package kr.hs.entrydsm.application.usecase;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 
