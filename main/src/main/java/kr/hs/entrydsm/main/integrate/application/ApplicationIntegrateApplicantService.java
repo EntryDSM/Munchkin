@@ -44,6 +44,18 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
 
     @Override
     public Information getInformation(Long receiptCode) {
-        return null;
+        User user = userExportRepository.findByReceiptCode(receiptCode);
+        return Information.builder()
+                .name(user.getName())
+                .sex(user.getSex().toString())
+                .birthday(user.getBirthday())
+                .parentName(user.getParentName())
+                .parentTel(user.getParentTel())
+                .telephoneNumber(user.getTelephoneNumber())
+                .homeTel(user.getHomeTel())
+                .address(user.getAddress())
+                .postCode(user.getPostCode())
+                .photoFileName(user.getPhotoFileName())
+                .build();
     }
 }
