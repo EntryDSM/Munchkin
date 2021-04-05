@@ -34,40 +34,40 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
             Applicant applicant = applicants.get(i);
             excelApplicants.add(
                     ExcelApplicant.builder()
-                            .examCode(applicant.getExamCode()) //수험번호
-                            .receiptCode(String.valueOf(applicant.getReceiptCode())) //접수 번호
-                            .applicationType(user.getApplicationType().toString()) //전형 유형
-                            .applicationRemrk(user.getApplicationRemark().toString()) //추가 유형
-                            .area(user.isDaejeon()) //지역
-                            .name(user.getName()) //이름
-                            .birthDay(user.getBirthday().toString()) //생년월일
-                            .address(user.getAddress()) //주소
-                            .middleSchool(applicant.getSchoolName()) //출신학교
-                            .middleSchoolStudentNumber(applicant.getStudentNumber()) //중학교 학번 (반으로 분류)
-                            .telephoneNumber(user.getTelephoneNumber()) //학생 전화번호
-                            .studyPlan(user.getSelfIntroduce()) //자기소개서
-                            .selfIntroduce(user.getStudyPlan()) //학업 계획서
-                            .parentName(user.getParentName()) //보호자 이름
-                            .parentTel(user.getParentTel()) //보호자 전화번호
-                            .koreanGrade(applicant.getKoreanScore()) //국어 점수
-                            .socialGrade(applicant.getSocialScore()) //사회 점수
-                            .historyGrade(applicant.getHistoryScore()) //역사 점수
-                            .mathGrade(applicant.getMathScore()) //수학 점수
-                            .scienceGrade(applicant.getScienceScore()) //과학 점수
-                            .englishGrade(applicant.getEnglishScore()) //영어 점수
-                            .techAndHomeGrade(applicant.getTechAndHomeScore()) //기술가정 점수
-                            .totalFirstGradeScores(applicant.getTotalFirstGradeScores()) //1학년 성적 총합
-                            .totalSecondGradeScores(applicant.getTotalSecondGradeScores()) //2학년 성적 총합
-                            .totalThirdGradeScores(applicant.getTotalThirdGradeScores()) //3학년 성적 총합
-                            .volunteerTime(String.valueOf(applicant.getVolunteerTime())) //봉사 시간
-                            .volunteerScore(applicant.getVolunteerScore()) //봉사 점수
-                            .dayAbsenceCount(String.valueOf(applicant.getDayAbsenceCount())) //무단 결석
-                            .lectureAbsenceCount(String.valueOf(applicant.getLectureAbsenceCount())) //무단 결과
-                            .latenessCount(String.valueOf(applicant.getLatenessCount())) //지각
-                            .earlyLeaveCount(String.valueOf(applicant.getEarlyLeaveCount())) //조퇴
-                            .conversionScore(applicant.getConversionScore()) //교과 성적 환산 점수
-                            .attendanceScore(applicant.getAttendanceScore()) //출석 점수
-                            .totalScoreFirstRound(applicant.getTotalScoreFirstRound()) //1차 전형 총점
+                            .examCode(null) //수험번호
+                            .receiptCode(null) //접수 번호
+                            .applicationType(null) //전형 유형
+                            .applicationRemrk(null) //추가 유형
+                            .area(null) //지역
+                            .name(null) //이름
+                            .birthDay(null) //생년월일
+                            .address(null) //주소
+                            .middleSchool(null) //출신학교
+                            .middleSchoolStudentNumber(null) //중학교 학번 (반으로 분류)
+                            .telephoneNumber(null) //학생 전화번호
+                            .studyPlan(null) //자기소개서
+                            .selfIntroduce(null) //학업 계획서
+                            .parentName(null) //보호자 이름
+                            .parentTel(null) //보호자 전화번호
+                            .koreanGrade(null) //국어 점수
+                            .socialGrade(null) //사회 점수
+                            .historyGrade(null) //역사 점수
+                            .mathGrade(null) //수학 점수
+                            .scienceGrade(null) //과학 점수
+                            .englishGrade(null) //영어 점수
+                            .techAndHomeGrade(null) //기술가정 점수
+                            .totalFirstGradeScores(null) //1학년 성적 총합
+                            .totalSecondGradeScores(null) //2학년 성적 총합
+                            .totalThirdGradeScores(null) //3학년 성적 총합
+                            .volunteerTime(null) //봉사 시간
+                            .volunteerScore(null) //봉사 점수
+                            .dayAbsenceCount(null) //무단 결석
+                            .lectureAbsenceCount(null) //무단 결과
+                            .latenessCount(null) //지각
+                            .earlyLeaveCount(null) //조퇴
+                            .conversionScore(null) //교과 성적 환산 점수
+                            .attendanceScore(null) //출석 점수
+                            .totalScoreFirstRound(null) //1차 전형 총점
                             .build()
             );
         }
