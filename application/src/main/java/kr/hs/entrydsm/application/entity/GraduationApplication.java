@@ -82,4 +82,13 @@ public class GraduationApplication extends Application {
         }
         return schoolClass;
     }
+
+    public void setSchoolTel(String schoolTel){
+        this.schoolTel = schoolTel;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
 }
