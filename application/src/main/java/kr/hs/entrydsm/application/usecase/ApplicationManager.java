@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase;
 
+import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.entity.SchoolRepository;
@@ -72,6 +73,10 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public Information getInformation(Long receiptCode) {
-        return applicantExportService.getInformation(receiptCode);
+        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode).orElseThrow(ApplicationNotFoundException::new);
+        Information result = applicantExportService.getInformation(receiptCode);
+        result.setSchoolCode(graduationApplication.getSchoolCode());
+        result.setSchoolTel(graduationApplication.getSchoolTel());
+        return result;
     }
 }
