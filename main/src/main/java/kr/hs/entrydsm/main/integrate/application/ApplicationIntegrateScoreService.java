@@ -4,11 +4,16 @@ import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.common.model.Scores;
+import kr.hs.entrydsm.score.integrate.application.ApplicationScoreExportRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Published
 @Service
+@RequiredArgsConstructor
 public class ApplicationIntegrateScoreService implements ScoreCalculator {
+
+    private final ApplicationScoreExportRepository applicationScoreExportRepository;
 
     @Override
     public Iterable<Score> getAll() {
@@ -17,6 +22,12 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     @Override
     public Scores getScores(Long receiptCode) {
-        return null;
+        kr.hs.entrydsm.score.entity.Score score = applicationScoreExportRepository.findByReceiptCode(receiptCode);
+        return Scores.builder()
+                .gradeScore(score.getGradeScore())
+                .volunteerScore(score.getVolunteerScore())
+                .attendanceScore(score.getAttendanceScore())
+                .totalScore(score.getTotalScore())
+                .build();
     }
 }
