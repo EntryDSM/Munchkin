@@ -42,18 +42,39 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override
-    public void updateStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
+    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
+        changeStatus(receiptCode, isPrintedArrived, "isPrintedArrived");
+    }
+
+    @Override
+    public void changeIsPaid(int receiptCode, boolean isPaid) {
+        changeStatus(receiptCode, isPaid, "isPaid");
+    }
+
+    @Override
+    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
+        changeStatus(receiptCode, isSubmit, "isSubmit");
+    }
+
+    private void changeStatus(int receiptCode, boolean changedValue, String changes) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-
-        if(admin.getPermission().equals("TEACHER")) {
-            applicantRepository.changeStatus(receiptCode, isPrintedArrived, isPaid, isSubmit);
+        if(admin.getPermission().toString().equals("TEACHER")) {
+            switch (changes) {
+                case "isPrintedArrived":
+                    applicantRepository.changeIsPrintedArrived(receiptCode, changedValue);
+                    break;
+                case "isPaid":
+                    applicantRepository.changeIsPaid(receiptCode, changedValue);
+                    break;
+                case "isSubmit":
+                    applicantRepository.changeIsSubmit(receiptCode, changedValue);
+                    break;
+            }
         }
         else {
             throw new UserNotAccessibleException();
         }
-
-        //공지메세지에서 보내주기
     }
 
     @Override
