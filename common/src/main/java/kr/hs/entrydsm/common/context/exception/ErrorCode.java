@@ -26,7 +26,8 @@ public enum ErrorCode {
     TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist"),
     NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority"),
 
-    APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found");
+    APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found"),
+    SCHOOL_NOT_FOUND(404, "APPLICATION404-1", "The school could not be found");
 
     private final int status;
     private final String code;
