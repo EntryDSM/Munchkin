@@ -10,6 +10,7 @@ import kr.hs.entrydsm.application.integrate.user.UserDocsService;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -59,7 +60,7 @@ public class ApplicationManager implements ApplicationProcessing {
         graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .map(graduationApplication -> {
                     graduationApplication.setSchoolTel(information.getSchoolTel());
-                    graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode()).orElseThrow(ApplicationNotFoundException::new));
+                    graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode()).orElseThrow(SchoolNotFoundException::new));
                     graduationApplicationRepository.save(graduationApplication);
                     return graduationApplication;
                 }).orElseThrow(ApplicationNotFoundException::new);
