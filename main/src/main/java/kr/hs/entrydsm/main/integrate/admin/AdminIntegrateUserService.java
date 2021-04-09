@@ -99,17 +99,17 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
     @Override
     public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
+        userExportRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
     }
 
     @Override
     public void changeIsPaid(int receiptCode, boolean isPaid) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
+        userExportRepository.changeIsPaid(receiptCode, isPaid);
     }
 
     @Override
     public void changeIsSubmit(int receiptCode, boolean isSubmit) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
+        userExportRepository.changeIsSubmit(receiptCode, isSubmit);
     }
 
 }
