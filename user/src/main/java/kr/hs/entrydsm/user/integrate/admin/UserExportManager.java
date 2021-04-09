@@ -73,4 +73,25 @@ public class UserExportManager implements UserExportRepository {
         return userRepository.countAllBy();
     }
 
+    @Override
+    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
+        userRepository.findByReceiptCode(receiptCode)
+                .map(user -> user.setPrintedArrived(isPrintedArrived))
+                .ifPresent(userRepository::save);
+    }
+
+    @Override
+    public void changeIsPaid(int receiptCode, boolean isPaid) {
+        userRepository.findByReceiptCode(receiptCode)
+                .map(user -> user.setPaid(isPaid))
+                .ifPresent(userRepository::save);
+    }
+
+    @Override
+    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
+        userRepository.findByReceiptCode(receiptCode)
+                .map(user -> user.setSubmit(isSubmit))
+                .ifPresent(userRepository::save);
+    }
+
 }

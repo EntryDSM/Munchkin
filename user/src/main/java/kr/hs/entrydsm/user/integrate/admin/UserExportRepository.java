@@ -19,4 +19,7 @@ public interface UserExportRepository {
     List<User> findAllIsSubmitTrue();
     List<User> findAllForExcel();
     long getTotalStudent();
+    void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
+    void changeIsPaid(int receiptCode, boolean isPaid);
+    void changeIsSubmit(int receiptCode, boolean isSubmit);
 }
