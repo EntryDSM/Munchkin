@@ -6,7 +6,6 @@ import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -60,13 +59,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     public List<Applicant> findAllIsSubmitTrue() {
         return null;
     }
-  
-    @Override
-    public void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
-        // 상태 정보 수정 method
-        // userExportRepository.method(user.getReceiptCode(), isPrintedArrived, isPaid, isSubmit);
-    }
 
     //지원자 목록, 상세 보기
     @Override
@@ -103,6 +95,21 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .dayAbsenceCount(reportCard.getDayAbsenceCount()) // 무단 결석
                 .conversionScore(reportCard.getTotalScore()) // 총 점수
                 .build();
+    }
+
+    @Override
+    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
+        userExportRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+    }
+
+    @Override
+    public void changeIsPaid(int receiptCode, boolean isPaid) {
+        userExportRepository.changeIsPaid(receiptCode, isPaid);
+    }
+
+    @Override
+    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
+        userExportRepository.changeIsSubmit(receiptCode, isSubmit);
     }
 
 }

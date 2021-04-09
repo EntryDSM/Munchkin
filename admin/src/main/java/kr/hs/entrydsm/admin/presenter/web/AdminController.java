@@ -25,19 +25,30 @@ public class AdminController {
 
     //지원자
     @AdminJWTRequired
-    @PatchMapping("/{reciept-code}")
+    @PatchMapping("/applicant/is-printed-arrived")
+    public void updateIsprintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
+                             @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
+        applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+    }
 
-    public void updateStatus(@PathVariable(name = "reciept-code") int receiptCode,
-                             @RequestParam(required = false) boolean isPrintedArrived,
-                             @RequestParam(required = false) boolean isPaid,
-                             @RequestParam(required = false) boolean isSubmit) {
-        applicantService.updateStatus(receiptCode, isPrintedArrived, isPaid, isSubmit);
+    @AdminJWTRequired
+    @PatchMapping("/applicant/is-paid")
+    public void updateIspaid(@RequestParam(name = "receipt-code") int receiptCode,
+                             @RequestParam(required = false, name = "is-paid") boolean isPaid) {
+        applicantService.changeIsPaid(receiptCode, isPaid);
+    }
+
+    @AdminJWTRequired
+    @PatchMapping("/applicant/is-submit")
+    public void updateStatus(@RequestParam(name = "receipt-code") int receiptCode,
+                             @RequestParam(required = false, name = "is-submit") boolean isSubmit) {
+        applicantService.changeIsSubmit(receiptCode, isSubmit);
     }
 
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
-                                            @RequestParam(required = false, name = "reciept-code") Long receiptCode,
+                                            @RequestParam(required = false, name = "receipt-code") Long receiptCode,
                                             @RequestParam(name = "is-daejeon") boolean isDaejeon,
                                             @RequestParam(name = "is-nationwide") boolean isNationwide,
                                             @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
