@@ -91,6 +91,21 @@ public class User {
         return this;
     }
 
+    public User setPrintedArrived(boolean isPrintedArrived) {
+        status.setPrintedArrived(isPrintedArrived);
+        return this;
+    }
+
+    public User setPaid(boolean isPaid) {
+        status.setPaid(isPaid);
+        return this;
+    }
+
+    public User setSubmit(boolean isSubmit) {
+        status.setSubmit(isSubmit);
+        return this;
+    }
+
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
                                       boolean isDaejeon, ApplicationRemark applicationRemark) {
         this.educationalStatus = educationalStatus;

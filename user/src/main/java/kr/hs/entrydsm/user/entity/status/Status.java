@@ -38,4 +38,19 @@ public class Status {
         this.examCode = examCode;
     }
 
+    public void setPrintedArrived(boolean isPrintedArrived) {
+        this.isPrintedArrived = isPrintedArrived;
+    }
+
+    public void setPaid(boolean isPaid) {
+        this.isPaid = isPaid;
+    }
+
+    public void setSubmit(boolean isSubmit) {
+        this.isSubmit = isSubmit;
+
+        if (isSubmit) submittedAt = LocalDateTime.now();
+        else submittedAt = null;
+    }
+
 }
