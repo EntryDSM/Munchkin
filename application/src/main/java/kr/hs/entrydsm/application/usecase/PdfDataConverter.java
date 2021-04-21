@@ -6,6 +6,7 @@ import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ public class PdfDataConverter {
 
     public Map<String, Object> applicationToInfo(Applicant applicant, Score score) {
         setReceiptCode(applicant);
+        setEntranceYear();
         setPersonalInfo(applicant);
         setGenderInfo(applicant);
         setSchoolInfo(applicant);
@@ -45,6 +47,11 @@ public class PdfDataConverter {
 
     private void setReceiptCode(Applicant applicant) {
         values.put("receiptCode", applicant.getReceiptCode());
+    }
+
+    private void setEntranceYear() {
+        int entranceYear = LocalDate.now().plusYears(1).getYear();
+        values.put("entranceYear", String.valueOf(entranceYear));
     }
 
     private void setPersonalInfo(Applicant applicant) {
