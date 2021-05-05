@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ApplicationStatusResponse {
+public class ReceiptStatusResponse {
 
-    private int totalApplicantCount; //총 지원자
+    private Integer totalApplicantCount; //총 지원자
 
-    private int totalCompetitionRate; //총 경쟁률
+    private Integer totalCompetitionRate; //총 경쟁률
 
     private CommonScore commonScore; //일반전형 점수
 
@@ -18,7 +18,7 @@ public class ApplicationStatusResponse {
 
     private SpecialScore socialScore; //사회통합 전형 점수
 
-    private int commonCount;
+    private Integer commonCount;
 
     private double commonCompetitionRate;
 
@@ -26,7 +26,7 @@ public class ApplicationStatusResponse {
 
     private double meisterCompetitionRate;
 
-    private double socailCount;
+    private double socialCount;
 
     private double socialCompetitionRate;
 
