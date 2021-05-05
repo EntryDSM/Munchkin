@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase.dto.response;
+package kr.hs.entrydsm.admin.usecase.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
@@ -33,5 +33,37 @@ public class SpecialScore {
 
     @JsonFormat(pattern = "-20")
     private int score_20;
+
+    public void plus20() {
+        this.score_20++;
+    }
+
+    public void plus21_30() {
+        this.score21_30++;
+    }
+
+    public void plus31_40() {
+        this.score31_40++;
+    }
+
+    public void plus41_50() {
+        this.score41_50++;
+    }
+
+    public void plus51_60() {
+        this.score51_60++;
+    }
+
+    public void plus61_70() {
+        this.score61_70++;
+    }
+
+    public void plus71_80() {
+        this.score71_80++;
+    }
+
+    public void plus81_90() {
+        this.score81_90++;
+    }
 
 }
