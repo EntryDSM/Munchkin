@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.integrate.user;
 
-import kr.hs.entrydsm.admin.entity.ExcelApplicant;
+import kr.hs.entrydsm.admin.usecase.dto.ExcelApplicant;
 
 import java.util.List;
 

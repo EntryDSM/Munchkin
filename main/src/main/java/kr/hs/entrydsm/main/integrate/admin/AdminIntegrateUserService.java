@@ -4,7 +4,7 @@ import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.common.model.ReportCard;
-import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,11 +23,12 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final ApplicationExportRepository applicationExportRepository;
 
     @Override
-    public Page<Applicant> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
-                                   boolean isPrintedArrived, boolean isPaid, boolean isCommon,
-                                   boolean isMeister, boolean isSocial, int receiptCode,
-                                   String schoolName, String telephoneNumber, String name) {
-        Page<User> users = userExportRepository.findAll(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon, isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
+    public Page<Applicant> findAll(Pageable page, Long receiptCode,
+                                   boolean isDaejeon, boolean isNationwide,
+                                   String telephoneNumber, String name,
+                                   boolean isCommon, boolean isMeister, boolean isSocial,
+                                   boolean isPrintedArrived, boolean isPaid) {
+        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived, isPaid);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
         for (User user : users) {
@@ -56,13 +57,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     @Override
     public List<Applicant> findAllIsSubmitTrue() {
         return null;
-    }
-
-    @Override
-    public void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
-        // 상태 정보 수정 method
-        // userExportRepository.method(user.getReceiptCode(), isPrintedArrived, isPaid, isSubmit);
     }
 
     //지원자 목록, 상세 보기
@@ -100,6 +94,21 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .dayAbsenceCount(reportCard.getDayAbsenceCount()) // 무단 결석
                 .conversionScore(reportCard.getTotalScore()) // 총 점수
                 .build();
+    }
+
+    @Override
+    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
+
+    }
+
+    @Override
+    public void changeIsPaid(int receiptCode, boolean isPaid) {
+
+    }
+
+    @Override
+    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
+
     }
 
 }
