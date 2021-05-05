@@ -5,5 +5,5 @@ import kr.hs.entrydsm.admin.entity.ExcelApplicant;
 import java.util.List;
 
 public interface ExcelApplicantRepository {
-    List<ExcelApplicant> findAll();
+    List<ExcelApplicant> findAllForExcel();
 }

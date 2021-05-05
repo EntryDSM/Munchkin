@@ -24,7 +24,7 @@ public class ExcelApplicant {
     private String address; //주소
 
     private String middleSchool; //출신학교
-    
+
     private String yearOfGraduation; //졸업년도
 
     private String middleSchoolStudentNumber; //중학교 학번
@@ -74,7 +74,7 @@ public class ExcelApplicant {
 
     private String latenessCount; //지각
 
-    private String earlyLeaveCound; //조퇴
+    private String earlyLeaveCount; //조퇴
 
     private String conversionScore; //교과 성적 환산 점수
 
