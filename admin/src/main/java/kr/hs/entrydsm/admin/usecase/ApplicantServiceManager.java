@@ -12,6 +12,7 @@ import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
+import kr.hs.entrydsm.common.context.sms.MessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -35,8 +36,16 @@ public class ApplicantServiceManager implements ApplicantService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final double endX = 127.363585;
-    private final double endY = 36.391636;
+    private final MessageSender messageSender;
+
+    private static final double endX = 127.363585;
+    private static final double endY = 36.391636;
+
+    private static final String PRINTED_ARRIVED = "원서가 도착했습니다.";
+    private static final String PRINTED_NOT_ARRIVED = "원서가 아직 도착하지 않았습니다.";
+
+    private static final String PAID_UP = "전형료 납부가 확인되었습니다.";
+    private static final String NOT_PAID_UP = "전형료가 납부되지 않았습니다.";
 
     @Value("${tmap.app.key}")
     private String appKey;
@@ -44,16 +53,25 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override
     public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
         changeStatus(receiptCode, isPrintedArrived, "isPrintedArrived");
+
+        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        String message = null;
+        if(isPrintedArrived) message = PRINTED_ARRIVED;
+        else message = PRINTED_NOT_ARRIVED;
+
+        messageSender.sendMessage(applicant.getTelephoneNumber(), message);
     }
 
     @Override
     public void changeIsPaid(int receiptCode, boolean isPaid) {
         changeStatus(receiptCode, isPaid, "isPaid");
-    }
 
-    @Override
-    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
-        changeStatus(receiptCode, isSubmit, "isSubmit");
+        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        String message = null;
+        if(isPaid) message = PAID_UP;
+        else message = NOT_PAID_UP;
+
+        messageSender.sendMessage(applicant.getTelephoneNumber(), message);
     }
 
     private void changeStatus(int receiptCode, boolean changedValue, String changes) {
@@ -66,9 +84,6 @@ public class ApplicantServiceManager implements ApplicantService {
                     break;
                 case "isPaid":
                     applicantRepository.changeIsPaid(receiptCode, changedValue);
-                    break;
-                case "isSubmit":
-                    applicantRepository.changeIsSubmit(receiptCode, changedValue);
                     break;
             }
         }
