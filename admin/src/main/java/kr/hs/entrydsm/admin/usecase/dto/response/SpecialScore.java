@@ -3,9 +3,11 @@ package kr.hs.entrydsm.admin.usecase.dto.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@NoArgsConstructor
 public class SpecialScore {
 
     @JsonFormat(pattern = "81-90")

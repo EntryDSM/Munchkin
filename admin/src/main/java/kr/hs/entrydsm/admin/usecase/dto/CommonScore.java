@@ -1,11 +1,11 @@
 package kr.hs.entrydsm.admin.usecase.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @Builder
+@NoArgsConstructor
 public class CommonScore {
 
     @JsonFormat(pattern = "141-150")
