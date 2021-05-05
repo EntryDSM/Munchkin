@@ -34,4 +34,8 @@ public class Information {
         this.schoolTel = schoolTel;
     }
 
+    public void setPhotoFileName(String photoFileName) {
+        this.photoFileName = photoFileName;
+    }
+
 }
