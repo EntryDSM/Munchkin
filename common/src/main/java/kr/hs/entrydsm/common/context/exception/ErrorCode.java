@@ -8,21 +8,16 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
+    INVALID_TOKEN(400, "COMMON400-0", "Invalid Token"),
     UNAUTHENTICATED(401, "COMMON401-0", "UnAuthenticated"),
-    EXPIRED_TOKEN(401, "COMMON401-1", "Expired token"),
-    INVALID_TOKEN(403, "COMMON403-0", "Invalid Token"),
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
 
-    INVALID_AUTH_CODE(403, "USER403-0", "Invalid Auth Code"),
-    AUTH_CODE_REQUEST_OVER_LIMIT(403, "USER403-1", "Auth Code Request Over Limit"),
     USER_NOT_FOUND(404, "USER404-0", "User Not Found"),
-    USER_ALREADY_EXISTS(409, "USER409-0", "User Already Exists"),
-    AUTH_CODE_ALREADY_VERIFIED(409, "USER409-1", "Auth Code Already Verified"),
 
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
 
     INVALID_ADMIN_TOKEN(401, "ADMIN401-0","This token is invalid"),
-    EXPIRED_ADMIN_TOKEN(401, "ADMIN401-1","Token is Expired"),
+    EXPIRED_TOKEN(401, "ADMIN401-1","Token is Expired"),
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
     APPLICANT_NOT_FOUND(404, "ADMIN404-1","The applicant does not exist"),
     NOT_ACCESSIBLE(401, "ADMIN401-2","Check the token"),

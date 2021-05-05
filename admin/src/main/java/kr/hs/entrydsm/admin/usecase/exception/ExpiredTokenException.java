@@ -5,6 +5,6 @@ import kr.hs.entrydsm.common.context.exception.MunchkinException;
 
 public class ExpiredTokenException extends MunchkinException {
     public ExpiredTokenException() {
-        super(ErrorCode.EXPIRED_ADMIN_TOKEN);
+        super(ErrorCode.EXPIRED_TOKEN);
     }
 }

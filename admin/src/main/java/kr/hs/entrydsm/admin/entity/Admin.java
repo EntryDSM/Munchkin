@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity(name = "tbl_admin")
 public class Admin {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 8)
     private String id;
 

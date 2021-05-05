@@ -47,7 +47,6 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
 
         implementation 'org.slf4j:slf4j-api'
-        implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -94,7 +93,6 @@ project(':common') {
 project(':user') {
     dependencies {
         compile project(':common')
-        compile 'org.springframework.boot:spring-boot-starter-data-redis'
     }
 }
 

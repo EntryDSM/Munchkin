@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.integrate.user;
 
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
+import kr.hs.entrydsm.admin.entity.Applicant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -8,15 +8,13 @@ import java.util.List;
 
 public interface ApplicantRepository {
 
-    Page<Applicant> findAll(Pageable page, Long receiptCode,
-                            boolean isDaejeon, boolean isNationwide,
-                            String telephoneNumber, String name,
-                            boolean isCommon, boolean isMeister, boolean isSocial,
-                            boolean isPrintedArrived, boolean isPaid);
+    Page<Applicant> findAll(Pageable page, boolean isDaejeon, boolean isNationwide,
+                            boolean isPrintedArrived, boolean isPaid, boolean isCommon,
+                            boolean isMeister, boolean isSocial, int receiptCode,
+                            String schoolName, String telephoneNumber, String name);
     void changeExamCode(long receiptCode, String examCode);
     List<Applicant> findAllIsSubmitTrue();
     Applicant getUserInfo(long receiptCode);
-    void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
-    void changeIsPaid(int receiptCode, boolean isPaid);
-    void changeIsSubmit(int receiptCode, boolean isSubmit);
+    void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit);
+
 }

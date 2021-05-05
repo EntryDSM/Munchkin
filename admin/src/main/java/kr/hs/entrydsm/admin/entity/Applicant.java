@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase.dto;
+package kr.hs.entrydsm.admin.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

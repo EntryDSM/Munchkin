@@ -3,7 +3,7 @@ package kr.hs.entrydsm.admin.usecase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hs.entrydsm.admin.entity.Admin;
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
+import kr.hs.entrydsm.admin.entity.Applicant;
 import kr.hs.entrydsm.admin.entity.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.*;
@@ -42,61 +42,29 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override
-    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
-        changeStatus(receiptCode, isPrintedArrived, "isPrintedArrived");
-    }
-
-    @Override
-    public void changeIsPaid(int receiptCode, boolean isPaid) {
-        changeStatus(receiptCode, isPaid, "isPaid");
-    }
-
-    @Override
-    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
-        changeStatus(receiptCode, isSubmit, "isSubmit");
-    }
-
-    private void changeStatus(int receiptCode, boolean changedValue, String changes) {
+    public void updateStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-        if(admin.getPermission().toString().equals("TEACHER")) {
-            switch (changes) {
-                case "isPrintedArrived":
-                    applicantRepository.changeIsPrintedArrived(receiptCode, changedValue);
-                    break;
-                case "isPaid":
-                    applicantRepository.changeIsPaid(receiptCode, changedValue);
-                    break;
-                case "isSubmit":
-                    applicantRepository.changeIsSubmit(receiptCode, changedValue);
-                    break;
-            }
+
+        if(admin.getPermission().equals("TEACHER")) {
+            applicantRepository.changeStatus(receiptCode, isPrintedArrived, isPaid, isSubmit);
         }
         else {
             throw new UserNotAccessibleException();
         }
+
+        //공지메세지에서 보내주기
     }
 
     @Override
-    public ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
-                                            boolean isDaejeon, boolean isNationwide,
-                                            String telephoneNumber, String name,
-                                            boolean isCommon, boolean isMeister, boolean isSocial,
-                                            boolean isPrintedArrived, boolean isPaid) {
+    public ApplicantsResponse getApplicants(Pageable page, boolean isDaejeon, boolean isNationwide,
+                                            boolean isPrintedArrived, boolean isPaid, boolean isCommon,
+                                            boolean isMeister, boolean isSocial, int receiptCode,
+                                            String schoolName, String telephoneNumber, String name) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        if(!isDaejeon && !isNationwide) {
-            isDaejeon = true;
-            isNationwide = true;
-        }
-        if(!isCommon && !isMeister && !isSocial) {
-            isCommon = true;
-            isMeister = true;
-            isSocial = true;
-        }
-
-        Page<Applicant> applicants = applicantRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived, isPaid);
+        Page<Applicant> applicants = applicantRepository.findAll(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon, isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
         
         for (Applicant applicant : applicants) {

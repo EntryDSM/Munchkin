@@ -1,11 +1,7 @@
 package kr.hs.entrydsm.common.context.auth.token;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import kr.hs.entrydsm.common.context.exception.ErrorCode;
-import kr.hs.entrydsm.common.context.exception.MunchkinException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -63,34 +59,23 @@ public class JWTTokenProvider {
         return null;
     }
 
+    public String resoleRefreshToken(HttpServletRequest request) {
+        return request.getHeader(refreshTokenHeader);
+    }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey)
                     .parseClaimsJws(token).getBody().getSubject();
             return true;
-        } catch (ExpiredJwtException e) {
-            throw new MunchkinException(ErrorCode.EXPIRED_TOKEN);
         } catch (Exception e) {
             return false;
         }
     }
 
     public long parseAccessToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(token).getBody();
-        if (claims.get("type").equals("access_token")) {
-            return Long.parseLong(claims.getSubject());
-        }
-        throw new MunchkinException(ErrorCode.INVALID_TOKEN);
-    }
-
-    public long parseRefreshToken(String token) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey)
-                .parseClaimsJws(token).getBody();
-        if (claims.get("type").equals("refresh_token")) {
-            return Long.parseLong(claims.getSubject());
-        }
-        throw new MunchkinException(ErrorCode.INVALID_TOKEN);
+        return Long.parseLong(Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody().getSubject());
     }
 
     public String parseAdminToken(String token) {

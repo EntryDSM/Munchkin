@@ -21,11 +21,4 @@ auth:
     header:
       access: ${JWT_HEADER:Authorization}
       refresh: ${JWT_REFRESH_HEADER:X-Refresh-Token}
-    prefix: ${JWT_PREFIX:Bearer}
-
-sms:
-  aligo:
-    url: ${ALIGO_URL}
-    key: ${ALIGO_KEY}
-    user-id: ${ALIGO_USER_ID}
-    sender: ${ALIGO_SENDER}
+    prefix: ${JWT_PREFIX:Bearer} 

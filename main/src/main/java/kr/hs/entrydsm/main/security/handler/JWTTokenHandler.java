@@ -5,11 +5,12 @@ import kr.hs.entrydsm.admin.infrastructure.database.AdminRepositoryManager;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
+import kr.hs.entrydsm.common.context.auth.token.RefreshRequired;
 import kr.hs.entrydsm.common.context.exception.ErrorCode;
 import kr.hs.entrydsm.common.context.exception.MunchkinException;
 import kr.hs.entrydsm.main.security.auth.AdminAuthentication;
 import kr.hs.entrydsm.main.security.auth.UserAuthentication;
-import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.User;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.annotation.Annotation;
 
 @Component
 @RequiredArgsConstructor
@@ -33,60 +33,61 @@ public class JWTTokenHandler implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if (!(handler instanceof HandlerMethod))
+        if (!(handler instanceof HandlerMethod)) {
             return true;
-
-        if (response.getStatus() == 404)
+        }
+        if (response.getStatus() == 404) {
             throw new MunchkinException(ErrorCode.NOT_FOUND);
-
-        if (hasJWTRequired((HandlerMethod) handler))
-            return checkJWTRequired(request);
-        if (hasAdminJWTRequired((HandlerMethod) handler))
-            return checkAdminJWTRequired(request);
-
-        return true;
-    }
-
-    private boolean checkJWTRequired(HttpServletRequest request) {
-        String token = tokenProvider.resolveAccessToken(request);
-        if (tokenProvider.validateToken(token)) {
-            long receiptCode = tokenProvider.parseAccessToken(token);
-            User user = userRepositoryManager.findByReceiptCode(receiptCode)
-                    .orElseThrow(() -> new MunchkinException(ErrorCode.NOT_FOUND));
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            Authentication authentication = new UserAuthentication(user);
-            securityContext.setAuthentication(authentication);
-            return true;
         }
-        throw new MunchkinException(ErrorCode.UNAUTHENTICATED);
-    }
-
-    private boolean checkAdminJWTRequired(HttpServletRequest request) {
-        String token = tokenProvider.resolveAccessToken(request);
-        if (tokenProvider.validateToken(token)) {
-            String adminId = tokenProvider.parseAdminToken(token);
-            Admin admin = adminRepositoryManager.findById(adminId)
-                    .orElseThrow(() -> new MunchkinException(ErrorCode.NOT_FOUND));
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            Authentication authentication = new AdminAuthentication(admin);
-            securityContext.setAuthentication(authentication);
-            return true;
-        }
-        throw new MunchkinException(ErrorCode.UNAUTHENTICATED);
-    }
-
-    private boolean hasJWTRequired(HandlerMethod handlerMethod) {
-        return hasAnnotationRequired(handlerMethod, JWTRequired.class);
-    }
-
-    private boolean hasAdminJWTRequired(HandlerMethod handlerMethod) {
-        return hasAnnotationRequired(handlerMethod, AdminJWTRequired.class);
-    }
-
-    private boolean hasAnnotationRequired(HandlerMethod handlerMethod, Class<? extends Annotation> annotationClass) {
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
         Class<?> handlerClass = handlerMethod.getBeanType();
-        return handlerMethod.hasMethodAnnotation(annotationClass) ||
-                handlerClass.getDeclaredAnnotation(annotationClass) != null;
+
+        boolean jwtRequired = false;
+        if (handlerMethod.hasMethodAnnotation(JWTRequired.class) || handlerClass.getDeclaredAnnotation(JWTRequired.class) != null) {
+            jwtRequired = true;
+        }
+        if (jwtRequired) {
+            String token = tokenProvider.resolveAccessToken(request);
+            if (tokenProvider.validateToken(token)) {
+                long receiptCode = tokenProvider.parseAccessToken(token);
+                User user = userRepositoryManager.findByReceiptCode(receiptCode)
+                        .orElseThrow(() -> new MunchkinException(ErrorCode.NOT_FOUND));
+                SecurityContext securityContext = SecurityContextHolder.getContext();
+                Authentication authentication = new UserAuthentication(user);
+                securityContext.setAuthentication(authentication);
+                return true;
+            }
+            throw new MunchkinException(ErrorCode.UNAUTHENTICATED);
+        }
+
+        boolean adminJwtRequired = false;
+        if (handlerMethod.hasMethodAnnotation(AdminJWTRequired.class) || handlerClass.getDeclaredAnnotation(AdminJWTRequired.class) != null) {
+            adminJwtRequired = true;
+        }if (adminJwtRequired) {
+            String token = tokenProvider.resolveAccessToken(request);
+            if (tokenProvider.validateToken(token)) {
+                String adminId = tokenProvider.parseAdminToken(token);
+                Admin admin = adminRepositoryManager.findById(adminId)
+                        .orElseThrow(() -> new MunchkinException(ErrorCode.NOT_FOUND));
+                SecurityContext securityContext = SecurityContextHolder.getContext();
+                Authentication authentication = new AdminAuthentication(admin);
+                securityContext.setAuthentication(authentication);
+                return true;
+            }
+        }
+
+        boolean refreshRequired = false;
+        if (handlerMethod.hasMethodAnnotation(RefreshRequired.class) || handlerClass.getDeclaredAnnotation(RefreshRequired.class) != null) {
+            refreshRequired = true;
+        }
+        if (refreshRequired) {
+            String token = tokenProvider.resoleRefreshToken(request);
+            if (tokenProvider.validateToken(token) && tokenProvider.isRefreshToken(token)) {
+                return true;
+            }
+            throw new MunchkinException(ErrorCode.INVALID_TOKEN);
+        }
+        return true;
     }
 
 }

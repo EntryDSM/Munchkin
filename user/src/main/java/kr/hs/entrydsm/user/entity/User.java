@@ -1,15 +1,14 @@
-package kr.hs.entrydsm.user.entity.user;
+package kr.hs.entrydsm.user.entity;
 
-import kr.hs.entrydsm.user.entity.status.Status;
-import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
-import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
-import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
+import kr.hs.entrydsm.user.entity.enumeration.ApplicationRemark;
+import kr.hs.entrydsm.user.entity.enumeration.ApplicationType;
+import kr.hs.entrydsm.user.entity.enumeration.EducationalStatus;
+import kr.hs.entrydsm.user.entity.enumeration.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -75,44 +74,11 @@ public class User {
     @Column(length = 1600)
     private String studyPlan;
 
-    @CreationTimestamp
+    @CreatedBy
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(fetch = FetchType.LAZY)
     private Status status;
-
-    public String getExamCode() {
-        return status.getExamCode();
-    }
-
-    public User setExamCode(String examCode) {
-        status.setExamCode(examCode);
-        return this;
-    }
-
-    public User setPrintedArrived(boolean isPrintedArrived) {
-        status.setPrintedArrived(isPrintedArrived);
-        return this;
-    }
-
-    public User setPaid(boolean isPaid) {
-        status.setPaid(isPaid);
-        return this;
-    }
-
-    public User setSubmit(boolean isSubmit) {
-        status.setSubmit(isSubmit);
-        return this;
-    }
-
-    public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
-                                      boolean isDaejeon, ApplicationRemark applicationRemark) {
-        this.educationalStatus = educationalStatus;
-        this.applicationType = applicationType;
-        this.isDaejeon = isDaejeon;
-        this.applicationRemark = applicationRemark;
-        return this;
-    }
 
 }
