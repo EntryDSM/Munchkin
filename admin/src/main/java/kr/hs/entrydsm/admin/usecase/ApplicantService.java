@@ -2,6 +2,7 @@ package kr.hs.entrydsm.admin.usecase;
 
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
+import lombok.NonNull;
 import org.springframework.data.domain.Pageable;
 
 public interface ApplicantService {
