@@ -5,10 +5,10 @@ import kr.hs.entrydsm.admin.usecase.ApplicantService;
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
@@ -77,6 +77,13 @@ public class AdminController {
     @GetMapping("/schedules")
     public ScheduleResponse getSchedules() {
         return adminService.getSchedules();
+    }
+
+    //접수 현황 통계
+    @AdminJWTRequired
+    @GetMapping("/statics")
+    public ReceiptStatusResponse getStatics() {
+        return adminService.getStatics();
     }
 
 }
