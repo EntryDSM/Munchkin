@@ -15,6 +15,7 @@ public interface ApplicantRepository {
     void changeExamCode(long receiptCode, String examCode);
     List<Applicant> findAllIsSubmitTrue();
     Applicant getUserInfo(long receiptCode);
-    void changeStatus(int receiptCode, boolean isPrintedArrived, boolean isPaid, boolean isSubmit);
-
+    void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
+    void changeIsPaid(int receiptCode, boolean isPaid);
+    void changeIsSubmit(int receiptCode, boolean isSubmit);
 }
