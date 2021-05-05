@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 public interface ApplicantService {
     void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
     void changeIsPaid(int receiptCode, boolean isPaid);
-    void changeIsSubmit(int receiptCode, boolean isSubmit);
     ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                      boolean isDaejeon, boolean isNationwide,
                                      String telephoneNumber, String name,
