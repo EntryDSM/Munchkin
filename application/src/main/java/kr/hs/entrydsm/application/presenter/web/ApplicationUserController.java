@@ -4,6 +4,7 @@ import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +15,7 @@ public class ApplicationUserController {
     private final ApplicationProcessing applicationProcessing;
 
     @PatchMapping("/type")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void selectType(@RequestBody Application application){
         applicationProcessing.writeApplicationType(1L, application);
     }
@@ -24,6 +26,7 @@ public class ApplicationUserController {
     }
 
     @PatchMapping("/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertInfo(@RequestBody Information information){
         applicationProcessing.writeInformation(1L, information);
     }
