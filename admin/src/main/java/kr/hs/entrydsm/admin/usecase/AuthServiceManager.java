@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.admin.usecase;
 
-import kr.hs.entrydsm.admin.entity.Admin;
-import kr.hs.entrydsm.admin.entity.RefreshToken;
-import kr.hs.entrydsm.admin.entity.AdminRepository;
+import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.refreshtoken.RefreshToken;
+import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.RefreshTokenRepository;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;

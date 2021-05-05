@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.infrastructure.database;
 
-import kr.hs.entrydsm.admin.entity.Admin;
-import kr.hs.entrydsm.admin.entity.AdminRepository;
+import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

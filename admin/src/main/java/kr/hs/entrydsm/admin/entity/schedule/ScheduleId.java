@@ -1,6 +1,5 @@
-package kr.hs.entrydsm.admin.entity;
+package kr.hs.entrydsm.admin.entity.schedule;
 
-import kr.hs.entrydsm.admin.entity.enums.Type;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;

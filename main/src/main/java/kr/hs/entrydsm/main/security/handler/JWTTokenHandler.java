@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.main.security.handler;
 
-import kr.hs.entrydsm.admin.entity.Admin;
+import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.infrastructure.database.AdminRepositoryManager;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;

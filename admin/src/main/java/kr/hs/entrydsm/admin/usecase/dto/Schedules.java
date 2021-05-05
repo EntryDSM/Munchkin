@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.usecase.dto;
 
-import kr.hs.entrydsm.admin.entity.enums.Type;
+import kr.hs.entrydsm.admin.entity.schedule.Type;
 import lombok.Builder;
 import lombok.Getter;
 

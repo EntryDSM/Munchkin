@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.entity.enums;
+package kr.hs.entrydsm.admin.entity.admin;
 
 public enum Permission {
     TEACHER, OFFICE

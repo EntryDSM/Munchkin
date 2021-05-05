@@ -1,6 +1,5 @@
-package kr.hs.entrydsm.admin.entity;
+package kr.hs.entrydsm.admin.entity.admin;
 
-import kr.hs.entrydsm.admin.entity.enums.Permission;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -2,9 +2,9 @@ package kr.hs.entrydsm.admin.usecase;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.hs.entrydsm.admin.entity.Admin;
+import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.entity.AdminRepository;
+import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;

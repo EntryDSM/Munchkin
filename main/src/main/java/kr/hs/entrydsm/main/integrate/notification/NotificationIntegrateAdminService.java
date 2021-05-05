@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.main.integrate.notification;
 
-import kr.hs.entrydsm.admin.entity.Admin;
+import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.integrate.notification.AdminExportRepository;
 import kr.hs.entrydsm.notification.entity.Teacher;
 import kr.hs.entrydsm.notification.integrate.admin.TeacherRepository;

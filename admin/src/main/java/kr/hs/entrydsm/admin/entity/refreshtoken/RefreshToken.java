@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.entity;
+package kr.hs.entrydsm.admin.entity.refreshtoken;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

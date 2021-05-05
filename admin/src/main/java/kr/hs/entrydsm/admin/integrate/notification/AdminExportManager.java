@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.integrate.notification;
 
-import kr.hs.entrydsm.admin.entity.Admin;
-import kr.hs.entrydsm.admin.entity.AdminRepository;
+import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
