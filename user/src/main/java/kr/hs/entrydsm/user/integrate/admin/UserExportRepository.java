@@ -18,7 +18,10 @@ public interface UserExportRepository {
     List<User> findAllIsSubmitTrue();
     List<User> findAllForExcel();
     long getTotalStudent();
+<<<<<<< HEAD
     void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
     void changeIsPaid(int receiptCode, boolean isPaid);
     void changeIsSubmit(int receiptCode, boolean isSubmit);
+=======
+>>>>>>> 236a950... [ADD] integrate 함수 추가
 }
