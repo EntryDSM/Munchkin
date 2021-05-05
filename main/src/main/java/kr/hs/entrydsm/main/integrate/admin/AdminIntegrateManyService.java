@@ -3,7 +3,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.entity.ExcelApplicant;
 import kr.hs.entrydsm.admin.integrate.user.ExcelApplicantRepository;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
-import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,10 +28,10 @@ public class AdminIntegrateManyService implements ExcelApplicantRepository {
         for(User user : users) {
             excelApplicants.add(
                     ExcelApplicant.builder()
-                            .examCode(user.getExamCode()) //수험번호
+                            .examCode(user.getStatus().getExamCode()) //수험번호
                             .receiptCode(String.valueOf(user.getReceiptCode())) //접수 번호
-                            .applicationType(user.getApplicationType().toString()) //전형 유형
-                            .applicationRemrk(user.getApplicationRemark().toString()) //추가 유형
+                            .applicationType(String.valueOf(user.getApplicationType())) //전형 유형
+                            .applicationRemrk(String.valueOf(user.getApplicationRemark())) //추가 유형
                             .area(String.valueOf(user.isDaejeon())) //지역
                             .name(user.getName()) //이름
                             .birthDay(user.getBirthday().toString()) //생년월일
