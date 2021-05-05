@@ -39,13 +39,6 @@ public class AdminController {
     }
 
     @AdminJWTRequired
-    @PatchMapping("/applicant/is-submit")
-    public void updateStatus(@RequestParam(name = "receipt-code") int receiptCode,
-                             @RequestParam(required = false, name = "is-submit") boolean isSubmit) {
-        applicantService.changeIsSubmit(receiptCode, isSubmit);
-    }
-
-    @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
                                             @RequestParam(required = false, name = "reciept-code") Long receiptCode,
@@ -65,6 +58,12 @@ public class AdminController {
     @GetMapping("/{receipt-code}")
     public ApplicantDetailResponse getDetail(@PathVariable(name = "receipt-code") int recieptCode) {
         return applicantService.getDetail(recieptCode);
+    }
+
+    @AdminJWTRequired
+    @GetMapping("/applicants/examcode")
+    public void saveExamCode() throws Exception {
+        applicantService.saveExamCode();
     }
 
     //전형 일자
