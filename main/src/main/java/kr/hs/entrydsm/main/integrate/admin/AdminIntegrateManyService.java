@@ -3,7 +3,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelApplicant;
 import kr.hs.entrydsm.admin.integrate.user.ExcelApplicantRepository;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
-import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
