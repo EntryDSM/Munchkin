@@ -4,23 +4,27 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.entity.SchoolRepository;
-import kr.hs.entrydsm.application.infrastructure.database.GraduationApplicationRepositoryManager;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.integrate.user.UserDocsService;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
+import kr.hs.entrydsm.application.usecase.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 @RequiredArgsConstructor
 @Service
 public class ApplicationManager implements ApplicationProcessing {
 
     private final UserDocsService userDocsService;
+    private final ImageService imageService;
     private final ApplicationApplicantRepository applicantExportService;
     private final SchoolRepository schoolRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
@@ -73,11 +77,16 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public Information getInformation(Long receiptCode) {
+    public Information getInformation(Long receiptCode) throws IOException {
         GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode).orElseThrow(ApplicationNotFoundException::new);
         Information result = applicantExportService.getInformation(receiptCode);
+        result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
         result.setSchoolCode(graduationApplication.getSchoolCode());
         result.setSchoolTel(graduationApplication.getSchoolTel());
         return result;
+    }
+
+    private String getImageUrl(String photoFileName) throws MalformedURLException {
+        return (!photoFileName.isEmpty()) ? imageService.generateObjectUrl(photoFileName) : null;
     }
 }
