@@ -20,7 +20,7 @@ public class AdminAuthController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TokenResponse login(SignInRequest signInRequest) {
+    public TokenResponse login(@RequestBody SignInRequest signInRequest) {
         return authService.login(signInRequest);
     }
 

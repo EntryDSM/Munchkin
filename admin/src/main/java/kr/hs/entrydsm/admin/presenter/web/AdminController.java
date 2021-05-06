@@ -11,8 +11,9 @@ import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Published
@@ -32,6 +33,12 @@ public class AdminController {
     }
 
     @AdminJWTRequired
+    @GetMapping("/applicant")
+    public ApplicantDetailResponse getDetail(@RequestParam(name = "receipt-code") int receiptCode) {
+        return applicantService.getDetail(receiptCode);
+    }
+
+    @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
                                             @RequestParam(required = false, name = "reciept-code") Long receiptCode,
@@ -48,12 +55,6 @@ public class AdminController {
     }
 
     @AdminJWTRequired
-    @GetMapping("/{receipt-code}")
-    public ApplicantDetailResponse getDetail(@PathVariable(name = "receipt-code") int recieptCode) {
-        return applicantService.getDetail(recieptCode);
-    }
-
-    @AdminJWTRequired
     @GetMapping("/applicants/examcode")
     public void saveExamCode() throws Exception {
         applicantService.saveExamCode();
@@ -61,7 +62,7 @@ public class AdminController {
 
     //전형 일자
     @PatchMapping("/schedules")
-    public void updateSchedules(@RequestBody @Validated ScheduleRequest scheduleRequest) {
+    public void updateSchedules(@RequestBody @Valid ScheduleRequest scheduleRequest) {
         adminService.updateSchedules(scheduleRequest);
     }
 
