@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.integrate.user;
 
-public interface UserStatusService {
+public interface ApplicantStatusService {
 
     boolean isFinalSubmit(long receiptCode);
 }
