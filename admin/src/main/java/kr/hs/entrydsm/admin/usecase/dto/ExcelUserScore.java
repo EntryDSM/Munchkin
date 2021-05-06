@@ -5,45 +5,14 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ExcelApplicant {
-
-    private String examCode; //수험번호
-
-    private String receiptCode; //접수 번호
-
-    private String applicationType; //전형 유형
-
-    private String applicationRemrk; //추가유형
-
-    private String area; //지역
-
-    private String name; //이름
-
-    private String birthDay; //생년월일
-
-    private String address; //주소
-
-    private String middleSchool; //출신학교
+public class ExcelUserScore {
 
     private String yearOfGraduation; //졸업년도
 
     private String middleSchoolStudentNumber; //중학교 학번
 
-    private String telephoneNumber; //학생 전화번호
+    private String middleSchool; //출신학교
 
-    private String sex; //성별
-
-    private String educationalStatus; //학력구분
-
-    private String studyPlan; //자기소개서
-
-    private String selfIntroduce; //학업 계획서
-
-    private String parentName; //보호자 이름
-
-    private String parentTel; //보호자 전화번호
-
-    //점수
     private String koreanGrade; //국어 점수
 
     private String socialGrade; //사회 점수
