@@ -5,6 +5,7 @@ import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -27,5 +28,7 @@ public interface ApplicationProcessing {
     Application getApplicationType(Long receiptCode);
 
     Information getInformation(Long receiptCode) throws IOException;
+
+    String uploadPhoto(MultipartFile multipartFile) throws IOException;
 
 }
