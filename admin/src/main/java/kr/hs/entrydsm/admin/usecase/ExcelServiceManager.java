@@ -48,7 +48,7 @@ public class ExcelServiceManager implements ExcelService {
         //학생 정보 싸그리 가져오기
 
         for(int i = 1; i < excelApplicants.size() ; i++) { //학생 수만큼
-            ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i-1).getExamCode());
+            ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i-1).getReceiptCode());
 
             Row row = sheet.createRow(i);
 
