@@ -10,7 +10,7 @@ import kr.hs.entrydsm.common.context.exception.ErrorCode;
 import kr.hs.entrydsm.common.context.exception.MunchkinException;
 import kr.hs.entrydsm.main.security.auth.AdminAuthentication;
 import kr.hs.entrydsm.main.security.auth.UserAuthentication;
-import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
