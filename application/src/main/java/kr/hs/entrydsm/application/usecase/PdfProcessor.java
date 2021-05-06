@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.application.usecase;
 
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -9,6 +11,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static kr.hs.entrydsm.application.config.PdfConfig.createConverterProperties;
 
 public class PdfProcessor {
 
@@ -24,6 +28,12 @@ public class PdfProcessor {
         mergeDocument(merger, secondDocument);
 
         mergedDocument.close();
+        return outputStream;
+    }
+
+    public static ByteArrayOutputStream convertHtmlToPdf(String html) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        HtmlConverter.convertToPdf(html, outputStream, createConverterProperties());
         return outputStream;
     }
 
