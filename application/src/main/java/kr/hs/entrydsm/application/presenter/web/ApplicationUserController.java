@@ -6,6 +6,9 @@ import kr.hs.entrydsm.application.usecase.dto.Information;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,8 +35,14 @@ public class ApplicationUserController {
     }
 
     @GetMapping("/")
-    public Information getInfo(){
+    public Information getInfo() throws IOException {
         return applicationProcessing.getInformation(1L);
+    }
+
+    @PostMapping("/photo")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String uploadPhoto(@RequestPart MultipartFile multipartFile) throws IOException {
+        return applicationProcessing.uploadPhoto(multipartFile);
     }
 
 }
