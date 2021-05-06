@@ -55,6 +55,7 @@ public class AuthServiceManager implements AuthService {
         }
 
         return refreshTokenRepository.findByRefreshToken(receivedToken)
+                .map(refreshToken -> refreshToken.update(refreshExp))
                 .map(refreshToken ->
                         new AccessTokenResponse(jwtTokenProvider.generateAccessToken(refreshToken.getId())))
                 .orElseThrow(AdminNotFoundException::new);
