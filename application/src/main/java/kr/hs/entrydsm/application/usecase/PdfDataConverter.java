@@ -5,6 +5,7 @@ import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Component
 public class PdfDataConverter {
 
     private final GraduationApplicationRepository graduationRepository;
