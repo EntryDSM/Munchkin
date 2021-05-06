@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application.usecase;
+package kr.hs.entrydsm.application.usecase.pdf;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.presenter.web;
 
-import kr.hs.entrydsm.application.usecase.ApplicationPdfService;
+import kr.hs.entrydsm.application.usecase.pdf.ApplicationPdfService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

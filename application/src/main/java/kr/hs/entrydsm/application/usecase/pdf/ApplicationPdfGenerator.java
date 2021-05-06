@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application.usecase;
+package kr.hs.entrydsm.application.usecase.pdf;
 
 import kr.hs.entrydsm.application.config.TemplateFileName;
 import kr.hs.entrydsm.application.entity.Applicant;

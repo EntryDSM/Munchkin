@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application.usecase;
+package kr.hs.entrydsm.application.usecase.pdf;
 
 public interface ApplicationPdfService {
 
