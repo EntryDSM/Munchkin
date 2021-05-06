@@ -1,10 +1,12 @@
 package kr.hs.entrydsm.admin.usecase;
 
+import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
+import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -19,7 +21,7 @@ import java.util.List;
 public class ExcelServiceManager implements ExcelService {
 
     private final ApplicantRepository applicantRepository;
-    private final ExcelApplicantRepository excelApplicantRepository;
+    private final ScoreRepository scoreRepository;
 
     @Override
     public void createAdmissionTicket(int receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
@@ -41,11 +43,13 @@ public class ExcelServiceManager implements ExcelService {
     public void createApplicantInformation() {
         ApplicantInformation applicantInformation = new ApplicantInformation();
         Sheet sheet = applicantInformation.getSheet();
-        List<ExcelUser> excelApplicants = ApplicantRepository.findAllForExcel();
+        List<ExcelUser> excelApplicants = applicantRepository.findAllForExcel();
 
         //학생 정보 싸그리 가져오기
 
         for(int i = 1; i < excelApplicants.size() ; i++) { //학생 수만큼
+            ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i-1).getExamCode());
+
             Row row = sheet.createRow(i);
 
             row.createCell(0).setCellValue(excelApplicants.get(i-1).getExamCode()); //수험번호
@@ -61,13 +65,13 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(8).setCellValue(excelApplicants.get(i-1).getTelephoneNumber()); //전화번호
             row.createCell(9).setCellValue(excelApplicants.get(i-1).getSex()); //성별
             row.createCell(10).setCellValue(excelApplicants.get(i-1).getEducationalStatus()); //학력구분
-            row.createCell(11).setCellValue(excelApplicants.get(i-1).getYearOfGraduation()); //졸업년도
-            row.createCell(12).setCellValue(excelApplicants.get(i-1).getMiddleSchool()); //출신학교
-            row.createCell(13).setCellValue(excelApplicants.get(i-1).getMiddleSchoolStudentNumber()); //반
+            row.createCell(11).setCellValue(excelUserScore.getYearOfGraduation()); //졸업년도
+            row.createCell(12).setCellValue(excelUserScore.getMiddleSchool()); //출신학교
+            row.createCell(13).setCellValue(excelUserScore.getMiddleSchoolStudentNumber()); //반
             row.createCell(14).setCellValue(excelApplicants.get(i-1).getParentName()); //보호자 성명
             row.createCell(15).setCellValue(excelApplicants.get(i-1).getParentTel()); //보호자 전화번호
 
-            String[] koreanScore = excelApplicants.get(i-1).getKoreanGrade().split("");
+            String[] koreanScore = excelUserScore.getKoreanGrade().split("");
 
             row.createCell(16).setCellValue(koreanScore[0]); //국어 1학년 1학기
             row.createCell(17).setCellValue(koreanScore[1]); //국어 1학년 2학기
@@ -76,7 +80,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(20).setCellValue(koreanScore[4]); //국어 3학년 1학기
             row.createCell(21).setCellValue(koreanScore[5]); //국어 3학년 2학기
 
-            String[] socialScore = excelApplicants.get(i-1).getSocialGrade().split("");
+            String[] socialScore = excelUserScore.getSocialGrade().split("");
 
             row.createCell(22).setCellValue(socialScore[0]); //사회 1학년 1학기
             row.createCell(23).setCellValue(socialScore[1]); //사회 1학년 2학기
@@ -85,7 +89,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(26).setCellValue(socialScore[4]); //사회 3학년 1학기
             row.createCell(27).setCellValue(socialScore[5]); //사회 3학년 2학기
 
-            String[] historyScore = excelApplicants.get(i-1).getHistoryGrade().split("");
+            String[] historyScore = excelUserScore.getHistoryGrade().split("");
 
             row.createCell(28).setCellValue(historyScore[0]); //역사 1학년 1학기
             row.createCell(29).setCellValue(historyScore[1]); //역사 1학년 2학기
@@ -94,7 +98,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(32).setCellValue(historyScore[4]); //역사 3학년 1학기
             row.createCell(33).setCellValue(historyScore[5]); //역사 3학년 2학기
 
-            String[] mathScore = excelApplicants.get(i-1).getMathGrade().split("");
+            String[] mathScore = excelUserScore.getMathGrade().split("");
 
             row.createCell(34).setCellValue(mathScore[0]); //수학 1학년 1학기
             row.createCell(35).setCellValue(mathScore[1]); //수학 1학년 2학기
@@ -103,7 +107,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(38).setCellValue(mathScore[4]); //수학 3학년 1학기
             row.createCell(39).setCellValue(mathScore[5]); //수학 3학년 2학기
 
-            String[] scienceScore = excelApplicants.get(i-1).getScienceGrade().split("");
+            String[] scienceScore = excelUserScore.getScienceGrade().split("");
 
             row.createCell(40).setCellValue(scienceScore[0]); //과학 1학년 1학기
             row.createCell(41).setCellValue(scienceScore[1]); //과학 1학년 2학기
@@ -112,7 +116,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(44).setCellValue(scienceScore[4]); //과학 3학년 1학기
             row.createCell(45).setCellValue(scienceScore[5]); //과학 3학년 2학기
 
-            String[] techAndHomeScore = excelApplicants.get(i-1).getTechAndHomeGrade().split("");
+            String[] techAndHomeScore = excelUserScore.getTechAndHomeGrade().split("");
 
             row.createCell(46).setCellValue(techAndHomeScore[0]); //기술가정 1학년 1학기
             row.createCell(47).setCellValue(techAndHomeScore[1]); //기술가정 1학년 2학기
@@ -121,7 +125,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(50).setCellValue(techAndHomeScore[4]); //기술가정 3학년 1학기
             row.createCell(51).setCellValue(techAndHomeScore[5]); //기술가정 3학년 2학기
 
-            String[] englishScore = excelApplicants.get(i-1).getEnglishGrade().split("");
+            String[] englishScore = excelUserScore.getEnglishGrade().split("");
 
             row.createCell(52).setCellValue(englishScore[0]); //영어 1학년 1학기
             row.createCell(53).setCellValue(englishScore[0]); //영어 1학년 2학기
@@ -130,22 +134,22 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(56).setCellValue(englishScore[0]); //영어 3학년 1학기
             row.createCell(57).setCellValue(englishScore[0]); //영어 3학년 2학기
 
-            row.createCell(58).setCellValue(excelApplicants.get(i-1).getTotalFirstGradeScores()); //1학년 성적 총합
-            row.createCell(59).setCellValue(excelApplicants.get(i-1).getTotalSecondGradeScores()); //2학년 성적 총합
-            row.createCell(60).setCellValue(excelApplicants.get(i-1).getTotalThirdGradeScores()); //3학년 성적 총합
-            row.createCell(61).setCellValue(excelApplicants.get(i-1).getConversionScore()); //교과성적환산점수
+            row.createCell(58).setCellValue(excelUserScore.getTotalFirstGradeScores()); //1학년 성적 총합
+            row.createCell(59).setCellValue(excelUserScore.getTotalSecondGradeScores()); //2학년 성적 총합
+            row.createCell(60).setCellValue(excelUserScore.getTotalThirdGradeScores()); //3학년 성적 총합
+            row.createCell(61).setCellValue(excelUserScore.getConversionScore()); //교과성적환산점수
 
-            row.createCell(62).setCellValue(excelApplicants.get(i-1).getVolunteerTime()); //봉사시간
-            row.createCell(63).setCellValue(excelApplicants.get(i-1).getVolunteerScore()); //봉사점수
+            row.createCell(62).setCellValue(excelUserScore.getVolunteerTime()); //봉사시간
+            row.createCell(63).setCellValue(excelUserScore.getVolunteerScore()); //봉사점수
 
-            row.createCell(64).setCellValue(excelApplicants.get(i-1).getDayAbsenceCount()); //결석
-            row.createCell(65).setCellValue(excelApplicants.get(i-1).getLatenessCount()); //지각
-            row.createCell(66).setCellValue(excelApplicants.get(i-1).getLectureAbsenceCount()); //조퇴
-            row.createCell(67).setCellValue(excelApplicants.get(i-1).getEarlyLeaveCount()); //결과
+            row.createCell(64).setCellValue(excelUserScore.getDayAbsenceCount()); //결석
+            row.createCell(65).setCellValue(excelUserScore.getLatenessCount()); //지각
+            row.createCell(66).setCellValue(excelUserScore.getLectureAbsenceCount()); //조퇴
+            row.createCell(67).setCellValue(excelUserScore.getEarlyLeaveCount()); //결과
 
-            row.createCell(68).setCellValue(excelApplicants.get(i-1).getAttendanceScore()); //출석점수
+            row.createCell(68).setCellValue(excelUserScore.getAttendanceScore()); //출석점수
 
-            row.createCell(69).setCellValue(excelApplicants.get(i-1).getTotalScoreFirstRound()); //1차전형 총점
+            row.createCell(69).setCellValue(excelUserScore.getTotalScoreFirstRound()); //1차전형 총점
 
             row.createCell(70).setCellValue(excelApplicants.get(i-1).getSelfIntroduce()); //자기소개서
             row.createCell(71).setCellValue(excelApplicants.get(i-1).getSelfIntroduce()); //학업계획서

@@ -111,7 +111,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
             excelUsers.add(
                     ExcelUser.builder()
                             .examCode(user.getStatus().getExamCode()) //수험번호
-                            .receiptCode(String.valueOf(user.getReceiptCode())) //접수 번호
+                            .receiptCode(user.getReceiptCode()) //접수 번호
                             .applicationType(String.valueOf(user.getApplicationType())) //전형 유형
                             .applicationRemrk(String.valueOf(user.getApplicationRemark())) //추가 유형
                             .area(String.valueOf(user.isDaejeon())) //지역
@@ -125,6 +125,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                             .selfIntroduce(user.getSelfIntroduce()) //학업 계획서
                             .parentName(user.getParentName()) //보호자 이름
                             .parentTel(user.getParentTel()) //보호자 전화번호
+                    .build()
             );
         }
 

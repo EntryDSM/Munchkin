@@ -9,7 +9,7 @@ public class ExcelUser {
 
     private String examCode; //수험번호
 
-    private String receiptCode; //접수 번호
+    private Long receiptCode; //접수 번호
 
     private String applicationType; //전형 유형
 
