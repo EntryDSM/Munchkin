@@ -25,22 +25,26 @@ public class ApplicationPdfGenerator {
     private byte[] generateApplicationPdf(Applicant applicant, Score score) {
         Map<String, Object> data = pdfDataConverter.applicationToInfo(applicant, score);
 
-        List<String> templates = new LinkedList<>(List.of(
-                TemplateFileName.APPLICATION_FOR_ADMISSION,
-                TemplateFileName.INTRODUCTION,
-                TemplateFileName.NON_SMOKING
-        ));
-
-        if (!applicant.isQualificationExam() && !applicant.isCommonApplicationType()) {
-            templates.add(2, TemplateFileName.RECOMMENDATION);
-        }
-
-        ByteArrayOutputStream result = templates.parallelStream()
+        ByteArrayOutputStream result = getTemplateFileNames(applicant).parallelStream()
                 .map(template -> templateProcessor.process(template, data))
                 .map(HtmlConverter::convertHtmlToPdf)
                 .reduce(PdfMerger::concat)
                 .orElseGet(() -> (ByteArrayOutputStream) ByteArrayOutputStream.nullOutputStream());
 
         return result.toByteArray();
+    }
+
+    private List<String> getTemplateFileNames(Applicant applicant) {
+        List<String> result = new LinkedList<>(List.of(
+                TemplateFileName.APPLICATION_FOR_ADMISSION,
+                TemplateFileName.INTRODUCTION,
+                TemplateFileName.NON_SMOKING
+        ));
+
+        if (!applicant.isQualificationExam() && !applicant.isCommonApplicationType()) {
+            result.add(2, TemplateFileName.RECOMMENDATION);
+        }
+
+        return result;
     }
 }
