@@ -5,6 +5,7 @@ import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
+import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
 import kr.hs.entrydsm.admin.usecase.dto.CommonScore;
@@ -29,6 +30,7 @@ public class AdminServiceManager implements AdminService {
 
     private final AdminRepository adminRepository;
     private final ScheduleRepository scheduleRepository;
+    private final ScheduleRepositoryManager scheduleRepositoryManager;
     private final ScoreRepository scoreRepository;
 
     private final AuthenticationManager authenticationManager;
@@ -51,6 +53,8 @@ public class AdminServiceManager implements AdminService {
         else {
             throw new UserNotAccessibleException();
         }
+
+        scheduleRepositoryManager.save(schedule);
     }
 
     @Override
