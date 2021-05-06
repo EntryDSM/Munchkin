@@ -98,4 +98,8 @@ public class Applicant {
     public boolean isSocialApplicationType() {
         return applicationType.equals("SOCIAL");
     }
+
+    public boolean isRecommendationsRequired() {
+        return !isEducationalStatusEmpty() && !isCommonApplicationType() && !isProspectiveGraduate();
+    }
 }

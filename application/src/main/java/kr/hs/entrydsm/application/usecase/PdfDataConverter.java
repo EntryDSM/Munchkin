@@ -36,7 +36,7 @@ public class PdfDataConverter {
         setIntroduction(applicant);
         setParentInfo(applicant);
 
-        if (isRecommendationsRequired(applicant)) {
+        if (applicant.isRecommendationsRequired()) {
             setRecommendations(applicant);
         }
 
@@ -202,10 +202,6 @@ public class PdfDataConverter {
                 "graduateMonth", "__",
                 "prospectiveGraduateMonth", "__"
         );
-    }
-
-    private boolean isRecommendationsRequired(Applicant applicant) {
-        return !applicant.isEducationalStatusEmpty() && !applicant.isCommonApplicationType() && !applicant.isProspectiveGraduate();
     }
 
     private String toFormattedPhoneNumber(String phoneNumber) {
