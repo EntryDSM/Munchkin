@@ -1,12 +1,12 @@
 package kr.hs.entrydsm.main.integrate.application;
 
-import kr.hs.entrydsm.application.integrate.user.UserDocsService;
+import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.common.context.beans.Published;
 import org.springframework.stereotype.Service;
 
 @Published
 @Service
-public class ApplicationIntegrateUserService implements UserDocsService {
+public class ApplicationIntegrateUserService implements ApplicantDocsService {
     @Override
     public void writeSelfIntroduce(Long receiptCode, String content) {
 
