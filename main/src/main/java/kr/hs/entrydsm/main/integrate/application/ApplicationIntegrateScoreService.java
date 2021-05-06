@@ -21,6 +21,11 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     @Override
+    public Score getScore(Long receiptCode) {
+        return null;
+    }
+
+    @Override
     public Scores getScores(Long receiptCode) {
         kr.hs.entrydsm.score.entity.Score score = applicationScoreExportRepository.findByReceiptCode(receiptCode);
         return Scores.builder()

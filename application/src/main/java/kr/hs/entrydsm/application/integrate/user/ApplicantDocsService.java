@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.integrate.user;
 
-public interface UserDocsService {
+public interface ApplicantDocsService {
 
     void writeSelfIntroduce(Long receiptCode, String content);
 

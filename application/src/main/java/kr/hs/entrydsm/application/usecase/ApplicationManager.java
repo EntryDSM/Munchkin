@@ -2,8 +2,8 @@ package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.entity.SchoolRepository;
-import kr.hs.entrydsm.application.integrate.user.ApplicantExportService;
-import kr.hs.entrydsm.application.integrate.user.UserDocsService;
+import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
+import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import lombok.RequiredArgsConstructor;
@@ -15,28 +15,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationManager implements ApplicationProcessing {
 
-    private final UserDocsService userDocsService;
-    private final ApplicantExportService applicantExportService;
+    private final ApplicantDocsService applicantDocsService;
+    private final ApplicationApplicantRepository applicantExportService;
     private final SchoolRepository schoolRepository;
 
     @Override
     public void writeSelfIntroduce(Long receiptCode, String content) {
-        userDocsService.writeSelfIntroduce(receiptCode, content);
+        applicantDocsService.writeSelfIntroduce(receiptCode, content);
     }
 
     @Override
     public void writeStudyPlan(Long receiptCode, String content) {
-        userDocsService.writeStudyPlan(receiptCode, content);
+        applicantDocsService.writeStudyPlan(receiptCode, content);
     }
 
     @Override
     public String getSelfIntroduce(Long receiptCode) {
-        return userDocsService.getSelfIntroduce(receiptCode);
+        return applicantDocsService.getSelfIntroduce(receiptCode);
     }
 
     @Override
     public String getStudyPlan(Long receiptCode) {
-        return userDocsService.getStudyPlan(receiptCode);
+        return applicantDocsService.getStudyPlan(receiptCode);
     }
 
     @Override
