@@ -28,7 +28,7 @@ public class ApplicationPdfGenerator {
         ByteArrayOutputStream result = getTemplateFileNames(applicant).parallelStream()
                 .map(template -> templateProcessor.convertTemplateIntoHtmlString(template, data))
                 .map(HtmlConverter::convertHtmlToPdf)
-                .reduce(PdfMerger::concat)
+                .reduce(PdfProcessor::concat)
                 .orElseGet(() -> (ByteArrayOutputStream) ByteArrayOutputStream.nullOutputStream());
 
         return result.toByteArray();
