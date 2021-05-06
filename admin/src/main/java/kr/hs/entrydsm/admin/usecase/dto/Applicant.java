@@ -26,8 +26,6 @@ public class Applicant {
 
     private LocalDate birthDate;
 
-    private boolean isPaid;
-
     private boolean isPrintedArrived;
 
     private boolean isSubmit;
@@ -77,10 +75,6 @@ public class Applicant {
     private boolean isGraduated; // 졸업 여부
 
     private double distance; // 학교까지의 거리
-
-    public void updateIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
-    }
 
     public void updateExamCode(String examCode) {
         this.examCode = examCode;
