@@ -18,7 +18,7 @@ public class ApplicationPdfGenerator {
     private final PdfDataConverter pdfDataConverter;
     private final TemplateProcessor templateProcessor;
 
-    public byte[] applicationPdf(Applicant applicant, Score score) {
+    public byte[] generate(Applicant applicant, Score score) {
         return generateApplicationPdf(applicant, score);
     }
 
