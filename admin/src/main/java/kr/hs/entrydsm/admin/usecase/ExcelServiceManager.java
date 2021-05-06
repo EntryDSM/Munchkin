@@ -1,9 +1,8 @@
 package kr.hs.entrydsm.admin.usecase;
 
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelApplicant;
+import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.admin.integrate.user.ExcelApplicantRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +41,7 @@ public class ExcelServiceManager implements ExcelService {
     public void createApplicantInformation() {
         ApplicantInformation applicantInformation = new ApplicantInformation();
         Sheet sheet = applicantInformation.getSheet();
-        List<ExcelApplicant> excelApplicants = excelApplicantRepository.findAllForExcel();
+        List<ExcelUser> excelApplicants = ApplicantRepository.findAllForExcel();
 
         //학생 정보 싸그리 가져오기
 

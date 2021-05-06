@@ -2,6 +2,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
@@ -102,13 +103,32 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     }
 
     @Override
-    public void changeIsPaid(int receiptCode, boolean isPaid) {
+    public List<ExcelUser> findAllForExcel() {
+        List<User> users = userExportRepository.findAllForExcel();
 
-    }
+        List<ExcelUser> excelUsers = new ArrayList<>();
+        for (User user : users) {
+            excelUsers.add(
+                    ExcelUser.builder()
+                            .examCode(user.getStatus().getExamCode()) //수험번호
+                            .receiptCode(String.valueOf(user.getReceiptCode())) //접수 번호
+                            .applicationType(String.valueOf(user.getApplicationType())) //전형 유형
+                            .applicationRemrk(String.valueOf(user.getApplicationRemark())) //추가 유형
+                            .area(String.valueOf(user.isDaejeon())) //지역
+                            .name(user.getName()) //이름
+                            .birthDay(user.getBirthday().toString()) //생년월일
+                            .sex(user.getSex().toString()) //성별
+                            .address(user.getAddress()) //주소
+                            .educationalStatus(user.getEducationalStatus().toString()) //학력구분
+                            .telephoneNumber(user.getTelephoneNumber()) //학생 전화번호
+                            .studyPlan(user.getStudyPlan()) //자기소개서
+                            .selfIntroduce(user.getSelfIntroduce()) //학업 계획서
+                            .parentName(user.getParentName()) //보호자 이름
+                            .parentTel(user.getParentTel()) //보호자 전화번호
+            );
+        }
 
-    @Override
-    public void changeIsSubmit(int receiptCode, boolean isSubmit) {
-
+        return excelUsers;
     }
 
 }

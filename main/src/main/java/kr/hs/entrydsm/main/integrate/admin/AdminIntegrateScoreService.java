@@ -2,6 +2,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
+import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
 import kr.hs.entrydsm.score.integrate.admin.ScoreExportRepository;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,12 @@ public class AdminIntegrateScoreService implements ScoreRepository {
                 .meisterScore(statusResponse.getMeisterScore())
                 .specialScore(statusResponse.getSpecialScore())
                 .build();
+    }
+
+    @Override
+    public ExcelUserScore findUserScore(Long receiptCode) {
+
+        return null;
     }
 
 }
