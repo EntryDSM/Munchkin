@@ -3,7 +3,7 @@ package kr.hs.entrydsm.application.usecase.pdf;
 import kr.hs.entrydsm.application.entity.Applicant;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.application.integrate.user.UserStatusService;
+import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;
 import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.application.usecase.exception.FinalSubmitRequiredException;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationPdfManager implements ApplicationPdfService {
 
     private final ApplicationPdfGenerator applicationPdfGenerator;
-    private final UserStatusService userStatusService;
+    private final ApplicantStatusService applicantStatusService;
     private final ScoreCalculator scoreCalculator;
     private final ApplicantRepository applicantRepository;
 
@@ -27,7 +27,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
 
     @Override
     public byte[] getFinalApplicationPdf(long receiptCode) {
-        if (!userStatusService.isFinalSubmit(receiptCode)) {
+        if (!applicantStatusService.isFinalSubmit(receiptCode)) {
             throw new FinalSubmitRequiredException();
         }
 
