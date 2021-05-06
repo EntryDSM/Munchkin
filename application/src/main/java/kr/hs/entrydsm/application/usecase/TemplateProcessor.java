@@ -13,7 +13,7 @@ public class TemplateProcessor {
 
     private final TemplateEngine templateEngine;
 
-    public String process(String template, Map<String, Object> data) {
+    public String convertTemplateIntoHtmlString(String template, Map<String, Object> data) {
         Context context = new Context();
         context.setVariables(data);
         return templateEngine.process(template, context);
