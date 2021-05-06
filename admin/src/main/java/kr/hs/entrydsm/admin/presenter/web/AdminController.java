@@ -25,17 +25,10 @@ public class AdminController {
 
     //지원자
     @AdminJWTRequired
-    @PatchMapping("/applicant/is-printed-arrived")
+    @PatchMapping("/applicant/printed-arrived")
     public void updateIsprintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
                              @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
         applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
-    }
-
-    @AdminJWTRequired
-    @PatchMapping("/applicant/is-paid")
-    public void updateIspaid(@RequestParam(name = "receipt-code") int receiptCode,
-                             @RequestParam(required = false, name = "is-paid") boolean isPaid) {
-        applicantService.changeIsPaid(receiptCode, isPaid);
     }
 
     @AdminJWTRequired

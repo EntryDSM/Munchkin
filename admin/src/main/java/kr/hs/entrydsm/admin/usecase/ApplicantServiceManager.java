@@ -44,15 +44,19 @@ public class ApplicantServiceManager implements ApplicantService {
     private static final String PRINTED_ARRIVED = "원서가 도착했습니다.";
     private static final String PRINTED_NOT_ARRIVED = "원서가 아직 도착하지 않았습니다.";
 
-    private static final String PAID_UP = "전형료 납부가 확인되었습니다.";
-    private static final String NOT_PAID_UP = "전형료가 납부되지 않았습니다.";
-
     @Value("${tmap.app.key}")
     private String appKey;
 
     @Override
     public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
-        changeStatus(receiptCode, isPrintedArrived, "isPrintedArrived");
+        Admin admin = adminRepository.findById(authenticationManager.getAdminId())
+                .orElseThrow(AdminNotFoundException::new);
+        if(admin.getPermission().toString().equals("TEACHER")) {
+            applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+        }
+        else {
+            throw new UserNotAccessibleException();
+        }
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
         String message = null;
@@ -60,36 +64,6 @@ public class ApplicantServiceManager implements ApplicantService {
         else message = PRINTED_NOT_ARRIVED;
 
         messageSender.sendMessage(applicant.getTelephoneNumber(), message);
-    }
-
-    @Override
-    public void changeIsPaid(int receiptCode, boolean isPaid) {
-        changeStatus(receiptCode, isPaid, "isPaid");
-
-        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
-        String message = null;
-        if(isPaid) message = PAID_UP;
-        else message = NOT_PAID_UP;
-
-        messageSender.sendMessage(applicant.getTelephoneNumber(), message);
-    }
-
-    private void changeStatus(int receiptCode, boolean changedValue, String changes) {
-        Admin admin = adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
-        if(admin.getPermission().toString().equals("TEACHER")) {
-            switch (changes) {
-                case "isPrintedArrived":
-                    applicantRepository.changeIsPrintedArrived(receiptCode, changedValue);
-                    break;
-                case "isPaid":
-                    applicantRepository.changeIsPaid(receiptCode, changedValue);
-                    break;
-            }
-        }
-        else {
-            throw new UserNotAccessibleException();
-        }
     }
 
     @Override
