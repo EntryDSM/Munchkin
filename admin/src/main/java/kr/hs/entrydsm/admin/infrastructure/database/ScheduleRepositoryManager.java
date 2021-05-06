@@ -12,4 +12,5 @@ public interface ScheduleRepositoryManager extends CrudRepository<Schedule, Stri
 
     @Override
     List<Schedule> findAllBy();
+
 }
