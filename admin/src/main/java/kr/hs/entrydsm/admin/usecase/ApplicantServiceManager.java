@@ -96,7 +96,6 @@ public class ApplicantServiceManager implements ApplicantService {
                             .isDaejeon(applicant.isDaejeon())
                             .applicationType(applicant.getApplicationType())
                             .isPrintedArrived(applicant.isPrintedArrived())
-                            .isPaid(applicant.isPaid())
                             .isSubmit(applicant.isSubmit())
                             .build()
             );
@@ -110,14 +109,17 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
-    public ApplicantDetailResponse getDetail(int receiptCode) {
+    public Object getDetail(int receiptCode) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        if(!applicant.isSubmit()) {
+            NotSubmitApplicant notSubmitApplicant = new NotSubmitApplicant(applicant.getApplicationType(), applicant.getParentTel(), applicant.getHomeTel(), applicant.getSchoolTel());
+            return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
+        }
 
         Status status = Status.builder()
-                .isPaid(applicant.isPaid())
                 .isPrintedArrived(applicant.isPrintedArrived())
                 .isSubmit(applicant.isSubmit())
                 .build();
