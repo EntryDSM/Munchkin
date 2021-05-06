@@ -2,7 +2,7 @@ package kr.hs.entrydsm.admin.presenter.web;
 
 import kr.hs.entrydsm.admin.usecase.AdminService;
 import kr.hs.entrydsm.admin.usecase.ApplicantService;
-import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantDetailResponse;
+import kr.hs.entrydsm.admin.usecase.ExcelService;
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Published
@@ -23,6 +24,8 @@ public class AdminController {
 
     private final ApplicantService applicantService;
     private final AdminService adminService;
+
+    private final ExcelService excelService;
 
     //지원자
     @AdminJWTRequired
@@ -34,7 +37,7 @@ public class AdminController {
 
     @AdminJWTRequired
     @GetMapping("/applicant")
-    public ApplicantDetailResponse getDetail(@RequestParam(name = "receipt-code") int receiptCode) {
+    public Object getDetail(@RequestParam(name = "receipt-code") int receiptCode) {
         return applicantService.getDetail(receiptCode);
     }
 
@@ -61,12 +64,12 @@ public class AdminController {
     }
 
     //전형 일자
+    @AdminJWTRequired
     @PatchMapping("/schedules")
     public void updateSchedules(@RequestBody @Valid ScheduleRequest scheduleRequest) {
         adminService.updateSchedules(scheduleRequest);
     }
 
-    @AdminJWTRequired
     @GetMapping("/schedules")
     public ScheduleResponse getSchedules() {
         return adminService.getSchedules();
@@ -77,6 +80,18 @@ public class AdminController {
     @GetMapping("/statics")
     public ReceiptStatusResponse getStatics() {
         return adminService.getStatics();
+    }
+
+    @AdminJWTRequired
+    @GetMapping("/excel/applicants")
+    public void createAdmissionTicket() {
+        excelService.createApplicantInformation();
+    }
+
+    @AdminJWTRequired
+    @GetMapping("/excel/admissionTicket/{receipt-code}")
+    public void createApplicantInformation(@PathVariable("receipt-code") Long receiptCode) throws IOException {
+        excelService.createAdmissionTicket(receiptCode);
     }
 
 }
