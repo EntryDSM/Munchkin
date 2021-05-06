@@ -24,7 +24,7 @@ public class ExcelServiceManager implements ExcelService {
     private final ScoreRepository scoreRepository;
 
     @Override
-    public void createAdmissionTicket(int receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
+    public void createAdmissionTicket(long receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
 
         String examCode = applicant.getExamCode();
