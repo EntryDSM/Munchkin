@@ -11,6 +11,7 @@ import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +30,7 @@ public class AdminController {
 
     //지원자
     @AdminJWTRequired
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/applicant/printed-arrived")
     public void updateIsprintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
                              @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
@@ -65,6 +67,7 @@ public class AdminController {
 
     //전형 일자
     @AdminJWTRequired
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/schedules")
     public void updateSchedules(@RequestBody @Valid ScheduleRequest scheduleRequest) {
         adminService.updateSchedules(scheduleRequest);
