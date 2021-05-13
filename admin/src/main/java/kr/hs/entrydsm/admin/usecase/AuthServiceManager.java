@@ -38,7 +38,7 @@ public class AuthServiceManager implements AuthService {
                 .map(Admin::getId)
                 .map(adminId -> {
                     String refreshToken = jwtTokenProvider.generateRefreshToken(adminId);
-                    return new RefreshToken(adminId.toString(), refreshToken, refreshExp);
+                    return new RefreshToken(adminId, refreshToken, refreshExp);
                 })
                 .map(refreshTokenRepository::save)
                 .map(refreshToken -> {
@@ -55,9 +55,9 @@ public class AuthServiceManager implements AuthService {
         }
 
         return refreshTokenRepository.findByRefreshToken(receivedToken)
-                .map(refreshToken -> refreshToken.update(refreshExp))
-                .map(refreshToken ->
-                        new AccessTokenResponse(jwtTokenProvider.generateAccessToken(refreshToken.getId())))
+                .map(refreshToken ->refreshToken.update(refreshExp))
+                .map(refreshTokenRepository::save)
+                .map(refreshToken ->new AccessTokenResponse(jwtTokenProvider.generateAccessToken(refreshToken.getId())))
                 .orElseThrow(AdminNotFoundException::new);
     }
 }
