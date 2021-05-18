@@ -5,6 +5,7 @@ import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +42,7 @@ public class ApplicationUserController {
 
     @PostMapping("/photo")
     @ResponseStatus(HttpStatus.CREATED)
-    public String uploadPhoto(@RequestPart MultipartFile multipartFile) throws IOException {
+    public String uploadPhoto(@RequestPart @Nullable MultipartFile multipartFile) throws IOException {
         return applicationProcessing.uploadPhoto(multipartFile);
     }
 
