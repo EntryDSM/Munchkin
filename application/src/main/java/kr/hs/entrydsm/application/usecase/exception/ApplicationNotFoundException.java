@@ -8,4 +8,5 @@ public class ApplicationNotFoundException extends MunchkinException {
     public ApplicationNotFoundException() {
         super(ErrorCode.APPLICATION_NOT_FOUND);
     }
+
 }
