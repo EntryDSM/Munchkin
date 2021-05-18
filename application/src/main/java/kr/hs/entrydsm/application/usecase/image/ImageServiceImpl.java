@@ -1,10 +1,8 @@
 package kr.hs.entrydsm.application.usecase.image;
 
 import com.amazonaws.auth.AWS4Signer;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,6 +29,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
     private static final String ALGORITHM = "HMAC-SHA256";
 
     private static final Integer EXPIRES = 900;
+    public static final String HMAC_SHA_256 = "HmacSHA256";
 
     private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat(ISO8601BasicFormat);
     private final SimpleDateFormat dateStampFormat = new SimpleDateFormat("yyyyMMdd");
@@ -53,6 +53,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
 
     @Override
     public String upload(MultipartFile file) throws IOException {
+        if(file.isEmpty()) throw new FileNotFoundException();
         String originalFilename = file.getOriginalFilename();
         String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String randomName = UUID.randomUUID().toString();
@@ -74,18 +75,18 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         URL endpointUrl = new URL("https://" + baseImageUrl + "/" + objectName);
 
         // X-Amz-Algorithm
-        String x_amz_algorithm = SCHEME + "-" + ALGORITHM;
+        String xAmzAlgorithm = SCHEME + "-" + ALGORITHM;
 
         // X-Amz-Credential
         dateStampFormat.setTimeZone(new SimpleTimeZone(0, "UTC"));
         Date now = new Date();
         String dateStamp = dateStampFormat.format(now);
         String scope = dateStamp + "/" + region + "/s3/aws4_request";
-        String x_amz_credential = accessKey + "/" + scope;
+        String xAmzCredential = accessKey + "/" + scope;
 
         // X-Amz-Date
         dateTimeFormat.setTimeZone(new SimpleTimeZone(0, "UTC"));
-        String x_amz_date = dateTimeFormat.format(now);
+        String xAmzDate = dateTimeFormat.format(now);
 
         // X-Amz-SignedHeaders
         Map<String, String> headers = new HashMap<>();
@@ -96,9 +97,9 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
 
         // X-Amz_Signature
         Map<String, String> queryParameters = new HashMap<>();
-        queryParameters.put("X-Amz-Algorithm", x_amz_algorithm);
-        queryParameters.put("X-Amz-Credential", x_amz_credential);
-        queryParameters.put("X-Amz-Date", x_amz_date);
+        queryParameters.put("X-Amz-Algorithm", xAmzAlgorithm);
+        queryParameters.put("X-Amz-Credential", xAmzCredential);
+        queryParameters.put("X-Amz-Date", xAmzDate);
         queryParameters.put("X-Amz-SignedHeaders", canonicalizedHeaderNames);
         queryParameters.put("X-Amz-Expires", Integer.toString(EXPIRES));
         String canonicalizedQueryParameters = AWS4SignerBase.getCanonicalizedQueryString(queryParameters);
@@ -107,14 +108,14 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
                 canonicalizedQueryParameters, canonicalizedHeaderNames,
                 canonicalizedHeaders, AWS4SignerBase.UNSIGNED_PAYLOAD);
 
-        String stringToSign = getStringToSign(SCHEME, ALGORITHM, x_amz_date, scope, canonicalRequest);
+        String stringToSign = getStringToSign(SCHEME, ALGORITHM, xAmzDate, scope, canonicalRequest);
 
         byte[] kSecret = (SCHEME + secretKey).getBytes();
-        byte[] kDate = AWS4SignerBase.sign(dateStamp, kSecret, "HmacSHA256");
-        byte[] kRegion = AWS4SignerBase.sign(region, kDate, "HmacSHA256");
-        byte[] kService = AWS4SignerBase.sign("s3", kRegion, "HmacSHA256");
-        byte[] kSigning = AWS4SignerBase.sign(TERMINATOR, kService, "HmacSHA256");
-        byte[] signature = AWS4SignerBase.sign(stringToSign, kSigning, "HmacSHA256");
+        byte[] kDate = AWS4SignerBase.sign(dateStamp, kSecret, HMAC_SHA_256);
+        byte[] kRegion = AWS4SignerBase.sign(region, kDate, HMAC_SHA_256);
+        byte[] kService = AWS4SignerBase.sign("s3", kRegion, HMAC_SHA_256);
+        byte[] kSigning = AWS4SignerBase.sign(TERMINATOR, kService, HMAC_SHA_256);
+        byte[] signature = AWS4SignerBase.sign(stringToSign, kSigning, HMAC_SHA_256);
 
         StringBuilder authString = new StringBuilder();
 
