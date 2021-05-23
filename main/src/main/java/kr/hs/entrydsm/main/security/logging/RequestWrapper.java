@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Map;
 
 public class RequestWrapper extends HttpServletRequestWrapper {
@@ -70,11 +71,19 @@ public class RequestWrapper extends HttpServletRequestWrapper {
                 bodyMap.put("password", "SECURED");
 
             body = objectMapper.writeValueAsString(bodyMap);
+            return body;
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         return "{}";
+    }
+
+    public String getParamsString() {
+        StringBuilder params = new StringBuilder();
+        getParameterMap().forEach((key, value) -> params.append(key).append("=").append(value[0]));
+        if (params.length() == 0) return "";
+        return params.insert(0, "?").toString();
     }
 
 }
