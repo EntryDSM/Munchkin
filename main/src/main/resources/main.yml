@@ -22,4 +22,10 @@ auth:
     header:
       access: ${JWT_HEADER:Authorization}
       refresh: ${JWT_REFRESH_HEADER:X-Refresh-Token}
-    prefix: ${JWT_PREFIX:Bearer} 
+    prefix: ${JWT_PREFIX:Bearer}
+
+munchkin:
+  logging:
+    name: munchkin.log
+    path: ${LOG_PATH:/}
+    size: 10 # 10mb
