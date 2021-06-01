@@ -8,4 +8,6 @@ public interface ApplicationApplicantRepository {
     void writeInformation(Long receiptCode, Information information);
     Application getApplicationType(Long receiptCode);
     Information getInformation(Long receiptCode);
+    void setPhotoFileName(String photoFileName);
+    String getPhotoFileName(Long receiptCode);
 }
