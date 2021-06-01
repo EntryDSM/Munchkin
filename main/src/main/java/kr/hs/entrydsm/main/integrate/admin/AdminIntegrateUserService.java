@@ -28,8 +28,8 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                                    boolean isDaejeon, boolean isNationwide,
                                    String telephoneNumber, String name,
                                    boolean isCommon, boolean isMeister, boolean isSocial,
-                                   boolean isPrintedArrived, boolean isPaid) {
-        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived, isPaid);
+                                   boolean isPrintedArrived) {
+        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
         for (User user : users) {
@@ -39,7 +39,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                             .name(user.getName())
                             .isDaejeon(user.isDaejeon())
                             .applicationType(String.valueOf(user.getApplicationType()))
-                            .isPaid(user.getStatus().isPaid())
                             .isPrintedArrived(user.getStatus().isPrintedArrived())
                             .isSubmit(user.getStatus().isSubmit())
                             .build()
@@ -75,13 +74,13 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .address(user.getAddress())
                 .detailAddress(null)
                 .birthDate(user.getBirthday())
-                .isPaid(user.getStatus().isPaid())
                 .isPrintedArrived(user.getStatus().isPrintedArrived())
                 .isSubmit(user.getStatus().isSubmit())
                 .telephoneNumber(user.getTelephoneNumber())
                 .parentTel(user.getParentTel())
                 .homeTel(user.getHomeTel())
                 .selfIntroduce(user.getSelfIntroduce())
+                .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
                 //수정 필요
                 .averageScore(reportCard.getAverageScore()) // 검정고시 평균 점수

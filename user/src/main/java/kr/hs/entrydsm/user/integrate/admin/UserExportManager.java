@@ -32,7 +32,7 @@ public class UserExportManager implements UserExportRepository {
                               boolean isDaejeon, boolean isNationwide,
                               @NonNull String telephoneNumber, @NonNull String name,
                               boolean isCommon, boolean isMeister, boolean isSocial,
-                              boolean isPrintedArrived, boolean isPaid) {
+                              boolean isPrintedArrived) {
 
         String receiptCodeQuery = "%%";
         if (receiptCode != null) receiptCodeQuery = receiptCode.toString();
@@ -46,7 +46,7 @@ public class UserExportManager implements UserExportRepository {
         String nameQuery = "%" + name + "%";
 
         return userRepository.findAllByUserInfo(receiptCodeQuery, isDaejeonQuery, telephoneNumberQuery,
-                nameQuery, isCommon, isMeister, isSocial, isPrintedArrived, isPaid, page);
+                nameQuery, isCommon, isMeister, isSocial, isPrintedArrived, page);
     }
 
     @Override

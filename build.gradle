@@ -106,6 +106,7 @@ project(':admin') {
         compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.apache.poi:poi:3.16'
         compile 'org.apache.poi:poi-ooxml:3.16'
+        implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3control', version: '1.11.457'
     }
 }
 
