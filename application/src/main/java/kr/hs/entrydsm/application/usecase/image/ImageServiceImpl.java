@@ -52,12 +52,14 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
     private String baseImageUrl;
 
     @Override
-    public String upload(MultipartFile file) throws IOException {
+    public String upload(MultipartFile file, long receiptCode) throws IOException {
         if(file.isEmpty()) throw new FileNotFoundException();
         String originalFilename = file.getOriginalFilename();
         String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String randomName = UUID.randomUUID().toString();
         String filename = randomName + "." + ext;
+
+
 
         s3.putObject(new PutObjectRequest(bucket, "images/" + filename, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.AuthenticatedRead));

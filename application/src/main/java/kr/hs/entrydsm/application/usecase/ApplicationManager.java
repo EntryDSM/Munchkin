@@ -89,7 +89,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public String uploadPhoto(MultipartFile multipartFile) throws IOException {
-        return imageService.upload(multipartFile);
+        return imageService.upload(multipartFile, 1L);
     }
 
     private String getImageUrl(String photoFileName) throws MalformedURLException {
