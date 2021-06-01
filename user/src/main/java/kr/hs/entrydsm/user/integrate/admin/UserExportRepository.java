@@ -14,7 +14,7 @@ public interface UserExportRepository {
                        boolean isDaejeon, boolean isNationwide,
                        String telephoneNumber, String name,
                        boolean isCommon, boolean isMeister, boolean isSocial,
-                       boolean isPrintedArrived, boolean isPaid);
+                       boolean isPrintedArrived);
     void changeExamCode(long receiptCode, String examCode);
     List<User> findAllIsSubmitTrue();
     List<User> findAllForExcel();
