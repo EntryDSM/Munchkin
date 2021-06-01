@@ -1,5 +1,8 @@
 package kr.hs.entrydsm.admin.usecase;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.util.IOUtils;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
@@ -8,12 +11,16 @@ import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFPatriarch;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,6 +29,11 @@ public class ExcelServiceManager implements ExcelService {
 
     private final ApplicantRepository applicantRepository;
     private final ScoreRepository scoreRepository;
+
+    private final AmazonS3 s3;
+
+    @Value("${aws.s3.bucket}")
+    private String bucket;
 
     @Override
     public void createAdmissionTicket(long receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
@@ -34,8 +46,31 @@ public class ExcelServiceManager implements ExcelService {
         String applicationType = applicant.getApplicationType();
         //사진은 나중에 추가하기
 
+        File file = new File(applicant.getPhotoFileName());
+        long length = file.length();
+        byte[] picData = new byte[(int)length];
+        byte[] bytes = new byte[(int)length];
+        InputStream input = new BufferedInputStream(new FileInputStream(file));
+        FileInputStream picln = new FileInputStream(file);
+        picln.read(picData);
+        try {
+            int offset = 0;
+            int read;
+            while((read = input.read()) != -1) bytes[offset++] = (byte)read;
+        } finally {
+            input.close();
+        }
+
         AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
         admissionTicket.format(0,0);
+
+        int index = admissionTicket.getWorkbook().addPicture(picData, HSSFWorkbook.PICTURE_TYPE_PNG);
+        HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
+        HSSFClientAnchor anchor;
+        anchor = new HSSFClientAnchor(0,0,0,0,(short)0,2,(short)2,14);
+        anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+        patriarch.createPicture(anchor, index);
+
         admissionTicket.getWorkbook().write(new FileOutputStream("./"+name+" 수험표.xls"));
     }
 
@@ -155,6 +190,11 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(71).setCellValue(excelApplicants.get(i-1).getSelfIntroduce()); //학업계획서
         }
 
+    }
+
+    private byte[] getObject(String fileName) throws IOException {
+        S3Object object = s3.getObject(bucket, fileName);
+        return IOUtils.toByteArray(object.getObjectContent());
     }
 
 }

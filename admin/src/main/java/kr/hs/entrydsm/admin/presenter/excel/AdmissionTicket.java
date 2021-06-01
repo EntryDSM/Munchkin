@@ -28,6 +28,10 @@ public class AdmissionTicket {
         return workbook;
     }
 
+    public HSSFSheet getSheet() {
+        return sheet;
+    }
+
     public AdmissionTicket(String examCode, String name, String middleSchool, String area, String applicationType, String receiptCode) {
         this.examCode = examCode;
         this.name = name;
