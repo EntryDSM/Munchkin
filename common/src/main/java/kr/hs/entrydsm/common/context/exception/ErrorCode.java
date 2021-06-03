@@ -28,7 +28,7 @@ public enum ErrorCode {
 
     APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found"),
     SCHOOL_NOT_FOUND(404, "APPLICATION404-1", "The school could not be found"),
-    FILE_IS_EMPTY(400, "APPLICATION404-2", "The file could not be found");
+    FILE_IS_EMPTY(400, "APPLICATION400-0", "The file could not be found");
 
     private final int status;
     private final String code;
