@@ -6,6 +6,8 @@ import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.common.model.Scores;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Published
 @Service
 public class ApplicationIntegrateScoreService implements ScoreCalculator {

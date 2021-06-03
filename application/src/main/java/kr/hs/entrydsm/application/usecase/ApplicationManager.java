@@ -1,11 +1,16 @@
 package kr.hs.entrydsm.application.usecase;
 
+import kr.hs.entrydsm.application.entity.GraduationApplication;
+import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.entity.SchoolRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
+import kr.hs.entrydsm.application.infrastructure.database.GraduationApplicationRepositoryManager;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +23,7 @@ public class ApplicationManager implements ApplicationProcessing {
     private final ApplicantDocsService applicantDocsService;
     private final ApplicationApplicantRepository applicantExportService;
     private final SchoolRepository schoolRepository;
+    private final GraduationApplicationRepository graduationApplicationRepository;
 
     @Override
     public void writeSelfIntroduce(Long receiptCode, String content) {
@@ -51,6 +57,13 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public void writeInformation(Long receiptCode, Information information) {
+        graduationApplicationRepository.findByReceiptCode(receiptCode)
+                .map(graduationApplication -> {
+                    graduationApplication.setSchoolTel(information.getSchoolTel());
+                    graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode()).orElseThrow(SchoolNotFoundException::new));
+                    graduationApplicationRepository.save(graduationApplication);
+                    return graduationApplication;
+                }).orElseThrow(ApplicationNotFoundException::new);
         applicantExportService.writeInformation(receiptCode, information);
     }
 
@@ -61,6 +74,10 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public Information getInformation(Long receiptCode) {
-        return applicantExportService.getInformation(receiptCode);
+        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode).orElseThrow(ApplicationNotFoundException::new);
+        Information result = applicantExportService.getInformation(receiptCode);
+        result.setSchoolCode(graduationApplication.getSchoolCode());
+        result.setSchoolTel(graduationApplication.getSchoolTel());
+        return result;
     }
 }
