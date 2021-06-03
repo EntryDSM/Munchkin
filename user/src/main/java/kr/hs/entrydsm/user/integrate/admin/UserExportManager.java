@@ -68,4 +68,9 @@ public class UserExportManager implements UserExportRepository {
         return userRepository.findAllBy();
     }
 
+    @Override
+    public List<User> findAllForExcel() {
+        return null;
+    }
+
 }

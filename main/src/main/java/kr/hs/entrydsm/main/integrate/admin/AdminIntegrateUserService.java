@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                                    boolean isPrintedArrived, boolean isPaid, boolean isCommon,
                                    boolean isMeister, boolean isSocial, int receiptCode,
                                    String schoolName, String telephoneNumber, String name) {
-        /*Page<User> users = userExportRepository.findAll(page);
+        Page<User> users = userExportRepository.findAll(page, isDaejeon, isNationwide, isPrintedArrived, isPaid, isCommon, isMeister, isSocial, receiptCode, schoolName, telephoneNumber, name);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
         for (User user : users) {
@@ -41,7 +42,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                     .build()
             );
         }
-        return new PageImpl<>(applicants, pageable, totalElements);*/
         return null;
 
     }
