@@ -24,7 +24,8 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     }
 
     @Override
-    public void changeApplication(long receiptCode, String educationalStatus, String applicationType, boolean isDaejeon, String applicationRemark) {
+    public void changeApplication(long receiptCode, String educationalStatus, String applicationType,
+                                  boolean isDaejeon,String applicationRemark) {
         User user = findByReceiptCode(receiptCode);
         userRepository.save(
                 user.updateUserApplication(
@@ -37,13 +38,20 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     }
 
     @Override
-    public void changeInformation(long receiptCode, String name, String sex, LocalDate birthday, String parentName, String parentTel, String telephoneNumber, String homeTel, String address, String postCode, String photoFileName) {
-
+    public void changeInformation(long receiptCode, String name, String sex, LocalDate birthday,
+                                  String parentName, String parentTel, String telephoneNumber, String homeTel,
+                                  String address, String postCode, String photoFileName) {
+        User user = findByReceiptCode(receiptCode);
+        user.updateInformation(name, sex, birthday, parentName, parentTel, telephoneNumber,
+                homeTel, address, postCode, photoFileName);
+        userRepository.save(user);
     }
 
     @Override
     public void changePhotoFileName(long receiptCode, String photoFileName) {
-
+        User user = findByReceiptCode(receiptCode);
+        user.updatePhotoFileName(photoFileName);
+        userRepository.save(user);
     }
 
 }
