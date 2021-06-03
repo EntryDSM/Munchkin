@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ScoreCalculator {
     Iterable<Score> getAll();
+    Score getScore(Long receiptCode);
     Scores getScores(Long receiptCode);
 }

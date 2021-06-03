@@ -43,6 +43,10 @@ public class Applicant {
 
     private String homeTel;
 
+    private String selfIntroduce;
+
+    private String studyPlan;
+
     public boolean isMale() {
         return sex.equals("MALE");
     }
@@ -84,14 +88,18 @@ public class Applicant {
     }
 
     public boolean isCommonApplicationType() {
-        return applicationType.equals("COMMON");
+        return applicationType.equals(ApplicationType.COMMON);
     }
 
     public boolean isMeisterApplicationType() {
-        return applicationType.equals("MEISTER");
+        return applicationType.equals(ApplicationType.MEISTER);
     }
 
     public boolean isSocialApplicationType() {
-        return applicationType.equals("SOCIAL");
+        return applicationType.equals(ApplicationType.SOCIAL);
+    }
+
+    public boolean isRecommendationsRequired() {
+        return !isEducationalStatusEmpty() && !isCommonApplicationType() && !isProspectiveGraduate();
     }
 }

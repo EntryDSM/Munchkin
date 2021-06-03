@@ -1,16 +1,20 @@
-package kr.hs.entrydsm.application;
+package kr.hs.entrydsm.application.usecase.pdf;
 
 import com.itextpdf.io.IOException;
 import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Component
 public class PdfDataConverter {
 
     private final GraduationApplicationRepository graduationRepository;
@@ -18,20 +22,21 @@ public class PdfDataConverter {
 
     private final Map<String, Object> values = new HashMap<>();
 
-    public Map<String, Object> applicationToInfo(Applicant applicant) {
+    public Map<String, Object> applicationToInfo(Applicant applicant, Score score) {
         setReceiptCode(applicant);
+        setEntranceYear();
         setPersonalInfo(applicant);
         setGenderInfo(applicant);
         setSchoolInfo(applicant);
         setPhoneNumber(applicant);
         setGraduationClassification(applicant);
         setUserType(applicant);
-        setGradeScore(applicant);
+        setGradeScore(applicant, score);
         setLocalDate();
         setIntroduction(applicant);
         setParentInfo(applicant);
 
-        if (isRecommendationsRequired(applicant)) {
+        if (applicant.isRecommendationsRequired()) {
             setRecommendations(applicant);
         }
 
@@ -44,6 +49,11 @@ public class PdfDataConverter {
 
     private void setReceiptCode(Applicant applicant) {
         values.put("receiptCode", applicant.getReceiptCode());
+    }
+
+    private void setEntranceYear() {
+        int entranceYear = LocalDate.now().plusYears(1).getYear();
+        values.put("entranceYear", String.valueOf(entranceYear));
     }
 
     private void setPersonalInfo(Applicant applicant) {
@@ -133,8 +143,14 @@ public class PdfDataConverter {
         values.put("isSocialMerit", toBallotBox(applicant.isSocialApplicationType()));
     }
 
-    private void setGradeScore(Applicant applicant) {
-        // TODO score 통합
+    private void setGradeScore(Applicant applicant, Score score) {
+        values.put("conversionScore1st", applicant.isQualificationExam() ? "" : score.getTotalFirstGradeScores());
+        values.put("conversionScore2nd", applicant.isQualificationExam() ? "" : score.getTotalSecondGradeScores());
+        values.put("conversionScore3rd", applicant.isQualificationExam() ? "" : score.getTotalThirdGradeScores());
+        values.put("conversionScore", score.getConversionScore());
+        values.put("attendanceScore", score.getAttendanceScore());
+        values.put("volunteerScore", score.getVolunteerScore());
+        values.put("finalScore", score.getTotalScoreFirstRound());
     }
 
     private void setLocalDate() {
@@ -145,7 +161,9 @@ public class PdfDataConverter {
     }
 
     private void setIntroduction(Applicant applicant) {
-        // TODO applicant 데이터 추가
+        values.put("selfIntroduction", setBlankIfNull(applicant.getSelfIntroduce()));
+        values.put("studyPlan", setBlankIfNull(applicant.getStudyPlan()));
+        values.put("newLineChar", "\n");
     }
 
     private void setParentInfo(Applicant applicant) {
@@ -184,10 +202,6 @@ public class PdfDataConverter {
                 "graduateMonth", "__",
                 "prospectiveGraduateMonth", "__"
         );
-    }
-
-    private boolean isRecommendationsRequired(Applicant applicant) {
-        return !applicant.isEducationalStatusEmpty() && !applicant.isCommonApplicationType() && !applicant.isProspectiveGraduate();
     }
 
     private String toFormattedPhoneNumber(String phoneNumber) {

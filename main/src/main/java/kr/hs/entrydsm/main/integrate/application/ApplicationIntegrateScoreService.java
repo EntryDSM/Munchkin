@@ -13,7 +13,12 @@ import java.util.List;
 public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     @Override
-    public List<Score> getAll() {
+    public Iterable<Score> getAll() {
+        return null;
+    }
+
+    @Override
+    public Score getScore(Long receiptCode) {
         return null;
     }
 
