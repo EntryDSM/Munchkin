@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.application.entity;
 
-import kr.hs.entrydsm.application.entity.School;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
