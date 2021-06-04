@@ -16,7 +16,4 @@ public class TokenResponse {
     @JsonProperty("refresh-token")
     private String refreshToken;
 
-    @JsonProperty("refresh-exp")
-    private Long refreshExp;
-
 }

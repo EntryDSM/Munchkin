@@ -31,9 +31,6 @@ public class AuthServiceManager implements AuthService {
     @Value("${auth.jwt.exp.refresh}")
     private Long refreshExp;
 
-    @Value("${auth.jwt.exp.access}")
-    private Long accessExp;
-
     @Override
     public void signUp(SignUpRequest request) {
         adminRepository.findById(request.getId())
@@ -63,7 +60,7 @@ public class AuthServiceManager implements AuthService {
                 .map(refreshTokenRepository::save)
                 .map(refreshToken -> {
                     String accessToken = jwtTokenProvider.generateAccessToken(refreshToken.getId());
-                    return new TokenResponse(accessToken, refreshToken.getRefreshToken(), accessExp);
+                    return new TokenResponse(accessToken, refreshToken.getRefreshToken());
                 })
                 .orElseThrow(AdminNotFoundException::new);
     }
