@@ -136,7 +136,7 @@ public class AdminServiceManager implements AdminService {
 
         return ReceiptStatusResponse.builder()
                 .totalApplicantCount(totalApplicantCount)
-                .totalCompetitionRate((int) totalCompetitionRate)
+                .totalCompetitionRate(totalCompetitionRate)
                 .commonScore(commonScore)
                 .meisterScore(meisterScore)
                 .socialScore(socialScore)

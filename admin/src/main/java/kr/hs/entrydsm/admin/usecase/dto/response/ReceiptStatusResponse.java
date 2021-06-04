@@ -11,7 +11,7 @@ public class ReceiptStatusResponse {
 
     private Integer totalApplicantCount; //총 지원자
 
-    private Integer totalCompetitionRate; //총 경쟁률
+    private Double totalCompetitionRate; //총 경쟁률
 
     private CommonScore commonScore; //일반전형 점수
 
