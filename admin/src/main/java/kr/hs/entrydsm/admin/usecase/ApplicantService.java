@@ -9,7 +9,7 @@ public interface ApplicantService {
                                      boolean isDaejeon, boolean isNationwide,
                                      String telephoneNumber, String name,
                                      boolean isCommon, boolean isMeister, boolean isSocial,
-                                     boolean isPrintedArrived, boolean isPaid);
+                                     boolean isPrintedArrived);
     Object getDetail(int receiptCode);
     void saveExamCode() throws Exception;
 }

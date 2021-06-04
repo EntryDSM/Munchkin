@@ -54,9 +54,8 @@ public class AdminController {
                                             @RequestParam(name = "is-common") boolean isCommon,
                                             @RequestParam(name = "is-meiseter") boolean isMeister,
                                             @RequestParam(name = "is-social") boolean isSocial,
-                                            @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived,
-                                            @RequestParam(required = false, name = "is-paid") boolean isPaid) {
-        return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived, isPaid);
+                                            @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
+        return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 
     @AdminJWTRequired
