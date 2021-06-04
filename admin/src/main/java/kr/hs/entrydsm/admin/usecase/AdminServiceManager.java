@@ -94,6 +94,7 @@ public class AdminServiceManager implements AdminService {
         //일반전형 점수별 지원자 통계
         for(BigDecimal score : applicationStatus.getCommonScore()) {
             double s = Double.parseDouble(String.valueOf(score));
+            s = Math.round(s);
 
             if(s <= 80) commonScore.plus80();
             else if(s <= 90) commonScore.plus81_90();
@@ -108,6 +109,7 @@ public class AdminServiceManager implements AdminService {
         //마이스터전형
         for(BigDecimal score : applicationStatus.getMeisterScore()) {
             double s = Double.parseDouble(String.valueOf(score));
+            s = Math.round(s);
 
             if(s <= 20) meisterScore.plus20();
             else if(s <= 30) meisterScore.plus21_30();
@@ -123,6 +125,7 @@ public class AdminServiceManager implements AdminService {
         //마이스터전형
         for(BigDecimal score : applicationStatus.getSpecialScore()) {
             double s = Double.parseDouble(String.valueOf(score));
+            s = Math.round(s);
 
             if(s <= 20) socialScore.plus20();
             else if(s <= 30) socialScore.plus21_30();
