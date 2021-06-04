@@ -13,4 +13,6 @@ public interface AdminRepositoryManager extends CrudRepository<Admin, String>, A
     @Override
     Optional<Admin> findById(String id);
 
+    @Override
+    Admin save(Admin entity);
 }

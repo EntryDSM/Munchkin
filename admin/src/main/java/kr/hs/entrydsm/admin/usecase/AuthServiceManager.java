@@ -1,14 +1,17 @@
 package kr.hs.entrydsm.admin.usecase;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.refreshtoken.RefreshToken;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.RefreshTokenRepository;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
+import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.TokenResponse;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.AlreadyExistAdminIdException;
 import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +33,23 @@ public class AuthServiceManager implements AuthService {
 
     @Value("${auth.jwt.exp.access}")
     private Long accessExp;
+
+    @Override
+    public void signUp(SignUpRequest request) {
+        adminRepository.findById(request.getId())
+                .ifPresent(u -> {
+                    throw new AlreadyExistAdminIdException();
+                });
+
+        adminRepository.save(
+                Admin.builder()
+                        .id(request.getId())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .permission(Permission.valueOf(request.getPermission()))
+                        .name(request.getName())
+                        .build()
+        );
+    }
 
     @Override
     public TokenResponse login(SignInRequest signInRequest) {
