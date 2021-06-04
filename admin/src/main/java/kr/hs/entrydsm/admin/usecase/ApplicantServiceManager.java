@@ -3,6 +3,7 @@ package kr.hs.entrydsm.admin.usecase;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
@@ -51,7 +52,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-        if(admin.getPermission().toString().equals("TEACHER")) {
+        if(admin.getPermission().equals(Permission.TEACHER)) {
             applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
         }
         else {
