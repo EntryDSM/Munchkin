@@ -5,6 +5,7 @@ import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
+import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
@@ -45,16 +46,15 @@ public class AdminServiceManager implements AdminService {
     public void updateSchedules(ScheduleRequest scheduleRequest) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-        Schedule schedule = new Schedule();
+        Schedule schedule = scheduleRepository.findByYearAndType(scheduleRequest.getYear(), scheduleRequest.getType());
 
         if(admin.getPermission().equals(Permission.TEACHER)) {
             schedule.update(scheduleRequest);
+            scheduleRepositoryManager.save(schedule);
         }
         else {
             throw new UserNotAccessibleException();
         }
-
-        scheduleRepositoryManager.save(schedule);
     }
 
     @Override
