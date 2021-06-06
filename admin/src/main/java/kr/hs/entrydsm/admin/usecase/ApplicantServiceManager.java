@@ -116,7 +116,8 @@ public class ApplicantServiceManager implements ApplicantService {
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
         if(!applicant.isSubmit()) {
-            NotSubmitApplicant notSubmitApplicant = new NotSubmitApplicant(applicant.getApplicationType(), applicant.getParentTel(), applicant.getHomeTel(), applicant.getSchoolTel());
+            NotSubmitApplicant notSubmitApplicant
+                    = new NotSubmitApplicant(applicant.getTelephoneNumber(), applicant.getParentTel(), applicant.getHomeTel(), applicant.getSchoolTel());
             return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
         }
 
@@ -126,31 +127,31 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
 
         PersonalData personalData = PersonalData.builder()
+                .photoFileName(applicant.getPhotoFileName())
                 .name(applicant.getName())
                 .birthDate(applicant.getBirthDate())
-                .isGraduated(applicant.isGraduated())
-                .applicationType(applicant.getApplicationType())
-                .photoFileName(applicant.getPhotoFileName())
                 .schoolName(applicant.getSchoolName())
-                .schoolTel(applicant.getSchoolTel())
+                .isGraduated(applicant.isGraduated())
+                .educationalStatus(applicant.getEducationalStatus())
+                .applicationType(applicant.getApplicationType())
                 .address(applicant.getAddress())
                 .detailAddress(applicant.getDetailAddress())
-                .educationalStatus(applicant.getEducationalStatus())
                 .telephoneNumber(applicant.getTelephoneNumber())
-                .homeTel(applicant.getHomeTel())
                 .parentTel(applicant.getParentTel())
+                .schoolTel(applicant.getSchoolTel())
+                .homeTel(applicant.getHomeTel())
                 .build();
 
         Evaluation evaluation = Evaluation.builder()
-                .studyPlan(applicant.getStudyPlan())
-                .selfIntroduce(applicant.getSelfIntroduce())
-                .averageScore(applicant.getAverageScore())
                 .volunteerTime(applicant.getVolunteerTime())
                 .conversionScore(applicant.getAverageScore())
+                .dayAbsenceCount(applicant.getDayAbsenceCount())
                 .lectureAbsenceCount(applicant.getLectureAbsenceCount())
                 .earlyLeaveCount(applicant.getEarlyLeaveCount())
                 .latenessCount(applicant.getLatenessCount())
-                .dayAbsenceCount(applicant.getDayAbsenceCount())
+                .averageScore(applicant.getAverageScore())
+                .selfIntroduce(applicant.getSelfIntroduce())
+                .studyPlan(applicant.getStudyPlan())
                 .build();
 
         return ApplicantDetailResponse.builder()
