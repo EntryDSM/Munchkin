@@ -85,15 +85,15 @@ public class AdminController {
     }
 
     @AdminJWTRequired
-    @GetMapping("/excel/applicants")
-    public void createAdmissionTicket() {
-        excelService.createApplicantInformation();
+    @GetMapping("/excel/admission-ticket/{receipt-code}")
+    public void createAdmissionTicket(@PathVariable("receipt-code") Long receiptCode) throws IOException {
+        excelService.createAdmissionTicket(receiptCode);
     }
 
     @AdminJWTRequired
-    @GetMapping("/excel/admissionTicket/{receipt-code}")
-    public void createApplicantInformation(@PathVariable("receipt-code") Long receiptCode) throws IOException {
-        excelService.createAdmissionTicket(receiptCode);
+    @GetMapping("/excel/applicants")
+    public void createApplicantInformation() {
+        excelService.createApplicantInformation();
     }
 
 }
