@@ -33,7 +33,7 @@ public class AdminController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/applicant/printed-arrived")
     public void updateIsprintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
-                             @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
+                                       @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
         applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
     }
 
@@ -46,7 +46,7 @@ public class AdminController {
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
-                                            @RequestParam(required = false, name = "reciept-code") Long receiptCode,
+                                            @RequestParam(required = false, name = "receipt-code") Long receiptCode,
                                             @RequestParam(name = "is-daejeon") boolean isDaejeon,
                                             @RequestParam(name = "is-nationwide") boolean isNationwide,
                                             @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
