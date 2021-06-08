@@ -35,6 +35,9 @@ public class ExcelServiceManager implements ExcelService {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
+    @Value("${munchkin.applicant-information-path}")
+    private String path;
+
     @Override
     public void createAdmissionTicket(long receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
@@ -71,7 +74,7 @@ public class ExcelServiceManager implements ExcelService {
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream("./"+name+" 수험표.xls"));
+        admissionTicket.getWorkbook().write(new FileOutputStream(new File(path, name+" 수험표.xls")));
     }
 
     @Override

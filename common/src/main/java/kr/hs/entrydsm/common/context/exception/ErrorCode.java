@@ -8,11 +8,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    INVALID_TOKEN(400, "COMMON400-0", "Invalid Token"),
-    UNAUTHENTICATED(401, "COMMON401-0", "UnAuthenticated"),
+    INVALID_TOKEN(401, "COMMON401-0", "Invalid Token"),
+    UNAUTHENTICATED(401, "COMMON401-1", "UnAuthenticated"),
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
 
+    INVALID_AUTH_CODE(401, "USER401-0", "Invalid Auth Code"),
     USER_NOT_FOUND(404, "USER404-0", "User Not Found"),
+    USER_ALREADY_EXISTS(409, "USER409-0", "User Already Exists"),
+    AUTH_CODE_ALREADY_VERIFIED(409, "USER409-1", "Auth Code Already Verified"),
+    AUTH_CODE_REQUEST_OVER_LIMIT(429, "USER429-0", "Auth Code Request Over Limit"),
 
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
 

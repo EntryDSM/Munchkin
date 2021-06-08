@@ -23,6 +23,12 @@ auth:
       refresh: ${JWT_REFRESH_HEADER:X-Refresh-Token}
     prefix: ${JWT_PREFIX:Bearer}
 
+aws:
+  s3:
+    accessKey: access
+    secretKey: secret
+  region:
+    static: 한국
 sms:
   aligo:
     url: ${ALIGO_URL}

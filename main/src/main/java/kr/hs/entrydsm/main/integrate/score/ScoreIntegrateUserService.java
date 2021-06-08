@@ -4,13 +4,13 @@ import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
 import kr.hs.entrydsm.score.integrate.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.score.integrate.user.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
-@Component
+@Repository
 public class ScoreIntegrateUserService implements ScorerRepository {
 
     private final UserExportRepository userExportRepository;

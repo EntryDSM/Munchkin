@@ -1,7 +1,10 @@
 package kr.hs.entrydsm.common.context.auth.token;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import kr.hs.entrydsm.common.context.exception.ErrorCode;
+import kr.hs.entrydsm.common.context.exception.MunchkinException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -76,6 +79,15 @@ public class JWTTokenProvider {
     public long parseAccessToken(String token) {
         return Long.parseLong(Jwts.parser().setSigningKey(secretKey)
                 .parseClaimsJws(token).getBody().getSubject());
+    }
+
+    public long parseRefreshToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(secretKey)
+                .parseClaimsJws(token).getBody();
+        if (claims.get("type").equals("refresh_token")) {
+            return Long.parseLong(claims.getSubject());
+        }
+        throw new MunchkinException(ErrorCode.INVALID_TOKEN);
     }
 
     public String parseAdminToken(String token) {

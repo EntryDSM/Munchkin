@@ -1,28 +1,24 @@
 package kr.hs.entrydsm.admin.presenter.excel;
 
+import lombok.AllArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFRegionUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
-@Component
+@AllArgsConstructor
 public class AdmissionTicket {
     private final HSSFWorkbook workbook = new HSSFWorkbook();
     private final HSSFSheet sheet = workbook.createSheet("admission ticket");
 
-    @Value("${munchkin.applicant-information-path}")
-    private String path;
-
-    private String examCode;
-    private String name;
-    private String middleSchool;
-    private String area;
-    private String applicationType;
-    private String receiptCode;
+    private final String examCode;
+    private final String name;
+    private final String middleSchool;
+    private final String area;
+    private final String applicationType;
+    private final String receiptCode;
 
     public Workbook getWorkbook() {
         return workbook;
@@ -30,15 +26,6 @@ public class AdmissionTicket {
 
     public HSSFSheet getSheet() {
         return sheet;
-    }
-
-    public AdmissionTicket(String examCode, String name, String middleSchool, String area, String applicationType, String receiptCode) {
-        this.examCode = examCode;
-        this.name = name;
-        this.middleSchool = middleSchool;
-        this.area = area;
-        this.applicationType = applicationType;
-        this.receiptCode = receiptCode;
     }
 
     public void format(int rowIndex, int colIndex) {
@@ -107,9 +94,9 @@ public class AdmissionTicket {
 
     private void mergeCell(CellRangeAddress cellAddress) {
         sheet.addMergedRegion(cellAddress);
-        HSSFRegionUtil.setBorderTop(CellStyle.BORDER_THIN, cellAddress, sheet, workbook);
-        HSSFRegionUtil.setBorderBottom(CellStyle.BORDER_THIN, cellAddress, sheet, workbook);
-        HSSFRegionUtil.setBorderLeft(CellStyle.BORDER_THIN, cellAddress, sheet, workbook);
-        HSSFRegionUtil.setBorderRight(CellStyle.BORDER_THIN, cellAddress, sheet, workbook);
+        HSSFRegionUtil.setBorderTop(BorderStyle.THIN.getCode(), cellAddress, sheet, workbook);
+        HSSFRegionUtil.setBorderBottom(BorderStyle.THIN.getCode(), cellAddress, sheet, workbook);
+        HSSFRegionUtil.setBorderLeft(BorderStyle.THIN.getCode(), cellAddress, sheet, workbook);
+        HSSFRegionUtil.setBorderRight(BorderStyle.THIN.getCode(), cellAddress, sheet, workbook);
     }
 }

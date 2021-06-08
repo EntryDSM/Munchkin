@@ -6,6 +6,7 @@ import lombok.*;
 @Getter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class CommonScore {
 
     @JsonFormat(pattern = "141-150")
