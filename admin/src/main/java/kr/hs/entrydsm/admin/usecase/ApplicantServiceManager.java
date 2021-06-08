@@ -45,8 +45,8 @@ public class ApplicantServiceManager implements ApplicantService {
     private static final String ROUTE_URL = "https://apis.openapi.sk.com/tmap/routes?version=1";
     private static final String GEO_BASIC_URL="https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=";
 
-    private static final String PRINTED_ARRIVED = "대덕소프트웨어마이스터고등학교에서 원서가 도착했음을 알려드립니다.";
-    private static final String PRINTED_NOT_ARRIVED = "대덕소프트웨어마이스터고등학교에서 원서가 도착하지 않았음을 알려드립니다.";
+    private static final String PRINTED_ARRIVED = "원서가 도착했음을 알려드립니다.";
+    private static final String PRINTED_NOT_ARRIVED = "원서가 아직 도착하지 않았음을 알려드립니다.";
 
     @Value("${tmap.app.key}")
     private String appKey;
@@ -134,6 +134,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 .name(applicant.getName())
                 .birthDate(applicant.getBirthDate())
                 .schoolName(applicant.getSchoolName())
+                .email(applicant.getEmail())
                 .isGraduated(applicant.isGraduated())
                 .educationalStatus(applicant.getEducationalStatus())
                 .applicationType(applicant.getApplicationType())
@@ -166,14 +167,14 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void saveExamCode() throws Exception {
-        List<Applicant> applicants = applicantRepository.findAllIsSubmitTrue();
+        List<SaveExamCodeUserResponse> applicants = applicantRepository.findAllIsSubmitTrue();
         String examCode = null;
-        List<Applicant> applicantSort = new ArrayList<>();
+        List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>();
         applicantSort.addAll(applicants);
         int commonDaejeon = 0, commonNationwide = 0, meisterDaejeon = 0, meisterNationwide = 0, socialDaejeon = 0, socialNationwide = 0;
 
         //첫번째, 두번째 자리 채우기
-        for (Applicant applicant : applicants) {
+        for (SaveExamCodeUserResponse applicant : applicants) {
             String first = applicant.getApplicationType().equals("COMMON") ? "1" : applicant.getApplicationType().equals("MEISTER") ? "2" : "3";
             String second = applicant.isDaejeon() ? "1" : "2";
 
@@ -181,7 +182,7 @@ public class ApplicantServiceManager implements ApplicantService {
             applicant.updateExamCode(examCode);
         }
 
-        for (Applicant applicant : applicants) {
+        for (SaveExamCodeUserResponse applicant : applicants) {
             Coordinate coordinate = getCoordinate(applicant.getAddress());
             RouteGuidanceRequest request = new RouteGuidanceRequest().builder()
                     .endX(endX)
@@ -203,7 +204,7 @@ public class ApplicantServiceManager implements ApplicantService {
             }
         });
 
-        for(Applicant applicant : applicantSort) {
+        for(SaveExamCodeUserResponse applicant : applicantSort) {
             int i = 0;
             if(applicant.getExamCode().startsWith("11")) {
                 commonDaejeon++;

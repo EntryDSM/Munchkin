@@ -57,6 +57,11 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
+    public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
+
+    }
+
+    @Override
     public List<User> findAllIsSubmitTrue() {
         return statusRepository.findAllByIsSubmitTrue().stream()
                 .map(Status::getUser)
