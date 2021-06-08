@@ -26,10 +26,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long receiptCode;
 
-    @Column(columnDefinition = "char (11)", nullable = false)
-    private String telephoneNumber;
+    @Column(columnDefinition = "char(36)", nullable = false)
+    private String email;
 
-    @Column(columnDefinition = "char(11)", nullable = false)
+    @Column(columnDefinition = "char(60)", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -50,6 +50,9 @@ public class User {
     private Sex sex;
 
     private LocalDate birthday;
+
+    @Column(columnDefinition = "char(11)", nullable = false)
+    private String telephoneNumber;
 
     @Column(columnDefinition = "char(5)")
     private String parentName;
