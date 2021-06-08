@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
 @RequiredArgsConstructor
+@Repository
 public class UserExportManager implements UserExportRepository {
 
     private final UserRepositoryManager userRepository;
