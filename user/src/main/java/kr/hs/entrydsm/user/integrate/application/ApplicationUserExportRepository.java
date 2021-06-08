@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.user.integrate.application;
 
 import kr.hs.entrydsm.common.context.beans.Published;
-import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.User;
 
 import java.time.LocalDate;
 
