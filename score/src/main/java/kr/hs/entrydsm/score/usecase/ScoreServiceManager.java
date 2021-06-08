@@ -20,7 +20,7 @@ public class ScoreServiceManager implements ScoreService {
     private final ScorerRepository scorerRepository;
     private final GraduationCaseRepository graduationCaseRepository;
     private final QualificationExamCaseRepository qualificationExamCaseRepository;
-    private final int TEMP_AUTHENTICATION = 0; // authentication logic required!
+    private final int TEMP_AUTHENTICATION = 0;
 
     @Override
     public QueryGraduationResponse queryGraduation() {
