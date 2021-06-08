@@ -15,7 +15,7 @@ import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.UserRepository;
 import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.AuthCodeRequest;
-import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
+import kr.hs.entrydsm.user.usecase.dto.request.EmailRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.user.usecase.dto.response.UserStatusResponse;
@@ -69,7 +69,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Override
     public ResponseEntity<AccessTokenResponse> auth(AccountRequest accountRequest) {
-        return userRepository.findByTelephoneNumber(accountRequest.getPhoneNumber())
+        return userRepository.findByEmail(accountRequest.getEmail())
                 .filter(user -> passwordEncoder.matches(accountRequest.getPassword(), user.getPassword()))
                 .map(User::getReceiptCode)
                 .map(this::getAccessToken)
@@ -89,18 +89,18 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Override
     public ResponseEntity<AccessTokenResponse> registerUser(SignupRequest signupRequest) {
-        String phoneNumber = signupRequest.getPhoneNumber();
+        String email = signupRequest.getEmail();
         String name = signupRequest.getName();
         String password = signupRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
-        authCodeRepository.findById(phoneNumber)
+        authCodeRepository.findById(email)
                 .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
         User user = userRepository.save(
                 User.builder()
-                        .telephoneNumber(phoneNumber)
+                        .email(email)
                         .name(name)
                         .password(encodedPassword)
                         .selfIntroduce("")
@@ -111,7 +111,6 @@ public class UserServiceManager implements UserAuthService, UserService {
         statusRepository.save(
                 Status.builder()
                         .user(user)
-                        .isPaid(false)
                         .isPrintedArrived(false)
                         .isSubmit(false)
                         .build()
@@ -131,7 +130,6 @@ public class UserServiceManager implements UserAuthService, UserService {
                     .name(user.getName())
                     .phoneNumber(user.getTelephoneNumber())
                     .isSubmit(status.isSubmit())
-                    .isPaid(status.isPaid())
                     .isPrintedArrived(status.isPrintedArrived())
                     .applicationType(user.getApplicationType())
                     .selfIntroduce(user.getSelfIntroduce().length())
@@ -141,35 +139,35 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Override
     public void changePassword(AccountRequest accountRequest) {
-        String phoneNumber = accountRequest.getPhoneNumber();
+        String email = accountRequest.getEmail();
         String password = accountRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
 
-        authCodeRepository.findById(phoneNumber)
+        authCodeRepository.findById(email)
                 .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
-        userRepository.findByTelephoneNumber(phoneNumber)
+        userRepository.findByEmail(email)
                 .map(user -> user.changePassword(encodedPassword))
                 .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
-    public void sendPasswordAuthCode(PhoneNumberRequest phoneNumberRequest) {
-        String phoneNumber = phoneNumberRequest.getPhoneNumber();
-        boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
+    public void sendPasswordAuthCode(EmailRequest emailRequest) {
+        String email = emailRequest.getEmail();
+        boolean isRegisteredUser =  userRepository.existsByEmail(email);
 
         if (!isRegisteredUser) throw new UserNotFoundException();
-        sendRandomCode(phoneNumber);
+        sendRandomCode(email);
     }
 
     @Override
-    public void sendAuthCode(PhoneNumberRequest phoneNumberRequest) {
-        String phoneNumber = phoneNumberRequest.getPhoneNumber();
-        boolean isRegisteredUser =  userRepository.existsByTelephoneNumber(phoneNumber);
+    public void sendAuthCode(EmailRequest emailRequest) {
+        String email = emailRequest.getEmail();
+        boolean isRegisteredUser =  userRepository.existsByEmail(email);
 
         if (isRegisteredUser) throw new UserAlreadyExistsException();
-        sendRandomCode(phoneNumber);
+        sendRandomCode(email);
     }
 
     @Override
@@ -217,20 +215,20 @@ public class UserServiceManager implements UserAuthService, UserService {
         return stringBuilder.toString();
     }
 
-    private void sendRandomCode(String phoneNumber) {
-        if (isOverRequestLimit(phoneNumber)) throw new AuthCodeRequestOverLimitException();
+    private void sendRandomCode(String email) {
+        if (isOverRequestLimit(email)) throw new AuthCodeRequestOverLimitException();
 
         String randomCode = randomCode();
         String content = authCodeSmsContent.replace("%code%", randomCode);
-        authCodeRepository.findById(phoneNumber)
-                .or(() -> Optional.of(new AuthCode(phoneNumber, randomCode, false, authCodeTtl)))
+        authCodeRepository.findById(email)
+                .or(() -> Optional.of(new AuthCode(email, randomCode, false, authCodeTtl)))
                 .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
-                .ifPresent(authCode -> messageSender.sendMessage(phoneNumber, content));
+                .ifPresent(authCode -> messageSender.sendMessage(email, content));
     }
 
-    private boolean isOverRequestLimit(String phoneNumber) {
-        return authCodeLimitRepository.findById(phoneNumber)
-                .or(() -> Optional.of(new AuthCodeLimit(phoneNumber, 0, authCodeLimitTtl)))
+    private boolean isOverRequestLimit(String email) {
+        return authCodeLimitRepository.findById(email)
+                .or(() -> Optional.of(new AuthCodeLimit(email, 0, authCodeLimitTtl)))
                 .filter(limit -> limit.getCount() < authCodeLimit)
                 .map(limit -> authCodeLimitRepository.save(limit.updateAuthCode(authCodeLimitTtl)))
                 .isEmpty();

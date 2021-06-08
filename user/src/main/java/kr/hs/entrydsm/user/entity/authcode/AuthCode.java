@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.TimeToLive;
 public class AuthCode {
 
     @Id
-    private final String phoneNumber;
+    private final String email;
 
     private String code;
 

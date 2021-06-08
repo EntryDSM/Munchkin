@@ -18,6 +18,8 @@ public class Applicant {
     //공통
     private long receiptCode;
 
+    private String email;
+
     private String name;
 
     private boolean isDaejeon;
