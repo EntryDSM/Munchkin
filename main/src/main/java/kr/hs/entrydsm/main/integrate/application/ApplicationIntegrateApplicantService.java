@@ -58,7 +58,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     }
 
     @Override
-    public void setPhotoFileName(String photoFileName) {
+    public void setPhotoFileName(Long receiptCode, String photoFileName) {
 
     }
 
