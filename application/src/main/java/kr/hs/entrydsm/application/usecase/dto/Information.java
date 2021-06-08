@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -12,12 +13,17 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class Information {
+
+    @NotEmpty
     private String name;
+
+    @NotEmpty
+    private String telephoneNumber;
+
     private String sex;
     private LocalDate birthday;
     private String parentName;
     private String parentTel;
-    private String telephoneNumber;
     private String homeTel;
     private String address;
     private String postCode;

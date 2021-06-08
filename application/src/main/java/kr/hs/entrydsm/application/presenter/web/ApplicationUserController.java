@@ -10,6 +10,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Published
@@ -22,7 +23,7 @@ public class ApplicationUserController {
 
     @PatchMapping("/type")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void selectType(@RequestBody Application application){
+    public void selectType(@RequestBody @Valid Application application){
         applicationProcessing.writeApplicationType(1L, application);
     }
 
@@ -33,7 +34,7 @@ public class ApplicationUserController {
 
     @PatchMapping("/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertInfo(@RequestBody Information information){
+    public void insertInfo(@RequestBody @Valid Information information){
         applicationProcessing.writeInformation(1L, information);
     }
 

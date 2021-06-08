@@ -6,12 +6,12 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
+import kr.hs.entrydsm.application.usecase.exception.FileIsEmptyException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -53,7 +53,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
 
     @Override
     public String upload(MultipartFile file, long receiptCode) throws IOException {
-        if(file.isEmpty()) throw new FileNotFoundException();
+        if(file == null || file.isEmpty()) throw new FileIsEmptyException();
         String originalFilename = file.getOriginalFilename();
         String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String randomName = UUID.randomUUID().toString();
