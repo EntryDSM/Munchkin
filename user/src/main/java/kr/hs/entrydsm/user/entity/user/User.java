@@ -124,4 +124,16 @@ public class User {
         this.photoFileName = photoFileName;
     }
 
+    public void updateSelfIntroduce(String selfIntroduce) {
+        if (!selfIntroduce.isBlank() && !selfIntroduce.isEmpty()) {
+            this.selfIntroduce = selfIntroduce;
+        }
+    }
+
+    public void updateStudyPlan(String studyPlan) {
+        if (!studyPlan.isBlank() && !studyPlan.isEmpty()) {
+            this.studyPlan = studyPlan;
+        }
+    }
+
 }
