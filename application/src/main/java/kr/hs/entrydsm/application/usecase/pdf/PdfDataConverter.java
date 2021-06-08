@@ -1,15 +1,18 @@
 package kr.hs.entrydsm.application.usecase.pdf;
 
-import com.itextpdf.io.IOException;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +22,7 @@ public class PdfDataConverter {
 
     private final GraduationApplicationRepository graduationRepository;
     private final QualificationExamApplicationRepository qualificationExamRepository;
+    private final ImageService imageService;
 
     private final Map<String, Object> values = new HashMap<>();
 
@@ -177,8 +181,11 @@ public class PdfDataConverter {
         values.put("isNotDaejeonAndSocialMerit", markIfTrue(!applicant.isDaejeon() && applicant.isSocialApplicationType()));
     }
 
-    private void setBase64Image(Applicant applicant) throws IOException {
-        // TODO 이미지 서비스 필요 요망
+    private void setBase64Image(Applicant applicant) {
+        try {
+            byte[] imageBytes = imageService.getObject(applicant.getPhotoFileName());
+            values.put("base64Image", Arrays.toString(Base64.getEncoder().encode(imageBytes)));
+        } catch (IOException ignored) {}
     }
 
     private String markIfTrue(boolean isTrue) {
