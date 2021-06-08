@@ -42,8 +42,11 @@ public class ApplicantServiceManager implements ApplicantService {
     private static final double endX = 127.363585;
     private static final double endY = 36.391636;
 
-    private static final String PRINTED_ARRIVED = "원서가 도착했습니다.";
-    private static final String PRINTED_NOT_ARRIVED = "원서가 아직 도착하지 않았습니다.";
+    private static final String ROUTE_URL = "https://apis.openapi.sk.com/tmap/routes?version=1";
+    private static final String GEO_BASIC_URL="https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=";
+
+    private static final String PRINTED_ARRIVED = "대덕소프트웨어마이스터고등학교에서 원서가 도착했음을 알려드립니다.";
+    private static final String PRINTED_NOT_ARRIVED = "대덕소프트웨어마이스터고등학교에서 원서가 도착하지 않았음을 알려드립니다.";
 
     @Value("${tmap.app.key}")
     private String appKey;
@@ -60,7 +63,7 @@ public class ApplicantServiceManager implements ApplicantService {
         }
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
-        String message = null;
+        String message;
         if(isPrintedArrived) message = PRINTED_ARRIVED;
         else message = PRINTED_NOT_ARRIVED;
 
@@ -234,8 +237,7 @@ public class ApplicantServiceManager implements ApplicantService {
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE
                 + ";charset=UTF-8");
 
-        URI url = new URI("https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey="
-                + appKey + "&addr=" + URLEncoder.encode(address,"UTF-8") + "&addressFlag=F00&format=json");
+        URI url = new URI(GEO_BASIC_URL + appKey + "&addr=" + URLEncoder.encode(address,"UTF-8") + "&addressFlag=F00&format=json");
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Map> response = restTemplate.getForObject(url, Map.class);
@@ -263,7 +265,7 @@ public class ApplicantServiceManager implements ApplicantService {
         headers.add("appKey",appKey);
         headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 
-        URI url = new URI("https://apis.openapi.sk.com/tmap/routes?version=1");
+        URI url = new URI(ROUTE_URL);
 
         ObjectMapper mapper = new ObjectMapper();
         HttpEntity<RouteBody> rq = new HttpEntity<>(routeBody, headers);
@@ -273,4 +275,5 @@ public class ApplicantServiceManager implements ApplicantService {
                 Arrays.asList(mapper.readValue(mapper.writeValueAsString(response.get("features")), RouteGuidanceResponse[].class));
         return map.get(0);
     }
+    
 }
