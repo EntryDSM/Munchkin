@@ -48,6 +48,7 @@ subprojects {
 
         implementation 'org.slf4j:slf4j-api'
         implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+        compile 'org.springframework.boot:spring-boot-starter-security'
 
         implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3control', version: '1.11.457'
 
@@ -86,7 +87,6 @@ project(':common') {
         compile 'org.springframework:spring-context-support'
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-        compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.springframework.boot:spring-boot-starter-validation'
 
         compile 'mysql:mysql-connector-java'
