@@ -36,8 +36,6 @@ public class Applicant {
 
     private String detailAddress;
 
-    private String email;
-
     private String telephoneNumber;
 
     private String parentTel;
