@@ -36,4 +36,8 @@ public class Status {
         this.examCode = examCode;
     }
 
+    public void setPrintedArrived(boolean isPrintedArrived) {
+        this.isPrintedArrived = isPrintedArrived;
+    }
+
 }

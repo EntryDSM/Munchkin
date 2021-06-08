@@ -99,6 +99,11 @@ public class User {
         return this;
     }
 
+    public User setPrintedArrived(boolean isPrintedArrived) {
+        this.status.setPrintedArrived(isPrintedArrived);
+        return this;
+    }
+
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
                                       boolean isDaejeon, ApplicationRemark applicationRemark) {
         this.educationalStatus = educationalStatus;
