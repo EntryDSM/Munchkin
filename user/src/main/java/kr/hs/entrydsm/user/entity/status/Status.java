@@ -23,8 +23,6 @@ public class Status {
     @JoinColumn(name = "receipt_code")
     private User user;
 
-    private boolean isPaid;
-
     private boolean isPrintedArrived;
 
     private boolean isSubmit;
