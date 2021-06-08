@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.score.usecase;
 
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.score.entity.*;
 import kr.hs.entrydsm.score.integrate.application.*;
 import kr.hs.entrydsm.score.integrate.user.Scorer;
@@ -20,28 +21,28 @@ public class ScoreServiceManager implements ScoreService {
     private final ScorerRepository scorerRepository;
     private final GraduationCaseRepository graduationCaseRepository;
     private final QualificationExamCaseRepository qualificationExamCaseRepository;
-    private  final int TEMP_AUTHENTICATION = 0;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public QueryGraduationResponse queryGraduation() {
-        GraduationCase graduationCase = graduationCaseRepository.findByReceiptCode(scorer().getReceiptCode())
+        GraduationCase graduationCase = graduationCaseRepository.findByReceiptCode(currentScorer().getReceiptCode())
                                                                 .orElseThrow();
         return new QueryGraduationResponse(graduationCase);
     }
 
     @Override
     public QueryQualificationExamResponse queryQualificationExam() {
-        QualificationExamCase qualificationExamCase = qualificationExamCaseRepository.findByReceiptCode(scorer().getReceiptCode())
+        QualificationExamCase qualificationExamCase = qualificationExamCaseRepository.findByReceiptCode(currentScorer().getReceiptCode())
                                                                                      .orElseThrow();
         return new QueryQualificationExamResponse(qualificationExamCase);
     }
 
     @Override
     public void updateGraduation(UpdateGraduationRequest request) {
-        if (scorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
+        if (currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
 
         GraduationCase graduationCase = GraduationCase.builder()
-                                                      .scorer(scorer())
+                                                      .scorer(currentScorer())
                                                       .volunteerTime(request.getVolunteerTime())
                                                       .dayAbsenceCount(request.getDayAbsenceCount())
                                                       .lectureAbsenceCount(request.getLectureAbsenceCount())
@@ -61,10 +62,10 @@ public class ScoreServiceManager implements ScoreService {
 
     @Override
     public void updateQualificationExam(UpdateQualificationExamRequest request) {
-        if (!scorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
+        if (!currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
 
         QualificationExamCase qualificationExamCase = QualificationExamCase.builder()
-                                                                           .scorer(scorer())
+                                                                           .scorer(currentScorer())
                                                                            .averageScore(request.getGedAverageScore())
                                                                            .build();
         qualificationExamCaseRepository.save(qualificationExamCase);
@@ -72,11 +73,11 @@ public class ScoreServiceManager implements ScoreService {
     }
 
     private void updateScore(ApplicationCase applicationCase) {
-        Score score = new Score(scorer().getReceiptCode(), applicationCase);
+        Score score = new Score(currentScorer().getReceiptCode(), applicationCase);
         scoreRepository.save(score);
     }
 
-    private Scorer scorer() {
-        return scorerRepository.findByReceiptCode(TEMP_AUTHENTICATION);
+    private Scorer currentScorer() {
+        return scorerRepository.findByReceiptCode(authenticationManager.getUserReceiptCode());
     }
 }

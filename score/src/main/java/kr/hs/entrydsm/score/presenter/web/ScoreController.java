@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.score.presenter.web;
 
+import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.score.usecase.ScoreService;
 import kr.hs.entrydsm.score.usecase.dto.QueryGraduationResponse;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Published
+@JWTRequired
 @RestController
 @RequestMapping("/score")
 public class ScoreController {
