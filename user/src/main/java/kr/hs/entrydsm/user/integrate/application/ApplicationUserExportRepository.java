@@ -13,4 +13,6 @@ public interface ApplicationUserExportRepository {
                            String parentTel, String telephoneNumber, String homeTel, String address, String postCode,
                            String photoFileName);
     void changePhotoFileName(long receiptCode, String photoFileName);
+    void changeSelfIntroduce(long receiptCode, String content);
+    void changeStudyPlan(long receiptCode, String content);
 }

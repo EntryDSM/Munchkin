@@ -54,4 +54,14 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
         userRepository.save(user);
     }
 
+    @Override
+    public void changeSelfIntroduce(long receiptCode, String content) {
+        // TODO 구현 - 자기소개 컬럼 업데이트
+    }
+
+    @Override
+    public void changeStudyPlan(long receiptCode, String content) {
+        // TODO 구현 - 학업계획 컬럼 업데이트
+    }
+
 }
