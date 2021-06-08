@@ -5,7 +5,6 @@ import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.entity.SchoolRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
-import kr.hs.entrydsm.application.infrastructure.database.GraduationApplicationRepositoryManager
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
@@ -25,7 +24,6 @@ import java.net.MalformedURLException;
 @Service
 public class ApplicationManager implements ApplicationProcessing {
 
-    private final UserDocsService userDocsService;
     private final ImageService imageService;
     private final ApplicantDocsService applicantDocsService;
     private final ApplicationApplicantRepository applicantExportService;

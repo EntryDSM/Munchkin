@@ -3,7 +3,7 @@ package kr.hs.entrydsm.main.integrate.application;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
-import kr.hs.entrydsm.user.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.application.ApplicationUserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
