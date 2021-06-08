@@ -3,6 +3,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
+import kr.hs.entrydsm.admin.usecase.dto.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.common.model.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
@@ -55,8 +56,21 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     }
 
     @Override
-    public List<Applicant> findAllIsSubmitTrue() {
-        return null;
+    public List<SaveExamCodeUserResponse> findAllIsSubmitTrue() {
+        List<User> users = userExportRepository.findAllIsSubmitTrue();
+        List<SaveExamCodeUserResponse> applicants = new ArrayList<>();
+        for (User user : users) {
+            applicants.add(
+                    SaveExamCodeUserResponse.builder()
+                            .applicationType(user.getApplicationType().toString())
+                            .isDaejeon(user.isDaejeon())
+                            .address(user.getAddress())
+                            .receiptCode(user.getReceiptCode())
+                            .build()
+            );
+        }
+
+        return applicants;
     }
 
     //지원자 목록, 상세 보기
@@ -70,6 +84,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .receiptCode(user.getReceiptCode())
                 .name(user.getName())
                 .photoFileName(user.getPhotoFileName())
+                .email(user.getEmail())
                 .applicationType(String.valueOf(user.getApplicationType()))
                 .address(user.getAddress())
                 .detailAddress(null)
