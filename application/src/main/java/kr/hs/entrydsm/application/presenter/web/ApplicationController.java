@@ -1,11 +1,13 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
+import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 
+@Published
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application")
