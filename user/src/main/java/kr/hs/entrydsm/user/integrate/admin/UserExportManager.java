@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
 @RequiredArgsConstructor
+@Repository
 public class UserExportManager implements UserExportRepository {
 
     private final UserRepositoryManager userRepository;
@@ -53,6 +53,13 @@ public class UserExportManager implements UserExportRepository {
     public void changeExamCode(long receiptCode, String examCode) {
         userRepository.findByReceiptCode(receiptCode)
                 .map(user -> user.setExamCode(examCode))
+                .ifPresent(userRepository::save);
+    }
+
+    @Override
+    public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
+        userRepository.findByReceiptCode(receiptCode)
+                .map(user -> user.setPrintedArrived(isPrintedArrived))
                 .ifPresent(userRepository::save);
     }
 

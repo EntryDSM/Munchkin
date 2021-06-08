@@ -56,12 +56,16 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
 
     @Override
     public void changeSelfIntroduce(long receiptCode, String content) {
-        // TODO 구현 - 자기소개 컬럼 업데이트
+        User user = findByReceiptCode(receiptCode);
+        user.updateSelfIntroduce(content);
+        userRepository.save(user);
     }
 
     @Override
     public void changeStudyPlan(long receiptCode, String content) {
-        // TODO 구현 - 학업계획 컬럼 업데이트
+        User user = findByReceiptCode(receiptCode);
+        user.updateStudyPlan(content);
+        userRepository.save(user);
     }
 
 }

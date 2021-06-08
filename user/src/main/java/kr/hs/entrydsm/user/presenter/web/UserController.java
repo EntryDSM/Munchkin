@@ -5,7 +5,7 @@ import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.user.usecase.UserService;
 import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.AuthCodeRequest;
-import kr.hs.entrydsm.user.usecase.dto.request.PhoneNumberRequest;
+import kr.hs.entrydsm.user.usecase.dto.request.EmailRequest;
 import kr.hs.entrydsm.user.usecase.dto.request.SignupRequest;
 import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.user.usecase.dto.response.UserStatusResponse;
@@ -38,20 +38,20 @@ public class UserController {
 
     @PutMapping("/password")
     public void changePassword(@RequestBody @Valid AccountRequest accountRequest) {
-
+        userService.changePassword(accountRequest);
     }
 
-    @PostMapping("/password/phone/verify")
-    public void sendPasswordAuthCode(@RequestBody @Valid PhoneNumberRequest phoneNumberRequest) {
-        userService.sendPasswordAuthCode(phoneNumberRequest);
+    @PostMapping("/password/email/verify")
+    public void sendPasswordAuthCode(@RequestBody @Valid EmailRequest emailRequest) {
+        userService.sendPasswordAuthCode(emailRequest);
     }
 
-    @PostMapping("/phone/verify")
-    public void sendAuthCode(@RequestBody @Valid PhoneNumberRequest phoneNumberRequest) {
-        userService.sendAuthCode(phoneNumberRequest);
+    @PostMapping("/email/verify")
+    public void sendAuthCode(@RequestBody @Valid EmailRequest emailRequest) {
+        userService.sendAuthCode(emailRequest);
     }
 
-    @PutMapping("/phone/verify")
+    @PutMapping("/email/verify")
     public void verifyAuthCode(@RequestBody AuthCodeRequest authCodeRequest) {
         userService.verifyAuthCode(authCodeRequest);
     }

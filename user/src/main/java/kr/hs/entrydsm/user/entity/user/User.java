@@ -26,10 +26,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long receiptCode;
 
-    @Column(columnDefinition = "char (11)", nullable = false)
-    private String telephoneNumber;
+    @Column(columnDefinition = "char(36)", nullable = false)
+    private String email;
 
-    @Column(columnDefinition = "char(11)", nullable = false)
+    @Column(columnDefinition = "char(60)", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -50,6 +50,9 @@ public class User {
     private Sex sex;
 
     private LocalDate birthday;
+
+    @Column(columnDefinition = "char(11)", nullable = false)
+    private String telephoneNumber;
 
     @Column(columnDefinition = "char(5)")
     private String parentName;
@@ -96,6 +99,11 @@ public class User {
         return this;
     }
 
+    public User setPrintedArrived(boolean isPrintedArrived) {
+        this.status.setPrintedArrived(isPrintedArrived);
+        return this;
+    }
+
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
                                       boolean isDaejeon, ApplicationRemark applicationRemark) {
         this.educationalStatus = educationalStatus;
@@ -122,6 +130,18 @@ public class User {
 
     public void updatePhotoFileName(String photoFileName) {
         this.photoFileName = photoFileName;
+    }
+
+    public void updateSelfIntroduce(String selfIntroduce) {
+        if (!selfIntroduce.isBlank() && !selfIntroduce.isEmpty()) {
+            this.selfIntroduce = selfIntroduce;
+        }
+    }
+
+    public void updateStudyPlan(String studyPlan) {
+        if (!studyPlan.isBlank() && !studyPlan.isEmpty()) {
+            this.studyPlan = studyPlan;
+        }
     }
 
 }

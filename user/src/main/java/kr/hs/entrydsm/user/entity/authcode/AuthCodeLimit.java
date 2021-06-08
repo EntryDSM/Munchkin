@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.TimeToLive;
 public class AuthCodeLimit {
 
     @Id
-    private final String phoneNumber;
+    private final String email;
 
     private int count;
 

@@ -18,6 +18,8 @@ public class Applicant {
     //공통
     private long receiptCode;
 
+    private String email;
+
     private String name;
 
     private boolean isDaejeon;
@@ -75,13 +77,5 @@ public class Applicant {
     private boolean isGraduated; // 졸업 여부
 
     private double distance; // 학교까지의 거리
-
-    public void updateExamCode(String examCode) {
-        this.examCode = examCode;
-    }
-
-    public void updateDistance(double distance) {
-        this.distance = distance;
-    }
 
 }

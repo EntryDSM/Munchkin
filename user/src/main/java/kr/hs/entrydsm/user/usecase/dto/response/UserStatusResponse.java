@@ -14,7 +14,6 @@ public class UserStatusResponse {
     private String name;
     private String phoneNumber;
     private Boolean isSubmit;
-    private Boolean isPaid;
     private Boolean isPrintedArrived;
     private ApplicationType applicationType;
     private int selfIntroduce;
