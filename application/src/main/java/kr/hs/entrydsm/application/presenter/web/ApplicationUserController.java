@@ -3,6 +3,7 @@ package kr.hs.entrydsm.application.presenter.web;
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+@Published
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application/users")

@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.pdf.ApplicationPdfService;
+import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 
+@Published
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/pdf")

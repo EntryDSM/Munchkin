@@ -178,6 +178,7 @@ public class ApplicantServiceManager implements ApplicantService {
             String second = applicant.isDaejeon() ? "1" : "2";
 
             examCode = first + second;
+            applicant.updateExamCode(examCode);
         }
 
         for (Applicant applicant : applicants) {

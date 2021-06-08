@@ -5,7 +5,6 @@ import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
-import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
