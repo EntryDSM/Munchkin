@@ -1,10 +1,13 @@
 package kr.hs.entrydsm.application.usecase.pdf;
 
 import kr.hs.entrydsm.application.entity.Applicant;
+import kr.hs.entrydsm.application.entity.Application;
+import kr.hs.entrydsm.application.entity.ApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;
 import kr.hs.entrydsm.application.usecase.dto.Score;
+import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.FinalSubmitRequiredException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationPdfManager implements ApplicationPdfService {
 
     private final ApplicationPdfGenerator applicationPdfGenerator;
+    private final ApplicationRepository applicationRepository;
     private final ApplicantStatusService applicantStatusService;
     private final ScoreCalculator scoreCalculator;
     private final ApplicantRepository applicantRepository;
@@ -21,7 +25,9 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     @Override
     public byte[] getPreviewApplicationPdf(long receiptCode) {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
-        Score score = scoreCalculator.getScore(receiptCode);
+        Application application = applicationRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(ApplicationNotFoundException::new);
+        Score score = scoreCalculator.getScore(application);
         return applicationPdfGenerator.generate(applicant, score);
     }
 
@@ -32,7 +38,9 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         }
 
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
-        Score score = scoreCalculator.getScore(receiptCode);
+        Application application = applicationRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(ApplicationNotFoundException::new);
+        Score score = scoreCalculator.getScore(application);
         return applicationPdfGenerator.generate(applicant, score);
     }
 }
