@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
+import kr.hs.entrydsm.application.usecase.dto.EtcScore;
 import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,12 @@ public class ApplicationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateSubjectScore(@RequestBody @Valid SubjectScore score) {
         applicationProcessing.updateSubjectScore(score);
+    }
+
+    @PatchMapping("/score/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateEtcScore(@RequestBody @Valid EtcScore score) {
+        applicationProcessing.updateEtcScore(score);
     }
 
 }
