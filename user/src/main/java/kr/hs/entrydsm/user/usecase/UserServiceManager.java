@@ -2,7 +2,7 @@ package kr.hs.entrydsm.user.usecase;
 
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
-import kr.hs.entrydsm.common.context.sms.MessageSender;
+import kr.hs.entrydsm.common.context.sender.ContentSender;
 import kr.hs.entrydsm.user.entity.authcode.AuthCode;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimit;
 import kr.hs.entrydsm.user.entity.authcode.AuthCodeLimitRedisRepository;
@@ -28,10 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -47,7 +44,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final JWTTokenProvider tokenProvider;
-    private final MessageSender messageSender;
+    private final ContentSender contentSender;
 
     @Value("${authcode.length}")
     private int authCodeLength;
@@ -60,9 +57,6 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Value("${authcode.limit-ttl}")
     private int authCodeLimitTtl;
-
-    @Value("${authcode.sms-content}")
-    private String authCodeSmsContent;
 
     @Value("${auth.jwt.exp.refresh}")
     private long refreshTokenExpiration;
@@ -219,11 +213,13 @@ public class UserServiceManager implements UserAuthService, UserService {
         if (isOverRequestLimit(email)) throw new AuthCodeRequestOverLimitException();
 
         String randomCode = randomCode();
-        String content = authCodeSmsContent.replace("%code%", randomCode);
+        Map<String, String> params = new HashMap<>();
+        params.put("code", randomCode);
+
         authCodeRepository.findById(email)
                 .or(() -> Optional.of(new AuthCode(email, randomCode, false, authCodeTtl)))
                 .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
-                .ifPresent(authCode -> messageSender.sendMessage(email, content));
+                .ifPresent(authCode -> contentSender.sendMessage(email, "EntryEmailConfirmTemplate", params));
     }
 
     private boolean isOverRequestLimit(String email) {

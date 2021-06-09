@@ -50,7 +50,8 @@ subprojects {
         implementation 'com.squareup.okhttp3:okhttp:4.9.0'
         compile 'org.springframework.boot:spring-boot-starter-security'
 
-        implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3control', version: '1.11.457'
+        implementation 'com.amazonaws:aws-java-sdk-ses:1.11.852'
+        implementation 'com.amazonaws:aws-java-sdk-s3control:1.11.457'
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
