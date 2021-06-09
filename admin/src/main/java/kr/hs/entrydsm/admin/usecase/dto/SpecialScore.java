@@ -36,36 +36,15 @@ public class SpecialScore {
     @JsonFormat(pattern = "-20")
     private int score_20;
 
-    public void plus20() {
-        this.score_20++;
-    }
-
-    public void plus21_30() {
-        this.score21_30++;
-    }
-
-    public void plus31_40() {
-        this.score31_40++;
-    }
-
-    public void plus41_50() {
-        this.score41_50++;
-    }
-
-    public void plus51_60() {
-        this.score51_60++;
-    }
-
-    public void plus61_70() {
-        this.score61_70++;
-    }
-
-    public void plus71_80() {
-        this.score71_80++;
-    }
-
-    public void plus81_90() {
-        this.score81_90++;
+    public void addScore(double score) {
+        if (score <= 20) score_20++;
+        else if(score <= 30) score21_30++;
+        else if(score <= 40) score31_40++;
+        else if(score <= 50) score41_50++;
+        else if(score <= 60) score51_60++;
+        else if(score <= 70) score61_70++;
+        else if(score <= 80) score71_80++;
+        else if (score <= 90) score81_90++;
     }
 
 }

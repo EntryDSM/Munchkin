@@ -42,34 +42,18 @@ public class AdminServiceManager implements AdminService {
         }
 
         //마이스터전형
-        for(BigDecimal score : applicationStatus.getMeisterScore()) {
-            double s = Double.parseDouble(String.valueOf(score));
-            s = Math.round(s);
-
-            if(s <= 20) meisterScore.plus20();
-            else if(s <= 30) meisterScore.plus21_30();
-            else if(s <= 40) meisterScore.plus31_40();
-            else if(s <= 50) meisterScore.plus41_50();
-            else if(s <= 60) meisterScore.plus51_60();
-            else if(s <= 70) meisterScore.plus61_70();
-            else if(s <= 80) meisterScore.plus71_80();
-            else if(s <= 90) meisterScore.plus81_90();
+        for(BigDecimal scoreDecimal : applicationStatus.getMeisterScore()) {
+            double score = Double.parseDouble(String.valueOf(scoreDecimal));
+            score = Math.round(score);
+            meisterScore.addScore(score);
         }
 
         //사회통합
         //마이스터전형
-        for(BigDecimal score : applicationStatus.getSpecialScore()) {
-            double s = Double.parseDouble(String.valueOf(score));
-            s = Math.round(s);
-
-            if(s <= 20) socialScore.plus20();
-            else if(s <= 30) socialScore.plus21_30();
-            else if(s <= 40) socialScore.plus31_40();
-            else if(s <= 50) socialScore.plus41_50();
-            else if(s <= 60) socialScore.plus51_60();
-            else if(s <= 70) socialScore.plus61_70();
-            else if(s <= 80) socialScore.plus71_80();
-            else if(s <= 90) socialScore.plus81_90();
+        for(BigDecimal scoreDecimal : applicationStatus.getSpecialScore()) {
+            double score = Double.parseDouble(String.valueOf(scoreDecimal));
+            score = Math.round(score);
+            meisterScore.addScore(score);
         }
 
         return ReceiptStatusResponse.builder()
