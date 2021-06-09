@@ -50,7 +50,7 @@ public class ApplicantController {
     @AdminJWTRequired
     @GetMapping("/applicants/examcode")
     public void saveExamCode() throws Exception {
-        applicantService.saveExamCode();
+        applicantService.saveExamCode() ;
     }
 
 

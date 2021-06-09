@@ -26,6 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -39,8 +40,8 @@ public class ApplicantServiceManager implements ApplicantService {
 
     private final ContentSender contentSender;
 
-    private static final double endX = 127.363585;
-    private static final double endY = 36.391636;
+    private static final double SCHOOL_LAT = 36.391636; // 위도
+    private static final double SCHOOL_LNG = 127.363585; // 경도
 
     private static final String ROUTE_URL = "https://apis.openapi.sk.com/tmap/routes?version=1";
     private static final String GEO_BASIC_URL="https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=";
@@ -170,25 +171,34 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override //지원자 수험번호 저장
     public void saveExamCode() throws Exception {
         List<SaveExamCodeUserResponse> applicants = applicantRepository.findAllIsSubmitTrue();
-        String examCode = null;
-        List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>();
-        applicantSort.addAll(applicants);
-        int commonDaejeon = 0, commonNationwide = 0, meisterDaejeon = 0, meisterNationwide = 0, socialDaejeon = 0, socialNationwide = 0;
+        List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>(applicants);
+        int commonDaejeon = 1, commonNationwide = 1, meisterDaejeon = 1,
+                meisterNationwide = 1, socialDaejeon = 1, socialNationwide = 1;
 
         //첫번째, 두번째 자리 채우기
         for (SaveExamCodeUserResponse applicant : applicants) {
-            String first = applicant.getApplicationType().equals("COMMON") ? "1" : applicant.getApplicationType().equals("MEISTER") ? "2" : "3";
-            String second = applicant.isDaejeon() ? "1" : "2";
+            StringBuilder examCode = new StringBuilder();
+            switch (applicant.getApplicationType()) {
+                case "COMMON":
+                    examCode.append(1);
+                    break;
+                case "MEISTER":
+                    examCode.append(2);
+                    break;
+                default:
+                    examCode.append(3);
+            }
+            if (applicant.isDaejeon()) examCode.append(1);
+            else examCode.append(2);
 
-            examCode = first + second;
-            applicant.updateExamCode(examCode);
+            applicant.updateExamCode(examCode.toString());
         }
 
         for (SaveExamCodeUserResponse applicant : applicants) {
             Coordinate coordinate = getCoordinate(applicant.getAddress());
-            RouteGuidanceRequest request = new RouteGuidanceRequest().builder()
-                    .endX(endX)
-                    .endY(endY)
+            RouteGuidanceRequest request = RouteGuidanceRequest.builder()
+                    .lng(SCHOOL_LNG)
+                    .lat(SCHOOL_LAT)
                     .startX(Double.parseDouble(coordinate.getLon()))
                     .startY(Double.parseDouble(coordinate.getLat()))
                     .build();
@@ -196,44 +206,31 @@ public class ApplicantServiceManager implements ApplicantService {
             applicant.updateDistance(distance.getProperties().getTotalDistance());
         }
 
-        Collections.sort(applicantSort, (o1, o2) -> {
-            if (o1.getDistance() > o2.getDistance()) {
-                return -1; //음수일 때 자리를 바꾸지 않는다.
-            } else if (o1.getDistance() < o2.getDistance()) {
-                return 1; // 양수일 때 자리를 바꾸고
-            } else {
-                return 0;
-            }
-        });
+        applicantSort.sort((o1, o2) -> Double.compare(o2.getDistance(), o1.getDistance()));
 
         for(SaveExamCodeUserResponse applicant : applicantSort) {
-            int i = 0;
-            if(applicant.getExamCode().startsWith("11")) {
-                commonDaejeon++;
-                i = commonDaejeon;
-            } else if(applicant.getExamCode().startsWith("12")) {
-                commonNationwide++;
-                i = commonNationwide;
-            } else if(applicant.getExamCode().startsWith("21")) {
-                meisterDaejeon++;
-                i = meisterDaejeon;
-            } else if(applicant.getExamCode().startsWith("22")) {
-                meisterNationwide++;
-                i = meisterNationwide;
-            } else if(applicant.getExamCode().startsWith("31")) {
-                socialDaejeon++;
-                i = socialDaejeon;
-            } else if(applicant.getExamCode().startsWith("32")) {
-                socialNationwide++;
-                i = socialNationwide;
+            int examOrder = 0;
+            String examCode = applicant.getExamCode();
+            if(examCode.startsWith("11")) { ;
+                examOrder = commonDaejeon++;
+            } else if(examCode.startsWith("12")) {
+                examOrder = commonNationwide++;
+            } else if(examCode.startsWith("21")) {
+                examOrder = meisterDaejeon++;
+            } else if(examCode.startsWith("22")) {
+                examOrder = meisterNationwide++;
+            } else if(examCode.startsWith("31")) {
+                examOrder = socialDaejeon++;
+            } else if(examCode.startsWith("32")) {
+                examOrder = socialNationwide++;
             }
 
-            applicant.updateExamCode(examCode + String.format("%03d", i));
+            applicant.updateExamCode(applicant.getExamCode() + String.format("%03d", examOrder));
             applicantRepository.changeExamCode(applicant.getReceiptCode(), applicant.getExamCode());
         }
     }
 
-    private Coordinate getCoordinate (String address) throws URISyntaxException, UnsupportedEncodingException, JsonProcessingException {
+    private Coordinate getCoordinate(String address) throws URISyntaxException, UnsupportedEncodingException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
@@ -241,7 +238,7 @@ public class ApplicantServiceManager implements ApplicantService {
         headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE
                 + ";charset=UTF-8");
 
-        URI url = new URI(GEO_BASIC_URL + appKey + "&addr=" + URLEncoder.encode(address,"UTF-8") + "&addressFlag=F00&format=json");
+        URI url = new URI(GEO_BASIC_URL + appKey + "&addr=" + URLEncoder.encode(address, StandardCharsets.UTF_8) + "&addressFlag=F00&format=json");
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Map> response = restTemplate.getForObject(url, Map.class);
@@ -258,8 +255,8 @@ public class ApplicantServiceManager implements ApplicantService {
         HttpHeaders headers = new HttpHeaders();
 
         RouteBody routeBody = RouteBody.builder()
-                .endX(request.getEndX())
-                .endY(request.getEndY())
+                .endX(request.getLng())
+                .endY(request.getLat())
                 .startX(request.getStartX())
                 .startY(request.getStartY())
                 .totalValue(2)
