@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.List;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -36,7 +36,10 @@ public class ExcelServiceManager implements ExcelService {
     private String bucket;
 
     @Value("${munchkin.applicant-information-path}")
-    private String path;
+    private String applicantInformationPath;
+
+    @Value("${munchkin.admission-ticket-path}")
+    private String admissionTicketPath;
 
     @Override
     public void createAdmissionTicket(long receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
@@ -47,43 +50,28 @@ public class ExcelServiceManager implements ExcelService {
         String middleSchool = applicant.getSchoolName();
         String area = applicant.isDaejeon()?"대전":"전국";
         String applicationType = applicant.getApplicationType();
-        //사진은 나중에 추가하기
 
-        File file = new File(applicant.getPhotoFileName());
-        long length = file.length();
-        byte[] picData = new byte[(int)length];
-        byte[] bytes = new byte[(int)length];
-        InputStream input = new BufferedInputStream(new FileInputStream(file));
-        FileInputStream picln = new FileInputStream(file);
-        picln.read(picData);
-        try {
-            int offset = 0;
-            int read;
-            while((read = input.read()) != -1) bytes[offset++] = (byte)read;
-        } finally {
-            input.close();
-        }
+        byte[] imageBytes = getObject(applicant.getPhotoFileName());
 
         AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
         admissionTicket.format(0,0);
 
-        int index = admissionTicket.getWorkbook().addPicture(picData, HSSFWorkbook.PICTURE_TYPE_PNG);
+        int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
         HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
         HSSFClientAnchor anchor;
         anchor = new HSSFClientAnchor(0,0,0,0,(short)0,2,(short)2,14);
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream(new File(path, name+" 수험표.xls")));
+        admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, name+" 수험표.xls")));
     }
 
     @Override
-    public void createApplicantInformation() {
+    public void createApplicantInformation() throws IOException {
         ApplicantInformation applicantInformation = new ApplicantInformation();
+        applicantInformation.format();
         Sheet sheet = applicantInformation.getSheet();
         List<ExcelUser> excelApplicants = applicantRepository.findAllForExcel();
-
-        //학생 정보 싸그리 가져오기
 
         for(int i = 1; i < excelApplicants.size() ; i++) { //학생 수만큼
             ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i-1).getReceiptCode());
@@ -193,6 +181,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(71).setCellValue(excelApplicants.get(i-1).getSelfIntroduce()); //학업계획서
         }
 
+        applicantInformation.getWorkbook().write(new FileOutputStream(new File(applicantInformationPath +"지원자 목록.xls")));
     }
 
     private byte[] getObject(String fileName) throws IOException {

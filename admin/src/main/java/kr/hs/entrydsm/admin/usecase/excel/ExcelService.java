@@ -4,5 +4,5 @@ import java.io.IOException;
 
 public interface ExcelService {
     void createAdmissionTicket(long receiptCode) throws IOException;
-    void createApplicantInformation();
+    void createApplicantInformation() throws IOException;
 }
