@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
-import kr.hs.entrydsm.admin.usecase.AdminService;
-import kr.hs.entrydsm.admin.usecase.ExcelService;
+import kr.hs.entrydsm.admin.usecase.admin.AdminService;
+import kr.hs.entrydsm.admin.usecase.excel.ExcelService;
 import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;

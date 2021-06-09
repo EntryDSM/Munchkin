@@ -34,14 +34,14 @@ public class CommonScore {
     private int score_80;
 
     public void addScore(double score) {
-        if(score <= 80) score_80++;
-        else if(score <= 90) score81_90++;
-        else if(score <= 100) score91_100++;
-        else if(score <= 110) score101_110++;
-        else if(score <= 120) score111_120++;
-        else if(score <= 130) score121_130++;
-        else if(score <= 140) score131_140++;
-        else if(score <= 150) score141_150++;
+        if (score <= 80) score_80++;
+        else if (score <= 90) score81_90++;
+        else if (score <= 100) score91_100++;
+        else if (score <= 110) score101_110++;
+        else if (score <= 120) score111_120++;
+        else if (score <= 130) score121_130++;
+        else if (score <= 140) score131_140++;
+        else if (score <= 150) score141_150++;
     }
 
 }

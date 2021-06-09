@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
-import kr.hs.entrydsm.admin.usecase.ApplicantService;
+import kr.hs.entrydsm.admin.usecase.applicant.ApplicantService;
 import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;

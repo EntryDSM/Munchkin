@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
-import kr.hs.entrydsm.admin.usecase.ScheduleService;
+import kr.hs.entrydsm.admin.usecase.schedule.ScheduleService;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
