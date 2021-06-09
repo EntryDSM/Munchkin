@@ -5,8 +5,7 @@ import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.Score;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
-import kr.hs.entrydsm.common.model.ReportCard;
-import kr.hs.entrydsm.common.model.Scores;
+import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,17 +47,17 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
 
-        Scores scores = scoreCalculator.getScores(application.getReceiptCode());
+        Score score = scoreCalculator.getScore(application.getReceiptCode());
 
-        return createReportCard(application, scores);
+        return createReportCard(application, score);
     }
 
-    private ReportCard createReportCard(Application application, Scores scores) {
+    private ReportCard createReportCard(Application application, Score score) {
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
             return ReportCard.graduationBuilder()
                     .receiptCode(application.getReceiptCode())
-                    .scores(scores)
+                    .score(score)
                     .isGraduated(graduationApplication.getIsGraduated())
                     .schoolTel(graduationApplication.getSchoolTel())
                     .schoolName(graduationApplication.getSchoolName())
@@ -72,7 +71,7 @@ public class ApplicationExportManager implements ApplicationExportRepository {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
             return ReportCard.qualificationBuilder()
                     .receiptCode(application.getReceiptCode())
-                    .scores(scores)
+                    .score(score)
                     .averageScore(qualificationExamApplication.getAverageScore())
                     .build();
         }
