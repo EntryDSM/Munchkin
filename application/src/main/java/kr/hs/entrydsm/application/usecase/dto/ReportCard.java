@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.common.model;
+package kr.hs.entrydsm.application.usecase.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class ReportCard {
 
     private final Long receiptCode;
-    private final Scores scores;
+    private final Score score;
 
     private final Boolean isGraduated;
     private final String schoolName;
@@ -23,10 +23,10 @@ public class ReportCard {
     private final BigDecimal averageScore;
 
     @Builder(builderMethodName = "graduationBuilder", builderClassName = "GraduationBuilder")
-    public ReportCard(long receiptCode, Scores scores, boolean isGraduated, String schoolName, String schoolTel,
+    public ReportCard(long receiptCode, Score score, boolean isGraduated, String schoolName, String schoolTel,
                       int volunteerTime, int latenessCount, int earlyLeaveCount, int lectureAbsenceCount, int dayAbsenceCount) {
         this.receiptCode = receiptCode;
-        this.scores = scores;
+        this.score = score;
         this.isGraduated = isGraduated;
         this.schoolName = schoolName;
         this.schoolTel = schoolTel;
@@ -39,9 +39,9 @@ public class ReportCard {
     }
 
     @Builder(builderMethodName = "qualificationBuilder", builderClassName = "QualificationBuilder")
-    public ReportCard(long receiptCode, Scores scores, BigDecimal averageScore) {
+    public ReportCard(long receiptCode, Score score, BigDecimal averageScore) {
         this.receiptCode = receiptCode;
-        this.scores = scores;
+        this.score = score;
         this.averageScore = averageScore;
         this.isGraduated = null;
         this.schoolName = null;
@@ -54,18 +54,18 @@ public class ReportCard {
     }
 
     public BigDecimal getTotalScore() {
-        return scores.getTotalScore();
+        return score.getTotalScoreFirstRound();
     }
 
     public BigDecimal getVolunteerScore() {
-        return scores.getVolunteerScore();
+        return score.getVolunteerScore();
     }
 
     public BigDecimal getGradeScore() {
-        return scores.getGradeScore();
+        return score.getConversionScore();
     }
 
     public int attendanceScore() {
-        return scores.getAttendanceScore();
+        return score.getAttendanceScore();
     }
 }
