@@ -51,7 +51,7 @@ public class ApplicantServiceManager implements ApplicantService {
     @Value("${tmap.app.key}")
     private String appKey;
 
-    @Override
+    @Override //지원자 원서 도착 여부 변경
     public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
@@ -70,7 +70,7 @@ public class ApplicantServiceManager implements ApplicantService {
         messageSender.sendMessage(applicant.getTelephoneNumber(), message);
     }
 
-    @Override
+    @Override //지원자 목록
     public ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                             boolean isDaejeon, boolean isNationwide,
                                             String telephoneNumber, String name,
@@ -112,7 +112,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
     }
 
-    @Override
+    @Override //지원자 상세보기
     public Object getDetail(int receiptCode) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
@@ -165,7 +165,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
     }
 
-    @Override
+    @Override //지원자 수험번호 저장
     public void saveExamCode() throws Exception {
         List<SaveExamCodeUserResponse> applicants = applicantRepository.findAllIsSubmitTrue();
         String examCode = null;
