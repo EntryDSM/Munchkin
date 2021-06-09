@@ -29,6 +29,6 @@ aws:
     secretKey: secret
     region: 한국
   ses:
-    access-key: ${AWS_SES_ACCESS}
-    secret_key: ${AWS_SES_SECRET}
-    region: ${AWS_SES_REGION}
+    access-key: ${AWS_SES_ACCESS:ses_access}
+    secret_key: ${AWS_SES_SECRET:ses_secret}
+    region: ${AWS_SES_REGION:ap-northeast-2}
