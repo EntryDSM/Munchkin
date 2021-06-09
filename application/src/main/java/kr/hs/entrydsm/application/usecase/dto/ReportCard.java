@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @Getter
 public class ReportCard {
 
-    private final Long receiptCode;
+    private final long receiptCode;
     private final Score score;
 
     private final Boolean isGraduated;
