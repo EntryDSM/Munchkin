@@ -8,6 +8,7 @@ import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
@@ -65,7 +66,8 @@ public class ApplicationManager implements ApplicationProcessing {
         graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .map(graduationApplication -> {
                     graduationApplication.setSchoolTel(information.getSchoolTel());
-                    graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode()).orElseThrow(SchoolNotFoundException::new));
+                    graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode())
+                            .orElseThrow(SchoolNotFoundException::new));
                     graduationApplicationRepository.save(graduationApplication);
                     return graduationApplication;
                 }).orElseThrow(ApplicationNotFoundException::new);
@@ -79,7 +81,8 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public Information getInformation(Long receiptCode) throws IOException {
-        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode).orElseThrow(ApplicationNotFoundException::new);
+        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(ApplicationNotFoundException::new);
         Information result = applicantExportService.getInformation(receiptCode);
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
         result.setSchoolCode(graduationApplication.getSchoolCode());
@@ -92,6 +95,22 @@ public class ApplicationManager implements ApplicationProcessing {
         String fileName = imageService.upload(multipartFile, 1L);
         applicantExportService.setPhotoFileName(1L, fileName);
         return fileName;
+    }
+
+    @Override
+    public void updateSubjectScore(SubjectScore score) {
+        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(1L)
+                .orElseThrow(ApplicationNotFoundException::new);
+
+        graduationApplication.setMathScore(score.getMathScore());
+        graduationApplication.setEnglishScore(score.getEnglishScore());
+        graduationApplication.setHistoryScore(score.getHistoryScore());
+        graduationApplication.setKoreanScore(score.getKoreanScore());
+        graduationApplication.setSocialScore(score.getSocialScore());
+        graduationApplication.setScienceScore(score.getScienceScore());
+        graduationApplication.setTechAndHomeScore(score.getTechAndHomeScore());
+
+        graduationApplicationRepository.save(graduationApplication);
     }
 
     private String getImageUrl(String photoFileName) throws MalformedURLException {

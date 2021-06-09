@@ -1,10 +1,13 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
+import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 @Published
@@ -34,4 +37,11 @@ public class ApplicationController {
     public String getStudyPlan() {
         return applicationProcessing.getStudyPlan(1L);
     }
+
+    @PatchMapping("/score/subject")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateSubjectScore(@RequestBody @Valid SubjectScore score) {
+        applicationProcessing.updateSubjectScore(score);
+    }
+
 }

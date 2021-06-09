@@ -27,11 +27,8 @@ aws:
   s3:
     accessKey: access
     secretKey: secret
-  region:
-    static: 한국
-sms:
-  aligo:
-    url: ${ALIGO_URL}
-    key: ${ALIGO_KEY}
-    user-id: ${ALIGO_USER_ID}
-    sender: ${ALIGO_SENDER}
+    region: 한국
+  ses:
+    access-key: ${AWS_SES_ACCESS:ses_access}
+    secret_key: ${AWS_SES_SECRET:ses_secret}
+    region: ${AWS_SES_REGION:ap-northeast-2}
