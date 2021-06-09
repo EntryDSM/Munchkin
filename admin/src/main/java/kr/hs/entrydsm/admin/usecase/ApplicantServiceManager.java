@@ -13,6 +13,7 @@ import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
+import kr.hs.entrydsm.common.context.sender.ContentSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,8 @@ public class ApplicantServiceManager implements ApplicantService {
     private final AdminRepository adminRepository;
 
     private final AuthenticationManager authenticationManager;
+
+    private final ContentSender contentSender;
 
     private static final double endX = 127.363585;
     private static final double endY = 36.391636;
@@ -60,11 +63,13 @@ public class ApplicantServiceManager implements ApplicantService {
         }
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
-        String message;
-        if(isPrintedArrived) message = PRINTED_ARRIVED;
-        else message = PRINTED_NOT_ARRIVED;
+        String template;
+        if(isPrintedArrived) template = "PRINTED_ARRIVED";
+        else template = "PRINTED_NOT_ARRIVED";
+        Map<String, String> params = new HashMap<>();
+        params.put("name", applicant.getName());
 
-        //이메일 보내기
+        contentSender.sendMessage(applicant.getTelephoneNumber(), template, params);
     }
 
     @Override //지원자 목록
