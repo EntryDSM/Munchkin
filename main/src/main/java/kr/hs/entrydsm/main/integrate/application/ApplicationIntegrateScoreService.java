@@ -24,10 +24,10 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
         return null;
     };
 
-    private Optional<SubjectScore> makeSubjectScore(Application application) { // Optional 값이 null이면 검정고시
+    private SubjectScore makeSubjectScore(Application application) {
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
-            SubjectScore subjectScore = SubjectScore.builder()
+            return SubjectScore.builder()
                     .koreanScore(graduationApplication.getKoreanScore())
                     .socialScore(graduationApplication.getSocialScore())
                     .scienceScore(graduationApplication.getScienceScore())
@@ -36,8 +36,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
                     .englishScore(graduationApplication.getEnglishScore())
                     .techAndHomeScore(graduationApplication.getTechAndHomeScore())
                     .build();
-            return Optional.of(subjectScore);
         }
-        return Optional.empty();
+        return null;
     }
 }
