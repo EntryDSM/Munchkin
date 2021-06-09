@@ -12,9 +12,6 @@ public class ApplicantInformation {
     private final Workbook workbook = new HSSFWorkbook();
     private final Sheet sheet = workbook.createSheet("applicant information");
 
-    @Value("${munchkin.admission-ticket-path}")
-    private String path;
-
     public Workbook getWorkbook() {
         return workbook;
     }
