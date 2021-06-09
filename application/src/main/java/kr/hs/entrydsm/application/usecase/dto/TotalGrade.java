@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto;
 
+import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,5 +32,14 @@ public class TotalGrade {
     @PositiveOrZero
     private final int earlyLeaveCount;
 
-
+    public static TotalGrade fromApplicationAndSubjectScore(GraduationApplication application, SubjectScore subjectScore) {
+        return TotalGrade.builder()
+                .subjectScore(subjectScore)
+                .dayAbsenceCount(application.getDayAbsenceCount())
+                .earlyLeaveCount(application.getEarlyLeaveCount())
+                .latenessCount(application.getLatenessCount())
+                .lectureAbsenceCount(application.getLectureAbsenceCount())
+                .volunteerTime(application.getVolunteerTime())
+                .build();
+    }
 }
