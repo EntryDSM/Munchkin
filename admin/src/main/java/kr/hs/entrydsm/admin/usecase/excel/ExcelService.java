@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase;
+package kr.hs.entrydsm.admin.usecase.excel;
 
 import java.io.IOException;
 

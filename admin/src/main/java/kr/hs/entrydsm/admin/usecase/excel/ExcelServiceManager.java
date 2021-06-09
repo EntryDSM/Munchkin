@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase;
+package kr.hs.entrydsm.admin.usecase.excel;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;

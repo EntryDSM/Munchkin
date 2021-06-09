@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase;
+package kr.hs.entrydsm.admin.usecase.schedule;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
@@ -6,7 +6,6 @@ import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
-import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Schedules;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;

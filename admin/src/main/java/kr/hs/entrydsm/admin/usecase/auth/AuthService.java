@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase;
+package kr.hs.entrydsm.admin.usecase.auth;
 
 import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;

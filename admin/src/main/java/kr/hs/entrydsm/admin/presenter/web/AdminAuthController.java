@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
-import kr.hs.entrydsm.admin.usecase.AuthService;
+import kr.hs.entrydsm.admin.usecase.auth.AuthService;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
