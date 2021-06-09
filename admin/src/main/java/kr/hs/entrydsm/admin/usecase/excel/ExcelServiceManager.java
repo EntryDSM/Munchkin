@@ -51,25 +51,25 @@ public class ExcelServiceManager implements ExcelService {
         String area = applicant.isDaejeon()?"대전":"전국";
         String applicationType = applicant.getApplicationType();
 
-        byte[] imageBytes = getObject(applicant.getPhotoFileName());
+        byte[] imageBytes = getObject(applicant.getPhotoFileName()); //S3파일을 byte로 가져오기
 
         AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
-        admissionTicket.format(0,0);
+        admissionTicket.format(0,0); //엑셀 포맷 설정
 
-        int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
+        int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG); //사진 넣기
         HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
         HSSFClientAnchor anchor;
         anchor = new HSSFClientAnchor(0,0,0,0,(short)0,2,(short)2,14);
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, name+" 수험표.xls")));
+        admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, applicant.getExamCode() + name+" 수험표.xls"))); //엑셀 다운
     }
 
     @Override
     public void createApplicantInformation() throws IOException {
         ApplicantInformation applicantInformation = new ApplicantInformation();
-        applicantInformation.format();
+        applicantInformation.format(); //엑셀 포맷 설정
         Sheet sheet = applicantInformation.getSheet();
         List<ExcelUser> excelApplicants = applicantRepository.findAllForExcel();
 
@@ -181,7 +181,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(71).setCellValue(excelApplicants.get(i-1).getSelfIntroduce()); //학업계획서
         }
 
-        applicantInformation.getWorkbook().write(new FileOutputStream(new File(applicantInformationPath +"지원자 목록.xls")));
+        applicantInformation.getWorkbook().write(new FileOutputStream(applicantInformationPath +"지원자 목록.xls")); //엑셀 다운
     }
 
     private byte[] getObject(String fileName) throws IOException {

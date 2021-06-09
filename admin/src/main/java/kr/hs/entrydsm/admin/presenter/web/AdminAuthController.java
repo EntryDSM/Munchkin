@@ -21,18 +21,21 @@ public class AdminAuthController {
 
     private final AuthService authService;
 
+    //어드민 계정 만들기
     @PostMapping("/account")
     @ResponseStatus(HttpStatus.CREATED)
     public void signUp(@RequestBody @Valid SignUpRequest request) {
         authService.signUp(request);
     }
 
+    //어드민 로그인
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TokenResponse login(@RequestBody SignInRequest signInRequest) {
         return authService.login(signInRequest);
     }
 
+    //어드민 토큰 리프레시
     @AdminJWTRequired
     @PutMapping
     public AccessTokenResponse tokenRefresh(@RequestHeader("X-Refresh-Token") String refreshToken) {
