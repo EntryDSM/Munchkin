@@ -4,6 +4,7 @@ import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.Score;
+import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
 
-        Score score = scoreCalculator.getScore(application.getReceiptCode());
+        Score score = scoreCalculator.getScore(application);
 
         return createReportCard(application, score);
     }
