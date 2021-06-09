@@ -1,11 +1,13 @@
 package kr.hs.entrydsm.score.usecase.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.PositiveOrZero;
 
+@Builder
 @Getter
 @AllArgsConstructor
 public class UpdateGraduationRequest {

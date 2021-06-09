@@ -38,7 +38,7 @@ public class ScoreServiceManager implements ScoreService {
     }
 
     @Override
-    public void updateGraduation(UpdateGraduationRequest request) {
+    public Score updateGraduation(UpdateGraduationRequest request) {
         if (currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
 
         GraduationCase graduationCase = GraduationCase.builder()
@@ -57,11 +57,11 @@ public class ScoreServiceManager implements ScoreService {
                                                       .techAndHomeGrade(request.getTechAndHomeGrade())
                                                       .build();
         graduationCaseRepository.save(graduationCase);
-        updateScore(graduationCase);
+        return updateScore(graduationCase);
     }
 
     @Override
-    public void updateQualificationExam(UpdateQualificationExamRequest request) {
+    public Score updateQualificationExam(UpdateQualificationExamRequest request) {
         if (!currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
 
         QualificationExamCase qualificationExamCase = QualificationExamCase.builder()
@@ -69,12 +69,12 @@ public class ScoreServiceManager implements ScoreService {
                                                                            .averageScore(request.getGedAverageScore())
                                                                            .build();
         qualificationExamCaseRepository.save(qualificationExamCase);
-        updateScore(qualificationExamCase);
+        return updateScore(qualificationExamCase);
     }
 
-    private void updateScore(ApplicationCase applicationCase) {
+    private Score updateScore(ApplicationCase applicationCase) {
         Score score = new Score(currentScorer().getReceiptCode(), applicationCase);
-        scoreRepository.save(score);
+        return scoreRepository.save(score);
     }
 
     private Scorer currentScorer() {
