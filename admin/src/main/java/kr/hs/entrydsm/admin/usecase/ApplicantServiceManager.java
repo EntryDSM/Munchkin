@@ -13,7 +13,6 @@ import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
-import kr.hs.entrydsm.common.context.sms.MessageSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -36,8 +35,6 @@ public class ApplicantServiceManager implements ApplicantService {
     private final AdminRepository adminRepository;
 
     private final AuthenticationManager authenticationManager;
-
-    private final MessageSender messageSender;
 
     private static final double endX = 127.363585;
     private static final double endY = 36.391636;
