@@ -67,7 +67,7 @@ public class ApplicantServiceManager implements ApplicantService {
         if(isPrintedArrived) message = PRINTED_ARRIVED;
         else message = PRINTED_NOT_ARRIVED;
 
-        messageSender.sendMessage(applicant.getTelephoneNumber(), message);
+        //이메일 보내기
     }
 
     @Override //지원자 목록
