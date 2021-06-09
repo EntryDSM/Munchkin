@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,13 +30,13 @@ public class Applicant {
     private String englishScore;
     private String techAndHomeScore;
     private String examCode;
-    private String totalFirstGradeScores;
-    private String totalSecondGradeScores;
-    private String totalThirdGradeScores;
-    private String volunteerScore;
-    private String conversionScore;
-    private String attendanceScore;
-    private String totalScoreFirstRound;
+    private BigDecimal totalFirstGradeScore;
+    private BigDecimal totalSecondGradeScore;
+    private BigDecimal totalThirdGradeScore;
+    private BigDecimal volunteerScore;
+    private BigDecimal conversionScore;
+    private BigDecimal attendanceScore;
+    private BigDecimal totalScoreFirstRound;
 
     public void setGraduationApplication(GraduationApplication graduationApplication){
         this.schoolName = graduationApplication.getSchoolName();
@@ -55,9 +57,9 @@ public class Applicant {
     }
 
     public void setScore(Score score){
-        this.totalFirstGradeScores = score.getTotalFirstGradeScores();
-        this.totalSecondGradeScores = score.getTotalSecondGradeScores();
-        this.totalThirdGradeScores = score.getTotalThirdGradeScores();
+        this.totalFirstGradeScore = score.getTotalFirstGradeScore();
+        this.totalSecondGradeScore = score.getTotalSecondGradeScore();
+        this.totalThirdGradeScore = score.getTotalThirdGradeScore();
         this.volunteerScore = score.getVolunteerScore();
         this.conversionScore = score.getConversionScore();
         this.attendanceScore = score.getAttendanceScore();
