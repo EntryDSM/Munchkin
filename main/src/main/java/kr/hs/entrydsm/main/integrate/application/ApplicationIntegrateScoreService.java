@@ -25,9 +25,10 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     };
 
     private SubjectScore makeSubjectScore(Application application) {
+        SubjectScore result = null;
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
-            return SubjectScore.builder()
+            result = SubjectScore.builder()
                     .koreanScore(graduationApplication.getKoreanScore())
                     .socialScore(graduationApplication.getSocialScore())
                     .scienceScore(graduationApplication.getScienceScore())
@@ -37,6 +38,6 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
                     .techAndHomeScore(graduationApplication.getTechAndHomeScore())
                     .build();
         }
-        return null;
+        return result;
     }
 }
