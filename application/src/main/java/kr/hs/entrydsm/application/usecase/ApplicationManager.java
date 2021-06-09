@@ -7,6 +7,7 @@ import kr.hs.entrydsm.application.entity.SchoolRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
+import kr.hs.entrydsm.application.usecase.dto.EtcScore;
 import kr.hs.entrydsm.application.usecase.dto.Information;
 import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
@@ -109,6 +110,20 @@ public class ApplicationManager implements ApplicationProcessing {
         graduationApplication.setSocialScore(score.getSocialScore());
         graduationApplication.setScienceScore(score.getScienceScore());
         graduationApplication.setTechAndHomeScore(score.getTechAndHomeScore());
+
+        graduationApplicationRepository.save(graduationApplication);
+    }
+
+    @Override
+    public void updateEtcScore(EtcScore score) {
+        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(1L)
+                .orElseThrow(ApplicationNotFoundException::new);
+
+        graduationApplication.setVolunteerTime(score.getVolunteerTime());
+        graduationApplication.setDayAbsenceCount(score.getDayAbsenceCount());
+        graduationApplication.setLectureAbsenceCount(score.getLectureAbsenceCount());
+        graduationApplication.setLatenessCount(score.getLatenessCount());
+        graduationApplication.setEarlyLeaveCount(score.getEarlyLeaveCount());
 
         graduationApplicationRepository.save(graduationApplication);
     }
