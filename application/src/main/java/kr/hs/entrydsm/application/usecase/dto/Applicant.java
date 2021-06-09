@@ -35,7 +35,7 @@ public class Applicant {
     private BigDecimal totalThirdGradeScore;
     private BigDecimal volunteerScore;
     private BigDecimal conversionScore;
-    private BigDecimal attendanceScore;
+    private int attendanceScore;
     private BigDecimal totalScoreFirstRound;
 
     public void setGraduationApplication(GraduationApplication graduationApplication){
