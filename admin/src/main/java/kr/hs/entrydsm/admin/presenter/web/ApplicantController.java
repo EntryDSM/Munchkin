@@ -17,21 +17,23 @@ public class ApplicantController {
 
     private final ApplicantService applicantService;
 
-    //지원자
+    //지원자 원서 도착여부 상태 변경
     @AdminJWTRequired
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/applicant/printed-arrived")
-    public void updateIsprintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
+    public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
                                        @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
         applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
     }
 
+    //지원자 정보 상세 보기
     @AdminJWTRequired
     @GetMapping("/applicant")
     public Object getDetail(@RequestParam(name = "receipt-code") int receiptCode) {
         return applicantService.getDetail(receiptCode);
     }
 
+    //지원자 목록 보기
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
@@ -47,6 +49,7 @@ public class ApplicantController {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 
+    //지원자 수험번호 저장
     @AdminJWTRequired
     @GetMapping("/applicants/examcode")
     public void saveExamCode() throws Exception {

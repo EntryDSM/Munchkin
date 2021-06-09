@@ -19,6 +19,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
+    //스케줄 업데이트
     @AdminJWTRequired
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/schedules")
@@ -26,6 +27,7 @@ public class ScheduleController {
         scheduleService.updateSchedules(scheduleRequest);
     }
 
+    //스케줄 보기(유저에서도 사용)
     @GetMapping("/schedules")
     public ScheduleResponse getSchedules() {
         return scheduleService.getSchedules();

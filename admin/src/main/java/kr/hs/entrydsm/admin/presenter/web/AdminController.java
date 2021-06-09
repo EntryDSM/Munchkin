@@ -27,15 +27,17 @@ public class AdminController {
         return adminService.getStatics();
     }
 
+    //수험표 만들기
     @AdminJWTRequired
     @GetMapping("/excel/admission-ticket/{receipt-code}")
     public void createAdmissionTicket(@PathVariable("receipt-code") Long receiptCode) throws IOException {
         excelService.createAdmissionTicket(receiptCode);
     }
 
+    //지원자 목록 엑셀
     @AdminJWTRequired
     @GetMapping("/excel/applicants")
-    public void createApplicantInformation() {
+    public void createApplicantInformation() throws IOException {
         excelService.createApplicantInformation();
     }
 
