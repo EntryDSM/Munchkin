@@ -35,25 +35,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     private TotalGrade makeTotalGrade(GraduationApplication application) {
-        return TotalGrade.builder()
-                .subjectScore(makeSubjectScore(application))
-                .dayAbsenceCount(application.getDayAbsenceCount())
-                .earlyLeaveCount(application.getEarlyLeaveCount())
-                .latenessCount(application.getLatenessCount())
-                .lectureAbsenceCount(application.getLectureAbsenceCount())
-                .volunteerTime(application.getVolunteerTime())
-                .build();
-    }
-
-    private SubjectScore makeSubjectScore(GraduationApplication application) {
-        return SubjectScore.builder()
-                .koreanScore(application.getKoreanScore())
-                .mathScore(application.getMathScore())
-                .englishScore(application.getEnglishScore())
-                .scienceScore(application.getScienceScore())
-                .socialScore(application.getSocialScore())
-                .historyScore(application.getHistoryScore())
-                .techAndHomeScore(application.getTechAndHomeScore())
-                .build();
+        SubjectScore subjectScore = SubjectScore.from(application);
+        return TotalGrade.fromApplicationAndSubjectScore(application, subjectScore);
     }
 }
