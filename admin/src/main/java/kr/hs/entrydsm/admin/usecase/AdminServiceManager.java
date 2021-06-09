@@ -36,18 +36,9 @@ public class AdminServiceManager implements AdminService {
         SpecialScore socialScore = new SpecialScore();
 
         //일반전형 점수별 지원자 통계
-        for(BigDecimal score : applicationStatus.getCommonScore()) {
-            double s = Double.parseDouble(String.valueOf(score));
-            s = Math.round(s);
-
-            if(s <= 80) commonScore.plus80();
-            else if(s <= 90) commonScore.plus81_90();
-            else if(s <= 100) commonScore.plus91_100();
-            else if(s <= 110) commonScore.plus101_110();
-            else if(s <= 120) commonScore.plus111_120();
-            else if(s <= 130) commonScore.plus121_130();
-            else if(s <= 140) commonScore.plus131_140();
-            else if(s <= 150) commonScore.plus141_150();
+        for(BigDecimal scoreDecimal : applicationStatus.getCommonScore()) {
+            double score = Double.parseDouble(String.valueOf(scoreDecimal));
+            commonScore.addScore(Math.round(score));
         }
 
         //마이스터전형

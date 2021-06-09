@@ -33,36 +33,15 @@ public class CommonScore {
     @JsonFormat(pattern = "-80")
     private int score_80;
 
-    public void plus80() {
-        this.score_80++;
-    }
-
-    public void plus81_90() {
-        this.score81_90++;
-    }
-
-    public void plus91_100() {
-        this.score91_100++;
-    }
-
-    public void plus101_110() {
-        this.score91_100++;
-    }
-
-    public void plus111_120() {
-        this.score111_120++;
-    }
-
-    public void plus121_130() {
-        this.score121_130++;
-    }
-
-    public void plus131_140() {
-        this.score131_140++;
-    }
-
-    public void plus141_150() {
-        this.score141_150++;
+    public void addScore(double score) {
+        if(score <= 80) score_80++;
+        else if(score <= 90) score81_90++;
+        else if(score <= 100) score91_100++;
+        else if(score <= 110) score101_110++;
+        else if(score <= 120) score111_120++;
+        else if(score <= 130) score121_130++;
+        else if(score <= 140) score131_140++;
+        else if(score <= 150) score141_150++;
     }
 
 }
