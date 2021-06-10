@@ -100,10 +100,10 @@ public class GraduationCase extends ApplicationCase {
         BigDecimal scoresSum = BigDecimal.ZERO;
 
         for (BigDecimal score: gradeScoreFormula()) {
-            scoresSum.add(score);
+            scoresSum = scoresSum.add(score);
         }
         if (scorer.isMeister()) {
-            scoresSum.multiply(MEISTER_RATE);
+            scoresSum = scoresSum.multiply(MEISTER_RATE);
         }
 
         return scoresSum.setScale(3, RoundingMode.HALF_UP);
