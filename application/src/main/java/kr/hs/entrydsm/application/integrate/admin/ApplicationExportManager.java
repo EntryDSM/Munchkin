@@ -48,19 +48,9 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
 
-        Score score = getScore(application);
+        Score score = scoreCalculator.getScore(application);
 
         return createReportCard(application, score);
-    }
-
-    private Score getScore(Application application) {
-        Score result = null;
-        if (application.isGraduation()) {
-            result = scoreCalculator.getGraduationScore((GraduationApplication) application);
-        } else {
-            result = scoreCalculator.getQualificationExamScore((QualificationExamApplication) application);
-        }
-        return result;
     }
 
     private ReportCard createReportCard(Application application, Score score) {

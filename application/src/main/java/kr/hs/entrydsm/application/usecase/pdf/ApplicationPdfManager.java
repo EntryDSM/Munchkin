@@ -25,7 +25,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        Score score = getScore(application);
+        Score score = scoreCalculator.getScore(application);
         return applicationPdfGenerator.generate(applicant, score);
     }
 
@@ -38,17 +38,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        Score score = getScore(application);
+        Score score = scoreCalculator.getScore(application);
         return applicationPdfGenerator.generate(applicant, score);
-    }
-
-    private Score getScore(Application application) {
-        Score result = null;
-        if (application.isGraduation()) {
-            result = scoreCalculator.getGraduationScore((GraduationApplication) application);
-        } else {
-            result = scoreCalculator.getQualificationExamScore((QualificationExamApplication) application);
-        }
-        return result;
     }
 }
