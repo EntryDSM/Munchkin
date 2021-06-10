@@ -18,6 +18,7 @@ buildscript {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'jacoco'
 
     configurations {
         developmentOnly
@@ -66,6 +67,13 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
     }
 }
 
