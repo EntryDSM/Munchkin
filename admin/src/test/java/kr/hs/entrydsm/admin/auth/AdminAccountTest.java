@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("어드민 계정 테스트")
-public class AdminAccountTest extends AdminTest {
+public class AdminAccountTest extends AdminBaseTest {
 
     @Test
     public void 어드민_선생님_계정_추가() {

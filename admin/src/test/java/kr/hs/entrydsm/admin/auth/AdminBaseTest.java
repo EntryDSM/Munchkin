@@ -6,7 +6,7 @@ import kr.hs.entrydsm.admin.entity.admin.Permission;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminTest {
+public class AdminBaseTest {
 
     protected static final Admin TEACHER_ADMIN = Admin.builder()
             .id("asdf1234")
