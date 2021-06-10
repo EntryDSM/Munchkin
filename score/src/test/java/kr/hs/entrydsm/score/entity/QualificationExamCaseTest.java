@@ -32,9 +32,9 @@ public class QualificationExamCaseTest extends EntityTest {
 
     @Test
     void calculateGradeScore() {
-        assertEquals(qualificationExamCase(prospectiveGraduateCommon).calculateTotalScore(), BigDecimal.valueOf(120.630));
-        assertEquals(qualificationExamCase(prospectiveGraduateMeister).calculateTotalScore(), BigDecimal.valueOf(72.378));
-        assertEquals(qualificationExamCase(graduateCommon).calculateTotalScore(), BigDecimal.valueOf(120.630));
-        assertEquals(qualificationExamCase(graduateMeister).calculateTotalScore(), BigDecimal.valueOf(72.378));
+        assertEquals(qualificationExamCase(prospectiveGraduateCommon).calculateTotalGradeScore(), BigDecimal.valueOf(120.630));
+        assertEquals(qualificationExamCase(prospectiveGraduateMeister).calculateTotalGradeScore(), BigDecimal.valueOf(72.378));
+        assertEquals(qualificationExamCase(graduateCommon).calculateTotalGradeScore(), BigDecimal.valueOf(120.630));
+        assertEquals(qualificationExamCase(graduateMeister).calculateTotalGradeScore(), BigDecimal.valueOf(72.378));
     }
 }
