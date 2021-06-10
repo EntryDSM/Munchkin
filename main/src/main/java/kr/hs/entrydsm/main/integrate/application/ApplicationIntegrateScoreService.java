@@ -4,11 +4,9 @@ import kr.hs.entrydsm.application.entity.Application;
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
-import kr.hs.entrydsm.application.usecase.dto.QualificationExamGrade;
-import kr.hs.entrydsm.application.usecase.dto.Score;
-import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
-import kr.hs.entrydsm.application.usecase.dto.TotalGrade;
+import kr.hs.entrydsm.application.usecase.dto.*;
 import kr.hs.entrydsm.common.context.beans.Published;
+import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.integrate.application.ScoreExportRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
 import kr.hs.entrydsm.score.usecase.dto.UpdateGraduationRequest;
@@ -28,15 +26,15 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     private final ScoreService scoreService;
 
     @Override
-    public Iterable<Score> getAll() {
+    public Iterable<CalculatedScore> getAll() {
         return StreamSupport.stream(scoreExportRepository.findAll().spliterator(), false)
                 .map(this::entityToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Score getScore(Application application) {
-        Score result;
+    public CalculatedScore getScore(Application application) {
+        CalculatedScore result;
         if (application.isGraduation()) {
             result = getGraduationScore((GraduationApplication) application);
         } else {
@@ -45,16 +43,17 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
         return result;
     }
 
-    private Score getGraduationScore(GraduationApplication application) {
+    private CalculatedScore getGraduationScore(GraduationApplication application) {
         TotalGrade totalGrade = makeTotalGrade(application);
         SubjectScore subjectScore = totalGrade.getSubjectScore();
+        EtcScore etcScore = totalGrade.getEtcScore();
 
-        kr.hs.entrydsm.score.entity.Score score = scoreService.updateGraduation(UpdateGraduationRequest.builder()
-                .volunteerTime(totalGrade.getVolunteerTime())
-                .latenessCount(totalGrade.getLatenessCount())
-                .dayAbsenceCount(totalGrade.getDayAbsenceCount())
-                .earlyLeaveCount(totalGrade.getEarlyLeaveCount())
-                .lectureAbsenceCount(totalGrade.getLectureAbsenceCount())
+        Score score = scoreService.updateGraduation(UpdateGraduationRequest.builder()
+                .volunteerTime(etcScore.getVolunteerTime())
+                .latenessCount(etcScore.getLatenessCount())
+                .dayAbsenceCount(etcScore.getDayAbsenceCount())
+                .earlyLeaveCount(etcScore.getEarlyLeaveCount())
+                .lectureAbsenceCount(etcScore.getLectureAbsenceCount())
                 .englishGrade(subjectScore.getEnglishScore())
                 .historyGrade(subjectScore.getHistoryScore())
                 .koreanGrade(subjectScore.getKoreanScore())
@@ -67,10 +66,10 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
         return entityToDTO(score);
     }
 
-    private Score getQualificationExamScore(QualificationExamApplication application) {
+    private CalculatedScore getQualificationExamScore(QualificationExamApplication application) {
         QualificationExamGrade qualificationExamGrade = makeQualificationExamGrade(application);
 
-        kr.hs.entrydsm.score.entity.Score score = scoreService.updateQualificationExam(UpdateQualificationExamRequest.builder()
+        Score score = scoreService.updateQualificationExam(UpdateQualificationExamRequest.builder()
                 .gedAverageScore(qualificationExamGrade.getAverageScore())
                 .build());
 
@@ -83,11 +82,12 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     private TotalGrade makeTotalGrade(GraduationApplication application) {
         SubjectScore subjectScore = SubjectScore.from(application);
-        return TotalGrade.fromApplicationAndSubjectScore(application, subjectScore);
+        EtcScore etcScore = EtcScore.from(application);
+        return TotalGrade.from(subjectScore, etcScore);
     }
 
-    private Score entityToDTO(kr.hs.entrydsm.score.entity.Score score) {
-        return Score.builder()
+    private CalculatedScore entityToDTO(Score score) {
+        return CalculatedScore.builder()
                 .receiptCode(score.getReceiptCode())
                 .attendanceScore(score.getAttendanceScore())
                 .volunteerScore(score.getVolunteerScore())

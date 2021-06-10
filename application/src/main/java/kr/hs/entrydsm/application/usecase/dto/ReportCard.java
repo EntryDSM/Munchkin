@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class ReportCard {
 
     private final long receiptCode;
-    private final Score score;
+    private final CalculatedScore calculatedScore;
 
     private final Boolean isGraduated;
     private final String schoolName;
@@ -23,10 +23,10 @@ public class ReportCard {
     private final BigDecimal averageScore;
 
     @Builder(builderMethodName = "graduationBuilder", builderClassName = "GraduationBuilder")
-    public ReportCard(long receiptCode, Score score, boolean isGraduated, String schoolName, String schoolTel,
+    public ReportCard(long receiptCode, CalculatedScore calculatedScore, boolean isGraduated, String schoolName, String schoolTel,
                       int volunteerTime, int latenessCount, int earlyLeaveCount, int lectureAbsenceCount, int dayAbsenceCount) {
         this.receiptCode = receiptCode;
-        this.score = score;
+        this.calculatedScore = calculatedScore;
         this.isGraduated = isGraduated;
         this.schoolName = schoolName;
         this.schoolTel = schoolTel;
@@ -39,9 +39,9 @@ public class ReportCard {
     }
 
     @Builder(builderMethodName = "qualificationBuilder", builderClassName = "QualificationBuilder")
-    public ReportCard(long receiptCode, Score score, BigDecimal averageScore) {
+    public ReportCard(long receiptCode, CalculatedScore calculatedScore, BigDecimal averageScore) {
         this.receiptCode = receiptCode;
-        this.score = score;
+        this.calculatedScore = calculatedScore;
         this.averageScore = averageScore;
         this.isGraduated = null;
         this.schoolName = null;
@@ -54,18 +54,18 @@ public class ReportCard {
     }
 
     public BigDecimal getTotalScore() {
-        return score.getTotalScoreFirstRound();
+        return calculatedScore.getTotalScoreFirstRound();
     }
 
     public BigDecimal getVolunteerScore() {
-        return score.getVolunteerScore();
+        return calculatedScore.getVolunteerScore();
     }
 
     public BigDecimal getGradeScore() {
-        return score.getConversionScore();
+        return calculatedScore.getConversionScore();
     }
 
     public int attendanceScore() {
-        return score.getAttendanceScore();
+        return calculatedScore.getAttendanceScore();
     }
 }

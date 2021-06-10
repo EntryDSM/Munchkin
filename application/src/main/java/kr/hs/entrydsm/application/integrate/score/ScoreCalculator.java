@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.application.integrate.score;
 
 import kr.hs.entrydsm.application.entity.Application;
-import kr.hs.entrydsm.application.usecase.dto.Score;
+import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 
 public interface ScoreCalculator {
-    Iterable<Score> getAll();
-    Score getScore(Application application);
+    Iterable<CalculatedScore> getAll();
+    CalculatedScore getScore(Application application);
 }
