@@ -33,9 +33,9 @@ public class ExcelUser {
 
     private String educationalStatus; //학력구분
 
-    private String studyPlan; //자기소개서
+    private String studyPlan; //학업 계획서
 
-    private String selfIntroduce; //학업 계획서
+    private String selfIntroduce; //자기소개서
 
     private String parentName; //보호자 이름
 
