@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Getter
 @NoArgsConstructor
@@ -14,19 +15,19 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class EtcScore {
 
-    @NotNull
+    @PositiveOrZero
     private Integer volunteerTime;
 
-    @NotNull
+    @PositiveOrZero
     private Integer dayAbsenceCount;
 
-    @NotNull
+    @PositiveOrZero
     private Integer lectureAbsenceCount;
 
-    @NotNull
+    @PositiveOrZero
     private Integer latenessCount;
 
-    @NotNull
+    @PositiveOrZero
     private Integer earlyLeaveCount;
 
     public static EtcScore from(GraduationApplication application) {
