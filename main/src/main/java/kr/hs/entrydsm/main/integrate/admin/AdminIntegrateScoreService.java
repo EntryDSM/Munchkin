@@ -3,7 +3,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
-import kr.hs.entrydsm.score.integrate.admin.ScoreExportRepository;
+import kr.hs.entrydsm.score.integrate.admin.ScoreExportAdminRepository;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdminIntegrateScoreService implements ScoreRepository {
 
-    private final ScoreExportRepository scoreExportRepository;
+    private final ScoreExportAdminRepository scoreExportRepository;
 
     @Override
     public ApplicationStatus getScore() {

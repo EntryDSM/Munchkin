@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-public class ScoreExportManager implements ScoreExportRepository {
+public class ScoreExportApplicationManager implements ScoreExportApplicationRepository {
     private final ScoreRepository scoreRepository;
 
     @Override

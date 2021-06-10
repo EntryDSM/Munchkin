@@ -1,8 +1,10 @@
 package kr.hs.entrydsm.score.integrate.application;
 
+import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.score.entity.Score;
 
-public interface ScoreExportRepository {
+@Published
+public interface ScoreExportApplicationRepository {
     Iterable<Score> findAll();
     Score findByReceiptCode(long receiptCode);
 }

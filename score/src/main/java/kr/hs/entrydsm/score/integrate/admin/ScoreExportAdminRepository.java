@@ -5,7 +5,7 @@ import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
 
 @Published
-public interface ScoreExportRepository {
+public interface ScoreExportAdminRepository {
     ApplicationStatusResponse getApplicationStatus();
     ApplicantScore getApplicantScore(Long receiptCode);
 }

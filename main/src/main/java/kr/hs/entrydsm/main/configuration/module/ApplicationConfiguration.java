@@ -4,6 +4,6 @@ import kr.hs.entrydsm.application.EnableApplicationModule;
 import kr.hs.entrydsm.main.configuration.DependentModule;
 
 @EnableApplicationModule
-@DependentModule(UserConfiguration.class)
+@DependentModule(ScoreConfiguration.class)
 public class ApplicationConfiguration {
 }

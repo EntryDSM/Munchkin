@@ -7,7 +7,7 @@ import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.*;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.score.entity.Score;
-import kr.hs.entrydsm.score.integrate.application.ScoreExportRepository;
+import kr.hs.entrydsm.score.integrate.application.ScoreExportApplicationRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
 import kr.hs.entrydsm.score.usecase.dto.UpdateGraduationRequest;
 import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
@@ -18,11 +18,10 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
-@Published
 @Service
 public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
-    private final ScoreExportRepository scoreExportRepository;
+    private final ScoreExportApplicationRepository scoreExportRepository;
     private final ScoreService scoreService;
 
     @Override

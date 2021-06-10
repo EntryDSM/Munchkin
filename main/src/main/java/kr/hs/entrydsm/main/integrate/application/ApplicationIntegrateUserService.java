@@ -12,9 +12,8 @@ import kr.hs.entrydsm.user.integrate.application.ApplicationUserStatusExportRepo
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Published
-@Service
 @RequiredArgsConstructor
+@Service
 public class ApplicationIntegrateUserService
         implements ApplicantDocsService, ApplicantStatusService, ApplicantRepository {
 
