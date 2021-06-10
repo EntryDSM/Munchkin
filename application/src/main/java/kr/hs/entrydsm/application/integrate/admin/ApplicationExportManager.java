@@ -49,31 +49,6 @@ public class ApplicationExportManager implements ApplicationExportRepository {
 
         CalculatedScore calculatedScore = scoreCalculator.getScore(application);
 
-        return createReportCard(application, calculatedScore);
-    }
-
-    private ReportCard createReportCard(Application application, CalculatedScore calculatedScore) {
-        if (application.isGraduation()) {
-            GraduationApplication graduationApplication = (GraduationApplication) application;
-            return ReportCard.graduationBuilder()
-                    .receiptCode(application.getReceiptCode())
-                    .calculatedScore(calculatedScore)
-                    .isGraduated(graduationApplication.getIsGraduated())
-                    .schoolTel(graduationApplication.getSchoolTel())
-                    .schoolName(graduationApplication.getSchoolName())
-                    .volunteerTime(graduationApplication.getVolunteerTime())
-                    .latenessCount(graduationApplication.getLatenessCount())
-                    .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
-                    .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
-                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
-                    .build();
-        } else {
-            QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
-            return ReportCard.qualificationBuilder()
-                    .receiptCode(application.getReceiptCode())
-                    .calculatedScore(calculatedScore)
-                    .averageScore(qualificationExamApplication.getAverageScore())
-                    .build();
-        }
+        return ReportCard.from(application, calculatedScore);
     }
 }

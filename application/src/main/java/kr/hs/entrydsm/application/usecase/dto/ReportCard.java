@@ -1,5 +1,8 @@
 package kr.hs.entrydsm.application.usecase.dto;
 
+import kr.hs.entrydsm.application.entity.Application;
+import kr.hs.entrydsm.application.entity.GraduationApplication;
+import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -51,6 +54,33 @@ public class ReportCard {
         this.earlyLeaveCount = null;
         this.lectureAbsenceCount = null;
         this.dayAbsenceCount = null;
+    }
+
+    public static ReportCard from(Application application, CalculatedScore calculatedScore) {
+        ReportCard result;
+        if (application.isGraduation()) {
+            GraduationApplication graduationApplication = (GraduationApplication) application;
+            result = ReportCard.graduationBuilder()
+                    .receiptCode(application.getReceiptCode())
+                    .calculatedScore(calculatedScore)
+                    .isGraduated(graduationApplication.getIsGraduated())
+                    .schoolTel(graduationApplication.getSchoolTel())
+                    .schoolName(graduationApplication.getSchoolName())
+                    .volunteerTime(graduationApplication.getVolunteerTime())
+                    .latenessCount(graduationApplication.getLatenessCount())
+                    .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
+                    .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
+                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
+                    .build();
+        } else {
+            QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
+            result = ReportCard.qualificationBuilder()
+                    .receiptCode(application.getReceiptCode())
+                    .calculatedScore(calculatedScore)
+                    .averageScore(qualificationExamApplication.getAverageScore())
+                    .build();
+        }
+        return result;
     }
 
     public BigDecimal getTotalScore() {
