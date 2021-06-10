@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -11,10 +13,12 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class AuthCodeRequest {
 
-    @Pattern(regexp = "^[0-9]{11}$")
-    private String phoneNumber;
+    @Email
+    @NotEmpty
+    private String email;
 
     @Pattern(regexp = "\\d{6}")
+    @NotEmpty
     private String code;
 
 }

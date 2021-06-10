@@ -166,10 +166,10 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Override
     public void verifyAuthCode(AuthCodeRequest authCodeRequest) {
-        String phoneNumber = authCodeRequest.getPhoneNumber();
+        String email = authCodeRequest.getEmail();
         String code = authCodeRequest.getCode();
 
-        authCodeRepository.findById(phoneNumber)
+        authCodeRepository.findById(email)
                 .filter(authCode -> authCode.getCode().equals(code))
                 .map(authCode -> {
                     if (authCode.isVerified()) throw new AuthCodeAlreadyVerifiedException();
