@@ -83,7 +83,6 @@ project(':main') {
     dependencies {
         compile project(':user')
         compile project(':admin')
-        compile project(':notification')
         compile project(':application')
         compile project(':score')
     }
@@ -119,16 +118,6 @@ project(':admin') {
         compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.apache.poi:poi:3.16'
         compile 'org.apache.poi:poi-ooxml:3.16'
-    }
-}
-
-project(':notification') {
-    dependencies {
-        compile project(':common')
-        compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
-        testImplementation 'com.h2database:h2'
-        compile 'org.springframework.boot:spring-boot-starter-data-redis'
-        compile 'org.springframework.boot:spring-boot-starter-security'
     }
 }
 

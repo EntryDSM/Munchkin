@@ -30,7 +30,7 @@ public class GraduationCaseTest extends EntityTest {
     @Test
     void calculateVolunteerScore() {
         for (Scorer scorer: scorers) {
-            assertEquals(graduationCase(scorer).calculateVolunteerScore(), BigDecimal.valueOf(14.667));
+                assertEquals(graduationCase(scorer).calculateVolunteerScore(), BigDecimal.valueOf(14.667));
         }
     }
 
