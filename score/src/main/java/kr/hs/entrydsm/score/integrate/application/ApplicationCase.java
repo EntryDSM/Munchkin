@@ -15,5 +15,6 @@ public abstract class ApplicationCase extends ExternalEntity {
 
     abstract public BigDecimal calculateVolunteerScore();
     abstract public Integer calculateAttendanceScore();
-    abstract public BigDecimal calculateGradeScore();
+    abstract public BigDecimal[] calculateGradeScores();
+    abstract public BigDecimal calculateTotalGradeScore();
 }

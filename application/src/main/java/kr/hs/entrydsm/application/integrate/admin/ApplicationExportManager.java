@@ -3,10 +3,9 @@ package kr.hs.entrydsm.application.integrate.admin;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.Applicant;
-import kr.hs.entrydsm.application.usecase.dto.Score;
-import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
-import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
+import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +26,17 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         List<GraduationApplication> graduationApplications = new ArrayList<>();
         graduationApplicationRepository.findAll().forEach(graduationApplications::add);
         graduationApplications.sort(Comparator.comparing(Application::getReceiptCode));
-        List<Score> scores = new ArrayList<>();
-        scoreCalculator.getAll().forEach(scores::add);
-        scores.sort(Comparator.comparing(Score::getReceiptCode));
+        List<CalculatedScore> calculatedScores = new ArrayList<>();
+        scoreCalculator.getAll().forEach(calculatedScores::add);
+        calculatedScores.sort(Comparator.comparing(CalculatedScore::getReceiptCode));
 
         List<Applicant> applicants = new ArrayList<>();
         for(int i=0,size=graduationApplications.size(); i<size; i++){
             Applicant applicant = new Applicant();
             GraduationApplication graduationApplication = graduationApplications.get(i);
-            Score score = scores.get(i);
+            CalculatedScore calculatedScore = calculatedScores.get(i);
             applicant.setGraduationApplication(graduationApplication);
-            applicant.setScore(score);
+            applicant.setScore(calculatedScore);
             applicants.add(applicant);
         }
         return applicants;
@@ -48,43 +47,8 @@ public class ApplicationExportManager implements ApplicationExportRepository {
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
 
-        Score score = getScore(application);
+        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
 
-        return createReportCard(application, score);
-    }
-
-    private Score getScore(Application application) {
-        Score result = null;
-        if (application.isGraduation()) {
-            result = scoreCalculator.getGraduationScore((GraduationApplication) application);
-        } else {
-            result = scoreCalculator.getQualificationExamScore((QualificationExamApplication) application);
-        }
-        return result;
-    }
-
-    private ReportCard createReportCard(Application application, Score score) {
-        if (application.isGraduation()) {
-            GraduationApplication graduationApplication = (GraduationApplication) application;
-            return ReportCard.graduationBuilder()
-                    .receiptCode(application.getReceiptCode())
-                    .score(score)
-                    .isGraduated(graduationApplication.getIsGraduated())
-                    .schoolTel(graduationApplication.getSchoolTel())
-                    .schoolName(graduationApplication.getSchoolName())
-                    .volunteerTime(graduationApplication.getVolunteerTime())
-                    .latenessCount(graduationApplication.getLatenessCount())
-                    .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
-                    .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
-                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
-                    .build();
-        } else {
-            QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
-            return ReportCard.qualificationBuilder()
-                    .receiptCode(application.getReceiptCode())
-                    .score(score)
-                    .averageScore(qualificationExamApplication.getAverageScore())
-                    .build();
-        }
+        return ReportCard.from(application, calculatedScore);
     }
 }

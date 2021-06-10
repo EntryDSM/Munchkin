@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Builder
-public class Score {
+public class CalculatedScore {
     private long receiptCode;
     private BigDecimal totalFirstGradeScore; //1학년 성적 총합
     private BigDecimal totalSecondGradeScore; //2학년 성적 총합

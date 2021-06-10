@@ -56,14 +56,14 @@ public class Applicant {
         this.techAndHomeScore = graduationApplication.getTechAndHomeScore();
     }
 
-    public void setScore(Score score){
-        this.totalFirstGradeScore = score.getTotalFirstGradeScore();
-        this.totalSecondGradeScore = score.getTotalSecondGradeScore();
-        this.totalThirdGradeScore = score.getTotalThirdGradeScore();
-        this.volunteerScore = score.getVolunteerScore();
-        this.conversionScore = score.getConversionScore();
-        this.attendanceScore = score.getAttendanceScore();
-        this.totalScoreFirstRound = score.getTotalScoreFirstRound();
+    public void setScore(CalculatedScore calculatedScore){
+        this.totalFirstGradeScore = calculatedScore.getTotalFirstGradeScore();
+        this.totalSecondGradeScore = calculatedScore.getTotalSecondGradeScore();
+        this.totalThirdGradeScore = calculatedScore.getTotalThirdGradeScore();
+        this.volunteerScore = calculatedScore.getVolunteerScore();
+        this.conversionScore = calculatedScore.getConversionScore();
+        this.attendanceScore = calculatedScore.getAttendanceScore();
+        this.totalScoreFirstRound = calculatedScore.getTotalScoreFirstRound();
     }
 
 }

@@ -8,4 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScoreRepositoryManager extends CrudRepository<Score, Long>, ScoreRepository {
-}
+} 

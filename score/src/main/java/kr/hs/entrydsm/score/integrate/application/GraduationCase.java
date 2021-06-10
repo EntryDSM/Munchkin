@@ -3,6 +3,7 @@ package kr.hs.entrydsm.score.integrate.application;
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import lombok.*;
 
+import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -59,6 +60,10 @@ public class GraduationCase extends ApplicationCase {
     private final String englishGrade;
     private final String techAndHomeGrade;
 
+    private final BigDecimal FIRST_SECOND_GRADE_RATE = BigDecimal.valueOf(4.5);
+    private final BigDecimal THIRD_GRADE_RATE = BigDecimal.valueOf(6);
+    private final BigDecimal MEISTER_RATE = BigDecimal.valueOf(0.6);
+
     @Override
     public BigDecimal calculateVolunteerScore() { return volunteerScoreFormula(); }
 
@@ -66,7 +71,10 @@ public class GraduationCase extends ApplicationCase {
     public Integer calculateAttendanceScore() { return attendanceScoreFormula(); }
 
     @Override
-    public BigDecimal calculateGradeScore() { return gradeScoreFormula(); }
+    public BigDecimal[] calculateGradeScores() { return gradeScoreFormula(); }
+
+    @Override
+    public BigDecimal calculateTotalGradeScore() { return totalGradeScoreFormula(); }
 
     private BigDecimal volunteerScoreFormula() {
         if (volunteerTime >= MAX_VOLUNTEER_TIME) {
@@ -88,21 +96,30 @@ public class GraduationCase extends ApplicationCase {
                         0);
     }
 
-    private BigDecimal gradeScoreFormula() {
-        BigDecimal gradeScore = BigDecimal.ZERO;
-        BigDecimal[] scoresPerYear = zeroCheckedScorePerYear();
-        BigDecimal multiple = BigDecimal.valueOf(4.5);
+    private BigDecimal totalGradeScoreFormula() {
+        BigDecimal scoresSum = BigDecimal.ZERO;
 
-        for (int i = 0 ; i < scoresPerYear.length ; i++) {
-            if (i == scoresPerYear().length - 1) { multiple = BigDecimal.valueOf(6); }
-            gradeScore = scoresPerYear[i].multiply(multiple).add(gradeScore);
+        for (BigDecimal score: gradeScoreFormula()) {
+            scoresSum.add(score);
         }
-
         if (scorer.isMeister()) {
-            return gradeScore.multiply(BigDecimal.valueOf(0.6)).setScale(3, RoundingMode.HALF_UP);
-        } else {
-            return gradeScore.setScale(3, RoundingMode.HALF_UP);
+            scoresSum.multiply(MEISTER_RATE);
         }
+
+        return scoresSum.setScale(3, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal[] gradeScoreFormula() {
+        BigDecimal[] gradeScores = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+        BigDecimal[] scoresPerYear = zeroCheckedScorePerYear();
+        int lastScoreIndex = scoresPerYear().length - 1;
+
+        for (int i = 0 ; i < lastScoreIndex ; i++) {
+            gradeScores[i] = scoresPerYear[i].multiply(FIRST_SECOND_GRADE_RATE);
+        }
+        gradeScores[lastScoreIndex] = scoresPerYear[lastScoreIndex].multiply(THIRD_GRADE_RATE);
+
+        return gradeScores;
     }
 
     private BigDecimal[] zeroCheckedScorePerYear() {
