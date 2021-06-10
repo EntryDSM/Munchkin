@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.main.integrate.application;
 
+import kr.hs.entrydsm.application.entity.Application;
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
@@ -34,7 +35,17 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     @Override
-    public Score getGraduationScore(GraduationApplication application) {
+    public Score getScore(Application application) {
+        Score result;
+        if (application.isGraduation()) {
+            result = getGraduationScore((GraduationApplication) application);
+        } else {
+            result = getQualificationExamScore((QualificationExamApplication) application);
+        }
+        return result;
+    }
+
+    private Score getGraduationScore(GraduationApplication application) {
         TotalGrade totalGrade = makeTotalGrade(application);
         SubjectScore subjectScore = totalGrade.getSubjectScore();
 
@@ -56,8 +67,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
         return entityToDTO(score);
     }
 
-    @Override
-    public Score getQualificationExamScore(QualificationExamApplication application) {
+    private Score getQualificationExamScore(QualificationExamApplication application) {
         QualificationExamGrade qualificationExamGrade = makeQualificationExamGrade(application);
 
         kr.hs.entrydsm.score.entity.Score score = scoreService.updateQualificationExam(UpdateQualificationExamRequest.builder()
