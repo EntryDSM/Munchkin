@@ -13,23 +13,23 @@ import java.io.IOException;
 
 public interface ApplicationProcessing {
 
-    void writeSelfIntroduce(Long receiptCode, String content);
+    void writeSelfIntroduce(String content);
 
-    void writeStudyPlan(Long receiptCode, String content);
+    void writeStudyPlan(String content);
 
-    String getSelfIntroduce(Long receiptCode);
+    String getSelfIntroduce();
 
-    String getStudyPlan(Long receiptCode);
+    String getStudyPlan();
 
     Page<School> getSchoolsByInformation(String information, Pageable pageable);
 
-    void writeApplicationType(Long receiptCode, Application applicationRequest);
+    void writeApplicationType(Application applicationRequest);
 
-    void writeInformation(Long receiptCode, Information information);
+    void writeInformation(Information information);
 
-    Application getApplicationType(Long receiptCode);
+    Application getApplicationType();
 
-    Information getInformation(Long receiptCode) throws IOException;
+    Information getInformation() throws IOException;
 
     String uploadPhoto(MultipartFile multipartFile) throws IOException;
 

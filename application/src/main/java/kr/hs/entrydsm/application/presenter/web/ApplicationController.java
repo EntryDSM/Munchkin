@@ -21,22 +21,22 @@ public class ApplicationController {
 
     @PatchMapping("/intro")
     public void updateIntro(@RequestBody @NotBlank String content) {
-        applicationProcessing.writeSelfIntroduce(1L, content);
+        applicationProcessing.writeSelfIntroduce(content);
     }
 
     @PatchMapping("/study-plan")
     public void updateStudyPlan(@RequestBody @NotBlank String content) {
-        applicationProcessing.writeStudyPlan(1L, content);
+        applicationProcessing.writeStudyPlan(content);
     }
 
     @GetMapping("/intro")
     public String getIntro() {
-        return applicationProcessing.getSelfIntroduce(1L);
+        return applicationProcessing.getSelfIntroduce();
     }
 
     @GetMapping("/study-plan")
     public String getStudyPlan() {
-        return applicationProcessing.getStudyPlan(1L);
+        return applicationProcessing.getStudyPlan();
     }
 
     @PatchMapping("/score/subject")

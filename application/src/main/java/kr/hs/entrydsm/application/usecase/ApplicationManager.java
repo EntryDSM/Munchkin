@@ -13,6 +13,7 @@ import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,24 +32,29 @@ public class ApplicationManager implements ApplicationProcessing {
     private final ApplicationApplicantRepository applicantExportService;
     private final SchoolRepository schoolRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
+    private final AuthenticationManager authenticationManager;
 
     @Override
-    public void writeSelfIntroduce(Long receiptCode, String content) {
+    public void writeSelfIntroduce(String content) {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         applicantDocsService.writeSelfIntroduce(receiptCode, content);
     }
 
     @Override
-    public void writeStudyPlan(Long receiptCode, String content) {
+    public void writeStudyPlan(String content) {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         applicantDocsService.writeStudyPlan(receiptCode, content);
     }
 
     @Override
-    public String getSelfIntroduce(Long receiptCode) {
+    public String getSelfIntroduce() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         return applicantDocsService.getSelfIntroduce(receiptCode);
     }
 
     @Override
-    public String getStudyPlan(Long receiptCode) {
+    public String getStudyPlan() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         return applicantDocsService.getStudyPlan(receiptCode);
     }
 
@@ -58,12 +64,14 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public void writeApplicationType(Long receiptCode, Application applicationRequest) {
+    public void writeApplicationType(Application applicationRequest) {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
     @Override
-    public void writeInformation(Long receiptCode, Information information) {
+    public void writeInformation(Information information) {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .map(graduationApplication -> {
                     graduationApplication.setSchoolTel(information.getSchoolTel());
@@ -76,12 +84,14 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public Application getApplicationType(Long receiptCode) {
+    public Application getApplicationType() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         return applicantExportService.getApplicationType(receiptCode);
     }
 
     @Override
-    public Information getInformation(Long receiptCode) throws IOException {
+    public Information getInformation() throws IOException {
+        long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
         Information result = applicantExportService.getInformation(receiptCode);
@@ -93,14 +103,16 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public String uploadPhoto(MultipartFile multipartFile) throws IOException {
-        String fileName = imageService.upload(multipartFile, 1L);
-        applicantExportService.setPhotoFileName(1L, fileName);
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        String fileName = imageService.upload(multipartFile, receiptCode);
+        applicantExportService.setPhotoFileName(receiptCode, fileName);
         return fileName;
     }
 
     @Override
     public void updateSubjectScore(SubjectScore score) {
-        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(1L)
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
 
         graduationApplication.setMathScore(score.getMathScore());

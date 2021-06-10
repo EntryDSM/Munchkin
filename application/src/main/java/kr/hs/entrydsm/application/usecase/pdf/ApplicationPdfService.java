@@ -2,7 +2,7 @@ package kr.hs.entrydsm.application.usecase.pdf;
 
 public interface ApplicationPdfService {
 
-    byte[] getPreviewApplicationPdf(long receiptCode);
+    byte[] getPreviewApplicationPdf();
 
-    byte[] getFinalApplicationPdf(long receiptCode);
+    byte[] getFinalApplicationPdf();
 }

@@ -22,13 +22,13 @@ public class ApplicationPdfController {
 
     @GetMapping(value = "/preview", produces = MediaType.APPLICATION_PDF_VALUE)
     public byte[] getPreviewApplicationPdf() {
-        return applicationPdfService.getPreviewApplicationPdf(1L);
+        return applicationPdfService.getPreviewApplicationPdf();
     }
 
     @GetMapping(value = "/final", produces = MediaType.APPLICATION_PDF_VALUE)
     public byte[] getFinalApplicationPdf(HttpServletResponse response) {
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.pdf\"", encodeFileName(FILE_NAME)));
-        return applicationPdfService.getFinalApplicationPdf(1L);
+        return applicationPdfService.getFinalApplicationPdf();
     }
 
     private String encodeFileName(String fileName) {
