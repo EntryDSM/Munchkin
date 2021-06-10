@@ -7,6 +7,7 @@ import kr.hs.entrydsm.admin.usecase.dto.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -122,6 +123,12 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
+            String sex;
+            if(user.getSex().equals(Sex.MALE)) {
+                sex = "남자";
+            } else {
+                sex = "여자";
+            }
             excelUsers.add(
                     ExcelUser.builder()
                             .examCode(user.getStatus().getExamCode()) //수험번호
@@ -131,7 +138,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                             .area(String.valueOf(user.isDaejeon())) //지역
                             .name(user.getName()) //이름
                             .birthDay(user.getBirthday().toString()) //생년월일
-                            .sex(user.getSex().toString()) //성별
+                            .sex(sex) //성별
                             .address(user.getAddress()) //주소
                             .educationalStatus(user.getEducationalStatus().toString()) //학력구분
                             .telephoneNumber(user.getTelephoneNumber()) //학생 전화번호
