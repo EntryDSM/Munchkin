@@ -18,6 +18,7 @@ buildscript {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'jacoco'
 
     configurations {
         developmentOnly
@@ -47,6 +48,11 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
 
         implementation 'org.slf4j:slf4j-api'
+        implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+        compile 'org.springframework.boot:spring-boot-starter-security'
+
+        implementation 'com.amazonaws:aws-java-sdk-ses:1.11.852'
+        implementation 'com.amazonaws:aws-java-sdk-s3control:1.11.457'
 
         implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -62,6 +68,13 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+            html.enabled false
+        }
+    }
 }
 
 project(':main') {
@@ -70,7 +83,6 @@ project(':main') {
     dependencies {
         compile project(':user')
         compile project(':admin')
-        compile project(':notification')
         compile project(':application')
         compile project(':score')
     }
@@ -78,11 +90,11 @@ project(':main') {
 
 project(':common') {
     dependencies {
+        compile 'io.jsonwebtoken:jjwt:0.9.1'
         compile 'org.springframework:spring-context'
         compile 'org.springframework:spring-context-support'
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-        compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.springframework.boot:spring-boot-starter-validation'
 
         compile 'mysql:mysql-connector-java'
@@ -92,24 +104,30 @@ project(':common') {
 project(':user') {
     dependencies {
         compile project(':common')
+
+        compile 'org.springframework.boot:spring-boot-starter-data-redis'
     }
 }
 
 project(':admin') {
     dependencies {
         compile project(':common')
-    }
-}
-
-project(':notification') {
-    dependencies {
-        compile project(':common')
+        compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+        testImplementation 'com.h2database:h2'
+        compile 'org.springframework.boot:spring-boot-starter-data-redis'
+        compile 'org.springframework.boot:spring-boot-starter-security'
+        compile 'org.apache.poi:poi:3.16'
+        compile 'org.apache.poi:poi-ooxml:3.16'
     }
 }
 
 project(':application') {
     dependencies {
         compile project(':common')
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+        implementation 'com.itextpdf:itext7-core:7.1.9'
+        implementation 'com.itextpdf:html2pdf:3.0.1'
+        implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3control', version: '1.11.457'
     }
 }
 

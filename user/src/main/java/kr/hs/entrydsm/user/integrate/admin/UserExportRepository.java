@@ -1,12 +1,22 @@
 package kr.hs.entrydsm.user.integrate.admin;
 
 import kr.hs.entrydsm.common.context.beans.Published;
-import kr.hs.entrydsm.user.domain.entity.User;
+import kr.hs.entrydsm.user.entity.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 @Published
 public interface UserExportRepository {
     User findByReceiptCode(int receiptCode);
-    List<User> findAll();
+    Page<User> findAll(Pageable page, Long receiptCode,
+                       boolean isDaejeon, boolean isNationwide,
+                       String telephoneNumber, String name,
+                       boolean isCommon, boolean isMeister, boolean isSocial,
+                       boolean isPrintedArrived);
+    void changeExamCode(long receiptCode, String examCode);
+    void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
+    List<User> findAllIsSubmitTrue();
+    List<User> findAllForExcel();
 }
