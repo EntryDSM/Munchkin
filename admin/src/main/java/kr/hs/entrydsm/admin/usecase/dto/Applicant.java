@@ -16,37 +16,37 @@ import java.time.LocalDate;
 public class Applicant {
 
     //공통
-    private long receiptCode;
+    private long receiptCode; //접수 번호
 
-    private String email;
+    private String email; //이메일
 
-    private String name;
+    private String name; //이름
 
-    private boolean isDaejeon;
+    private boolean isDaejeon; //대전 사는지 여부
 
-    private String photoFileName;
+    private String photoFileName; //사진 경로
 
-    private LocalDate birthDate;
+    private LocalDate birthDate; //생일
 
-    private boolean isPrintedArrived;
+    private boolean isPrintedArrived; //원서 도착 여부
 
-    private boolean isSubmit;
+    private boolean isSubmit; //최종 제출 여부
 
-    private String address;
+    private String address; //주소
 
-    private String detailAddress;
+    private String detailAddress; //상세 주소
 
-    private String telephoneNumber;
+    private String telephoneNumber; //전화번호
 
-    private String parentTel;
+    private String parentTel; //부모님 전화번호
 
-    private String schoolTel;
+    private String schoolTel; //학교 전화번호
 
-    private String homeTel;
+    private String homeTel; //집 전화번호
 
-    private String educationalStatus;
+    private String educationalStatus; //학력
 
-    private String applicationType;
+    private String applicationType; //전형
 
     private String selfIntroduce; //자기소개서
 
@@ -54,10 +54,8 @@ public class Applicant {
 
     private String examCode; // 수험번호
 
-    private String postCode;
-
     //검정고시 O
-    private BigDecimal averageScore;
+    private BigDecimal averageScore; //검정고시 평균 점수
 
     //검정고시 X
     private String schoolName;
