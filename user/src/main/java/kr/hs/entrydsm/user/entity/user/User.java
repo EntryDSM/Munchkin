@@ -63,6 +63,9 @@ public class User {
     @Column(length = 300)
     private String address;
 
+    @Column(length = 100)
+    private String detailAddress;
+
     @Column(columnDefinition = "char(5)")
     private String postCode;
 

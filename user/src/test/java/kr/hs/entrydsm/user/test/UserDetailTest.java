@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("유저 상태 테스트")
+@DisplayName("유저 상세정보 테스트")
 public class UserDetailTest extends UserBaseTest {
 
     @Test
