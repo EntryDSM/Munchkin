@@ -54,6 +54,8 @@ subprojects {
         implementation 'com.amazonaws:aws-java-sdk-ses:1.11.852'
         implementation 'com.amazonaws:aws-java-sdk-s3control:1.11.457'
 
+        compile 'org.springframework.boot:spring-boot-starter-data-redis'
+
         implementation 'org.springframework.boot:spring-boot-starter-web'
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
@@ -104,8 +106,6 @@ project(':common') {
 project(':user') {
     dependencies {
         compile project(':common')
-
-        compile 'org.springframework.boot:spring-boot-starter-data-redis'
     }
 }
 
@@ -114,7 +114,6 @@ project(':admin') {
         compile project(':common')
         compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
         testImplementation 'com.h2database:h2'
-        compile 'org.springframework.boot:spring-boot-starter-data-redis'
         compile 'org.springframework.boot:spring-boot-starter-security'
         compile 'org.apache.poi:poi:3.16'
         compile 'org.apache.poi:poi-ooxml:3.16'

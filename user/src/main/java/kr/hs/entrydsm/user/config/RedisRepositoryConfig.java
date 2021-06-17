@@ -5,10 +5,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisKeyValueAdapter;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+
+import java.time.Duration;
 
 @EnableRedisRepositories(basePackageClasses = UserModuleConfiguration.class,
         enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
@@ -19,11 +23,22 @@ public class RedisRepositoryConfig {
     private String redisHost;
 
     @Value("${spring.redis.port}")
-    private String redisPort;
+    private int redisPort;
+
+    @Value("${spring.redis.password}")
+    private String redisPassword;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(redisHost, Integer.parseInt(redisPort));
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration(redisHost, redisPort);
+        if (redisPassword != null && !redisPassword.isBlank())
+            redisConfig.setPassword(redisPassword);
+
+        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+                .commandTimeout(Duration.ofSeconds(1))
+                .shutdownTimeout(Duration.ZERO)
+                .build();
+        return new LettuceConnectionFactory(redisConfig, clientConfig);
     }
 
     @Bean
