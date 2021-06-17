@@ -7,11 +7,10 @@ spring:
   datasource:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:asdf}
+    paddword: ${REDIS_PASSWORD}
 
 auth:
   jwt:
@@ -21,14 +20,13 @@ auth:
       refresh: ${JWT_REFRESH_EXP:3600}
     header:
       access: ${JWT_HEADER:Authorization}
-      refresh: ${JWT_REFRESH_HEADER:X-Refresh-Token}
     prefix: ${JWT_PREFIX:Bearer}
 
 aws:
   s3:
-    accessKey: access
-    secretKey: secret
-    region: 한국
+    accessKey: ${AWS_S3_ACCESS:s3_access}
+    secretKey: ${AWS_S3_SECRET:s3_secret}
+    region: ${AWS_S3_REGION:ap-northeast-2}
   ses:
     access-key: ${AWS_SES_ACCESS:ses_access}
     secret_key: ${AWS_SES_SECRET:ses_secret}
