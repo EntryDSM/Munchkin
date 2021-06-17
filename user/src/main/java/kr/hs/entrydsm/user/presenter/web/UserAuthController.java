@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.user.presenter.web;
 
+import kr.hs.entrydsm.common.context.auth.token.RefreshRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.user.usecase.UserAuthService;
 import kr.hs.entrydsm.user.usecase.dto.request.AccountRequest;
@@ -23,6 +24,7 @@ public class UserAuthController {
         return userAuthService.auth(accountRequest);
     }
 
+    @RefreshRequired
     @PutMapping
     public ResponseEntity<AccessTokenResponse> refreshToken(@CookieValue("refresh-token") String refreshToken) {
         return userAuthService.refreshToken(refreshToken);

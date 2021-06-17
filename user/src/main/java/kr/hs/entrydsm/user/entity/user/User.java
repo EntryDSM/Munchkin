@@ -51,7 +51,7 @@ public class User {
 
     private LocalDate birthday;
 
-    @Column(columnDefinition = "char(11)", nullable = false)
+    @Column(columnDefinition = "char(11)")
     private String telephoneNumber;
 
     @Column(columnDefinition = "char(5)")

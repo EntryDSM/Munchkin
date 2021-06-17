@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Date;
 
 @Component
@@ -27,9 +29,6 @@ public class JWTTokenProvider {
 
     @Value("${auth.jwt.header.access}")
     private String accessTokenHeader;
-
-    @Value("${auth.jwt.header.refresh}")
-    private String refreshTokenHeader;
 
     @Value("${auth.jwt.prefix}")
     private String prefix;
@@ -63,7 +62,11 @@ public class JWTTokenProvider {
     }
 
     public String resoleRefreshToken(HttpServletRequest request) {
-        return request.getHeader(refreshTokenHeader);
+        return Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals("refresh-token"))
+                .findFirst()
+                .map(Cookie::getValue)
+                .orElse(null);
     }
 
     public boolean validateToken(String token) {
