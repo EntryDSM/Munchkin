@@ -45,7 +45,7 @@ public class ApplicationController {
         applicationProcessing.updateSubjectScore(score);
     }
 
-    @PatchMapping("/score/")
+    @PatchMapping("/score")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEtcScore(@RequestBody @Valid EtcScore score) {
         applicationProcessing.updateEtcScore(score);
