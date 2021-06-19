@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.main.security;
 
 import kr.hs.entrydsm.main.security.handler.JWTTokenHandler;
+import kr.hs.entrydsm.main.security.logging.RequestLogger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final JWTTokenHandler jwtTokenHandler;
+    private final RequestLogger requestLogger;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -37,7 +40,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                    .anyRequest().permitAll();
+                    .anyRequest().permitAll().and()
+                .addFilterAfter(requestLogger, FilterSecurityInterceptor.class);
     }
 
     @Bean
@@ -52,5 +56,6 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .allowedMethods("*")
                 .allowedHeaders("*");
     }
+
 }
 

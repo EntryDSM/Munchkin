@@ -104,7 +104,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
         statusRepository.save(
                 Status.builder()
-                        .user(user)
+                        .receiptCode(user.getReceiptCode())
                         .isPrintedArrived(false)
                         .isSubmit(false)
                         .build()
@@ -123,6 +123,7 @@ public class UserServiceManager implements UserAuthService, UserService {
         return UserStatusResponse.builder()
                     .name(user.getName())
                     .phoneNumber(user.getTelephoneNumber())
+                    .email(user.getEmail())
                     .isSubmit(status.isSubmit())
                     .isPrintedArrived(status.isPrintedArrived())
                     .applicationType(user.getApplicationType())

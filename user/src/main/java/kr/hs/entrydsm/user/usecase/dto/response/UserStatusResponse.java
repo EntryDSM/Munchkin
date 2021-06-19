@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class UserStatusResponse {
     private String name;
     private String phoneNumber;
+    private String email;
     private Boolean isSubmit;
     private Boolean isPrintedArrived;
     private ApplicationType applicationType;
