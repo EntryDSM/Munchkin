@@ -123,6 +123,7 @@ public class UserServiceManager implements UserAuthService, UserService {
         return UserStatusResponse.builder()
                     .name(user.getName())
                     .phoneNumber(user.getTelephoneNumber())
+                    .email(user.getEmail())
                     .isSubmit(status.isSubmit())
                     .isPrintedArrived(status.isPrintedArrived())
                     .applicationType(user.getApplicationType())
