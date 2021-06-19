@@ -104,6 +104,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
         statusRepository.save(
                 Status.builder()
+                        .receiptCode(user.getReceiptCode())
                         .user(user)
                         .isPrintedArrived(false)
                         .isSubmit(false)
