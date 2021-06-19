@@ -72,9 +72,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
             body = objectMapper.writeValueAsString(bodyMap);
             return body;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        } catch (JsonProcessingException ignored) {}
 
         return "{}";
     }
