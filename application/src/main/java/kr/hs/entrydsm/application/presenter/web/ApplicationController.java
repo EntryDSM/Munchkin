@@ -3,6 +3,7 @@ package kr.hs.entrydsm.application.presenter.web;
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.EtcScore;
 import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
+import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
 @Published
+@JWTRequired
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application")
