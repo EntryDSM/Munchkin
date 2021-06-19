@@ -1,9 +1,10 @@
 server:
   port: 8888
+
+spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
-spring:
   datasource:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -31,3 +32,9 @@ aws:
     access-key: ${AWS_SES_ACCESS:ses_access}
     secret_key: ${AWS_SES_SECRET:ses_secret}
     region: ${AWS_SES_REGION:ap-northeast-2}
+
+munchkin:
+  logging:
+    name: munchkin.log
+    path: ${LOG_PATH:/}
+    size: 10 # 10mb
