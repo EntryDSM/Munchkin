@@ -3,6 +3,7 @@ package kr.hs.entrydsm.application.presenter.web;
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.Application;
 import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @Published
+@JWTRequired
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application/users")
@@ -32,13 +34,13 @@ public class ApplicationUserController {
         return applicationProcessing.getApplicationType();
     }
 
-    @PatchMapping("/")
+    @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertInfo(@RequestBody @Valid Information information){
         applicationProcessing.writeInformation(information);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public Information getInfo() throws IOException {
         return applicationProcessing.getInformation();
     }

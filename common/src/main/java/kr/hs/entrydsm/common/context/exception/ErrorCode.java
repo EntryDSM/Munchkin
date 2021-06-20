@@ -31,7 +31,8 @@ public enum ErrorCode {
 
     APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found"),
     SCHOOL_NOT_FOUND(404, "APPLICATION404-1", "The school could not be found"),
-    FILE_IS_EMPTY(400, "APPLICATION400-1", "The file could not be found"),
+    FILE_IS_EMPTY(400, "APPLICATION400-0", "The file could not be found"),
+    INVALID_ENUM_CONSTANT(400, "APPLICATION400-1", "The enum constant is invalid"),
     FINAL_SUBMIT_REQUIRED(406, "APPLICATION406-0", "Final submit required");
 
     private final int status;

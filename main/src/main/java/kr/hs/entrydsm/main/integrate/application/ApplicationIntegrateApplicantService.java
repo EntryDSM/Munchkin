@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationIntegrateApplicantService implements ApplicationApplicantRepository {
 
-    private ApplicationUserExportRepository userExportRepository;
+    private final ApplicationUserExportRepository userExportRepository;
 
     @Override
     public void writeApplicationType(Long receiptCode, Application application) {

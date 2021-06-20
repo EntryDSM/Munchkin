@@ -5,6 +5,7 @@ import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
+import kr.hs.entrydsm.user.usecase.exception.InvalidEnumConstantException;
 import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -27,14 +28,19 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     public void changeApplication(long receiptCode, String educationalStatus, String applicationType,
                                   boolean isDaejeon,String applicationRemark) {
         User user = findByReceiptCode(receiptCode);
-        userRepository.save(
-                user.updateUserApplication(
-                        EducationalStatus.valueOf(educationalStatus),
-                        ApplicationType.valueOf(applicationType),
-                        isDaejeon,
-                        ApplicationRemark.valueOf(applicationRemark)
-                )
-        );
+        try{
+            userRepository.save(
+                    user.updateUserApplication(
+                            EducationalStatus.valueOf(educationalStatus),
+                            ApplicationType.valueOf(applicationType),
+                            isDaejeon,
+                            ApplicationRemark.valueOf(applicationRemark)
+                    )
+            );
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+
     }
 
     @Override
