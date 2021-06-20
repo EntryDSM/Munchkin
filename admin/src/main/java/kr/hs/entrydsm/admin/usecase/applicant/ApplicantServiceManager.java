@@ -46,9 +46,6 @@ public class ApplicantServiceManager implements ApplicantService {
     private static final String ROUTE_URL = "https://apis.openapi.sk.com/tmap/routes?version=1";
     private static final String GEO_BASIC_URL="https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=";
 
-    private static final String PRINTED_ARRIVED = "원서가 도착했음을 알려드립니다.";
-    private static final String PRINTED_NOT_ARRIVED = "원서가 아직 도착하지 않았음을 알려드립니다.";
-
     @Value("${tmap.app.key}")
     private String appKey;
 
