@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application.usecase;
 
-import kr.hs.entrydsm.application.entity.GraduationApplication;
-import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
-import kr.hs.entrydsm.application.entity.School;
-import kr.hs.entrydsm.application.entity.SchoolRepository;
+import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Application;
@@ -72,14 +69,21 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void writeInformation(Information information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        graduationApplicationRepository.findByReceiptCode(receiptCode)
-                .map(graduationApplication -> {
-                    graduationApplication.setSchoolTel(information.getSchoolTel());
-                    graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode())
-                            .orElseThrow(SchoolNotFoundException::new));
-                    graduationApplicationRepository.save(graduationApplication);
-                    return graduationApplication;
-                }).orElseThrow(ApplicationNotFoundException::new);
+        GraduationApplication graduationApplication;
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            graduationApplication =  graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        }else {
+            graduationApplication = new GraduationApplication();
+            graduationApplication.setReceiptCode(receiptCode);
+        }
+        graduationApplication.setSchoolTel(information.getSchoolTel());
+        graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode())
+                .orElseThrow(SchoolNotFoundException::new));
+        graduationApplication.setStudentNumber(information.getStudentNumber());
+        graduationApplication.setIsGraduated(information.isGraduated());
+        graduationApplicationRepository.save(graduationApplication);
+
         applicantExportService.writeInformation(receiptCode, information);
     }
 
@@ -98,6 +102,9 @@ public class ApplicationManager implements ApplicationProcessing {
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
         result.setSchoolCode(graduationApplication.getSchoolCode());
         result.setSchoolTel(graduationApplication.getSchoolTel());
+        result.setIsGraduated(graduationApplication.getIsGraduated());
+        result.setStudentNumber(graduationApplication.getStudentNumber());
+
         return result;
     }
 
@@ -112,8 +119,15 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void updateSubjectScore(SubjectScore score) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
-                .orElseThrow(ApplicationNotFoundException::new);
+        GraduationApplication graduationApplication;
+
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent())
+            graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        else {
+            graduationApplication = new GraduationApplication();
+            graduationApplication.setReceiptCode(receiptCode);
+        }
 
         graduationApplication.setMathScore(score.getMathScore());
         graduationApplication.setEnglishScore(score.getEnglishScore());
@@ -128,8 +142,16 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public void updateEtcScore(EtcScore score) {
-        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(1L)
-                .orElseThrow(ApplicationNotFoundException::new);
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        GraduationApplication graduationApplication;
+
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent())
+            graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        else {
+            graduationApplication = new GraduationApplication();
+            graduationApplication.setReceiptCode(receiptCode);
+        }
 
         graduationApplication.setVolunteerTime(score.getVolunteerTime());
         graduationApplication.setDayAbsenceCount(score.getDayAbsenceCount());
