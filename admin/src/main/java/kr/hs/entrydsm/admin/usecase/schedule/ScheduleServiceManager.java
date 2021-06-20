@@ -53,7 +53,7 @@ public class ScheduleServiceManager implements ScheduleService {
                     Schedules.builder()
                             .year(s.getYear())
                             .type(s.getType())
-                            .date(s.getDate())
+                            .date(s.getDate().toString())
                             .build()
             );
         }
