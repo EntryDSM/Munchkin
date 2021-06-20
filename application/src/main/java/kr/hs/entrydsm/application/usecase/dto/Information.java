@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class Information {
     private String telephoneNumber;
 
     private String sex;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     private String parentName;
     private String parentTel;
@@ -34,6 +36,8 @@ public class Information {
 
     private String schoolCode;
     private String schoolTel;
+    private String studentNumber;
+    private boolean isGraduated;
 
     public void setSchoolCode(String schoolCode){
         this.schoolCode = schoolCode;
@@ -45,6 +49,14 @@ public class Information {
 
     public void setPhotoFileName(String photoFileName) {
         this.photoFileName = photoFileName;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
+    }
+
+    public void setIsGraduated(boolean isGraduated) {
+        this.isGraduated = isGraduated;
     }
 
 }
