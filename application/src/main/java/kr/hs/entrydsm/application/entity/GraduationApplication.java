@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.entity;
 
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity(name = "tbl_graduation_application")
 public class GraduationApplication extends Application {
 

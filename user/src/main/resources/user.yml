@@ -5,4 +5,4 @@ authcode:
   length: ${AUTH_CODE_LENGTH:6}
   ttl: ${AUTH_CODE_TTL:180}
   limit: ${AUTH_CODE_LIMIT:5}
-  limit-ttl: ${AUTH_CODE_LIMIT_TTL:1800}
+  limit-ttl: ${AUTH_CODE_LIMIT_TTL:180}

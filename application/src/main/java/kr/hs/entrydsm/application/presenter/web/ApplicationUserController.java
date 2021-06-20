@@ -34,13 +34,13 @@ public class ApplicationUserController {
         return applicationProcessing.getApplicationType();
     }
 
-    @PatchMapping("/")
+    @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertInfo(@RequestBody @Valid Information information){
         applicationProcessing.writeInformation(information);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public Information getInfo() throws IOException {
         return applicationProcessing.getInformation();
     }
