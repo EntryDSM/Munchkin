@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class AuthenticationManager {
 
     public long getUserReceiptCode() {
-        return Long.parseLong((String) getAuthentication().getPrincipal());
+        return (long) getAuthentication().getPrincipal();
     }
 
     public String getAdminId() {
