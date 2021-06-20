@@ -5,9 +5,11 @@ import kr.hs.entrydsm.admin.usecase.dto.PersonalData;
 import kr.hs.entrydsm.admin.usecase.dto.Status;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@NoArgsConstructor
 public class ApplicantDetailResponse {
 
     private Evaluation evaluation;
