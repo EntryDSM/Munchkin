@@ -22,12 +22,12 @@ public class ApplicationController {
     private final ApplicationProcessing applicationProcessing;
 
     @PatchMapping("/intro")
-    public void updateIntro(@RequestBody @NotBlank String content) {
+    public void updateIntro(@RequestParam @NotBlank String content) {
         applicationProcessing.writeSelfIntroduce(content);
     }
 
     @PatchMapping("/study-plan")
-    public void updateStudyPlan(@RequestBody @NotBlank String content) {
+    public void updateStudyPlan(@RequestParam @NotBlank String content) {
         applicationProcessing.writeStudyPlan(content);
     }
 
