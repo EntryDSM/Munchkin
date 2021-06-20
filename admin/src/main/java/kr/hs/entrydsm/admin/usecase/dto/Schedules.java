@@ -18,6 +18,6 @@ public class Schedules {
 
     private Type type;
 
-    private LocalDate date;
+    private String date;
 
 }
