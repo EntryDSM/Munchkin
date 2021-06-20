@@ -3,6 +3,7 @@ package kr.hs.entrydsm.application.presenter.web;
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.EtcScore;
 import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
+import kr.hs.entrydsm.application.usecase.dto.UpdateDocsRequest;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +23,13 @@ public class ApplicationController {
     private final ApplicationProcessing applicationProcessing;
 
     @PatchMapping("/intro")
-    public void updateIntro(@RequestParam @NotBlank String content) {
-        applicationProcessing.writeSelfIntroduce(content);
+    public void updateIntro(@RequestBody @Valid UpdateDocsRequest dto) {
+        applicationProcessing.writeSelfIntroduce(dto.getContent());
     }
 
     @PatchMapping("/study-plan")
-    public void updateStudyPlan(@RequestParam @NotBlank String content) {
-        applicationProcessing.writeStudyPlan(content);
+    public void updateStudyPlan(@RequestBody @Valid UpdateDocsRequest dto) {
+        applicationProcessing.writeStudyPlan(dto.getContent());
     }
 
     @GetMapping("/intro")
