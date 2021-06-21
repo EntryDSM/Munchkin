@@ -25,6 +25,7 @@ public enum ErrorCode {
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
     NOT_ACCESSIBLE(403, "ADMIN401-2","Check the token"),
     ALREADY_EXIST_ADMIN_ID(409, "ADMIN409-0", "Already admin id exist"),
+    INVALID_ADMIN_PASSWORD(401, "ADMIN401-1", "The password is not valid"),
 
     TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist"),
     NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority"),
