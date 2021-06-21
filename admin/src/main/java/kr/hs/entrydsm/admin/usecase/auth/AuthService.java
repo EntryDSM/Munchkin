@@ -9,4 +9,5 @@ public interface AuthService {
     void signUp(SignUpRequest request);
     TokenResponse login(SignInRequest signInRequest);
     AccessTokenResponse tokenRefresh(String receivedToken);
+    String checkPassword(String password);
 }

@@ -81,7 +81,7 @@ public class ScheduleServiceManager implements ScheduleService {
         } else if(!now.isAfter(endDate.getDate())) {
             return startDate.getType().toString(); //START_DATE
         } else if(now.isBefore(firstAnnounce.getDate())) {
-            return "BEFORE_FIRST_ANNOUNCE"; //서류 합격 발표 전
+            return "BEFORE_FIRST_ANNOUNCEMENT"; //서류 합격 발표 전
         } else if(now.isEqual(firstAnnounce.getDate())) {
             return firstAnnounce.getType().toString();
         } else if(now.isBefore(interview.getDate())) {
@@ -89,7 +89,7 @@ public class ScheduleServiceManager implements ScheduleService {
         } else if(now.isEqual(interview.getDate())) {
             return interview.getType().toString();
         } else if(now.isBefore(secondAnnounce.getDate())) {
-            return "BEFORE_SECOND_ANNOUNCE";
+            return "BEFORE_SECOND_ANNOUNCEMENT";
         } else if(now.isEqual(secondAnnounce.getDate())) {
             return secondAnnounce.getType().toString();
         } else {

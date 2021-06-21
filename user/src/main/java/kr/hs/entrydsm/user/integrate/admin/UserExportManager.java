@@ -75,4 +75,9 @@ public class UserExportManager implements UserExportRepository {
         return userRepository.findAllBy();
     }
 
+    @Override
+    public List<Long> findAllReceiptCode() {
+        return null;
+    }
+
 }

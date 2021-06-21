@@ -153,4 +153,9 @@ public class AdminIntegrateUserService implements ApplicantRepository {
         return excelUsers;
     }
 
+    @Override
+    public List<Long> getUserReceiptCodes() {
+        return userExportRepository.findAllReceiptCode();
+    }
+
 }

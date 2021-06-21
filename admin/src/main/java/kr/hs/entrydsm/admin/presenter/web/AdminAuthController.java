@@ -42,4 +42,10 @@ public class AdminAuthController {
         return authService.tokenRefresh(refreshToken);
     }
 
+    @AdminJWTRequired
+    @GetMapping
+    public String checkPassword(@RequestBody String password) {
+        return authService.checkPassword(password);
+    }
+
 }
