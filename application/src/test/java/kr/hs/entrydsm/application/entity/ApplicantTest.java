@@ -358,8 +358,8 @@ public class ApplicantTest extends EntityTest{
         assertTrue(multicultural.isEducationalStatusEmpty());
         assertTrue(oneParent.isEducationalStatusEmpty());
         assertTrue(teenHouseholder.isEducationalStatusEmpty());
-        assertFalse(privilegedAdmission.isEducationalStatusEmpty());
-        assertFalse(nationalMerit.isEducationalStatusEmpty());
+        assertTrue(privilegedAdmission.isEducationalStatusEmpty());
+        assertTrue(nationalMerit.isEducationalStatusEmpty());
     }
 
     @Test
