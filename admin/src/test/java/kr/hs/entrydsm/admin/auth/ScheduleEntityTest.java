@@ -1,6 +1,10 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.schedule.Type;
+import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
+import kr.hs.entrydsm.admin.usecase.schedule.ScheduleService;
+import kr.hs.entrydsm.admin.usecase.schedule.ScheduleServiceManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +13,10 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @DisplayName("일정 테스트")
 public class ScheduleEntityTest extends ScheduleBaseTest {
+
+    private static final ScheduleService scheduleService = new ScheduleServiceManager(adminRepository, scheduleRepository, scheduleRepositoryManager, authenticationManager);
 
     @Test
     public void checkStartDate() {
@@ -49,4 +54,18 @@ public class ScheduleEntityTest extends ScheduleBaseTest {
         assertTrue(INTERVIEW.getType().equals(Type.INTERVIEW));
         assertTrue(INTERVIEW.getDate().equals(LocalDate.parse("2021-10-29")));
     }
+
+    @Test
+    public void 교무실_일정_수정() {
+        try {
+            scheduleService.updateSchedules(new ScheduleRequest("2021", Type.START_DATE, "2021-06-22"));
+        } catch (ScheduleNotFoundException e) {
+        }
+    }
+
+    @Test
+    public void 일정_가져오기() {
+        scheduleService.getSchedules();
+    }
+
 }
