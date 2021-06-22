@@ -7,7 +7,7 @@ public class SchoolBuilder {
                 .name("대전하기중학교")
                 .address("대전광역시 유성구 하기동")
                 .code("33333")
-                .information("대전광역시 유성구 하기동 롯데마트 옆")
+                .information("대전광역시 교육청")
                 .build();
     }
 }

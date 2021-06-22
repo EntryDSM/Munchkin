@@ -52,7 +52,7 @@ public class GraduationApplicationTest {
                 .name("대덕소프트웨어마이스터중학교")
                 .address("대전광역시 유성구 장동")
                 .code("44444")
-                .information("대전광역시 유성구 장동 대덕대학교 옆")
+                .information("대전광역시 교육청")
                 .build();
 
         application.setSchoolTel("0421111111");
