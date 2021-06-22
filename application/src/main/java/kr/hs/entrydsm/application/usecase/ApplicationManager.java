@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
@@ -63,20 +65,17 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void writeApplicationType(Application applicationRequest) {
         long receiptCode = authenticationManager.getUserReceiptCode();
+        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
+        if(!applicationRequest.getGraduatedAt().isEmpty())
+            graduationApplication.setGraduateAt(LocalDate.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyMMdd")));
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
     @Override
     public void writeInformation(Information information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication;
-        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
-            graduationApplication =  graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        }else {
-            graduationApplication = new GraduationApplication();
-            graduationApplication.setReceiptCode(receiptCode);
-        }
+        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
+
         graduationApplication.setSchoolTel(information.getSchoolTel());
         graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode())
                 .orElseThrow(SchoolNotFoundException::new));
@@ -119,15 +118,7 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void updateSubjectScore(SubjectScore score) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication;
-
-        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent())
-            graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        else {
-            graduationApplication = new GraduationApplication();
-            graduationApplication.setReceiptCode(receiptCode);
-        }
+        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
         graduationApplication.setMathScore(score.getMathScore());
         graduationApplication.setEnglishScore(score.getEnglishScore());
@@ -143,15 +134,7 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void updateEtcScore(EtcScore score) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication;
-
-        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent())
-            graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        else {
-            graduationApplication = new GraduationApplication();
-            graduationApplication.setReceiptCode(receiptCode);
-        }
+        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
         graduationApplication.setVolunteerTime(score.getVolunteerTime());
         graduationApplication.setDayAbsenceCount(score.getDayAbsenceCount());
@@ -165,4 +148,17 @@ public class ApplicationManager implements ApplicationProcessing {
     private String getImageUrl(String photoFileName) throws MalformedURLException {
         return (!photoFileName.isEmpty()) ? imageService.generateObjectUrl(photoFileName) : null;
     }
+
+    private GraduationApplication getGraduationApplication(long receiptCode) {
+        GraduationApplication graduationApplication;
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            return  graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        }else {
+            graduationApplication = new GraduationApplication();
+            graduationApplication.setReceiptCode(receiptCode);
+            return graduationApplication;
+        }
+    }
+
 }

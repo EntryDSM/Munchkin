@@ -28,13 +28,38 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     public void changeApplication(long receiptCode, String educationalStatus, String applicationType,
                                   boolean isDaejeon,String applicationRemark) {
         User user = findByReceiptCode(receiptCode);
+        EducationalStatus educationalStatusValue;
+        ApplicationType applicationTypeValue;
+        ApplicationRemark applicationRemarkValue;
+        try{
+            educationalStatusValue = EducationalStatus.valueOf(educationalStatus);
+        }catch(NullPointerException e) {
+            educationalStatusValue = null;
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+        try{
+            applicationTypeValue = ApplicationType.valueOf(applicationType);
+        }catch(NullPointerException e) {
+            applicationTypeValue = null;
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+        try{
+            applicationRemarkValue = ApplicationRemark.valueOf(applicationRemark);
+        }catch(NullPointerException e) {
+            applicationRemarkValue = null;
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+
         try{
             userRepository.save(
                     user.updateUserApplication(
-                            EducationalStatus.valueOf(educationalStatus),
-                            ApplicationType.valueOf(applicationType),
+                            educationalStatusValue,
+                            applicationTypeValue,
                             isDaejeon,
-                            ApplicationRemark.valueOf(applicationRemark)
+                            applicationRemarkValue
                     )
             );
         }catch (IllegalArgumentException e) {

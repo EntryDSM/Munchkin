@@ -8,6 +8,9 @@ import kr.hs.entrydsm.user.integrate.application.ApplicationUserExportRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @RequiredArgsConstructor
 @Service
 public class ApplicationIntegrateApplicantService implements ApplicationApplicantRepository {
@@ -24,7 +27,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     @Override
     public void writeInformation(Long receiptCode, Information information) {
         userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
-                information.getBirthday(), information.getParentName(), information.getParentTel(),
+                LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd")), information.getParentName(), information.getParentTel(),
                 information.getTelephoneNumber(), information.getHomeTel(), information.getAddress(),
                 information.getPostCode(), information.getPhotoFileName());
     }
@@ -33,9 +36,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public Application getApplicationType(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return Application.builder()
-                .educationalStatus(user.getEducationalStatus().toString())
-                .applicationType(user.getApplicationType().toString())
-                .applicationRemark(user.getApplicationRemark().toString())
+                .educationalStatus(String.valueOf(user.getEducationalStatus()))
+                .applicationType(String.valueOf(user.getApplicationType()))
+                .applicationRemark(String.valueOf(user.getApplicationRemark()))
                 .isDaejeon(user.isDaejeon())
                 .build();
     }
@@ -46,7 +49,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
         return Information.builder()
                 .name(user.getName())
                 .sex(user.getSex().toString())
-                .birthday(user.getBirthday())
+                .birthday(user.getBirthday().toString())
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
                 .telephoneNumber(user.getTelephoneNumber())

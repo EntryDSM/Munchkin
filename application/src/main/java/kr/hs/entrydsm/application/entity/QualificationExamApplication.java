@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application.entity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,13 @@ public class QualificationExamApplication extends Application {
     private BigDecimal averageScore;
 
     private LocalDate qualifiedAt;
+
+    @Builder
+    public QualificationExamApplication(long receiptCode, BigDecimal averageScore, LocalDate qualifiedAt) {
+        super(receiptCode);
+        this.averageScore = averageScore;
+        this.qualifiedAt = qualifiedAt;
+    }
 
     @Override
     public boolean isGraduation() {
