@@ -3,9 +3,7 @@ package kr.hs.entrydsm.admin.auth;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
 
-import java.time.LocalDate;
-
-public class AdminExcelBaseTest {
+public abstract class AdminExcelBaseTest {
 
     protected static final ExcelUser EXCEL_USER = ExcelUser.builder()
             .examCode("12036") //수험번호
