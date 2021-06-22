@@ -11,6 +11,7 @@ import kr.hs.entrydsm.admin.usecase.dto.Schedules;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.ScheduleResponse;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,8 @@ public class ScheduleServiceManager implements ScheduleService {
     public void updateSchedules(ScheduleRequest scheduleRequest) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-        Schedule schedule = scheduleRepository.findByYearAndType(scheduleRequest.getYear(), scheduleRequest.getType());
+        Schedule schedule = scheduleRepository.findByYearAndType(scheduleRequest.getYear(), scheduleRequest.getType())
+                .orElseThrow(ScheduleNotFoundException::new);
 
         if(admin.getPermission().equals(Permission.TEACHER)) {
             schedule.update(scheduleRequest);
@@ -70,11 +72,16 @@ public class ScheduleServiceManager implements ScheduleService {
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());
 
-        Schedule startDate = scheduleRepository.findByYearAndType(year, Type.START_DATE);
-        Schedule endDate = scheduleRepository.findByYearAndType(year, Type.END_DATE);
-        Schedule firstAnnounce = scheduleRepository.findByYearAndType(year, Type.FIRST_ANNOUNCEMENT);
-        Schedule secondAnnounce = scheduleRepository.findByYearAndType(year, Type.SECOND_ANNOUNCEMENT);
-        Schedule interview = scheduleRepository.findByYearAndType(year, Type.INTERVIEW);
+        Schedule startDate = scheduleRepository.findByYearAndType(year, Type.START_DATE)
+                .orElseThrow(ScheduleNotFoundException::new);
+        Schedule endDate = scheduleRepository.findByYearAndType(year, Type.END_DATE)
+                .orElseThrow(ScheduleNotFoundException::new);
+        Schedule firstAnnounce = scheduleRepository.findByYearAndType(year, Type.FIRST_ANNOUNCEMENT)
+                .orElseThrow(ScheduleNotFoundException::new);
+        Schedule secondAnnounce = scheduleRepository.findByYearAndType(year, Type.SECOND_ANNOUNCEMENT)
+                .orElseThrow(ScheduleNotFoundException::new);
+        Schedule interview = scheduleRepository.findByYearAndType(year, Type.INTERVIEW)
+                .orElseThrow(ScheduleNotFoundException::new);
 
         if(now.isBefore(startDate.getDate())) {
             return "NOT_APPLICATION_PERIOD";
