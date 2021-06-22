@@ -32,4 +32,62 @@ public class ApplicantTest {
     public void isApplicationTypeCommonTrue() {
         assertThat(applicant.isCommonApplicationType()).isTrue();
     }
+
+    @Test
+    public void isApplicationTypeMeisterFalse() {
+        assertThat(applicant.isMeisterApplicationType()).isFalse();
+    }
+
+    @Test
+    public void isApplicationTypeSocialFalse() {
+        assertThat(applicant.isSocialApplicationType()).isFalse();
+    }
+
+    @Test
+    public void isQualificationExamFalse() {
+        assertThat(applicant.isQualificationExam()).isFalse();
+    }
+
+    @Test
+    public void isGraduateTrue() {
+        assertThat(applicant.isGraduate()).isTrue();
+    }
+
+    @Test
+    public void isProspectiveGraduate() {
+        assertThat(applicant.isProspectiveGraduate()).isFalse();
+    }
+
+    @Test
+    public void isNationalMeritFalse() {
+        assertThat(applicant.isNationalMerit()).isFalse();
+    }
+
+    @Test
+    public void isPrivilegedAdmission() {
+        assertThat(applicant.isPrivilegedAdmission()).isFalse();
+    }
+
+    @Test
+    public void isSexTrue() {
+        assertThat(applicant.isMale()).isTrue();
+    }
+
+    @Test
+    public void isSexFalse() {
+        assertThat(applicant.isFemale()).isFalse();
+    }
+
+    @Test
+    public void isSchoolInfoTrue() {
+        assertThat(applicant.hasSchoolInfo()).isTrue();
+    }
+
+    @Test
+    public void isHomeTelEmptyFalse() {
+        assertThat(applicant.isHomeTelEmpty()).isFalse();
+    }
+
+
+
 }
