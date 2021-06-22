@@ -32,6 +32,7 @@ public class GraduationApplicationTest {
         assertThat(application.getMathScore()).isEqualTo("BXBBAA");
         assertThat(application.getSocialScore()).isEqualTo("AXAAAA");
         assertThat(application.getHistoryScore()).isEqualTo("AXAAAA");
+        assertThat(application.getScienceScore()).isEqualTo("AXAAAA");
         assertThat(application.getTechAndHomeScore()).isEqualTo("AXAAAA");
         assertThat(application.getGraduateAt()).isEqualTo(LocalDate.of(2019, 2, 1));
     }
@@ -52,7 +53,7 @@ public class GraduationApplicationTest {
                 .name("대덕소프트웨어마이스터중학교")
                 .address("대전광역시 유성구 장동")
                 .code("44444")
-                .information("대전광역시 유성구 장동 대덕대학교 옆")
+                .information("대전광역시 교육청")
                 .build();
 
         application.setSchoolTel("0421111111");
@@ -61,5 +62,12 @@ public class GraduationApplicationTest {
         assertThat(application.getSchoolTel()).isEqualTo("0421111111");
         assertThat(application.getSchoolName()).isEqualTo("대덕소프트웨어마이스터중학교");
         assertThat(application.getSchoolCode()).isEqualTo("44444");
+    }
+
+    @Test
+    public void getSchoolClassNull() {
+        GraduationApplication application = GraduationApplicationBuilder.buildEmptyStudentNumber();
+
+        assertThat(application.getSchoolClass()).isNull();
     }
 }
