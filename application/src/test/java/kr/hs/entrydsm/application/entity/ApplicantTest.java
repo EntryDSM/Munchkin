@@ -208,6 +208,8 @@ public class ApplicantTest extends EntityTest{
         assertFalse(multicultural.isBasicLiving());
         assertFalse(oneParent.isBasicLiving());
         assertFalse(teenHouseholder.isBasicLiving());
+        assertFalse(privilegedAdmission.isBasicLiving());
+        assertFalse(nationalMerit.isBasicLiving());
     }
 
     @Test
@@ -218,6 +220,8 @@ public class ApplicantTest extends EntityTest{
         assertFalse(multicultural.isFromNorth());
         assertFalse(oneParent.isFromNorth());
         assertFalse(teenHouseholder.isFromNorth());
+        assertFalse(privilegedAdmission.isFromNorth());
+        assertFalse(nationalMerit.isFromNorth());
     }
 
     @Test
@@ -228,6 +232,8 @@ public class ApplicantTest extends EntityTest{
         assertFalse(multicultural.isLowestIncome());
         assertFalse(oneParent.isLowestIncome());
         assertFalse(teenHouseholder.isLowestIncome());
+        assertFalse(privilegedAdmission.isLowestIncome());
+        assertFalse(nationalMerit.isLowestIncome());
     }
 
     @Test
@@ -238,6 +244,8 @@ public class ApplicantTest extends EntityTest{
         assertTrue(multicultural.isMulticultural());
         assertFalse(oneParent.isMulticultural());
         assertFalse(teenHouseholder.isMulticultural());
+        assertFalse(privilegedAdmission.isMulticultural());
+        assertFalse(nationalMerit.isMulticultural());
     }
 
     @Test
@@ -248,6 +256,8 @@ public class ApplicantTest extends EntityTest{
         assertFalse(multicultural.isOneParent());
         assertTrue(oneParent.isOneParent());
         assertFalse(teenHouseholder.isOneParent());
+        assertFalse(privilegedAdmission.isOneParent());
+        assertFalse(nationalMerit.isOneParent());
     }
 
     @Test
@@ -258,6 +268,131 @@ public class ApplicantTest extends EntityTest{
         assertFalse(multicultural.isTeenHouseholder());
         assertFalse(oneParent.isTeenHouseholder());
         assertTrue(teenHouseholder.isTeenHouseholder());
+        assertFalse(privilegedAdmission.isTeenHouseholder());
+        assertFalse(nationalMerit.isTeenHouseholder());
+    }
+
+    @Test
+    public void isPrivilegedAdmission() {
+        assertFalse(basicLiving.isPrivilegedAdmission());
+        assertFalse(fromNorth.isPrivilegedAdmission());
+        assertFalse(lowestIncome.isPrivilegedAdmission());
+        assertFalse(multicultural.isPrivilegedAdmission());
+        assertFalse(oneParent.isPrivilegedAdmission());
+        assertFalse(teenHouseholder.isPrivilegedAdmission());
+        assertTrue(privilegedAdmission.isPrivilegedAdmission());
+        assertFalse(nationalMerit.isPrivilegedAdmission());
+    }
+
+    @Test
+    public void isNationalMerit() {
+        assertFalse(basicLiving.isNationalMerit());
+        assertFalse(fromNorth.isNationalMerit());
+        assertFalse(lowestIncome.isNationalMerit());
+        assertFalse(multicultural.isNationalMerit());
+        assertFalse(oneParent.isNationalMerit());
+        assertFalse(teenHouseholder.isNationalMerit());
+        assertFalse(privilegedAdmission.isNationalMerit());
+        assertTrue(nationalMerit.isNationalMerit());
+    }
+
+    @Test
+    public void isHomeTelEmpty() {
+        assertFalse(graduateCommonMale.isHomeTelEmpty());
+        assertFalse(graduateCommonFemale.isHomeTelEmpty());
+        assertFalse(graduateMeisterMale.isHomeTelEmpty());
+        assertFalse(graduateMeisterFemale.isHomeTelEmpty());
+        assertFalse(graduateSocialMale.isHomeTelEmpty());
+        assertFalse(graduateSocialFemale.isHomeTelEmpty());
+
+        assertFalse(prospectiveGraduateCommonMale.isHomeTelEmpty());
+        assertFalse(prospectiveGraduateCommonFemale.isHomeTelEmpty());
+        assertFalse(prospectiveGraduateMeisterMale.isHomeTelEmpty());
+        assertFalse(prospectiveGraduateMeisterFemale.isHomeTelEmpty());
+        assertFalse(prospectiveGraduateSocialMale.isHomeTelEmpty());
+        assertFalse(prospectiveGraduateSocialFemale.isHomeTelEmpty());
+
+        assertFalse(qualificationExamCommonMale.isHomeTelEmpty());
+        assertFalse(qualificationExamCommonFemale.isHomeTelEmpty());
+        assertFalse(qualificationExamMeisterMale.isHomeTelEmpty());
+        assertFalse(qualificationExamMeisterFemale.isHomeTelEmpty());
+        assertFalse(qualificationExamSocialMale.isHomeTelEmpty());
+        assertFalse(qualificationExamSocialFemale.isHomeTelEmpty());
+
+        assertTrue(basicLiving.isHomeTelEmpty());
+        assertTrue(fromNorth.isHomeTelEmpty());
+        assertTrue(lowestIncome.isHomeTelEmpty());
+        assertTrue(multicultural.isHomeTelEmpty());
+        assertTrue(oneParent.isHomeTelEmpty());
+        assertTrue(teenHouseholder.isHomeTelEmpty());
+        assertTrue(privilegedAdmission.isHomeTelEmpty());
+        assertTrue(nationalMerit.isHomeTelEmpty());
+    }
+
+    @Test
+    public void isEducationalStatusEmpty() {
+        assertFalse(graduateCommonMale.isEducationalStatusEmpty());
+        assertFalse(graduateCommonFemale.isEducationalStatusEmpty());
+        assertFalse(graduateMeisterMale.isEducationalStatusEmpty());
+        assertFalse(graduateMeisterFemale.isEducationalStatusEmpty());
+        assertFalse(graduateSocialMale.isEducationalStatusEmpty());
+        assertFalse(graduateSocialFemale.isEducationalStatusEmpty());
+
+        assertFalse(prospectiveGraduateCommonMale.isEducationalStatusEmpty());
+        assertFalse(prospectiveGraduateCommonFemale.isEducationalStatusEmpty());
+        assertFalse(prospectiveGraduateMeisterMale.isEducationalStatusEmpty());
+        assertFalse(prospectiveGraduateMeisterFemale.isEducationalStatusEmpty());
+        assertFalse(prospectiveGraduateSocialMale.isEducationalStatusEmpty());
+        assertFalse(prospectiveGraduateSocialFemale.isEducationalStatusEmpty());
+
+        assertFalse(qualificationExamCommonMale.isEducationalStatusEmpty());
+        assertFalse(qualificationExamCommonFemale.isEducationalStatusEmpty());
+        assertFalse(qualificationExamMeisterMale.isEducationalStatusEmpty());
+        assertFalse(qualificationExamMeisterFemale.isEducationalStatusEmpty());
+        assertFalse(qualificationExamSocialMale.isEducationalStatusEmpty());
+        assertFalse(qualificationExamSocialFemale.isEducationalStatusEmpty());
+
+        assertTrue(basicLiving.isEducationalStatusEmpty());
+        assertTrue(fromNorth.isEducationalStatusEmpty());
+        assertTrue(lowestIncome.isEducationalStatusEmpty());
+        assertTrue(multicultural.isEducationalStatusEmpty());
+        assertTrue(oneParent.isEducationalStatusEmpty());
+        assertTrue(teenHouseholder.isEducationalStatusEmpty());
+        assertFalse(privilegedAdmission.isEducationalStatusEmpty());
+        assertFalse(nationalMerit.isEducationalStatusEmpty());
+    }
+
+    @Test
+    public void hasSchoolInfo() {
+        assertTrue(graduateCommonMale.hasSchoolInfo());
+        assertTrue(graduateCommonFemale.hasSchoolInfo());
+        assertTrue(graduateMeisterMale.hasSchoolInfo());
+        assertTrue(graduateMeisterFemale.hasSchoolInfo());
+        assertTrue(graduateSocialMale.hasSchoolInfo());
+        assertTrue(graduateSocialFemale.hasSchoolInfo());
+
+        assertTrue(prospectiveGraduateCommonMale.hasSchoolInfo());
+        assertTrue(prospectiveGraduateCommonFemale.hasSchoolInfo());
+        assertTrue(prospectiveGraduateMeisterMale.hasSchoolInfo());
+        assertTrue(prospectiveGraduateMeisterFemale.hasSchoolInfo());
+        assertTrue(prospectiveGraduateSocialMale.hasSchoolInfo());
+        assertTrue(prospectiveGraduateSocialFemale.hasSchoolInfo());
+
+        assertFalse(qualificationExamCommonMale.hasSchoolInfo());
+        assertFalse(qualificationExamCommonFemale.hasSchoolInfo());
+        assertFalse(qualificationExamMeisterMale.hasSchoolInfo());
+        assertFalse(qualificationExamMeisterFemale.hasSchoolInfo());
+        assertFalse(qualificationExamSocialMale.hasSchoolInfo());
+        assertFalse(qualificationExamSocialFemale.hasSchoolInfo());
+
+        assertFalse(basicLiving.hasSchoolInfo());
+        assertFalse(fromNorth.hasSchoolInfo());
+        assertFalse(lowestIncome.hasSchoolInfo());
+        assertFalse(multicultural.hasSchoolInfo());
+        assertFalse(oneParent.hasSchoolInfo());
+        assertFalse(teenHouseholder.hasSchoolInfo());
+        assertFalse(privilegedAdmission.hasSchoolInfo());
+        assertFalse(nationalMerit.hasSchoolInfo());
     }
 
 }
