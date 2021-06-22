@@ -66,7 +66,8 @@ public class ApplicationManager implements ApplicationProcessing {
     public void writeApplicationType(Application applicationRequest) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
-        graduationApplication.setGraduateAt(LocalDate.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyMMdd")));
+        if(!applicationRequest.getGraduatedAt().isEmpty())
+            graduationApplication.setGraduateAt(LocalDate.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyMMdd")));
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
