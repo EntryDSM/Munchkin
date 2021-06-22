@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 @RequiredArgsConstructor
 @Service
@@ -69,7 +70,9 @@ public class ApplicationManager implements ApplicationProcessing {
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
         if(applicationRequest.getGraduatedAt() != null){
             graduationApplication.setReceiptCode(receiptCode);
-            graduationApplication.setGraduateAt(YearMonth.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyyyMM")).atDay(1));
+            graduationApplication.setGraduateAt(
+                    YearMonth.parse(applicationRequest.getGraduatedAt(),
+                            DateTimeFormatter.ofPattern("yyyyMM")).atDay(2));
             graduationApplicationRepository.save(graduationApplication);
         }
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
@@ -96,7 +99,8 @@ public class ApplicationManager implements ApplicationProcessing {
         if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
             GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
                     .orElseThrow(ApplicationNotFoundException::new);
-            return applicantExportService.getApplicationType(receiptCode).setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+            return applicantExportService.getApplicationType(receiptCode)
+                    .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                     .format(graduationApplication.getGraduateAt()));
         }
         return applicantExportService.getApplicationType(receiptCode);
