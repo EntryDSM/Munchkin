@@ -140,8 +140,12 @@ public class PdfDataConverter {
         values.put("isProspectiveGraduate", toBallotBox(applicant.isProspectiveGraduate()));
         values.put("isDaejeon", toBallotBox(applicant.isDaejeon()));
         values.put("isNotDaejeon", toBallotBox(!applicant.isDaejeon()));
-        values.put("isNationalMerit", toBallotBox(applicant.isNationalMerit()));
-        values.put("isPrivilegedAdmission", toBallotBox(applicant.isPrivilegedAdmission()));
+        values.put("isBasicLiving", toBallotBox(applicant.isBasicLiving()));
+        values.put("isFromNorth", toBallotBox(applicant.isFromNorth()));
+        values.put("isLowestIncome", toBallotBox(applicant.isLowestIncome()));
+        values.put("isMulticultural", toBallotBox(applicant.isMulticultural()));
+        values.put("isOneParent", toBallotBox(applicant.isOneParent()));
+        values.put("isTeenHouseholder", toBallotBox(applicant.isTeenHouseholder()));
         values.put("isCommon", toBallotBox(applicant.isCommonApplicationType()));
         values.put("isMeister", toBallotBox(applicant.isMeisterApplicationType()));
         values.put("isSocialMerit", toBallotBox(applicant.isSocialApplicationType()));
