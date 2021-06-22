@@ -62,4 +62,11 @@ public class GraduationApplicationTest {
         assertThat(application.getSchoolName()).isEqualTo("대덕소프트웨어마이스터중학교");
         assertThat(application.getSchoolCode()).isEqualTo("44444");
     }
+
+    @Test
+    public void getSchoolClassNull() {
+        GraduationApplication application = GraduationApplicationBuilder.buildEmptyStudentNumber();
+
+        assertThat(application.getSchoolClass()).isNull();
+    }
 }
