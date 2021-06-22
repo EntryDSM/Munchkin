@@ -32,6 +32,7 @@ public class GraduationApplicationTest {
         assertThat(application.getMathScore()).isEqualTo("BXBBAA");
         assertThat(application.getSocialScore()).isEqualTo("AXAAAA");
         assertThat(application.getHistoryScore()).isEqualTo("AXAAAA");
+        assertThat(application.getScienceScore()).isEqualTo("AXAAAA");
         assertThat(application.getTechAndHomeScore()).isEqualTo("AXAAAA");
         assertThat(application.getGraduateAt()).isEqualTo(LocalDate.of(2019, 2, 1));
     }
