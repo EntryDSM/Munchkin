@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
@@ -67,7 +68,7 @@ public class ApplicationManager implements ApplicationProcessing {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
         if(applicationRequest.getGraduatedAt() != null)
-            graduationApplication.setGraduateAt(LocalDate.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyyyMM")));
+            graduationApplication.setGraduateAt(YearMonth.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyyyMM")).atDay(1));
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
@@ -89,7 +90,14 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public Application getApplicationType() {
         long receiptCode = authenticationManager.getUserReceiptCode();
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+            return applicantExportService.getApplicationType(receiptCode).setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                    .format(graduationApplication.getGraduateAt()));
+        }
         return applicantExportService.getApplicationType(receiptCode);
+
     }
 
     @Override
