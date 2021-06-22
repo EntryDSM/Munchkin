@@ -24,6 +24,7 @@ public class AuthCode {
     public AuthCode updateAuthCode(String code, long ttl) {
         this.code = code;
         this.ttl = ttl;
+        this.isVerified = false;
         return this;
     }
 

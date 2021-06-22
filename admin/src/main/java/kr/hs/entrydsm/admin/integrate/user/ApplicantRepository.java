@@ -20,4 +20,5 @@ public interface ApplicantRepository {
     Applicant getUserInfo(long receiptCode);
     void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
     List<ExcelUser> findAllForExcel();
+    List<Long> getUserReceiptCodes();
 }
