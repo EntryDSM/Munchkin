@@ -28,4 +28,8 @@ public class Application {
 
     private String graduatedAt;
 
+    public Application setGraduatedAt(String graduatedAt) {
+        this.graduatedAt = graduatedAt;
+        return this;
+    }
 }
