@@ -2,6 +2,11 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.admin.Permission;
+import kr.hs.entrydsm.admin.usecase.auth.AuthService;
+import kr.hs.entrydsm.admin.usecase.auth.AuthServiceManager;
+import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
+import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("어드민 계정 테스트")
 public class AdminAccountTest extends AdminBaseTest {
+
+    private static final AuthService authService = new AuthServiceManager(adminRepository, passwordEncoder,
+            authenticationManager, refreshTokenRepository, jwtTokenProvider);
 
     @Test
     public void 어드민_선생님_계정_추가() {
@@ -66,24 +74,29 @@ public class AdminAccountTest extends AdminBaseTest {
     public void 어드민_교무실_로그인() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), "teacheradmin");
-    }
-
-    @Test
-    public void 어드민_교무실_로그인_실패() {
-        assertNotEquals(TEACHER_ADMIN.getId(), "asdf12345");
-        assertNotEquals(TEACHER_ADMIN.getPassword(), "teachderadmin");
+        try {
+            authService.login(new SignInRequest("asdf1234", "teacheradmin"));
+        } catch (AdminNotFoundException e) {
+        }
     }
 
     @Test
     public void 어드민_행정실_로그인() {
         assertEquals(OFFICE_ADMIN.getId(), "asdf4567");
-        assertEquals(OFFICE_ADMIN.getPassword(), "officeadmin");
+        assertEquals(OFFICE_ADMIN.getPassword(), passwordEncoder.encode("officeadmin"));
+        try {
+            authService.login(new SignInRequest("asdf4567", "officeadmin"));
+        } catch (AdminNotFoundException e) {
+        }
     }
 
     @Test
-    public void 어드민_행정실_로그인_실패() {
-        assertNotEquals(OFFICE_ADMIN.getId(), "asdf4568");
-        assertNotEquals(OFFICE_ADMIN.getPassword(), "offdiceadmin");
+    public void 어드민_교무실_비밀번호_확인() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        try {
+            authService.checkPassword("teacheradmin");
+        } catch(PasswordNotValidException e) {
+        }
     }
 
 }
