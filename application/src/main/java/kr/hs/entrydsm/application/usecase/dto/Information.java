@@ -25,8 +25,7 @@ public class Information {
     private String telephoneNumber;
 
     private String sex;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthday;
+    private String birthday;
     private String parentName;
     private String parentTel;
     private String homeTel;
