@@ -8,7 +8,7 @@ public class QualificationExamApplicationTest {
 
     @Test
     public void isGraduationFalse() {
-        QualificationExamApplication application = new QualificationExamApplication();
+        Application application = QualificationExamApplicationBuilder.build();
         assertThat(application.isGraduation()).isFalse();
     }
 }

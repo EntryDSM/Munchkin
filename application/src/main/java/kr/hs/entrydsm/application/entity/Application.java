@@ -1,10 +1,7 @@
 package kr.hs.entrydsm.application.entity;
 
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,6 +13,7 @@ import javax.persistence.InheritanceType;
 @Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public abstract class Application extends BaseTimeEntity {
 
     @Id
