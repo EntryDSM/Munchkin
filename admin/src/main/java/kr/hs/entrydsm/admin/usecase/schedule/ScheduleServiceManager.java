@@ -34,7 +34,8 @@ public class ScheduleServiceManager implements ScheduleService {
     public void updateSchedules(ScheduleRequest scheduleRequest) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-        Schedule schedule = scheduleRepository.findByYearAndType(scheduleRequest.getYear(), scheduleRequest.getType());
+        Schedule schedule = scheduleRepository.findByYearAndType(scheduleRequest.getYear(), scheduleRequest.getType())
+                .orElseThrow(ScheduleNotFoundException::new);
 
         if(admin.getPermission().equals(Permission.TEACHER)) {
             schedule.update(scheduleRequest);

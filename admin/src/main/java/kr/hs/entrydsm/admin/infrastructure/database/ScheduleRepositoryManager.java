@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ScheduleRepositoryManager extends CrudRepository<Schedule, ScheduleId>, ScheduleRepository {
@@ -16,6 +17,6 @@ public interface ScheduleRepositoryManager extends CrudRepository<Schedule, Sche
     List<Schedule> findAllBy();
 
     @Override
-    Schedule findByYearAndType(String year, Type type);
+    Optional<Schedule> findByYearAndType(String year, Type type);
 
 }
