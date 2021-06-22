@@ -36,9 +36,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public Application getApplicationType(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return Application.builder()
-                .educationalStatus(user.getEducationalStatus().toString())
-                .applicationType(user.getApplicationType().toString())
-                .applicationRemark(user.getApplicationRemark().toString())
+                .educationalStatus(String.valueOf(user.getEducationalStatus()))
+                .applicationType(String.valueOf(user.getApplicationType()))
+                .applicationRemark(String.valueOf(user.getApplicationRemark()))
                 .isDaejeon(user.isDaejeon())
                 .build();
     }
