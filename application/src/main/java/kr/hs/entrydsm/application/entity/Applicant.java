@@ -79,12 +79,28 @@ public class Applicant {
         return educationalStatus.equals(EducationalStatus.PROSPECTIVE_GRADUATE);
     }
 
-    public boolean isNationalMerit() {
-        return applicationRemark.equals("NATIONAL_MERIT");
+    public boolean isBasicLiving() {
+        return applicationRemark.equals(ApplicationRemark.BASIC_LIVING);
     }
 
-    public boolean isPrivilegedAdmission() {
-        return applicationRemark.equals("PRIVILEGED_ADMISSION");
+    public boolean isFromNorth() {
+        return applicationRemark.equals(ApplicationRemark.FROM_NORTH);
+    }
+
+    public boolean isLowestIncome() {
+        return applicationRemark.equals(ApplicationRemark.LOWEST_INCOME);
+    }
+
+    public boolean isMulticultural() {
+        return applicationRemark.equals(ApplicationRemark.MULTICULTURAL);
+    }
+
+    public boolean isOneParent() {
+        return applicationRemark.equals(ApplicationRemark.ONE_PARENT);
+    }
+
+    public boolean isTeenHouseholder() {
+        return applicationRemark.equals(ApplicationRemark.TEEN_HOUSEHOLDER);
     }
 
     public boolean isCommonApplicationType() {
