@@ -103,6 +103,14 @@ public class Applicant {
         return applicationRemark.equals(ApplicationRemark.TEEN_HOUSEHOLDER);
     }
 
+    public boolean isPrivilegedAdmission() {
+        return applicationRemark.equals(ApplicationRemark.PRIVILEGED_ADMISSION);
+    }
+
+    public boolean isNationalMerit() {
+        return applicationRemark.equals(ApplicationRemark.NATIONAL_MERIT);
+    }
+
     public boolean isCommonApplicationType() {
         return applicationType.equals(ApplicationType.COMMON);
     }

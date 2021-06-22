@@ -118,10 +118,6 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-
-
-
-
     protected final Applicant prospectiveGraduateCommonMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
@@ -235,8 +231,6 @@ public abstract class EntityTest {
             .selfIntroduce("자기소개")
             .studyPlan("학업계획")
             .build();
-
-
 
     protected final Applicant qualificationExamCommonMale = Applicant.builder()
             .receiptCode(1)
@@ -374,6 +368,14 @@ public abstract class EntityTest {
 
     protected final Applicant teenHouseholder = Applicant.builder()
             .applicationRemark(ApplicationRemark.TEEN_HOUSEHOLDER)
+            .build();
+
+    protected final Applicant privilegedAdmission = Applicant.builder()
+            .applicationRemark(ApplicationRemark.PRIVILEGED_ADMISSION)
+            .build();
+
+    protected final Applicant nationalMerit = Applicant.builder()
+            .applicationRemark(ApplicationRemark.NATIONAL_MERIT)
             .build();
 
 }
