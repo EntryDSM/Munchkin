@@ -71,16 +71,6 @@ public class AdminAccountTest extends AdminBaseTest {
     }
 
     @Test
-    public void 어드민_교무실_로그인() {
-        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
-        assertEquals(TEACHER_ADMIN.getPassword(), "teacheradmin");
-        try {
-            authService.login(new SignInRequest("asdf1234", "teacheradmin"));
-        } catch (AdminNotFoundException e) {
-        }
-    }
-
-    @Test
     public void 어드민_행정실_로그인() {
         assertEquals(OFFICE_ADMIN.getId(), "asdf4567");
         assertEquals(OFFICE_ADMIN.getPassword(), passwordEncoder.encode("officeadmin"));

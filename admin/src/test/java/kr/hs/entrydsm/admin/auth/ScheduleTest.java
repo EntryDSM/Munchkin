@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("일정 테스트")
-public class ScheduleEntityTest extends ScheduleBaseTest {
+public class ScheduleTest extends ScheduleBaseTest {
 
     private static final ScheduleService scheduleService = new ScheduleServiceManager(adminRepository, scheduleRepository, scheduleRepositoryManager, authenticationManager);
 
@@ -22,7 +22,7 @@ public class ScheduleEntityTest extends ScheduleBaseTest {
     public void checkStartDate() {
         assertTrue(START_DATE.getYear().equals("2021"));
         assertTrue(START_DATE.getType().equals(Type.START_DATE));
-        assertTrue(START_DATE.getDate().equals(LocalDate.parse("2021-10-18")));
+        assertTrue(START_DATE.getDate().equals(LocalDate.parse("2021-06-22")));
     }
 
     @Test
