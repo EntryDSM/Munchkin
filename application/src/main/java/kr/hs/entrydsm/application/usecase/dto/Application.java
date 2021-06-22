@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Builder
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Application {
 
     private String educationalStatus;
@@ -26,5 +25,7 @@ public class Application {
     private boolean isDaejeon;
 
     private String applicationRemark;
+
+    private String graduatedAt;
 
 }
