@@ -36,9 +36,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public Application getApplicationType(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return Application.builder()
-                .educationalStatus(String.valueOf(user.getEducationalStatus()))
-                .applicationType(String.valueOf(user.getApplicationType()))
-                .applicationRemark(String.valueOf(user.getApplicationRemark()))
+                .educationalStatus(stringValueOf(user.getEducationalStatus()))
+                .applicationType(stringValueOf(user.getApplicationType()))
+                .applicationRemark(stringValueOf(user.getApplicationRemark()))
                 .isDaejeon(user.isDaejeon())
                 .build();
     }
@@ -69,5 +69,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public String getPhotoFileName(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return user.getPhotoFileName();
+    }
+
+    private String stringValueOf(Object object) {
+        return object == null ? null : String.valueOf(object);
     }
 }
