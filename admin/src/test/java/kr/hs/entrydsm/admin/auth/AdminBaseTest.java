@@ -44,7 +44,6 @@ public abstract class AdminBaseTest {
     private static final List<Admin> ADMINS = new ArrayList<>();
     static {
         ADMINS.add(TEACHER_ADMIN);
-        adminRepository.save(TEACHER_ADMIN);
     }
 
     protected static boolean addAccount(Admin admin) {

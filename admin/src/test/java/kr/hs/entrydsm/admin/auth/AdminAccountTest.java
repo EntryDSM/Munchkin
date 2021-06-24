@@ -8,21 +8,24 @@ import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("어드민 계정 테스트")
+@DisplayName("admin-auth")
+@SpringBootTest(classes = AuthServiceManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
-    private static final AuthService authService = new AuthServiceManager(adminRepository, passwordEncoder,
-            authenticationManager, refreshTokenRepository, jwtTokenProvider);
+    @MockBean
+    AuthService authService;
 
     @Test
-    public void 어드민_선생님_계정_추가() {
+    public void add_account() {
         assertTrue(addAccount(
                 Admin.builder()
                         .id("test1234")
-                        .name("교무실")
+                        .name("tcher")
                         .password("testPassword")
                         .build()
                 )
@@ -30,29 +33,17 @@ public class AdminAccountTest extends AdminBaseTest {
     }
 
     @Test
-    public void 어드민_선생님_계정_추가_실패() {
-        assertFalse(addAccount(
-                Admin.builder()
-                        .id("test2@test.com")
-                        .name("교무실")
-                        .password("testPassword")
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_교무실_로그인() {
-        assertEquals(TEACHER_ADMIN, "asdf1234");
+    public void login() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
         try {
-            authService.login(new SignInRequest("asdf4567", "teacheradmin"));
+            authService.login(new SignInRequest("asdf1234", "teacheradmin"));
         } catch (AdminNotFoundException e) {
         }
     }
 
     @Test
-    public void 어드민_교무실_비밀번호_확인() {
+    public void checking_password() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         try {
             authService.checkPassword("teacheradmin");
