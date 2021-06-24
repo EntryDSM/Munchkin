@@ -1,12 +1,12 @@
 package kr.hs.entrydsm.application.usecase.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 
@@ -26,6 +26,7 @@ public class Application {
 
     private String applicationRemark;
 
+    @Length(min = 6, max = 6, message = "INVALID DATE")
     private String graduatedAt;
 
     public Application setGraduatedAt(String graduatedAt) {

@@ -71,10 +71,10 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     @Override
     public void changeInformation(long receiptCode, String name, String sex, LocalDate birthday,
                                   String parentName, String parentTel, String telephoneNumber, String homeTel,
-                                  String address, String postCode, String photoFileName) {
+                                  String address, String postCode, String photoFileName, String detailAddress) {
         User user = findByReceiptCode(receiptCode);
         user.updateInformation(name, sex, birthday, parentName, parentTel, telephoneNumber,
-                homeTel, address, postCode, photoFileName);
+                homeTel, address, postCode, photoFileName, detailAddress);
         userRepository.save(user);
     }
 
