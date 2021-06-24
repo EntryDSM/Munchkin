@@ -4,7 +4,7 @@ import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.refreshtoken.RefreshToken;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
-import kr.hs.entrydsm.admin.infrastructure.database.RefreshTokenRepository;
+import kr.hs.entrydsm.admin.infrastructure.database.AdminRefreshTokenRepositoryManager;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
@@ -28,7 +28,7 @@ public class AuthServiceManager implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final AdminRefreshTokenRepositoryManager refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${auth.jwt.exp.refresh}")
