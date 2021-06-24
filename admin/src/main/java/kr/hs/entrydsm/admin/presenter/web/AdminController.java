@@ -17,7 +17,6 @@ import java.io.IOException;
 public class AdminController {
 
     private final AdminService adminService;
-
     private final ExcelService excelService;
 
     //접수 현황 통계

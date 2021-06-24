@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.admin.usecase.admin;
 
-import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
@@ -9,8 +8,8 @@ import kr.hs.entrydsm.admin.integrate.main.MainRepository;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
 import kr.hs.entrydsm.admin.usecase.dto.CommonScore;
-import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
 import kr.hs.entrydsm.admin.usecase.dto.SpecialScore;
+import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicationPeriodNotOverException;
 import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
