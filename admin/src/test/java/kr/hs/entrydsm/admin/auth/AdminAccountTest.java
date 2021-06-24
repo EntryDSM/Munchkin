@@ -42,23 +42,11 @@ public class AdminAccountTest extends AdminBaseTest {
     }
 
     @Test
-    public void 어드민_행정실_계정_추가() {
-        assertTrue(addAccount(
-                Admin.builder()
-                        .id("test4567")
-                        .name("행정실")
-                        .password("testPassword")
-                        .build()
-                )
-        );
-    }
-
-    @Test
     public void 어드민_교무실_로그인() {
-        assertEquals(TEACHER_ADMIN, "asdf4567");
-        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("officeadmin"));
+        assertEquals(TEACHER_ADMIN, "asdf1234");
+        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
         try {
-            authService.login(new SignInRequest("asdf4567", "officeadmin"));
+            authService.login(new SignInRequest("asdf4567", "teacheradmin"));
         } catch (AdminNotFoundException e) {
         }
     }
