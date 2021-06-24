@@ -52,8 +52,8 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return Information.builder()
                 .name(user.getName())
-                .sex(user.getSex().toString())
-                .birthday(user.getBirthday().toString())
+                .sex(stringValueOf(user.getSex()))
+                .birthday(stringValueOf(user.getBirthday()))
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
                 .telephoneNumber(user.getTelephoneNumber())

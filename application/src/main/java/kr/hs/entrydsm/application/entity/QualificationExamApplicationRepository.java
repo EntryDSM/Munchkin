@@ -4,4 +4,5 @@ import java.util.Optional;
 
 public interface QualificationExamApplicationRepository {
     Optional<QualificationExamApplication> findByReceiptCode(Long receiptCode);
+    QualificationExamApplication save(QualificationExamApplication qualificationExamApplication);
 }

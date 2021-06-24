@@ -1,10 +1,7 @@
 package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.entity.School;
-import kr.hs.entrydsm.application.usecase.dto.Application;
-import kr.hs.entrydsm.application.usecase.dto.EtcScore;
-import kr.hs.entrydsm.application.usecase.dto.Information;
-import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
+import kr.hs.entrydsm.application.usecase.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,5 +33,13 @@ public interface ApplicationProcessing {
     void updateSubjectScore(SubjectScore score);
 
     void updateEtcScore(EtcScore score);
+
+    void updateGedScore(GedScore score);
+
+    SubjectScore getSubjectScore();
+
+    EtcScore getEtcScore();
+
+    GedScore getGedScore();
 
 }
