@@ -2,7 +2,7 @@ package kr.hs.entrydsm.admin.usecase.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.admin.Permission;
-import kr.hs.entrydsm.admin.entity.refreshtoken.RefreshToken;
+import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.AdminRefreshTokenRepositoryManager;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
@@ -58,7 +58,7 @@ public class AuthServiceManager implements AuthService {
                 .map(Admin::getId)
                 .map(adminId -> {
                     String refreshToken = jwtTokenProvider.generateRefreshToken(adminId);
-                    return new RefreshToken(adminId, refreshToken, refreshExp);
+                    return new AdminRefreshToken(adminId, refreshToken, refreshExp);
                 })
                 .map(refreshTokenRepository::save)
                 .map(refreshToken -> {
