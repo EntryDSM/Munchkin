@@ -2,17 +2,25 @@ package kr.hs.entrydsm.admin.usecase.admin;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
+import kr.hs.entrydsm.admin.entity.schedule.Schedule;
+import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
+import kr.hs.entrydsm.admin.entity.schedule.Type;
+import kr.hs.entrydsm.admin.integrate.main.MainRepository;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
 import kr.hs.entrydsm.admin.usecase.dto.CommonScore;
 import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
 import kr.hs.entrydsm.admin.usecase.dto.SpecialScore;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.ApplicationPeriodNotOverException;
+import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +29,8 @@ public class AdminServiceManager implements AdminService {
     private final ScoreRepository scoreRepository;
     private final AdminRepository adminRepository;
     private final AuthenticationManager authenticationManager;
+    private final MainRepository mainRepository;
+    private final ScheduleRepository scheduleRepository;
 
     private static final Integer RECRUITMENT_NUMBER_OF_PEOPLE = 80;
     private static final Integer COMMON_ADMISSION_NUMBER_OF_RECRUITMENT = 40;
@@ -78,6 +88,17 @@ public class AdminServiceManager implements AdminService {
                 .socialCount(socialCount)
                 .socialCompetitionRate((double)socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)
                 .build();
+    }
+
+    @Override
+    public void deleteAll() {
+        LocalDate now = LocalDate.now();
+        Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
+                .orElseThrow(ScheduleNotFoundException::new);
+        if(now.isBefore(secondAnnouncement.getDate())) {
+            throw new ApplicationPeriodNotOverException();
+        }
+        mainRepository.deleteAll();
     }
 
 }

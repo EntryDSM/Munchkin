@@ -41,4 +41,16 @@ public class AdminController {
         excelService.createApplicantInformation();
     }
 
+    @AdminJWTRequired
+    @GetMapping("/excel")
+    public void getAllExcels() throws IOException {
+        excelService.getAllExcels();
+    }
+
+    @AdminJWTRequired
+    @DeleteMapping("/data")
+    public void deleteAll() {
+        adminService.deleteAll();
+    }
+
 }
