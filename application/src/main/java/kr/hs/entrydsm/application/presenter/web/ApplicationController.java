@@ -2,6 +2,7 @@ package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.EtcScore;
+import kr.hs.entrydsm.application.usecase.dto.GedScore;
 import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
 import kr.hs.entrydsm.application.usecase.dto.UpdateDocsRequest;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
@@ -52,6 +53,27 @@ public class ApplicationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateEtcScore(@RequestBody @Valid EtcScore score) {
         applicationProcessing.updateEtcScore(score);
+    }
+
+    @PatchMapping("/score/ged")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateGedScore(@RequestBody @Valid GedScore score) {
+        applicationProcessing.updateGedScore(score);
+    }
+
+    @GetMapping("/score/subject")
+    public SubjectScore getSubjectScore() {
+        return applicationProcessing.getSubjectScore();
+    }
+
+    @GetMapping("/score/etc")
+    public EtcScore getEtcScore() {
+        return applicationProcessing.getEtcScore();
+    }
+
+    @GetMapping("/score/ged")
+    public GedScore getGedScore() {
+        return applicationProcessing.getGedScore();
     }
 
 }
