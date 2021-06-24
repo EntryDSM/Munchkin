@@ -1,10 +1,9 @@
 package kr.hs.entrydsm.admin.usecase.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
-import kr.hs.entrydsm.admin.entity.admin.Permission;
-import kr.hs.entrydsm.admin.entity.refreshtoken.RefreshToken;
+import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
-import kr.hs.entrydsm.admin.infrastructure.database.RefreshTokenRepository;
+import kr.hs.entrydsm.admin.infrastructure.database.AdminRefreshTokenRepositoryManager;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
@@ -28,7 +27,7 @@ public class AuthServiceManager implements AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final AdminRefreshTokenRepositoryManager refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Value("${auth.jwt.exp.refresh}")
@@ -45,7 +44,6 @@ public class AuthServiceManager implements AuthService {
                 Admin.builder()
                         .id(request.getId())
                         .password(passwordEncoder.encode(request.getPassword()))
-                        .permission(Permission.valueOf(request.getPermission()))
                         .name(request.getName())
                         .build()
         );
@@ -58,7 +56,7 @@ public class AuthServiceManager implements AuthService {
                 .map(Admin::getId)
                 .map(adminId -> {
                     String refreshToken = jwtTokenProvider.generateRefreshToken(adminId);
-                    return new RefreshToken(adminId, refreshToken, refreshExp);
+                    return new AdminRefreshToken(adminId, refreshToken, refreshExp);
                 })
                 .map(refreshTokenRepository::save)
                 .map(refreshToken -> {

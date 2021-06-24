@@ -3,6 +3,9 @@ package kr.hs.entrydsm.admin.usecase.excel;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
+import kr.hs.entrydsm.admin.entity.schedule.Schedule;
+import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
+import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
@@ -10,6 +13,8 @@ import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
+import kr.hs.entrydsm.admin.usecase.exception.ApplicationPeriodNotOverException;
+import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPatriarch;
@@ -21,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -29,6 +35,7 @@ public class ExcelServiceManager implements ExcelService {
 
     private final ApplicantRepository applicantRepository;
     private final ScoreRepository scoreRepository;
+    private final ScheduleRepository scheduleRepository;
 
     private final AmazonS3 s3;
 
@@ -43,6 +50,32 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(long receiptCode) throws IOException { // 유저 수험표 만들기 "수험번호", "성명", "출신 중학교", "지역", "전형 유형", "접수 번호"
+        getAdmissionTicket(receiptCode);
+    }
+
+    @Override
+    public void createApplicantInformation() throws IOException {
+        getApplicationInformation();
+    }
+
+    @Override
+    public void getAllExcels() throws IOException {
+        List<Long> applicantReceiptCodes = applicantRepository.getUserReceiptCodes();
+        LocalDate now = LocalDate.now();
+        Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
+                .orElseThrow(ScheduleNotFoundException::new);
+        if(now.isBefore(secondAnnouncement.getDate())) {
+            throw new ApplicationPeriodNotOverException();
+        }
+
+        getApplicationInformation();
+        for(Long receiptCode : applicantReceiptCodes) {
+            getAdmissionTicket(receiptCode);
+        }
+    }
+
+
+    private void getAdmissionTicket(long receiptCode) throws IOException {
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
 
         String examCode = applicant.getExamCode();
@@ -66,8 +99,7 @@ public class ExcelServiceManager implements ExcelService {
         admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, applicant.getExamCode() + name+" 수험표.xls"))); //엑셀 다운
     }
 
-    @Override
-    public void createApplicantInformation() throws IOException {
+    private void getApplicationInformation() throws IOException {
         ApplicantInformation applicantInformation = new ApplicantInformation();
         applicantInformation.format(); //엑셀 포맷 설정
         Sheet sheet = applicantInformation.getSheet();

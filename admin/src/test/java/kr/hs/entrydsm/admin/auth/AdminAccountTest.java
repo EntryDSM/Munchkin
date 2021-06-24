@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
-import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
 import kr.hs.entrydsm.admin.usecase.auth.AuthServiceManager;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
@@ -9,79 +8,42 @@ import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("어드민 계정 테스트")
+@DisplayName("admin-auth")
+@SpringBootTest(classes = AuthServiceManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
-    private static final AuthService authService = new AuthServiceManager(adminRepository, passwordEncoder,
-            authenticationManager, refreshTokenRepository, jwtTokenProvider);
+    @MockBean
+    AuthService authService;
 
     @Test
-    public void 어드민_선생님_계정_추가() {
+    public void add_account() {
         assertTrue(addAccount(
                 Admin.builder()
                         .id("test1234")
-                        .name("교무실")
+                        .name("tcher")
                         .password("testPassword")
-                        .permission(Permission.TEACHER)
                         .build()
                 )
         );
     }
 
     @Test
-    public void 어드민_선생님_계정_추가_실패() {
-        assertFalse(addAccount(
-                Admin.builder()
-                        .id("test2@test.com")
-                        .name("교무실")
-                        .password("testPassword")
-                        .permission(Permission.TEACHER)
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_행정실_계정_추가() {
-        assertTrue(addAccount(
-                Admin.builder()
-                        .id("test4567")
-                        .name("행정실")
-                        .password("testPassword")
-                        .permission(Permission.OFFICE)
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_행정실_계정_추가_실패() {
-        assertFalse(addAccount(
-                Admin.builder()
-                        .id("test4567890")
-                        .name("행정실")
-                        .password("testPassword")
-                        .permission(Permission.OFFICE)
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_행정실_로그인() {
-        assertEquals(OFFICE_ADMIN.getId(), "asdf4567");
-        assertEquals(OFFICE_ADMIN.getPassword(), passwordEncoder.encode("officeadmin"));
+    public void login() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
         try {
-            authService.login(new SignInRequest("asdf4567", "officeadmin"));
+            authService.login(new SignInRequest("asdf1234", "teacheradmin"));
         } catch (AdminNotFoundException e) {
         }
     }
 
     @Test
-    public void 어드민_교무실_비밀번호_확인() {
+    public void checking_password() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         try {
             authService.checkPassword("teacheradmin");

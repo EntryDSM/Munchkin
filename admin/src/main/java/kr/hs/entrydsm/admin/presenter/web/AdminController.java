@@ -17,7 +17,6 @@ import java.io.IOException;
 public class AdminController {
 
     private final AdminService adminService;
-
     private final ExcelService excelService;
 
     //접수 현황 통계
@@ -39,6 +38,18 @@ public class AdminController {
     @GetMapping("/excel/applicants")
     public void createApplicantInformation() throws IOException {
         excelService.createApplicantInformation();
+    }
+
+    @AdminJWTRequired
+    @GetMapping("/excel")
+    public void getAllExcels() throws IOException {
+        excelService.getAllExcels();
+    }
+
+    @AdminJWTRequired
+    @DeleteMapping("/data")
+    public void deleteAll() {
+        adminService.deleteAll();
     }
 
 }

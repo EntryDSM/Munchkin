@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @RedisHash(value = "refresh_token")
-public class RefreshToken implements Serializable {
+public class AdminRefreshToken implements Serializable {
 
     @Id
     private String id;
@@ -26,7 +26,7 @@ public class RefreshToken implements Serializable {
     @Indexed
     private Long refreshExp;
 
-    public RefreshToken update(Long refreshExp) {
+    public AdminRefreshToken update(Long refreshExp) {
         this.refreshExp = refreshExp;
         return this;
     }

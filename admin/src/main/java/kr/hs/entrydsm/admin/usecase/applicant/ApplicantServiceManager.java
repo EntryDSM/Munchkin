@@ -3,7 +3,6 @@ package kr.hs.entrydsm.admin.usecase.applicant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hs.entrydsm.admin.entity.admin.Admin;
-import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
@@ -11,7 +10,6 @@ import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.common.context.sender.ContentSender;
 import lombok.RequiredArgsConstructor;
@@ -53,12 +51,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
-        if(admin.getPermission().equals(Permission.TEACHER)) {
-            applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
-        }
-        else {
-            throw new UserNotAccessibleException();
-        }
+        applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
         String template;

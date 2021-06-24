@@ -20,6 +20,4 @@ public class SignUpRequest {
     @Length(max = 5)
     private String name;
 
-    private String permission;
-
 }
