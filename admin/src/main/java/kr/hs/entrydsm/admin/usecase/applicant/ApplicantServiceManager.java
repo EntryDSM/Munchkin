@@ -10,7 +10,6 @@ import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.response.*;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.UserNotAccessibleException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.common.context.sender.ContentSender;
 import lombok.RequiredArgsConstructor;
