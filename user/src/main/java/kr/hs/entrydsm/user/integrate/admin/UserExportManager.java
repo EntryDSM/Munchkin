@@ -77,7 +77,9 @@ public class UserExportManager implements UserExportRepository {
 
     @Override
     public List<Long> findAllReceiptCode() {
-        return null;
+        return userRepository.findAllBy()
+                .stream().map(User::getReceiptCode)
+                .collect(Collectors.toList());
     }
 
 }
