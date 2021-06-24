@@ -93,11 +93,11 @@ public class GraduationApplication extends Application {
     }
 
     public String getSchoolName() {
-        return school.getName();
+        return school == null ? null : school.getName();
     }
 
     public String getSchoolCode() {
-        return school.getCode();
+        return school == null ? null : school.getCode();
     }
 
     public String getSchoolClass() {
