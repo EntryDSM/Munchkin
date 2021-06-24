@@ -11,9 +11,11 @@ import kr.hs.entrydsm.application.infrastructure.database.SchoolRepositoryManage
 import kr.hs.entrydsm.score.infrastructure.database.ScoreRepositoryManager;
 import kr.hs.entrydsm.user.infrastructure.database.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Lazy
 @Component
 public class AdminIntegrateMainService implements MainRepository {
 
