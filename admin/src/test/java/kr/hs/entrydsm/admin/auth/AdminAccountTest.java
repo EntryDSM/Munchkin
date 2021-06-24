@@ -5,12 +5,14 @@ import kr.hs.entrydsm.admin.usecase.auth.AuthService;
 import kr.hs.entrydsm.admin.usecase.auth.AuthServiceManager;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @DisplayName("admin-auth")
 public class AdminAccountTest extends AdminBaseTest {
@@ -33,26 +35,34 @@ public class AdminAccountTest extends AdminBaseTest {
     public void login() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        try {
-            authService.login(new SignInRequest("asdf1234", "teacheradmin"));
-        } catch (AdminNotFoundException e) {
-        }
+        authService.login(new SignInRequest("asdf1234", "teacheradmin"));
     }
 
     @Test
     public void login_fail() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        authService.login(new SignInRequest("asdf1234", "teacheradmin"));
+        when(authService.login(new SignInRequest("asdf123", "teacheradmin")))
+                .thenThrow(AdminNotFoundException.class);
     }
 
     @Test
     public void checking_password() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
-        try {
-            authService.checkPassword("teacheradmin");
-        } catch(PasswordNotValidException e) {
-        }
+        authService.checkPassword("teacheradmin");
+    }
+
+    @Test
+    public void checking_password_fail() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        when(authService.checkPassword("teacheradmn"))
+                .thenThrow(PasswordNotValidException.class);
+    }
+
+    @Test
+    public void refresh_token() {
+        when(authService.tokenRefresh("asdf.asdf.asdf"))
+                .thenThrow(InvalidTokenException.class);
     }
 
 }
