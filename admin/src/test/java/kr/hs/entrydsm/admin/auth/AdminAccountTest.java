@@ -8,17 +8,14 @@ import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @DisplayName("admin-auth")
-@SpringBootTest(classes = AuthServiceManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
-    @MockBean
-    AuthService authService;
+    private final AuthService authService = mock(AuthServiceManager.class);
 
     @Test
     public void add_account() {
@@ -40,6 +37,13 @@ public class AdminAccountTest extends AdminBaseTest {
             authService.login(new SignInRequest("asdf1234", "teacheradmin"));
         } catch (AdminNotFoundException e) {
         }
+    }
+
+    @Test
+    public void login_fail() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
+        authService.login(new SignInRequest("asdf1234", "teacheradmin"));
     }
 
     @Test
