@@ -53,7 +53,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
         return Information.builder()
                 .name(user.getName())
                 .sex(stringValueOf(user.getSex()))
-                .birthday(user.getBirthday().toString())
+                .birthday(stringValueOf(user.getBirthday()))
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
                 .telephoneNumber(user.getTelephoneNumber())
