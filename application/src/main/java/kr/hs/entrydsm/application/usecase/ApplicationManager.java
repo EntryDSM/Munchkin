@@ -160,7 +160,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
 
     private String getImageUrl(String photoFileName) throws MalformedURLException {
-        return (!photoFileName.isEmpty()) ? imageService.generateObjectUrl(photoFileName) : null;
+        return (photoFileName != null) ? imageService.generateObjectUrl(photoFileName) : null;
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {
