@@ -26,10 +26,14 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
 
     @Override
     public void writeInformation(Long receiptCode, Information information) {
+        LocalDate birthday = null;
+        if(information.getBirthday() != null)
+            birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd"));
+
         userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
-                LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd")), information.getParentName(), information.getParentTel(),
+                birthday, information.getParentName(), information.getParentTel(),
                 information.getTelephoneNumber(), information.getHomeTel(), information.getAddress(),
-                information.getPostCode(), information.getPhotoFileName());
+                information.getPostCode(), information.getPhotoFileName(), information.getDetailAddress());
     }
 
     @Override
@@ -57,6 +61,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
                 .address(user.getAddress())
                 .postCode(user.getPostCode())
                 .photoFileName(user.getPhotoFileName())
+                .detailAddress(user.getDetailAddress())
                 .build();
     }
 
