@@ -114,7 +114,8 @@ public class ApplicationManager implements ApplicationProcessing {
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
         result.setSchoolCode(graduationApplication.getSchoolCode());
         result.setSchoolTel(graduationApplication.getSchoolTel());
-        result.setIsGraduated(graduationApplication.getIsGraduated());
+        result.setIsGraduated(graduationApplication.getIsGraduated() != null
+                && graduationApplication.getIsGraduated());
         result.setStudentNumber(graduationApplication.getStudentNumber());
 
         return result;
