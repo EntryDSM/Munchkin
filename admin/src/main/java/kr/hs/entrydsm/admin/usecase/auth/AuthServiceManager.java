@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.admin.usecase.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
-import kr.hs.entrydsm.admin.entity.admin.Permission;
 import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.AdminRefreshTokenRepositoryManager;
@@ -45,7 +44,6 @@ public class AuthServiceManager implements AuthService {
                 Admin.builder()
                         .id(request.getId())
                         .password(passwordEncoder.encode(request.getPassword()))
-                        .permission(Permission.valueOf(request.getPermission()))
                         .name(request.getName())
                         .build()
         );

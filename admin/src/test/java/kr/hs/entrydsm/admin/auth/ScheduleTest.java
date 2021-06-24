@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("일정 테스트")
 public class ScheduleTest extends ScheduleBaseTest {
 
-    private static final ScheduleService scheduleService = new ScheduleServiceManager(adminRepository, scheduleRepository, scheduleRepositoryManager, authenticationManager);
+    private static final ScheduleService scheduleService = new ScheduleServiceManager(scheduleRepository, scheduleRepositoryManager);
 
     @Test
     public void checkStartDate() {
