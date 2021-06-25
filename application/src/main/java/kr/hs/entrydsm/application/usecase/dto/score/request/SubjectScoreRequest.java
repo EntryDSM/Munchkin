@@ -1,42 +1,40 @@
-package kr.hs.entrydsm.application.usecase.dto;
+package kr.hs.entrydsm.application.usecase.dto.score.request;
 
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Pattern;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SubjectScore {
+public class SubjectScoreRequest {
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String koreanScore;
+    private final String koreanScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String socialScore;
+    private final String socialScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String historyScore;
+    private final String historyScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String mathScore;
+    private final String mathScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String scienceScore;
+    private final String scienceScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String englishScore;
+    private final String englishScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private String techAndHomeScore;
+    private final String techAndHomeScore;
 
-    public static SubjectScore from(GraduationApplication application) {
-        return SubjectScore.builder()
+    public static SubjectScoreRequest from(GraduationApplication application) {
+        return SubjectScoreRequest.builder()
                 .koreanScore(application.getKoreanScore())
                 .mathScore(application.getMathScore())
                 .historyScore(application.getHistoryScore())

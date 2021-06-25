@@ -1,21 +1,15 @@
-package kr.hs.entrydsm.application.usecase.dto;
+package kr.hs.entrydsm.application.usecase.dto.application.request;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Builder
-public class Information {
+public class InformationRequest {
 
     private static final String TEL_REGEXP = "^\\d{3}\\d{3,4}\\d{4}$";
 
@@ -61,26 +55,15 @@ public class Information {
 
     @Length(max = 5, message = "INVALID STUDENT_NUMBER")
     private String studentNumber;
+
     private boolean isGraduated;
 
     public void setSchoolCode(String schoolCode){
         this.schoolCode = schoolCode;
     }
 
-    public void setSchoolTel(String schoolTel){
-        this.schoolTel = schoolTel;
-    }
-
-    public void setPhotoFileName(String photoFileName) {
-        this.photoFileName = photoFileName;
-    }
-
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
-    }
-
-    public void setIsGraduated(boolean isGraduated) {
-        this.isGraduated = isGraduated;
     }
 
 }
