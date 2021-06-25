@@ -3,8 +3,16 @@ package kr.hs.entrydsm.application.usecase;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.*;
-import kr.hs.entrydsm.application.usecase.dto.Application;
+import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
@@ -63,7 +71,7 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public void writeApplicationType(Application applicationRequest) {
+    public void writeApplicationType(ApplicationRequest applicationRequest) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
         if(applicationRequest.getGraduatedAt() != null){
@@ -77,7 +85,7 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public void writeInformation(Information information) {
+    public void writeInformation(InformationRequest information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
@@ -92,25 +100,27 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public Application getApplicationType() {
+    public ApplicationResponse getApplicationType() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
             GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
                     .orElseThrow(ApplicationNotFoundException::new);
-            return applicantExportService.getApplicationType(receiptCode)
+            if(graduationApplication.getGraduateAt() != null)
+                return applicantExportService.getApplicationType(receiptCode)
                     .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                     .format(graduationApplication.getGraduateAt()));
+            return applicantExportService.getApplicationType(receiptCode);
         }
         return applicantExportService.getApplicationType(receiptCode);
 
     }
 
     @Override
-    public Information getInformation() throws IOException {
+    public InformationResponse getInformation() throws IOException {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        Information result = applicantExportService.getInformation(receiptCode);
+        InformationResponse result = applicantExportService.getInformation(receiptCode);
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
         result.setSchoolCode(graduationApplication.getSchoolCode());
         result.setSchoolTel(graduationApplication.getSchoolTel());
@@ -130,32 +140,32 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public void updateSubjectScore(SubjectScore score) {
+    public void updateSubjectScore(SubjectScoreRequest score) {
         scoreService.updateSubjectScore(score);
     }
 
     @Override
-    public void updateEtcScore(EtcScore score) {
+    public void updateEtcScore(EtcScoreRequest score) {
         scoreService.updateEtcScore(score);
     }
 
     @Override
-    public void updateGedScore(GedScore score) {
+    public void updateGedScore(GedScoreRequest score) {
         scoreService.updateGedScore(score);
     }
 
     @Override
-    public SubjectScore getSubjectScore() {
+    public SubjectScoreResponse getSubjectScore() {
         return scoreService.getSubjectScore();
     }
 
     @Override
-    public EtcScore getEtcScore() {
+    public EtcScoreResponse getEtcScore() {
         return scoreService.getEtcScore();
     }
 
     @Override
-    public GedScore getGedScore() {
+    public GedScoreResponse getGedScore() {
         return scoreService.getGedScore();
     }
 
