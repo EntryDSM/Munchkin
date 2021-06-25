@@ -1,21 +1,24 @@
 package kr.hs.entrydsm.application.usecase.score;
 
-import kr.hs.entrydsm.application.usecase.dto.EtcScore;
-import kr.hs.entrydsm.application.usecase.dto.GedScore;
-import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
+import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
 
 public interface ScoreService {
 
-    void updateSubjectScore(SubjectScore score);
+    void updateSubjectScore(SubjectScoreRequest score);
 
-    void updateEtcScore(EtcScore score);
+    void updateEtcScore(EtcScoreRequest score);
 
-    void updateGedScore(GedScore score);
+    void updateGedScore(GedScoreRequest score);
 
-    SubjectScore getSubjectScore();
+    SubjectScoreResponse getSubjectScore();
 
-    EtcScore getEtcScore();
+    EtcScoreResponse getEtcScore();
 
-    GedScore getGedScore();
+    GedScoreResponse getGedScore();
 
 }

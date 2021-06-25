@@ -1,9 +1,12 @@
 package kr.hs.entrydsm.application.usecase.score;
 
 import kr.hs.entrydsm.application.entity.*;
-import kr.hs.entrydsm.application.usecase.dto.EtcScore;
-import kr.hs.entrydsm.application.usecase.dto.GedScore;
-import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
+import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +21,7 @@ public class ScoreServiceImpl implements ScoreService{
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public void updateSubjectScore(SubjectScore score) {
+    public void updateSubjectScore(SubjectScoreRequest score) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
@@ -34,7 +37,7 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public void updateEtcScore(EtcScore score) {
+    public void updateEtcScore(EtcScoreRequest score) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
@@ -48,7 +51,7 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public void updateGedScore(GedScore score) {
+    public void updateGedScore(GedScoreRequest score) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         QualificationExamApplication qualificationExamApplication = getQualificationExamApplication(receiptCode);
         qualificationExamApplication.setAverageScore(score.getGedAverageScore());
@@ -58,10 +61,10 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public SubjectScore getSubjectScore() {
+    public SubjectScoreResponse getSubjectScore() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
-        return SubjectScore.builder()
+        return SubjectScoreResponse.builder()
                 .koreanScore(graduationApplication.getKoreanScore())
                 .englishScore(graduationApplication.getEnglishScore())
                 .mathScore(graduationApplication.getMathScore())
@@ -73,11 +76,11 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public EtcScore getEtcScore() {
+    public EtcScoreResponse getEtcScore() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
-        return EtcScore.builder()
+        return EtcScoreResponse.builder()
                 .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
                 .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
                 .latenessCount(graduationApplication.getLatenessCount())
@@ -87,11 +90,11 @@ public class ScoreServiceImpl implements ScoreService{
     }
 
     @Override
-    public GedScore getGedScore() {
+    public GedScoreResponse getGedScore() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         QualificationExamApplication qualificationExamApplication = getQualificationExamApplication(receiptCode);
 
-        return new GedScore(qualificationExamApplication.getAverageScore());
+        return new GedScoreResponse(qualificationExamApplication.getAverageScore());
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {
