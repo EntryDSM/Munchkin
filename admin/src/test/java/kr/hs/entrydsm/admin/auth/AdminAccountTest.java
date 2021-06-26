@@ -4,7 +4,6 @@ import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.DisplayName;
@@ -64,8 +63,7 @@ public class AdminAccountTest extends AdminBaseTest {
 
     @Test
     public void refresh_token() {
-        when(authService.tokenRefresh("asdf.asdf.asdf"))
-                .thenThrow(InvalidTokenException.class);
+        REFRESH_TOKEN.update(123456L);
     }
 
     @Test
