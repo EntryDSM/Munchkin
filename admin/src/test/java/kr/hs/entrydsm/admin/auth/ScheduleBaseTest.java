@@ -1,24 +1,23 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
+import kr.hs.entrydsm.admin.entity.schedule.ScheduleId;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
+import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-
 public abstract class ScheduleBaseTest extends AdminBaseTest{
 
-    protected static final ScheduleRepository scheduleRepository = new MockScheduleRepositoryManager();
-    protected static final ScheduleRepositoryManager scheduleRepositoryManager = mock(ScheduleRepositoryManager.class);
+    protected static final ScheduleId START_SCHEDULE_ID = new ScheduleId("2021",Type.START_DATE);
 
     protected static final Schedule START_DATE = Schedule.builder()
-            .year("2021")
-            .type(Type.START_DATE)
+            .year(START_SCHEDULE_ID.getYear())
+            .type(START_SCHEDULE_ID.getType())
             .date(LocalDate.of(2021,10,18))
             .build();
 
@@ -47,6 +46,11 @@ public abstract class ScheduleBaseTest extends AdminBaseTest{
             .build();
 
     protected static final List<Schedule> SCHEDULES = new ArrayList<>();
+
+    protected static boolean updateSchedule(ScheduleRequest request) {
+        START_DATE.update(request);
+        return true;
+    }
 
     static {
         SCHEDULES.add(START_DATE);

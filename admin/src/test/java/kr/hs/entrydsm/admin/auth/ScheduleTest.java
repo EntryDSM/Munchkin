@@ -71,6 +71,13 @@ public class ScheduleTest extends ScheduleBaseTest {
     }
 
     @Test
+    @Order(2)
+    public void schedule_entity_modify_schedule() {
+        ScheduleRequest scheduleRequest = new ScheduleRequest("2021", Type.START_DATE, "2021-06-22");
+        updateSchedule(scheduleRequest);
+    }
+
+    @Test
     @Order(1)
     public void get_schedule() {
         scheduleService.getSchedules();

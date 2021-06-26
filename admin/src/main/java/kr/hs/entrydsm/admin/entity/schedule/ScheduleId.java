@@ -1,13 +1,15 @@
 package kr.hs.entrydsm.admin.entity.schedule;
 
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@NoArgsConstructor
+@Getter
+@AllArgsConstructor
 public class ScheduleId implements Serializable {
 
     @Id
