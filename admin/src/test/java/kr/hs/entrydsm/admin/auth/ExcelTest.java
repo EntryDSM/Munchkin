@@ -9,8 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("admin-excel")
 @SpringBootTest(classes = ExcelServiceManager.class)
@@ -34,6 +33,34 @@ public class ExcelTest extends ExcelBaseTest {
         assertTrue(!EXCEL_USER.getSelfIntroduce().isBlank());
         assertTrue(!EXCEL_USER.getStudyPlan().isBlank());
         assertEquals(EXCEL_USER.getParentTel(), "010-0000-0000");
+        assertFalse(EXCEL_USER.getAddress().isBlank());
+        assertFalse(EXCEL_USER.getEducationalStatus().isBlank());
+    }
+
+    @Test
+    public void excel_user_score() {
+        assertFalse(EXCEL_USER_SCORE.getYearOfGraduation().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getMiddleSchoolStudentNumber().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getMiddleSchool().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getKoreanGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getSocialGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getHistoryGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getMathGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getScienceGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getEnglishGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTechAndHomeGrade().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalFirstGradeScores().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalSecondGradeScores().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalThirdGradeScores().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getVolunteerScore().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getVolunteerTime().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getDayAbsenceCount().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getLectureAbsenceCount().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getLatenessCount().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getEarlyLeaveCount().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getConversionScore().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getAttendanceScore().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalScoreFirstRound().isBlank());
     }
 
     @Test
