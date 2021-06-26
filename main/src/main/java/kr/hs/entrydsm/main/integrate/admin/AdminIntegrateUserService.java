@@ -113,7 +113,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     }
 
     @Override
-    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
+    public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         userExportRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
     }
 

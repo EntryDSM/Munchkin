@@ -47,7 +47,7 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override //지원자 원서 도착 여부 변경
-    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
+    public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
         applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
