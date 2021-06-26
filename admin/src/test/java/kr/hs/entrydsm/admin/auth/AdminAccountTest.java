@@ -9,19 +9,18 @@ import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @DisplayName("admin-auth")
-@SpringBootTest(classes = AuthServiceManager.class)
+//@SpringBootTest(classes = AuthenticationManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
-    @MockBean
-    AuthService authService;
+    private final AuthService authService = new AuthServiceManager(adminRepository, passwordEncoder, authenticationManager, refreshTokenRepository, jwtTokenProvider);
 
+    /*@MockBean
+    AuthService authService;*/
 
     @Test
     public void add_account() {
@@ -39,15 +38,15 @@ public class AdminAccountTest extends AdminBaseTest {
     public void login() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        authService.login(new SignInRequest("asdf1234", "teacheradmin"));
+        //authService.login(new SignInRequest("asdf1234", "teacheradmin"));
     }
 
     @Test
     public void login_fail() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        when(authService.login(new SignInRequest("asdf123", "teacheradmin")))
-                .thenThrow(AdminNotFoundException.class);
+        /*when(authService.login(new SignInRequest("asdf123", "teacheradmin")))
+                .thenThrow(AdminNotFoundException.class);*/
     }
 
     @Test
@@ -59,14 +58,14 @@ public class AdminAccountTest extends AdminBaseTest {
     @Test
     public void checking_password_fail() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
-        when(authService.checkPassword("teacheradmn"))
-                .thenThrow(PasswordNotValidException.class);
+        /*when(authService.checkPassword("teacheradmn"))
+                .thenThrow(PasswordNotValidException.class);*/
     }
 
-    @Test
-    public void refresh_token() {
-        when(authService.tokenRefresh("asdf.asdf.asdf"))
-                .thenThrow(InvalidTokenException.class);
-    }
+        /*@Test
+        public void refresh_token() {
+            when(authService.tokenRefresh("asdf.asdf.asdf"))
+                    .thenThrow(InvalidTokenException.class);
+        }*/
 
 }
