@@ -68,4 +68,11 @@ public class AdminAccountTest extends AdminBaseTest {
                 .thenThrow(InvalidTokenException.class);
     }
 
+    @Test
+    public void check_refresh_token() {
+        assertEquals(REFRESH_TOKEN.getId(), TEACHER_ADMIN.getId());
+        assertEquals(REFRESH_TOKEN.getRefreshExp(), 123456L);
+        assertFalse(REFRESH_TOKEN.getRefreshToken().equals("asdf.asdf.asdf"));
+    }
+
 }

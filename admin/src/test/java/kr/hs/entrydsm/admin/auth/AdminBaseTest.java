@@ -1,6 +1,8 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
+import kr.hs.entrydsm.admin.security.JwtTokenProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -25,6 +27,10 @@ public abstract class AdminBaseTest {
             .password(passwordEncoder.encode("teacheradmin"))
             .name("본부교무실")
             .build();
+
+    protected static final JwtTokenProvider JWT_TOKEN_PROVIDER = new MockJwtTokenProvider();
+
+    protected static final AdminRefreshToken REFRESH_TOKEN = new AdminRefreshToken(TEACHER_ADMIN.getId(), JWT_TOKEN_PROVIDER.generateRefreshToken(TEACHER_ADMIN.getId()), 123456L);
 
     private static final List<Admin> ADMINS = new ArrayList<>();
     static {
