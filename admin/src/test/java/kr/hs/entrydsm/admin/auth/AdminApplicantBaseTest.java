@@ -23,6 +23,7 @@ public class AdminApplicantBaseTest {
             .parentTel("010-8888-8888") //보호자 전화번호
             .homeTel("02-000-0000")
             .schoolTel("02-031-031")
+            .photoFileName("asdf")
             .isSubmit(true)
             .isPrintedArrived(false)
             .email("test@test.com")

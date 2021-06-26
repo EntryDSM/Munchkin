@@ -22,9 +22,31 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void applicant() {
-        assertTrue(APPLICANT.isDaejeon()==false);
-
-        assertEquals(APPLICANT.isGraduated(), false);
+        assertTrue(APPLICANT.getIsDaejeon()==false);
+        assertFalse(APPLICANT.getEmail().isBlank());
+        assertFalse(APPLICANT.getName().isBlank());
+        assertFalse(APPLICANT.getPhotoFileName().isBlank());
+        assertFalse(APPLICANT.getBirthDate().toString().isBlank());
+        assertTrue(APPLICANT.getIsSubmit());
+        assertFalse(APPLICANT.getIsPrintedArrived());
+        assertTrue(APPLICANT.getDetailAddress() == null);
+        assertFalse(APPLICANT.getAddress().isBlank());
+        assertFalse(APPLICANT.getTelephoneNumber().isBlank());
+        assertFalse(APPLICANT.getParentTel().isBlank());
+        assertFalse(APPLICANT.getSchoolName().isBlank());
+        assertFalse(APPLICANT.getSchoolTel().isBlank());
+        assertFalse(APPLICANT.getHomeTel().isBlank());
+        assertFalse(APPLICANT.getSelfIntroduce().isBlank());
+        assertFalse(APPLICANT.getStudyPlan().isBlank());
+        assertFalse(APPLICANT.getAverageScore().toString().isBlank());
+        assertFalse(APPLICANT.getVolunteerTime().toString().isBlank());
+        assertFalse(APPLICANT.getConversionScore().toString().isBlank());
+        assertFalse(APPLICANT.getDayAbsenceCount().toString().isBlank());
+        assertFalse(APPLICANT.getLectureAbsenceCount().toString().isBlank());
+        assertFalse(APPLICANT.getEarlyLeaveCount().toString().isBlank());
+        assertFalse(APPLICANT.getLatenessCount().toString().isBlank());
+        assertTrue(APPLICANT.getDistance() == null);
+        assertEquals(APPLICANT.getIsGraduated(), false);
         assertTrue(APPLICANT.getEducationalStatus().equals("PROSPECTIVE_GRADUATE"));
         assertTrue(APPLICANT.getApplicationType().equals("COMMON"));
         assertEquals(APPLICANT.getExamCode(), "12036");
