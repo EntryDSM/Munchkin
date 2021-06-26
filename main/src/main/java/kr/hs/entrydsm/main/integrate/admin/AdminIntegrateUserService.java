@@ -124,11 +124,26 @@ public class AdminIntegrateUserService implements ApplicantRepository {
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
             String sex;
+            String educationalStatus;
             if(user.getSex().equals(Sex.MALE)) {
                 sex = "남자";
             } else {
                 sex = "여자";
             }
+            switch (user.getEducationalStatus()) {
+                case PROSPECTIVE_GRADUATE :
+                    educationalStatus = "졸업예정자";
+                    break;
+                case GRADUATE :
+                    educationalStatus = "졸업자";
+                    break;
+                case QUALIFICATION_EXAM :
+                    educationalStatus = "검정고시합격자";
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + user.getEducationalStatus());
+            }
+
             excelUsers.add(
                     ExcelUser.builder()
                             .examCode(user.getStatus().getExamCode()) //수험번호
@@ -140,7 +155,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                             .birthDay(user.getBirthday().toString()) //생년월일
                             .sex(sex) //성별
                             .address(user.getAddress()) //주소
-                            .educationalStatus(user.getEducationalStatus().toString()) //학력구분
+                            .educationalStatus(educationalStatus) //학력구분
                             .telephoneNumber(user.getTelephoneNumber()) //학생 전화번호
                             .studyPlan(user.getStudyPlan()) //자기소개서
                             .selfIntroduce(user.getSelfIntroduce()) //학업 계획서
