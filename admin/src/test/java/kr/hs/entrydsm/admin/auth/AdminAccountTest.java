@@ -9,15 +9,19 @@ import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @DisplayName("admin-auth")
+@SpringBootTest(classes = AuthServiceManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
-    private final AuthService authService = mock(AuthServiceManager.class);
+    @MockBean
+    AuthService authService;
+
 
     @Test
     public void add_account() {
