@@ -74,6 +74,12 @@ public class AdminAccountTest extends AdminBaseTest {
     }
 
     @Test
+    public void sign_in_request() {
+        assertNotNull(SIGN_IN_REQUEST.getId());
+        assertNotNull(SIGN_IN_REQUEST.getPassword());
+    }
+
+    @Test
     public void sign_up_request() {
         assertNotNull(SIGN_UP_REQUEST.getId());
         assertNotNull(SIGN_UP_REQUEST.getPassword());

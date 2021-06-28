@@ -74,6 +74,7 @@ public class ScheduleTest extends ScheduleBaseTest {
     @Order(2)
     public void schedule_entity_modify_schedule() {
         updateSchedule(SCHEDULE_REQUEST);
+        assertFalse(SCHEDULE_REQUEST.getType()==null);
     }
 
     @Test
