@@ -1,21 +1,18 @@
 package kr.hs.entrydsm.application.builder;
 
 import kr.hs.entrydsm.application.entity.Applicant;
-import kr.hs.entrydsm.application.entity.ApplicationRemark;
-import kr.hs.entrydsm.application.entity.ApplicationType;
-import kr.hs.entrydsm.application.entity.EducationalStatus;
 
 import java.time.LocalDate;
 
 public class ApplicantBuilder {
 
-    public static Applicant build() {
+    public static Applicant build(String applicationType, String applicationRemark, String educationalStatus) {
         return Applicant.builder()
                 .receiptCode(1)
                 .telephoneNumber("01000000000")
-                .applicationType(ApplicationType.SOCIAL)
-                .applicationRemark(ApplicationRemark.MULTICULTURAL)
-                .educationalStatus(EducationalStatus.PROSPECTIVE_GRADUATE)
+                .applicationType(applicationType)
+                .applicationRemark(applicationRemark)
+                .educationalStatus(educationalStatus)
                 .isDaejeon(true)
                 .name("김대덕")
                 .sex("MALE")

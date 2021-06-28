@@ -47,7 +47,9 @@ public class PdfDataConverterTest {
         final String checkedBallotBox = "☑";
         final String emptyBallotBox = "☐";
 
-        Applicant applicant = ApplicantBuilder.build();
+        Applicant applicant = ApplicantBuilder.build(
+                ApplicationType.SOCIAL, ApplicationRemark.MULTICULTURAL, EducationalStatus.PROSPECTIVE_GRADUATE
+        );
         CalculatedScore calculatedScore = CalculatedScoreBuilder.build();
 
         GraduationApplication graduationApplication = GraduationApplicationBuilder.build();
