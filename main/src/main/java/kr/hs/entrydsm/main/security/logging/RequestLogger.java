@@ -23,9 +23,13 @@ public class RequestLogger extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        RequestWrapper requestWrapper = new RequestWrapper(request);
-        filterChain.doFilter(requestWrapper, response);
-        logRequest(requestWrapper, response);
+        if(request.getHeader("Content-Type") != null && request.getHeader("Content-Type").contains("multipart/form-data")){
+            filterChain.doFilter(request, response);
+        }else {
+            RequestWrapper requestWrapper = new RequestWrapper(request);
+            logRequest(requestWrapper, response);
+            filterChain.doFilter(requestWrapper, response);
+        }
     }
 
     private void logRequest(RequestWrapper request, HttpServletResponse response) throws IOException {
