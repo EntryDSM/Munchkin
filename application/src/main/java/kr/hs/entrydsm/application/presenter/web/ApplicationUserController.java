@@ -49,7 +49,7 @@ public class ApplicationUserController {
 
     @PostMapping("/photo")
     @ResponseStatus(HttpStatus.CREATED)
-    public String uploadPhoto(@RequestPart @Nullable MultipartFile multipartFile) throws IOException {
+    public String uploadPhoto(@RequestPart(name = "file") @Nullable MultipartFile multipartFile) throws IOException {
         return applicationProcessing.uploadPhoto(multipartFile);
     }
 
