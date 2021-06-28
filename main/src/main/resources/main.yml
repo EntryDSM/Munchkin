@@ -25,6 +25,8 @@ aws:
     accessKey: ${AWS_S3_ACCESS:s3_access}
     secretKey: ${AWS_S3_SECRET:s3_secret}
     region: ${AWS_S3_REGION:ap-northeast-2}
+    bucket: ${AWS_S3_BUCKET:bucket}
+    base_image_url: ${AWS_S3_URL:image/}
   ses:
     access-key: ${AWS_SES_ACCESS:ses_access}
     secret_key: ${AWS_SES_SECRET:ses_secret}
