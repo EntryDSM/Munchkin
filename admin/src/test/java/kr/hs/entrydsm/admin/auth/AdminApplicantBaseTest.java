@@ -1,6 +1,9 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.usecase.dto.*;
+import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,11 +23,10 @@ public class AdminApplicantBaseTest {
             .detailAddress(null)
             .telephoneNumber("010-0000-0000") //학생 전화번호
             .educationalStatus("PROSPECTIVE_GRADUATE") //학력구분 PROSPECTIVE_GRADUATE, GRADUATE, QUALIFICATION_EXAM
-            .studyPlan("학업 계획서") //학업 계획서
-            .selfIntroduce("자기 소개서") //자기소개서
             .parentTel("010-8888-8888") //보호자 전화번호
             .homeTel("02-000-0000")
             .schoolTel("02-031-031")
+            .photoFileName("asdf")
             .isSubmit(true)
             .isPrintedArrived(false)
             .email("test@test.com")
@@ -114,6 +116,102 @@ public class AdminApplicantBaseTest {
             .address("경상북도 상주시 경상대로 314")
             .receiptCode(123456)
             .build();
+
+    protected static final Coordinate COORDINATE = Coordinate.builder()
+            .lat("뭐들어가야 하지")
+            .lon("진짜 뭐 들어가야 하는지 모라요")
+            .cityDo("경기도")
+            .guGun("기흥구")
+            .eupMyun("오잉")
+            .legalDong("이건 뭐죠")
+            .adminDong("띠용")
+            .ri("이런거 업는")
+            .bunji("대박")
+            .buildingName("빌딩네임")
+            .buildingDong("빌딩동")
+            .latEntr("다 스트링이네")
+            .lonEntr("오마이갓")
+            .newRoadName("아잇")
+            .newBuildingIndex("지금은")
+            .zipcode("1교시")
+            .build();
+
+    protected static final NotSubmitApplicant NOT_SUBMIT_APPLICANT = NotSubmitApplicant.builder()
+            .applicantTel("010-0000-0000")
+            .parentTel("010-0000-0000")
+            .homeTel("010-0000-0000")
+            .schoolTel("010-0000-0000")
+            .build();
+
+    protected static final Properties PROPERTIES = Properties.builder()
+            .totalDistance(123.123)
+            .totalTime(1)
+            .totalFare(2)
+            .taxiFare(123)
+            .build();
+
+    protected static final RouteBody ROUTE_BODY = RouteBody.builder()
+            .endX(1)
+            .endY(1)
+            .startX(1)
+            .startY(1)
+            .totalValue(1)
+            .build();
+
+    protected static final Status STATUS = Status.builder()
+            .isPrintedArrived(true)
+            .isSubmit(true)
+            .build();
+
+    protected static final RouteGuidanceRequest ROUTE_GUIDANCE_REQUEST = RouteGuidanceRequest.builder()
+            .lng(0)
+            .lat(0)
+            .startX(0)
+            .startY(0)
+            .totalValue(0)
+            .build();
+
+    protected static final Pageable PAGEABLE = new Pageable() {
+        @Override
+        public int getPageNumber() {
+            return 1;
+        }
+
+        @Override
+        public int getPageSize() {
+            return 3;
+        }
+
+        @Override
+        public long getOffset() {
+            return 0;
+        }
+
+        @Override
+        public Sort getSort() {
+            return null;
+        }
+
+        @Override
+        public Pageable next() {
+            return null;
+        }
+
+        @Override
+        public Pageable previousOrFirst() {
+            return null;
+        }
+
+        @Override
+        public Pageable first() {
+            return null;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+    };
 
     private static List<BigDecimal> commonScore = Arrays.asList(new BigDecimal[]{BigDecimal.valueOf(123.5), BigDecimal.valueOf(128.545)});
     private static List<BigDecimal> meisterScore = Arrays.asList(new BigDecimal[]{BigDecimal.valueOf(121.2), BigDecimal.valueOf(135.6)});

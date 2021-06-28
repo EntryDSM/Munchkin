@@ -24,8 +24,4 @@ public class Admin {
     @Column(length = 5, nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Permission permission;
-
 }

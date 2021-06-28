@@ -1,89 +1,89 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
-import kr.hs.entrydsm.admin.entity.admin.Permission;
+import kr.hs.entrydsm.admin.usecase.auth.AuthService;
+import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
+import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
-@DisplayName("어드민 계정 테스트")
+@DisplayName("admin-auth")
+@SpringBootTest(classes = AuthenticationManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
+    @MockBean
+    AuthService authService;
+
     @Test
-    public void 어드민_선생님_계정_추가() {
+    public void add_account() {
         assertTrue(addAccount(
                 Admin.builder()
                         .id("test1234")
-                        .name("교무실")
+                        .name("tcher")
                         .password("testPassword")
-                        .permission(Permission.TEACHER)
                         .build()
                 )
         );
     }
 
     @Test
-    public void 어드민_선생님_계정_추가_실패() {
-        assertFalse(addAccount(
-                Admin.builder()
-                        .id("test2@test.com")
-                        .name("교무실")
-                        .password("testPassword")
-                        .permission(Permission.TEACHER)
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_행정실_계정_추가() {
-        assertTrue(addAccount(
-                Admin.builder()
-                        .id("test4567")
-                        .name("행정실")
-                        .password("testPassword")
-                        .permission(Permission.OFFICE)
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_행정실_계정_추가_실패() {
-        assertFalse(addAccount(
-                Admin.builder()
-                        .id("test4567890")
-                        .name("행정실")
-                        .password("testPassword")
-                        .permission(Permission.OFFICE)
-                        .build()
-                )
-        );
-    }
-
-    @Test
-    public void 어드민_교무실_로그인() {
+    public void login() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
-        assertEquals(TEACHER_ADMIN.getPassword(), "teacheradmin");
+        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
+        authService.login(new SignInRequest("asdf1234", "teacheradmin"));
     }
 
     @Test
-    public void 어드민_교무실_로그인_실패() {
-        assertNotEquals(TEACHER_ADMIN.getId(), "asdf12345");
-        assertNotEquals(TEACHER_ADMIN.getPassword(), "teachderadmin");
+    public void login_fail() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
+        when(authService.login(SIGN_IN_REQUEST))
+                .thenThrow(AdminNotFoundException.class);
     }
 
     @Test
-    public void 어드민_행정실_로그인() {
-        assertEquals(OFFICE_ADMIN.getId(), "asdf4567");
-        assertEquals(OFFICE_ADMIN.getPassword(), "officeadmin");
+    public void checking_password() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        authService.checkPassword("teacheradmin");
     }
 
     @Test
-    public void 어드민_행정실_로그인_실패() {
-        assertNotEquals(OFFICE_ADMIN.getId(), "asdf4568");
-        assertNotEquals(OFFICE_ADMIN.getPassword(), "offdiceadmin");
+    public void checking_password_fail() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        when(authService.checkPassword("teacheradmn"))
+                .thenThrow(PasswordNotValidException.class);
+    }
+
+    @Test
+    public void refresh_token() {
+        REFRESH_TOKEN.update(123456L);
+    }
+
+    @Test
+    public void check_refresh_token() {
+        assertEquals(REFRESH_TOKEN.getId(), TEACHER_ADMIN.getId());
+        assertEquals(REFRESH_TOKEN.getRefreshExp(), 123456L);
+        assertFalse(REFRESH_TOKEN.getRefreshToken().equals("asdf.asdf.asdf"));
+    }
+
+    @Test
+    public void sign_in_request() {
+        assertNotNull(SIGN_IN_REQUEST.getId());
+        assertNotNull(SIGN_IN_REQUEST.getPassword());
+    }
+
+    @Test
+    public void sign_up_request() {
+        assertNotNull(SIGN_UP_REQUEST.getId());
+        assertNotNull(SIGN_UP_REQUEST.getPassword());
+        assertNotNull(SIGN_UP_REQUEST.getName());
     }
 
 }

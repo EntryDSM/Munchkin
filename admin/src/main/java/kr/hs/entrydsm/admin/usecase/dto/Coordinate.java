@@ -2,10 +2,12 @@ package kr.hs.entrydsm.admin.usecase.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coordinate {
@@ -45,4 +47,7 @@ public class Coordinate {
 
     private String zipcode;
 
+    public String getBuildingDong() {
+        return buildingDong;
+    }
 }

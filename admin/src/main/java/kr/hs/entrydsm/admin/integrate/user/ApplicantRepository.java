@@ -18,7 +18,7 @@ public interface ApplicantRepository {
     void changeExamCode(long receiptCode, String examCode);
     List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
     Applicant getUserInfo(long receiptCode);
-    void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived);
+    void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     List<ExcelUser> findAllForExcel();
     List<Long> getUserReceiptCodes();
 }

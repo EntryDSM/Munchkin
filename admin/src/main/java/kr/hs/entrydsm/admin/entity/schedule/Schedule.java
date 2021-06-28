@@ -30,7 +30,6 @@ public class Schedule {
 
     public void update(ScheduleRequest scheduleRequest) {
         this.year = scheduleRequest.getYear();
-        this.type = scheduleRequest.getType();
         this.date = LocalDate.parse(scheduleRequest.getDate());
     }
 

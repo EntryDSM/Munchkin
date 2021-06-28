@@ -1,8 +1,10 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
-import kr.hs.entrydsm.application.usecase.dto.Application;
-import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -25,23 +27,23 @@ public class ApplicationUserController {
 
     @PatchMapping("/type")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void selectType(@RequestBody @Valid Application application){
+    public void selectType(@RequestBody @Valid ApplicationRequest application){
         applicationProcessing.writeApplicationType(application);
     }
 
     @GetMapping("/type")
-    public Application getType(){
+    public ApplicationResponse getType(){
         return applicationProcessing.getApplicationType();
     }
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertInfo(@RequestBody @Valid Information information){
+    public void insertInfo(@RequestBody @Valid InformationRequest information){
         applicationProcessing.writeInformation(information);
     }
 
     @GetMapping
-    public Information getInfo() throws IOException {
+    public InformationResponse getInfo() throws IOException {
         return applicationProcessing.getInformation();
     }
 

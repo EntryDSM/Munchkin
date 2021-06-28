@@ -1,8 +1,10 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.Application;
-import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.application.ApplicationUserExportRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,38 +20,42 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     private final ApplicationUserExportRepository userExportRepository;
 
     @Override
-    public void writeApplicationType(Long receiptCode, Application application) {
+    public void writeApplicationType(Long receiptCode, ApplicationRequest application) {
         userExportRepository.changeApplication(receiptCode, application.getEducationalStatus(),
                 application.getApplicationType(), application.isDaejeon(), application.getApplicationRemark());
 
     }
 
     @Override
-    public void writeInformation(Long receiptCode, Information information) {
+    public void writeInformation(Long receiptCode, InformationRequest information) {
+        LocalDate birthday = null;
+        if(information.getBirthday() != null)
+            birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd"));
+
         userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
-                LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd")), information.getParentName(), information.getParentTel(),
+                birthday, information.getParentName(), information.getParentTel(),
                 information.getTelephoneNumber(), information.getHomeTel(), information.getAddress(),
-                information.getPostCode(), information.getPhotoFileName());
+                information.getPostCode(), information.getPhotoFileName(), information.getDetailAddress());
     }
 
     @Override
-    public Application getApplicationType(Long receiptCode) {
+    public ApplicationResponse getApplicationType(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return Application.builder()
-                .educationalStatus(user.getEducationalStatus().toString())
-                .applicationType(user.getApplicationType().toString())
-                .applicationRemark(user.getApplicationRemark().toString())
+        return ApplicationResponse.builder()
+                .educationalStatus(stringValueOf(user.getEducationalStatus()))
+                .applicationType(stringValueOf(user.getApplicationType()))
+                .applicationRemark(stringValueOf(user.getApplicationRemark()))
                 .isDaejeon(user.isDaejeon())
                 .build();
     }
 
     @Override
-    public Information getInformation(Long receiptCode) {
+    public InformationResponse getInformation(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return Information.builder()
+        return InformationResponse.builder()
                 .name(user.getName())
-                .sex(user.getSex().toString())
-                .birthday(user.getBirthday().toString())
+                .sex(stringValueOf(user.getSex()))
+                .birthday(stringValueOf(user.getBirthday()))
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
                 .telephoneNumber(user.getTelephoneNumber())
@@ -57,6 +63,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
                 .address(user.getAddress())
                 .postCode(user.getPostCode())
                 .photoFileName(user.getPhotoFileName())
+                .detailAddress(user.getDetailAddress())
                 .build();
     }
 
@@ -69,5 +76,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public String getPhotoFileName(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return user.getPhotoFileName();
+    }
+
+    private String stringValueOf(Object object) {
+        return object == null ? null : String.valueOf(object);
     }
 }

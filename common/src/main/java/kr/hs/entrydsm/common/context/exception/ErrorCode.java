@@ -23,10 +23,10 @@ public enum ErrorCode {
 
     INVALID_ADMIN_TOKEN(401, "ADMIN401-0","This token is invalid"),
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
-    NOT_ACCESSIBLE(403, "ADMIN401-2","Check the token"),
     ALREADY_EXIST_ADMIN_ID(409, "ADMIN409-0", "Already admin id exist"),
     INVALID_ADMIN_PASSWORD(401, "ADMIN401-1", "The password is not valid"),
     APPLICATION_PERIOD_NOT_OVER(400, "ADMIN400-0","The application period is not over"),
+    SCHEDULE_NOT_FOUND(404, "ADMIN404-2","The schedule does not exist"),
 
     TYPE_NOT_FOUND(404,"NOTIFICATION404-0","The corresponding message type does not exist"),
     NOT_AUTHORIZED(401, "NOTIFICATION401-0","Check the authority"),

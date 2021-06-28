@@ -3,13 +3,20 @@ package kr.hs.entrydsm.application.usecase;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.Application;
-import kr.hs.entrydsm.application.usecase.dto.EtcScore;
-import kr.hs.entrydsm.application.usecase.dto.Information;
-import kr.hs.entrydsm.application.usecase.dto.SubjectScore;
+import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
+import kr.hs.entrydsm.application.usecase.score.ScoreService;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
@@ -31,6 +38,7 @@ public class ApplicationManager implements ApplicationProcessing {
     private final ApplicationApplicantRepository applicantExportService;
     private final SchoolRepository schoolRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
+    private final ScoreService scoreService;
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -63,15 +71,21 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public void writeApplicationType(Application applicationRequest) {
+    public void writeApplicationType(ApplicationRequest applicationRequest) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
-        graduationApplication.setGraduateAt(LocalDate.parse(applicationRequest.getGraduatedAt(), DateTimeFormatter.ofPattern("yyMMdd")));
+        if(applicationRequest.getGraduatedAt() != null){
+            graduationApplication.setReceiptCode(receiptCode);
+            graduationApplication.setGraduateAt(
+                    YearMonth.parse(applicationRequest.getGraduatedAt(),
+                            DateTimeFormatter.ofPattern("yyyyMM")).atDay(2));
+            graduationApplicationRepository.save(graduationApplication);
+        }
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
     @Override
-    public void writeInformation(Information information) {
+    public void writeInformation(InformationRequest information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
@@ -86,21 +100,32 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public Application getApplicationType() {
+    public ApplicationResponse getApplicationType() {
         long receiptCode = authenticationManager.getUserReceiptCode();
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+            if(graduationApplication.getGraduateAt() != null)
+                return applicantExportService.getApplicationType(receiptCode)
+                    .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                    .format(graduationApplication.getGraduateAt()));
+            return applicantExportService.getApplicationType(receiptCode);
+        }
         return applicantExportService.getApplicationType(receiptCode);
+
     }
 
     @Override
-    public Information getInformation() throws IOException {
+    public InformationResponse getInformation() throws IOException {
         long receiptCode = authenticationManager.getUserReceiptCode();
         GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        Information result = applicantExportService.getInformation(receiptCode);
+        InformationResponse result = applicantExportService.getInformation(receiptCode);
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
         result.setSchoolCode(graduationApplication.getSchoolCode());
         result.setSchoolTel(graduationApplication.getSchoolTel());
-        result.setIsGraduated(graduationApplication.getIsGraduated());
+        result.setIsGraduated(graduationApplication.getIsGraduated() != null
+                && graduationApplication.getIsGraduated());
         result.setStudentNumber(graduationApplication.getStudentNumber());
 
         return result;
@@ -115,45 +140,46 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public void updateSubjectScore(SubjectScore score) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
-
-        graduationApplication.setMathScore(score.getMathScore());
-        graduationApplication.setEnglishScore(score.getEnglishScore());
-        graduationApplication.setHistoryScore(score.getHistoryScore());
-        graduationApplication.setKoreanScore(score.getKoreanScore());
-        graduationApplication.setSocialScore(score.getSocialScore());
-        graduationApplication.setScienceScore(score.getScienceScore());
-        graduationApplication.setTechAndHomeScore(score.getTechAndHomeScore());
-
-        graduationApplicationRepository.save(graduationApplication);
+    public void updateSubjectScore(SubjectScoreRequest score) {
+        scoreService.updateSubjectScore(score);
     }
 
     @Override
-    public void updateEtcScore(EtcScore score) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
-
-        graduationApplication.setVolunteerTime(score.getVolunteerTime());
-        graduationApplication.setDayAbsenceCount(score.getDayAbsenceCount());
-        graduationApplication.setLectureAbsenceCount(score.getLectureAbsenceCount());
-        graduationApplication.setLatenessCount(score.getLatenessCount());
-        graduationApplication.setEarlyLeaveCount(score.getEarlyLeaveCount());
-
-        graduationApplicationRepository.save(graduationApplication);
+    public void updateEtcScore(EtcScoreRequest score) {
+        scoreService.updateEtcScore(score);
     }
 
+    @Override
+    public void updateGedScore(GedScoreRequest score) {
+        scoreService.updateGedScore(score);
+    }
+
+    @Override
+    public SubjectScoreResponse getSubjectScore() {
+        return scoreService.getSubjectScore();
+    }
+
+    @Override
+    public EtcScoreResponse getEtcScore() {
+        return scoreService.getEtcScore();
+    }
+
+    @Override
+    public GedScoreResponse getGedScore() {
+        return scoreService.getGedScore();
+    }
+
+
     private String getImageUrl(String photoFileName) throws MalformedURLException {
-        return (!photoFileName.isEmpty()) ? imageService.generateObjectUrl(photoFileName) : null;
+        return (photoFileName != null) ? imageService.generateObjectUrl(photoFileName) : null;
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {
         GraduationApplication graduationApplication;
-        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
-            return  graduationApplicationRepository.findByReceiptCode(receiptCode)
+        if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
+            return graduationApplicationRepository.findByReceiptCode(receiptCode)
                     .orElseThrow(ApplicationNotFoundException::new);
-        }else {
+        } else {
             graduationApplication = new GraduationApplication();
             graduationApplication.setReceiptCode(receiptCode);
             return graduationApplication;

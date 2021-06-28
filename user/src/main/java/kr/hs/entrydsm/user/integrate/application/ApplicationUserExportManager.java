@@ -28,13 +28,38 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     public void changeApplication(long receiptCode, String educationalStatus, String applicationType,
                                   boolean isDaejeon,String applicationRemark) {
         User user = findByReceiptCode(receiptCode);
+        EducationalStatus educationalStatusValue;
+        ApplicationType applicationTypeValue;
+        ApplicationRemark applicationRemarkValue;
+        try{
+            educationalStatusValue = EducationalStatus.valueOf(educationalStatus);
+        }catch(NullPointerException e) {
+            educationalStatusValue = null;
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+        try{
+            applicationTypeValue = ApplicationType.valueOf(applicationType);
+        }catch(NullPointerException e) {
+            applicationTypeValue = null;
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+        try{
+            applicationRemarkValue = ApplicationRemark.valueOf(applicationRemark);
+        }catch(NullPointerException e) {
+            applicationRemarkValue = null;
+        }catch (IllegalArgumentException e) {
+            throw new InvalidEnumConstantException();
+        }
+
         try{
             userRepository.save(
                     user.updateUserApplication(
-                            EducationalStatus.valueOf(educationalStatus),
-                            ApplicationType.valueOf(applicationType),
+                            educationalStatusValue,
+                            applicationTypeValue,
                             isDaejeon,
-                            ApplicationRemark.valueOf(applicationRemark)
+                            applicationRemarkValue
                     )
             );
         }catch (IllegalArgumentException e) {
@@ -46,10 +71,10 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
     @Override
     public void changeInformation(long receiptCode, String name, String sex, LocalDate birthday,
                                   String parentName, String parentTel, String telephoneNumber, String homeTel,
-                                  String address, String postCode, String photoFileName) {
+                                  String address, String postCode, String photoFileName, String detailAddress) {
         User user = findByReceiptCode(receiptCode);
         user.updateInformation(name, sex, birthday, parentName, parentTel, telephoneNumber,
-                homeTel, address, postCode, photoFileName);
+                homeTel, address, postCode, photoFileName, detailAddress);
         userRepository.save(user);
     }
 

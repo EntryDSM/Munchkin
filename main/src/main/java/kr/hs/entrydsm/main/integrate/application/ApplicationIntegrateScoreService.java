@@ -5,7 +5,8 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.*;
-import kr.hs.entrydsm.common.context.beans.Published;
+import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
+import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
 import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.integrate.application.ScoreExportApplicationRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
@@ -44,8 +45,8 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     private CalculatedScore getGraduationScore(GraduationApplication application) {
         TotalGrade totalGrade = makeTotalGrade(application);
-        SubjectScore subjectScore = totalGrade.getSubjectScore();
-        EtcScore etcScore = totalGrade.getEtcScore();
+        SubjectScoreRequest subjectScore = totalGrade.getSubjectScore();
+        EtcScoreRequest etcScore = totalGrade.getEtcScore();
 
         Score score = scoreService.updateGraduation(UpdateGraduationRequest.builder()
                 .volunteerTime(etcScore.getVolunteerTime())
@@ -80,8 +81,8 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     private TotalGrade makeTotalGrade(GraduationApplication application) {
-        SubjectScore subjectScore = SubjectScore.from(application);
-        EtcScore etcScore = EtcScore.from(application);
+        SubjectScoreRequest subjectScore = SubjectScoreRequest.from(application);
+        EtcScoreRequest etcScore = EtcScoreRequest.from(application);
         return TotalGrade.from(subjectScore, etcScore);
     }
 
