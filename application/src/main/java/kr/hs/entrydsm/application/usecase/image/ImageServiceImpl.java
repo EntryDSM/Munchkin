@@ -8,11 +8,17 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
 import kr.hs.entrydsm.application.usecase.exception.FileIsEmptyException;
 import lombok.RequiredArgsConstructor;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -45,7 +51,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
-    @Value("${aws.region.static}")
+    @Value("${aws.s3.region}")
     private String region;
 
     @Value("${aws.s3.base_image_url}")
@@ -59,22 +65,27 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         String randomName = UUID.randomUUID().toString();
         String filename = randomName + "." + ext;
 
+        BufferedImage outputImage = makeThumbnail(file);
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        ImageIO.write(outputImage, "jpeg", os);
+        InputStream is = new ByteArrayInputStream(os.toByteArray());
 
 
-        s3.putObject(new PutObjectRequest(bucket, "images/" + filename, file.getInputStream(), null)
-                .withCannedAcl(CannedAccessControlList.AuthenticatedRead));
+        s3.putObject(new PutObjectRequest(bucket, "images/" + filename, is, null)
+                    .withCannedAcl(CannedAccessControlList.AuthenticatedRead));
 
         return filename;
     }
 
     @Override
     public void delete(String objectName) {
-        s3.deleteObject(bucket, objectName);
+        s3.deleteObject(bucket,"images/" + objectName);
     }
 
     @Override
     public String generateObjectUrl(String objectName) throws MalformedURLException {
-        URL endpointUrl = new URL("https://" + baseImageUrl + "/" + objectName);
+        URL endpointUrl = new URL("https://" + baseImageUrl + objectName);
 
         // X-Amz-Algorithm
         String xAmzAlgorithm = SCHEME + "-" + ALGORITHM;
@@ -136,4 +147,28 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         S3Object object = s3.getObject(bucket, fileName);
         return IOUtils.toByteArray(object.getObjectContent());
     }
+
+    private BufferedImage makeThumbnail(MultipartFile file) throws IOException {
+        BufferedImage srcImg = ImageIO.read(file.getInputStream());
+
+        int dw = 300, dh = 400;
+
+        int ow = srcImg.getWidth();
+        int oh = srcImg.getHeight();
+
+        int nw = ow;
+        int nh = (ow * dh) / dw;
+
+        if (nh > oh) {
+            nw = (oh * dw) / dh;
+            nh = oh;
+        }
+
+        BufferedImage cropImg = Scalr.crop(srcImg, (ow - nw) / 2, (oh - nh) / 2, nw, nh);
+
+        BufferedImage destImg = Scalr.resize(cropImg, dw, dh);
+
+        return destImg;
+    }
+
 }
