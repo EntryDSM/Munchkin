@@ -2,9 +2,8 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleId;
-import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
-import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
+import kr.hs.entrydsm.admin.usecase.dto.Schedules;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 
 import java.time.LocalDate;
@@ -45,12 +44,24 @@ public abstract class ScheduleBaseTest extends AdminBaseTest{
             .date(LocalDate.of(2021,10,29))
             .build();
 
+    protected static final ScheduleRequest SCHEDULE_REQUEST = ScheduleRequest.builder()
+            .year("2021")
+            .type(Type.INTERVIEW)
+            .date("2021-06-28")
+            .build();
+
     protected static final List<Schedule> SCHEDULES = new ArrayList<>();
 
     protected static boolean updateSchedule(ScheduleRequest request) {
         START_DATE.update(request);
         return true;
     }
+
+    protected static final Schedules SCHEDULES_DTO = Schedules.builder()
+            .year("2021")
+            .type(Type.START_DATE)
+            .date("2021-06-28")
+            .build();
 
     static {
         SCHEDULES.add(START_DATE);

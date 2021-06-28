@@ -44,7 +44,7 @@ public class AdminAccountTest extends AdminBaseTest {
     public void login_fail() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        when(authService.login(new SignInRequest("asdf123", "teacheradmin")))
+        when(authService.login(SIGN_IN_REQUEST))
                 .thenThrow(AdminNotFoundException.class);
     }
 
@@ -71,6 +71,13 @@ public class AdminAccountTest extends AdminBaseTest {
         assertEquals(REFRESH_TOKEN.getId(), TEACHER_ADMIN.getId());
         assertEquals(REFRESH_TOKEN.getRefreshExp(), 123456L);
         assertFalse(REFRESH_TOKEN.getRefreshToken().equals("asdf.asdf.asdf"));
+    }
+
+    @Test
+    public void sign_up_request() {
+        assertNotNull(SIGN_UP_REQUEST.getId());
+        assertNotNull(SIGN_UP_REQUEST.getPassword());
+        assertNotNull(SIGN_UP_REQUEST.getName());
     }
 
 }

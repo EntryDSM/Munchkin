@@ -12,12 +12,12 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class SignUpRequest {
 
-    @Length(max = 8)
+    @Length(min = 8, max = 8)
     private String id;
 
     private String password;
 
-    @Length(max = 5)
+    @Length(min = 5, max = 5)
     private String name;
 
 }
