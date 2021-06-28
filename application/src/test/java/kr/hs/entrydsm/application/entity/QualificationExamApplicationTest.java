@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.entity;
 
+import kr.hs.entrydsm.application.builder.QualificationExamApplicationBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
