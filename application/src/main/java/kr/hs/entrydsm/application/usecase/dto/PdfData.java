@@ -170,8 +170,8 @@ public class PdfData {
         return (String) data.get("conversionScore3rd");
     }
 
-    public BigDecimal getConversionScore() {
-        return (BigDecimal) data.get("conversionScore");
+    public String getConversionScore() {
+        return (String) data.get("conversionScore");
     }
 
     public String getAttendanceScore() {
