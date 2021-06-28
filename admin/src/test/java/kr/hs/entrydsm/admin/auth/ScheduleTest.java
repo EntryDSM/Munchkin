@@ -71,9 +71,23 @@ public class ScheduleTest extends ScheduleBaseTest {
     }
 
     @Test
+    @Order(2)
+    public void schedule_entity_modify_schedule() {
+        updateSchedule(SCHEDULE_REQUEST);
+        assertFalse(SCHEDULE_REQUEST.getType()==null);
+    }
+
+    @Test
     @Order(1)
     public void get_schedule() {
         scheduleService.getSchedules();
+    }
+
+    @Test
+    public void schedules() {
+        assertTrue(SCHEDULES_DTO.getYear().equals("2021"));
+        assertTrue(SCHEDULES_DTO.getType().equals(Type.START_DATE));
+        assertFalse(SCHEDULES_DTO.getDate().equals("2020-00-00"));
     }
 
 }

@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.application.usecase.dto;
+package kr.hs.entrydsm.application.usecase.dto.application.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

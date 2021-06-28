@@ -142,9 +142,10 @@ public class UserServiceManager implements UserAuthService, UserService {
                 .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
-        userRepository.findByEmail(email)
-                .map(user -> user.changePassword(encodedPassword))
+        User user = userRepository.findByEmail(email)
+                .map(u -> u.changePassword(encodedPassword))
                 .orElseThrow(UserNotFoundException::new);
+        userRepository.save(user);
     }
 
     @Override

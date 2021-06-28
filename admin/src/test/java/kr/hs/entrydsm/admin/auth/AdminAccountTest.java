@@ -2,11 +2,10 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
-import kr.hs.entrydsm.admin.usecase.auth.AuthServiceManager;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @DisplayName("admin-auth")
-@SpringBootTest(classes = AuthServiceManager.class)
+@SpringBootTest(classes = AuthenticationManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
     @MockBean
     AuthService authService;
-
 
     @Test
     public void add_account() {
@@ -46,7 +44,7 @@ public class AdminAccountTest extends AdminBaseTest {
     public void login_fail() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        when(authService.login(new SignInRequest("asdf123", "teacheradmin")))
+        when(authService.login(SIGN_IN_REQUEST))
                 .thenThrow(AdminNotFoundException.class);
     }
 
@@ -65,8 +63,27 @@ public class AdminAccountTest extends AdminBaseTest {
 
     @Test
     public void refresh_token() {
-        when(authService.tokenRefresh("asdf.asdf.asdf"))
-                .thenThrow(InvalidTokenException.class);
+        REFRESH_TOKEN.update(123456L);
+    }
+
+    @Test
+    public void check_refresh_token() {
+        assertEquals(REFRESH_TOKEN.getId(), TEACHER_ADMIN.getId());
+        assertEquals(REFRESH_TOKEN.getRefreshExp(), 123456L);
+        assertFalse(REFRESH_TOKEN.getRefreshToken().equals("asdf.asdf.asdf"));
+    }
+
+    @Test
+    public void sign_in_request() {
+        assertNotNull(SIGN_IN_REQUEST.getId());
+        assertNotNull(SIGN_IN_REQUEST.getPassword());
+    }
+
+    @Test
+    public void sign_up_request() {
+        assertNotNull(SIGN_UP_REQUEST.getId());
+        assertNotNull(SIGN_UP_REQUEST.getPassword());
+        assertNotNull(SIGN_UP_REQUEST.getName());
     }
 
 }

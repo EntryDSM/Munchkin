@@ -2,6 +2,7 @@ package kr.hs.entrydsm.application.usecase.pdf;
 
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
+import kr.hs.entrydsm.application.usecase.dto.PdfData;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class PdfDataConverter {
 
     private final Map<String, Object> values = new HashMap<>();
 
-    public Map<String, Object> applicationToInfo(Applicant applicant, CalculatedScore calculatedScore) {
+    public PdfData applicationToInfo(Applicant applicant, CalculatedScore calculatedScore) {
         setReceiptCode(applicant);
         setEntranceYear();
         setPersonalInfo(applicant);
@@ -48,7 +49,7 @@ public class PdfDataConverter {
             setBase64Image(applicant);
         }
 
-        return values;
+        return new PdfData(values);
     }
 
     private void setReceiptCode(Applicant applicant) {
@@ -154,13 +155,13 @@ public class PdfDataConverter {
     }
 
     private void setGradeScore(Applicant applicant, CalculatedScore calculatedScore) {
-        values.put("conversionScore1st", applicant.isQualificationExam() ? "" : calculatedScore.getTotalFirstGradeScore());
-        values.put("conversionScore2nd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalSecondGradeScore());
-        values.put("conversionScore3rd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalThirdGradeScore());
-        values.put("conversionScore", calculatedScore.getConversionScore());
-        values.put("attendanceScore", calculatedScore.getAttendanceScore());
-        values.put("volunteerScore", calculatedScore.getVolunteerScore());
-        values.put("finalScore", calculatedScore.getTotalScoreFirstRound());
+        values.put("conversionScore1st", applicant.isQualificationExam() ? "" : calculatedScore.getTotalFirstGradeScore().toString());
+        values.put("conversionScore2nd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalSecondGradeScore().toString());
+        values.put("conversionScore3rd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalThirdGradeScore().toString());
+        values.put("conversionScore", calculatedScore.getConversionScore().toString());
+        values.put("attendanceScore", String.valueOf(calculatedScore.getAttendanceScore()));
+        values.put("volunteerScore", calculatedScore.getVolunteerScore().toString());
+        values.put("finalScore", calculatedScore.getTotalScoreFirstRound().toString());
     }
 
     private void setLocalDate() {

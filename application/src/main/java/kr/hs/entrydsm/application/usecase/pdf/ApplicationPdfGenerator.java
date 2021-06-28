@@ -3,6 +3,7 @@ package kr.hs.entrydsm.application.usecase.pdf;
 import kr.hs.entrydsm.application.config.TemplateFileName;
 import kr.hs.entrydsm.application.entity.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
+import kr.hs.entrydsm.application.usecase.dto.PdfData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +24,10 @@ public class ApplicationPdfGenerator {
     }
 
     private byte[] generateApplicationPdf(Applicant applicant, CalculatedScore calculatedScore) {
-        Map<String, Object> data = pdfDataConverter.applicationToInfo(applicant, calculatedScore);
+        PdfData data = pdfDataConverter.applicationToInfo(applicant, calculatedScore);
 
         ByteArrayOutputStream result = getTemplateFileNames(applicant).parallelStream()
-                .map(template -> templateProcessor.convertTemplateIntoHtmlString(template, data))
+                .map(template -> templateProcessor.convertTemplateIntoHtmlString(template, data.toMap()))
                 .map(PdfProcessor::convertHtmlToPdf)
                 .reduce(PdfProcessor::concat)
                 .orElseGet(() -> (ByteArrayOutputStream) ByteArrayOutputStream.nullOutputStream());

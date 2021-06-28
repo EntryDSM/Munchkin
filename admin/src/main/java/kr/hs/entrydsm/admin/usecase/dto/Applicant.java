@@ -16,21 +16,21 @@ import java.time.LocalDate;
 public class Applicant {
 
     //공통
-    private long receiptCode; //접수 번호
+    private Long receiptCode; //접수 번호
 
     private String email; //이메일
 
     private String name; //이름
 
-    private boolean isDaejeon; //대전 사는지 여부
+    private Boolean isDaejeon; //대전 사는지 여부
 
     private String photoFileName; //사진 경로
 
     private LocalDate birthDate; //생일
 
-    private boolean isPrintedArrived; //원서 도착 여부
+    private Boolean isPrintedArrived; //원서 도착 여부
 
-    private boolean isSubmit; //최종 제출 여부
+    private Boolean isSubmit; //최종 제출 여부
 
     private String address; //주소
 
@@ -72,8 +72,8 @@ public class Applicant {
 
     private Integer latenessCount; //지각
 
-    private boolean isGraduated; // 졸업 여부
+    private Boolean isGraduated; // 졸업 여부
 
-    private double distance; // 학교까지의 거리
+    private Double distance; // 학교까지의 거리
 
 }

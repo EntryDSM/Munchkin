@@ -1,4 +1,6 @@
-package kr.hs.entrydsm.application.entity;
+package kr.hs.entrydsm.application.builder;
+
+import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

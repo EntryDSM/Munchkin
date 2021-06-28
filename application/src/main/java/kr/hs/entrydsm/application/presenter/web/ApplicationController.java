@@ -4,7 +4,7 @@ import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
-import kr.hs.entrydsm.application.usecase.dto.UpdateDocsRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.UpdateDocsRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
