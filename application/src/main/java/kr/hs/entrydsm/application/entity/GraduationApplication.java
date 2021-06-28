@@ -97,7 +97,6 @@ public class GraduationApplication extends Application {
     }
 
     public String getSchoolCode() {
-        System.out.println(school == null ? null : school.getCode());
         return school == null ? null : school.getCode();
     }
 
