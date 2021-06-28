@@ -134,6 +134,9 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public String uploadPhoto(MultipartFile multipartFile) throws IOException {
         long receiptCode = authenticationManager.getUserReceiptCode();
+        InformationResponse result = applicantExportService.getInformation(receiptCode);
+        if(result.getPhotoFileName() != null)
+            imageService.delete(result.getPhotoFileName());
         String fileName = imageService.upload(multipartFile, receiptCode);
         applicantExportService.setPhotoFileName(receiptCode, fileName);
         return fileName;
