@@ -127,6 +127,7 @@ project(':application') {
         implementation 'com.itextpdf:itext7-core:7.1.9'
         implementation 'com.itextpdf:html2pdf:3.0.1'
         implementation group: 'com.amazonaws', name: 'aws-java-sdk-s3control', version: '1.11.457'
+        implementation group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
     }
 }
 
