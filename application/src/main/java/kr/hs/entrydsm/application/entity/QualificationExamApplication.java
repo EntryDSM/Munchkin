@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.application.entity;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
 
@@ -29,4 +28,9 @@ public class QualificationExamApplication extends Application {
     public boolean isGraduation() {
         return false;
     }
+
+    public void setAverageScore(BigDecimal averageScore){
+        this.averageScore = averageScore;
+    }
+
 }

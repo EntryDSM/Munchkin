@@ -2,7 +2,6 @@ package kr.hs.entrydsm.admin.usecase.applicant;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
@@ -48,8 +47,8 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override //지원자 원서 도착 여부 변경
-    public void changeIsPrintedArrived(int receiptCode, boolean isPrintedArrived) {
-        Admin admin = adminRepository.findById(authenticationManager.getAdminId())
+    public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
+        adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
         applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
@@ -90,10 +89,10 @@ public class ApplicantServiceManager implements ApplicantService {
                     ApplicantsInformationResponse.builder()
                             .receiptCode(applicant.getReceiptCode())
                             .name(applicant.getName())
-                            .isDaejeon(applicant.isDaejeon())
+                            .isDaejeon(applicant.getIsDaejeon())
                             .applicationType(applicant.getApplicationType())
-                            .isPrintedArrived(applicant.isPrintedArrived())
-                            .isSubmit(applicant.isSubmit())
+                            .isPrintedArrived(applicant.getIsPrintedArrived())
+                            .isSubmit(applicant.getIsSubmit())
                             .build()
             );
         }
@@ -111,15 +110,15 @@ public class ApplicantServiceManager implements ApplicantService {
                 .orElseThrow(AdminNotFoundException::new);
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
-        if(!applicant.isSubmit()) {
+        if(!applicant.getIsSubmit()) {
             NotSubmitApplicant notSubmitApplicant
                     = new NotSubmitApplicant(applicant.getTelephoneNumber(), applicant.getParentTel(), applicant.getHomeTel(), applicant.getSchoolTel());
             return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
         }
 
         Status status = Status.builder()
-                .isPrintedArrived(applicant.isPrintedArrived())
-                .isSubmit(applicant.isSubmit())
+                .isPrintedArrived(applicant.getIsPrintedArrived())
+                .isSubmit(applicant.getIsSubmit())
                 .build();
 
         PersonalData personalData = PersonalData.builder()
@@ -128,7 +127,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 .birthDate(applicant.getBirthDate())
                 .schoolName(applicant.getSchoolName())
                 .email(applicant.getEmail())
-                .isGraduated(applicant.isGraduated())
+                .isGraduated(applicant.getIsGraduated())
                 .educationalStatus(applicant.getEducationalStatus())
                 .applicationType(applicant.getApplicationType())
                 .address(applicant.getAddress())

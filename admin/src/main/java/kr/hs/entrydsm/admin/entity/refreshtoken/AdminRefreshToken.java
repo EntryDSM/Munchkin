@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @RedisHash(value = "refresh_token")

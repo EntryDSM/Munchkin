@@ -20,11 +20,10 @@ public class AdminApplicantBaseTest {
             .detailAddress(null)
             .telephoneNumber("010-0000-0000") //학생 전화번호
             .educationalStatus("PROSPECTIVE_GRADUATE") //학력구분 PROSPECTIVE_GRADUATE, GRADUATE, QUALIFICATION_EXAM
-            .studyPlan("학업 계획서") //학업 계획서
-            .selfIntroduce("자기 소개서") //자기소개서
             .parentTel("010-8888-8888") //보호자 전화번호
             .homeTel("02-000-0000")
             .schoolTel("02-031-031")
+            .photoFileName("asdf")
             .isSubmit(true)
             .isPrintedArrived(false)
             .email("test@test.com")

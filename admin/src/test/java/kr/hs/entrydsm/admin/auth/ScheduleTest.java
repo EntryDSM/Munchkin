@@ -4,22 +4,20 @@ import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
 import kr.hs.entrydsm.admin.usecase.schedule.ScheduleService;
+import kr.hs.entrydsm.admin.usecase.schedule.ScheduleServiceManager;
 import org.junit.jupiter.api.*;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 @DisplayName("admin-schedule")
-@SpringBootTest(classes = ScheduleService.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ScheduleTest extends ScheduleBaseTest {
 
-    @MockBean
-    ScheduleService scheduleService;
+    private final ScheduleService scheduleService = mock(ScheduleServiceManager.class);
 
     @Test
     @Order(1)
@@ -70,6 +68,13 @@ public class ScheduleTest extends ScheduleBaseTest {
             scheduleService.updateSchedules(new ScheduleRequest("2021", Type.START_DATE, "2021-06-22"));
         } catch (ScheduleNotFoundException e) {
         }
+    }
+
+    @Test
+    @Order(2)
+    public void schedule_entity_modify_schedule() {
+        ScheduleRequest scheduleRequest = new ScheduleRequest("2021", Type.START_DATE, "2021-06-22");
+        updateSchedule(scheduleRequest);
     }
 
     @Test

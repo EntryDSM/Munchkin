@@ -1,39 +1,34 @@
-package kr.hs.entrydsm.application.usecase.dto;
+package kr.hs.entrydsm.application.usecase.dto.score.request;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class EtcScore {
+@AllArgsConstructor
+public class EtcScoreRequest {
 
     @PositiveOrZero
-    private Integer volunteerTime;
+    private final Integer volunteerTime;
 
     @PositiveOrZero
-    private Integer dayAbsenceCount;
+    private final Integer dayAbsenceCount;
 
     @PositiveOrZero
-    private Integer lectureAbsenceCount;
+    private final Integer lectureAbsenceCount;
 
     @PositiveOrZero
-    private Integer latenessCount;
+    private final Integer latenessCount;
 
     @PositiveOrZero
-    private Integer earlyLeaveCount;
+    private final Integer earlyLeaveCount;
 
-    public static EtcScore from(GraduationApplication application) {
-        return EtcScore.builder()
+    public static EtcScoreRequest from(GraduationApplication application) {
+        return EtcScoreRequest.builder()
                 .volunteerTime(application.getVolunteerTime())
                 .dayAbsenceCount(application.getDayAbsenceCount())
                 .lectureAbsenceCount(application.getLectureAbsenceCount())

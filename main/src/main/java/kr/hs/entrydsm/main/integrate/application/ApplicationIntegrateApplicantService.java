@@ -1,8 +1,10 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.Application;
-import kr.hs.entrydsm.application.usecase.dto.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.application.ApplicationUserExportRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,14 +20,14 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     private final ApplicationUserExportRepository userExportRepository;
 
     @Override
-    public void writeApplicationType(Long receiptCode, Application application) {
+    public void writeApplicationType(Long receiptCode, ApplicationRequest application) {
         userExportRepository.changeApplication(receiptCode, application.getEducationalStatus(),
                 application.getApplicationType(), application.isDaejeon(), application.getApplicationRemark());
 
     }
 
     @Override
-    public void writeInformation(Long receiptCode, Information information) {
+    public void writeInformation(Long receiptCode, InformationRequest information) {
         LocalDate birthday = null;
         if(information.getBirthday() != null)
             birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -37,9 +39,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     }
 
     @Override
-    public Application getApplicationType(Long receiptCode) {
+    public ApplicationResponse getApplicationType(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return Application.builder()
+        return ApplicationResponse.builder()
                 .educationalStatus(stringValueOf(user.getEducationalStatus()))
                 .applicationType(stringValueOf(user.getApplicationType()))
                 .applicationRemark(stringValueOf(user.getApplicationRemark()))
@@ -48,12 +50,12 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     }
 
     @Override
-    public Information getInformation(Long receiptCode) {
+    public InformationResponse getInformation(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return Information.builder()
+        return InformationResponse.builder()
                 .name(user.getName())
-                .sex(user.getSex().toString())
-                .birthday(user.getBirthday().toString())
+                .sex(stringValueOf(user.getSex()))
+                .birthday(stringValueOf(user.getBirthday()))
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
                 .telephoneNumber(user.getTelephoneNumber())

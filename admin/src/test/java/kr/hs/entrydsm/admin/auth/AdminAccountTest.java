@@ -2,19 +2,20 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
-import kr.hs.entrydsm.admin.usecase.auth.AuthServiceManager;
 import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
+import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @DisplayName("admin-auth")
-@SpringBootTest(classes = AuthServiceManager.class)
+@SpringBootTest(classes = AuthenticationManager.class)
 public class AdminAccountTest extends AdminBaseTest {
 
     @MockBean
@@ -36,19 +37,40 @@ public class AdminAccountTest extends AdminBaseTest {
     public void login() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
         assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
-        try {
-            authService.login(new SignInRequest("asdf1234", "teacheradmin"));
-        } catch (AdminNotFoundException e) {
-        }
+        authService.login(new SignInRequest("asdf1234", "teacheradmin"));
+    }
+
+    @Test
+    public void login_fail() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        assertEquals(TEACHER_ADMIN.getPassword(), passwordEncoder.encode("teacheradmin"));
+        when(authService.login(new SignInRequest("asdf123", "teacheradmin")))
+                .thenThrow(AdminNotFoundException.class);
     }
 
     @Test
     public void checking_password() {
         assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
-        try {
-            authService.checkPassword("teacheradmin");
-        } catch(PasswordNotValidException e) {
-        }
+        authService.checkPassword("teacheradmin");
+    }
+
+    @Test
+    public void checking_password_fail() {
+        assertEquals(TEACHER_ADMIN.getId(), "asdf1234");
+        when(authService.checkPassword("teacheradmn"))
+                .thenThrow(PasswordNotValidException.class);
+    }
+
+    @Test
+    public void refresh_token() {
+        REFRESH_TOKEN.update(123456L);
+    }
+
+    @Test
+    public void check_refresh_token() {
+        assertEquals(REFRESH_TOKEN.getId(), TEACHER_ADMIN.getId());
+        assertEquals(REFRESH_TOKEN.getRefreshExp(), 123456L);
+        assertFalse(REFRESH_TOKEN.getRefreshToken().equals("asdf.asdf.asdf"));
     }
 
 }

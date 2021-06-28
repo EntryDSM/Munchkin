@@ -81,7 +81,7 @@ public class ExcelServiceManager implements ExcelService {
         String examCode = applicant.getExamCode();
         String name = applicant.getName();
         String middleSchool = applicant.getSchoolName();
-        String area = applicant.isDaejeon()?"대전":"전국";
+        String area = applicant.getIsDaejeon()?"대전":"전국";
         String applicationType = applicant.getApplicationType();
 
         byte[] imageBytes = getObject(applicant.getPhotoFileName()); //S3파일을 byte로 가져오기
