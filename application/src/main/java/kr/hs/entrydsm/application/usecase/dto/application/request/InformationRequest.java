@@ -1,13 +1,18 @@
 package kr.hs.entrydsm.application.usecase.dto.application.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 public class InformationRequest {
 
@@ -56,6 +61,7 @@ public class InformationRequest {
     @Length(max = 5, message = "INVALID STUDENT_NUMBER")
     private String studentNumber;
 
+    @JsonProperty(value = "is_graduated")
     private boolean isGraduated;
 
     public void setSchoolCode(String schoolCode){
