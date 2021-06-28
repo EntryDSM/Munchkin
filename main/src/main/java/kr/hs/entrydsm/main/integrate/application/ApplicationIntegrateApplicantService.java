@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
@@ -30,7 +31,8 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public void writeInformation(Long receiptCode, InformationRequest information) {
         LocalDate birthday = null;
         if(information.getBirthday() != null)
-            birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd"));
+            birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd")
+                                                                                    .withZone(ZoneId.of("Asia/Seoul")));
 
         userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
                 birthday, information.getParentName(), information.getParentTel(),

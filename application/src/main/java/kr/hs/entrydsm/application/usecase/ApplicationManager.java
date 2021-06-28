@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
@@ -78,7 +79,9 @@ public class ApplicationManager implements ApplicationProcessing {
             graduationApplication.setReceiptCode(receiptCode);
             graduationApplication.setGraduateAt(
                     YearMonth.parse(applicationRequest.getGraduatedAt(),
-                            DateTimeFormatter.ofPattern("yyyyMM")).atDay(2));
+                            DateTimeFormatter.ofPattern("yyyyMM")
+                                            .withZone(ZoneId.of("Asia/Seoul")))
+                            .atDay(1));
             graduationApplicationRepository.save(graduationApplication);
         }
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
