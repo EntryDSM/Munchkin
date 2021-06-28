@@ -2,8 +2,6 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.usecase.applicant.ApplicantService;
 import kr.hs.entrydsm.admin.usecase.applicant.ApplicantServiceManager;
-import kr.hs.entrydsm.admin.usecase.dto.Coordinate;
-import kr.hs.entrydsm.admin.usecase.dto.SpecialScore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -215,6 +213,16 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
     @Test
     public void saveExamCode() throws Exception {
         applicantService.saveExamCode();
+    }
+
+    @Test
+    public void getDetail() {
+        applicantService.getDetail(123456);
+    }
+
+    @Test
+    public void getApplciants() {
+        applicantService.getApplicants(PAGEABLE, 123456L, true, false, null, null, true, false, false, true);
     }
 
 }

@@ -2,6 +2,8 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -168,6 +170,48 @@ public class AdminApplicantBaseTest {
             .startY(0)
             .totalValue(0)
             .build();
+
+    protected static final Pageable PAGEABLE = new Pageable() {
+        @Override
+        public int getPageNumber() {
+            return 1;
+        }
+
+        @Override
+        public int getPageSize() {
+            return 3;
+        }
+
+        @Override
+        public long getOffset() {
+            return 0;
+        }
+
+        @Override
+        public Sort getSort() {
+            return null;
+        }
+
+        @Override
+        public Pageable next() {
+            return null;
+        }
+
+        @Override
+        public Pageable previousOrFirst() {
+            return null;
+        }
+
+        @Override
+        public Pageable first() {
+            return null;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return false;
+        }
+    };
 
     private static List<BigDecimal> commonScore = Arrays.asList(new BigDecimal[]{BigDecimal.valueOf(123.5), BigDecimal.valueOf(128.545)});
     private static List<BigDecimal> meisterScore = Arrays.asList(new BigDecimal[]{BigDecimal.valueOf(121.2), BigDecimal.valueOf(135.6)});
