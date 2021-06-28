@@ -177,10 +177,10 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void properties() {
-        assertTrue(PROPERTIES.getTotalDistance() == 0);
-        assertTrue(PROPERTIES.getTotalTime() == 0);
-        assertTrue(PROPERTIES.getTotalFare() == 0);
-        assertTrue(PROPERTIES.getTaxiFare() == 0);
+        assertFalse(PROPERTIES.getTotalDistance() == 0);
+        assertFalse(PROPERTIES.getTotalTime() == 0);
+        assertFalse(PROPERTIES.getTotalFare() == 0);
+        assertFalse(PROPERTIES.getTaxiFare() == 0);
     }
 
     @Test
