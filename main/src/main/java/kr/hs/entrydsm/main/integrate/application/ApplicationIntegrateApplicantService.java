@@ -1,10 +1,9 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
+import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
-import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
-import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.application.ApplicationUserExportRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     }
 
     @Override
-    public void writeInformation(Long receiptCode, InformationRequest information) {
+    public void writeInformation(Long receiptCode, Information information) {
         LocalDate birthday = null;
         if(information.getBirthday() != null)
             birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd")
@@ -52,9 +51,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     }
 
     @Override
-    public InformationResponse getInformation(Long receiptCode) {
+    public Information getInformation(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return InformationResponse.builder()
+        return Information.builder()
                 .name(user.getName())
                 .sex(stringValueOf(user.getSex()))
                 .birthday(stringValueOf(user.getBirthday()))
@@ -78,6 +77,12 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     public String getPhotoFileName(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
         return user.getPhotoFileName();
+    }
+
+    @Override
+    public String getEducationalStatus(Long receiptCode) {
+        User user = userExportRepository.findByReceiptCode(receiptCode);
+        return stringValueOf(user.getEducationalStatus());
     }
 
     private String stringValueOf(Object object) {
