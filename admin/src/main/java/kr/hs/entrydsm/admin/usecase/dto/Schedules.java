@@ -14,8 +14,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Schedules {
 
-    private String year;
-
     private Type type;
 
     private String date;

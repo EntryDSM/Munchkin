@@ -15,9 +15,6 @@ import javax.validation.constraints.NotBlank;
 public class ScheduleRequest {
 
     @NotBlank
-    private String year;
-
-    @NotBlank
     private Type type;
 
     @NotBlank
