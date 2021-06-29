@@ -92,7 +92,7 @@ class ApplicationResponseTest {
 
     @Test
     void isGraduated() {
-        assertTrue(response1.isGraduated);
+        assertFalse(response1.isGraduated);
         assertTrue(response2.isGraduated);
         assertFalse(response3.isGraduated);
     }
