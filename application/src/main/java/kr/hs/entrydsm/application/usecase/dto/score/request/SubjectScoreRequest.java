@@ -8,8 +8,8 @@ import lombok.Getter;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class SubjectScoreRequest {
 
     @Pattern(regexp = "[A-E,X]{6}")

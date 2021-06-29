@@ -2,12 +2,14 @@ package kr.hs.entrydsm.application.usecase.dto.application.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class ApplicationRequest {
 

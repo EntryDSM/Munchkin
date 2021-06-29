@@ -1,12 +1,14 @@
 package kr.hs.entrydsm.application.usecase.dto.score.request;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class GedScoreRequest {
 

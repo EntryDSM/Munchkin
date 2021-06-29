@@ -2,12 +2,14 @@ package kr.hs.entrydsm.application.usecase.dto.application.request;
 
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Pattern;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class GraduatedInformationRequest extends Information {
 
