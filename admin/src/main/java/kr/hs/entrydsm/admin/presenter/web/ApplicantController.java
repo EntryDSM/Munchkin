@@ -46,7 +46,7 @@ public class ApplicantController {
                                             @RequestParam(name = "is-common") boolean isCommon,
                                             @RequestParam(name = "is-meister") boolean isMeister,
                                             @RequestParam(name = "is-social") boolean isSocial,
-                                            @RequestParam(required = false, name = "is-printed-arrived") @Nullable boolean isPrintedArrived) {
+                                            @RequestParam(required = false, name = "is-printed-arrived") @Nullable Boolean isPrintedArrived) {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 
