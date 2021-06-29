@@ -161,9 +161,9 @@ public class ApplicationManager implements ApplicationProcessing {
                     return applicantExportService.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                                     .format(graduationApplication.getGraduateAt()))
-                            .setIsGraduated(graduationApplication.isGraduation());
+                            .setIsGraduated(graduationApplication.getIsGraduated());
                 return applicantExportService.getApplicationType(receiptCode)
-                        .setIsGraduated(graduationApplication.isGraduation());
+                        .setIsGraduated(graduationApplication.getIsGraduated());
             }
         }else {
             if (qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
