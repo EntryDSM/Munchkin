@@ -99,7 +99,9 @@ public class ApplicationManager implements ApplicationProcessing {
                                         .withZone(ZoneId.of("Asia/Seoul")))
                                 .atDay(1));
             }
-            graduationApplication.setIsGraduated(applicationRequest.getIsGraduated());
+            graduationApplication.setIsGraduated(
+                    applicationRequest.getEducationalStatus().equals("GRADUATE")
+            );
             graduationApplicationRepository.save(graduationApplication);
         }
 
