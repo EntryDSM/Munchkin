@@ -26,8 +26,9 @@ public class ApplicationResponse {
     @JsonProperty(value = "is_graduated")
     protected boolean isGraduated;
 
-    public void setIsGraduated(boolean isGraduated) {
+    public ApplicationResponse setIsGraduated(boolean isGraduated) {
         this.isGraduated = isGraduated;
+        return this;
     }
 
     public ApplicationResponse setGraduatedAt(String graduatedAt) {

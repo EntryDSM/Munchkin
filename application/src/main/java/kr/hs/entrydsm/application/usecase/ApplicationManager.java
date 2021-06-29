@@ -160,7 +160,20 @@ public class ApplicationManager implements ApplicationProcessing {
                 if (graduationApplication.getGraduateAt() != null)
                     return applicantExportService.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
-                                    .format(graduationApplication.getGraduateAt()));
+                                    .format(graduationApplication.getGraduateAt()))
+                            .setIsGraduated(graduationApplication.isGraduation());
+                return applicantExportService.getApplicationType(receiptCode)
+                        .setIsGraduated(graduationApplication.isGraduation());
+            }
+        }else {
+            if (qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
+                QualificationExamApplication qualificationExamApplication =
+                        qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
+                        .orElseThrow(ApplicationNotFoundException::new);
+                if (qualificationExamApplication.getQualifiedAt() != null)
+                    return applicantExportService.getApplicationType(receiptCode)
+                            .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                                    .format(qualificationExamApplication.getQualifiedAt()));
                 return applicantExportService.getApplicationType(receiptCode);
             }
         }
