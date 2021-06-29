@@ -43,7 +43,7 @@ public class ApplicantController {
                                             @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
                                             @RequestParam(required = false) String name,
                                             @RequestParam(name = "is-common") boolean isCommon,
-                                            @RequestParam(name = "is-meiseter") boolean isMeister,
+                                            @RequestParam(name = "is-meister") boolean isMeister,
                                             @RequestParam(name = "is-social") boolean isSocial,
                                             @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
