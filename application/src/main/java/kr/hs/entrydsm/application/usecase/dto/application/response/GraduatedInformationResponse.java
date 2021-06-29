@@ -32,6 +32,7 @@ public class InformationResponse {
     private String detailAddress;
 
     private String postCode;
+
     private String photoFileName;
 
     private String schoolCode;
