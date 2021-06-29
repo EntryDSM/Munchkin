@@ -2,13 +2,13 @@ package kr.hs.entrydsm.application.usecase.dto.score.request;
 
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
-@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class EtcScoreRequest {
 
