@@ -25,13 +25,6 @@ public class GraduatedInformationRequest extends Information {
     @Length(max = 5, message = "INVALID STUDENT_NUMBER")
     private String studentNumber;
 
-    @JsonProperty(value = "is_graduated")
-    protected boolean isGraduated;
-
-    public void setIsGraduated(boolean isGraduated) {
-        this.isGraduated = isGraduated;
-    }
-
     public void setSchoolCode(String schoolCode){
         this.schoolCode = schoolCode;
     }
