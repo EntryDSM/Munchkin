@@ -10,9 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GraduationApplicationTest {
 
     @Test
-    public void isGraduationTrue() {
+    public void isGraduationFalse() {
         Application application = GraduationApplicationBuilder.build();
-        assertThat(application.isGraduation()).isTrue();
+        assertThat(application.isGraduation()).isFalse();
     }
 
     @Test
