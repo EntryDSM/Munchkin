@@ -3,8 +3,8 @@ package kr.hs.entrydsm.application.presenter.web;
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
-import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
-import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Published
 @JWTRequired
@@ -38,18 +37,18 @@ public class ApplicationUserController {
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertInfo(@RequestBody @Valid InformationRequest information){
-        applicationProcessing.writeInformation(information);
+    public void insertInfo(@RequestBody @Valid GraduatedInformationRequest information){
+        applicationProcessing.writeGraduatedInformation(information);
     }
 
     @GetMapping
-    public InformationResponse getInfo() throws IOException {
-        return applicationProcessing.getInformation();
+    public GraduatedInformationResponse getInfo() {
+        return applicationProcessing.getGraduatedInformation();
     }
 
     @PostMapping("/photo")
     @ResponseStatus(HttpStatus.CREATED)
-    public String uploadPhoto(@RequestPart(name = "file") @Nullable MultipartFile multipartFile) throws IOException {
+    public String uploadPhoto(@RequestPart(name = "file") @Nullable MultipartFile multipartFile) {
         return applicationProcessing.uploadPhoto(multipartFile);
     }
 
