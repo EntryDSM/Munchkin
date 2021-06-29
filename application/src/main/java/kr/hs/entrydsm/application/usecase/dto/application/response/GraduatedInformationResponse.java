@@ -7,7 +7,10 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Pattern;
 
+@Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class GraduatedInformationResponse extends Information {
 
     @Length(max = 11)

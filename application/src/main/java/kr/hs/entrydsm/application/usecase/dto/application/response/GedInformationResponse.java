@@ -1,7 +1,10 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -9,7 +12,10 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class GedInformationResponse extends Information {
 
     @NotNull
