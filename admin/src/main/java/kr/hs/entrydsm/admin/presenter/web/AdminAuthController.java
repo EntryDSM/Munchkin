@@ -44,7 +44,7 @@ public class AdminAuthController {
 
     @AdminJWTRequired
     @GetMapping
-    public String checkPassword(@RequestBody String password) {
+    public String checkPassword(@RequestParam String password) {
         return authService.checkPassword(password);
     }
 
