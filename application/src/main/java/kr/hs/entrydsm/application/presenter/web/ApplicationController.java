@@ -26,11 +26,13 @@ public class ApplicationController {
     private final ApplicationProcessing applicationProcessing;
 
     @PatchMapping("/intro")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateIntro(@RequestBody @Valid UpdateDocsRequest dto) {
         applicationProcessing.writeSelfIntroduce(dto.getContent());
     }
 
     @PatchMapping("/study-plan")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStudyPlan(@RequestBody @Valid UpdateDocsRequest dto) {
         applicationProcessing.writeStudyPlan(dto.getContent());
     }
