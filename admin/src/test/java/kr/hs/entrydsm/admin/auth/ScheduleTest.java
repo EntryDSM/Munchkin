@@ -65,7 +65,7 @@ public class ScheduleTest extends ScheduleBaseTest {
     @Order(2)
     public void modify_schedule() {
         try {
-            scheduleService.updateSchedules(new ScheduleRequest("2021", Type.START_DATE, "2021-06-22"));
+            scheduleService.updateSchedules(new ScheduleRequest(Type.START_DATE, "2021-06-22"));
         } catch (ScheduleNotFoundException e) {
         }
     }
@@ -73,7 +73,7 @@ public class ScheduleTest extends ScheduleBaseTest {
     @Test
     @Order(2)
     public void schedule_entity_modify_schedule() {
-        updateSchedule(SCHEDULE_REQUEST);
+        updateSchedule(SCHEDULE_REQUEST.getDate().substring(1,4), SCHEDULE_REQUEST.getDate());
         assertFalse(SCHEDULE_REQUEST.getType()==null);
     }
 
@@ -85,7 +85,6 @@ public class ScheduleTest extends ScheduleBaseTest {
 
     @Test
     public void schedules() {
-        assertTrue(SCHEDULES_DTO.getYear().equals("2021"));
         assertTrue(SCHEDULES_DTO.getType().equals(Type.START_DATE));
         assertFalse(SCHEDULES_DTO.getDate().equals("2020-00-00"));
     }

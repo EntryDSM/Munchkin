@@ -91,15 +91,18 @@ public class ApplicationManager implements ApplicationProcessing {
                             .atDay(1));
             qualificationExamApplicationRepository.save(qualificationExamApplication);
         }else {
+            GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
             if(applicationRequest.getGraduatedAt() != null){
-                GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
                 graduationApplication.setGraduateAt(
                         YearMonth.parse(applicationRequest.getGraduatedAt(),
                                 DateTimeFormatter.ofPattern("yyyyMM")
                                         .withZone(ZoneId.of("Asia/Seoul")))
                                 .atDay(1));
-                graduationApplicationRepository.save(graduationApplication);
             }
+            graduationApplication.setIsGraduated(
+                    applicationRequest.getEducationalStatus().equals("GRADUATE")
+            );
+            graduationApplicationRepository.save(graduationApplication);
         }
 
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
@@ -121,7 +124,6 @@ public class ApplicationManager implements ApplicationProcessing {
         graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode())
                 .orElseThrow(SchoolNotFoundException::new));
         graduationApplication.setStudentNumber(information.getStudentNumber());
-        graduationApplication.setIsGraduated(information.isGraduated());
         graduationApplicationRepository.save(graduationApplication);
 
         applicantExportService.writeInformation(receiptCode, information);
@@ -134,7 +136,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
         if(educationalStatus == null)
             throw new EducationalStatusNotFoundException();
-        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
             throw new EducationalStatusUnmatchedException();
 
         QualificationExamApplication qualificationExamApplication = getQualificationExamApplication(receiptCode);
@@ -149,17 +151,33 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public ApplicationResponse getApplicationType() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
-            GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-            if(graduationApplication.getGraduateAt() != null)
+        String educationStatus = applicantExportService.getEducationalStatus(receiptCode);
+        if (!educationStatus.equals("QUALIFICATION_EXAM")) {
+            if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
+                GraduationApplication graduationApplication =
+                        graduationApplicationRepository.findByReceiptCode(receiptCode)
+                        .orElseThrow(ApplicationNotFoundException::new);
+                if (graduationApplication.getGraduateAt() != null)
+                    return applicantExportService.getApplicationType(receiptCode)
+                            .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                                    .format(graduationApplication.getGraduateAt()))
+                            .setIsGraduated(graduationApplication.isGraduation());
                 return applicantExportService.getApplicationType(receiptCode)
-                    .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
-                    .format(graduationApplication.getGraduateAt()));
-            return applicantExportService.getApplicationType(receiptCode);
+                        .setIsGraduated(graduationApplication.isGraduation());
+            }
+        }else {
+            if (qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
+                QualificationExamApplication qualificationExamApplication =
+                        qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
+                        .orElseThrow(ApplicationNotFoundException::new);
+                if (qualificationExamApplication.getQualifiedAt() != null)
+                    return applicantExportService.getApplicationType(receiptCode)
+                            .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                                    .format(qualificationExamApplication.getQualifiedAt()));
+                return applicantExportService.getApplicationType(receiptCode);
+            }
         }
         return applicantExportService.getApplicationType(receiptCode);
-
     }
 
     @Override
@@ -197,7 +215,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
         if(educationalStatus == null)
             throw new EducationalStatusNotFoundException();
-        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
             throw new EducationalStatusUnmatchedException();
 
         GedInformationResponse result = new GedInformationResponse()

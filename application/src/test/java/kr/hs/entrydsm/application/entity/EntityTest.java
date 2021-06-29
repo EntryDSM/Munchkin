@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public abstract class EntityTest {
 
-    protected final Applicant graduateCommonMale = Applicant.builder()
+    protected static final Applicant graduateCommonMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.COMMON)
@@ -23,7 +23,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant graduateCommonFemale = Applicant.builder()
+    protected static final Applicant graduateCommonFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.COMMON)
@@ -42,7 +42,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant graduateMeisterMale = Applicant.builder()
+    protected static final Applicant graduateMeisterMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.MEISTER)
@@ -61,7 +61,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant graduateMeisterFemale = Applicant.builder()
+    protected static final Applicant graduateMeisterFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.MEISTER)
@@ -80,7 +80,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant graduateSocialMale = Applicant.builder()
+    protected static final Applicant graduateSocialMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.SOCIAL)
@@ -99,7 +99,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant graduateSocialFemale = Applicant.builder()
+    protected static final Applicant graduateSocialFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.SOCIAL)
@@ -118,7 +118,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant prospectiveGraduateCommonMale = Applicant.builder()
+    protected static final Applicant prospectiveGraduateCommonMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.COMMON)
@@ -137,7 +137,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant prospectiveGraduateCommonFemale = Applicant.builder()
+    protected static final Applicant prospectiveGraduateCommonFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.COMMON)
@@ -156,7 +156,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant prospectiveGraduateMeisterMale = Applicant.builder()
+    protected static final Applicant prospectiveGraduateMeisterMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.MEISTER)
@@ -175,7 +175,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant prospectiveGraduateMeisterFemale = Applicant.builder()
+    protected static final Applicant prospectiveGraduateMeisterFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.MEISTER)
@@ -194,7 +194,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant prospectiveGraduateSocialMale = Applicant.builder()
+    protected static final Applicant prospectiveGraduateSocialMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.SOCIAL)
@@ -213,7 +213,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant prospectiveGraduateSocialFemale = Applicant.builder()
+    protected static final Applicant prospectiveGraduateSocialFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.SOCIAL)
@@ -232,7 +232,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant qualificationExamCommonMale = Applicant.builder()
+    protected static final Applicant qualificationExamCommonMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.COMMON)
@@ -251,7 +251,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant qualificationExamCommonFemale = Applicant.builder()
+    protected static final Applicant qualificationExamCommonFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.COMMON)
@@ -270,7 +270,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant qualificationExamMeisterMale = Applicant.builder()
+    protected static final Applicant qualificationExamMeisterMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.MEISTER)
@@ -289,7 +289,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant qualificationExamMeisterFemale = Applicant.builder()
+    protected static final Applicant qualificationExamMeisterFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.MEISTER)
@@ -308,7 +308,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant qualificationExamSocialMale = Applicant.builder()
+    protected static final Applicant qualificationExamSocialMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.SOCIAL)
@@ -327,7 +327,7 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant qualificationExamSocialFemale = Applicant.builder()
+    protected static final Applicant qualificationExamSocialFemale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
             .applicationType(ApplicationType.SOCIAL)
@@ -346,35 +346,35 @@ public abstract class EntityTest {
             .studyPlan("학업계획")
             .build();
 
-    protected final Applicant basicLiving = Applicant.builder()
+    protected static final Applicant basicLiving = Applicant.builder()
             .applicationRemark(ApplicationRemark.BASIC_LIVING)
             .build();
 
-    protected final Applicant fromNorth = Applicant.builder()
+    protected static final Applicant fromNorth = Applicant.builder()
             .applicationRemark(ApplicationRemark.FROM_NORTH)
             .build();
 
-    protected final Applicant lowestIncome = Applicant.builder()
+    protected static final Applicant lowestIncome = Applicant.builder()
             .applicationRemark(ApplicationRemark.LOWEST_INCOME)
             .build();
 
-    protected final Applicant multicultural = Applicant.builder()
+    protected static final Applicant multicultural = Applicant.builder()
             .applicationRemark(ApplicationRemark.MULTICULTURAL)
             .build();
 
-    protected final Applicant oneParent = Applicant.builder()
+    protected static final Applicant oneParent = Applicant.builder()
             .applicationRemark(ApplicationRemark.ONE_PARENT)
             .build();
 
-    protected final Applicant teenHouseholder = Applicant.builder()
+    protected static final Applicant teenHouseholder = Applicant.builder()
             .applicationRemark(ApplicationRemark.TEEN_HOUSEHOLDER)
             .build();
 
-    protected final Applicant privilegedAdmission = Applicant.builder()
+    protected static final Applicant privilegedAdmission = Applicant.builder()
             .applicationRemark(ApplicationRemark.PRIVILEGED_ADMISSION)
             .build();
 
-    protected final Applicant nationalMerit = Applicant.builder()
+    protected static final Applicant nationalMerit = Applicant.builder()
             .applicationRemark(ApplicationRemark.NATIONAL_MERIT)
             .build();
 

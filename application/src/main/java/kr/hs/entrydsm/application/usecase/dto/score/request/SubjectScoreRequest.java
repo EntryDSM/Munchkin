@@ -4,34 +4,36 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Pattern;
 
 @Getter
-@AllArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SubjectScoreRequest {
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String koreanScore;
+    private String koreanScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String socialScore;
+    private String socialScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String historyScore;
+    private String historyScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String mathScore;
+    private String mathScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String scienceScore;
+    private String scienceScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String englishScore;
+    private String englishScore;
 
     @Pattern(regexp = "[A-E,X]{6}")
-    private final String techAndHomeScore;
+    private String techAndHomeScore;
 
     public static SubjectScoreRequest from(GraduationApplication application) {
         return SubjectScoreRequest.builder()

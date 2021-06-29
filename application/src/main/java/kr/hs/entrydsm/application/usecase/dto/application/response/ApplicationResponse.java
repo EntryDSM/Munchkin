@@ -23,6 +23,14 @@ public class ApplicationResponse {
 
     private String graduatedAt;
 
+    @JsonProperty(value = "is_graduated")
+    protected boolean isGraduated;
+
+    public ApplicationResponse setIsGraduated(boolean isGraduated) {
+        this.isGraduated = isGraduated;
+        return this;
+    }
+
     public ApplicationResponse setGraduatedAt(String graduatedAt) {
         this.graduatedAt = graduatedAt;
         return this;

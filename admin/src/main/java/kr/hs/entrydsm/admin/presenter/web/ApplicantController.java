@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import reactor.util.annotation.Nullable;
 
 @RequiredArgsConstructor
 @Published
@@ -37,15 +38,15 @@ public class ApplicantController {
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
-                                            @RequestParam(required = false, name = "receipt-code") Long receiptCode,
+                                            @RequestParam(required = false, name = "receipt-code") @Nullable Long receiptCode,
                                             @RequestParam(name = "is-daejeon") boolean isDaejeon,
                                             @RequestParam(name = "is-nationwide") boolean isNationwide,
-                                            @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
-                                            @RequestParam(required = false) String name,
+                                            @RequestParam(required = false, name = "telephone-number") @Nullable String telephoneNumber,
+                                            @RequestParam(required = false) @Nullable String name,
                                             @RequestParam(name = "is-common") boolean isCommon,
-                                            @RequestParam(name = "is-meiseter") boolean isMeister,
+                                            @RequestParam(name = "is-meister") boolean isMeister,
                                             @RequestParam(name = "is-social") boolean isSocial,
-                                            @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
+                                            @RequestParam(required = false, name = "is-printed-arrived") @Nullable boolean isPrintedArrived) {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 

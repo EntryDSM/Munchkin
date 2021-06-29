@@ -10,8 +10,8 @@ import javax.validation.constraints.*;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Information {
 
     protected static final String TEL_REGEXP = "^\\d{3}\\d{3,4}\\d{4}$";

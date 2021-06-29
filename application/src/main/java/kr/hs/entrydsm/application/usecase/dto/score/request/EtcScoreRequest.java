@@ -4,28 +4,30 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
+@NoArgsConstructor
 @Builder
 @AllArgsConstructor
 public class EtcScoreRequest {
 
     @PositiveOrZero
-    private final Integer volunteerTime;
+    private Integer volunteerTime;
 
     @PositiveOrZero
-    private final Integer dayAbsenceCount;
+    private Integer dayAbsenceCount;
 
     @PositiveOrZero
-    private final Integer lectureAbsenceCount;
+    private Integer lectureAbsenceCount;
 
     @PositiveOrZero
-    private final Integer latenessCount;
+    private Integer latenessCount;
 
     @PositiveOrZero
-    private final Integer earlyLeaveCount;
+    private Integer earlyLeaveCount;
 
     public static EtcScoreRequest from(GraduationApplication application) {
         return EtcScoreRequest.builder()

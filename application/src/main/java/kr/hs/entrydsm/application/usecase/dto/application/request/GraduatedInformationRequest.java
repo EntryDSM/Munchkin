@@ -1,9 +1,7 @@
 package kr.hs.entrydsm.application.usecase.dto.application.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -24,20 +22,5 @@ public class GraduatedInformationRequest extends Information {
 
     @Length(max = 5, message = "INVALID STUDENT_NUMBER")
     private String studentNumber;
-
-    @JsonProperty(value = "is_graduated")
-    protected boolean isGraduated;
-
-    public void setIsGraduated(boolean isGraduated) {
-        this.isGraduated = isGraduated;
-    }
-
-    public void setSchoolCode(String schoolCode){
-        this.schoolCode = schoolCode;
-    }
-
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
-    }
 
 }
