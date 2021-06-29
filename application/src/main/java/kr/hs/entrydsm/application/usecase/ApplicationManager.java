@@ -3,10 +3,13 @@ package kr.hs.entrydsm.application.usecase;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
+import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
-import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.GedInformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
-import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.GedInformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
@@ -14,6 +17,8 @@ import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.EducationalStatusUnmatchedException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import kr.hs.entrydsm.application.usecase.score.ScoreService;
@@ -39,6 +44,7 @@ public class ApplicationManager implements ApplicationProcessing {
     private final ApplicationApplicantRepository applicantExportService;
     private final SchoolRepository schoolRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
+    private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
     private final ScoreService scoreService;
     private final AuthenticationManager authenticationManager;
 
@@ -74,22 +80,41 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void writeApplicationType(ApplicationRequest applicationRequest) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
-        if(applicationRequest.getGraduatedAt() != null){
-            graduationApplication.setReceiptCode(receiptCode);
-            graduationApplication.setGraduateAt(
+
+        if(applicationRequest.getEducationalStatus().equals("QUALIFICATION_EXAM")){
+            QualificationExamApplication qualificationExamApplication =
+                    getQualificationExamApplication(receiptCode);
+            qualificationExamApplication.setQualifiedAt(
                     YearMonth.parse(applicationRequest.getGraduatedAt(),
                             DateTimeFormatter.ofPattern("yyyyMM")
-                                            .withZone(ZoneId.of("Asia/Seoul")))
+                                    .withZone(ZoneId.of("Asia/Seoul")))
                             .atDay(1));
-            graduationApplicationRepository.save(graduationApplication);
+            qualificationExamApplicationRepository.save(qualificationExamApplication);
+        }else {
+            if(applicationRequest.getGraduatedAt() != null){
+                GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
+                graduationApplication.setGraduateAt(
+                        YearMonth.parse(applicationRequest.getGraduatedAt(),
+                                DateTimeFormatter.ofPattern("yyyyMM")
+                                        .withZone(ZoneId.of("Asia/Seoul")))
+                                .atDay(1));
+                graduationApplicationRepository.save(graduationApplication);
+            }
         }
+
         applicantExportService.writeApplicationType(receiptCode, applicationRequest);
     }
 
     @Override
-    public void writeInformation(InformationRequest information) {
+    public void writeGraduatedInformation(GraduatedInformationRequest information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
+
         GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
 
         graduationApplication.setSchoolTel(information.getSchoolTel());
@@ -98,6 +123,25 @@ public class ApplicationManager implements ApplicationProcessing {
         graduationApplication.setStudentNumber(information.getStudentNumber());
         graduationApplication.setIsGraduated(information.isGraduated());
         graduationApplicationRepository.save(graduationApplication);
+
+        applicantExportService.writeInformation(receiptCode, information);
+    }
+
+    @Override
+    public void writeGedInformation(GedInformationRequest information) {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
+
+        QualificationExamApplication qualificationExamApplication = getQualificationExamApplication(receiptCode);
+        qualificationExamApplication.setAverageScore(information.getGedAverageScore());
+
+        qualificationExamApplicationRepository.save(qualificationExamApplication);
+
 
         applicantExportService.writeInformation(receiptCode, information);
     }
@@ -119,28 +163,66 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public InformationResponse getInformation() throws IOException {
+    public GraduatedInformationResponse getGraduatedInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
-                .orElseThrow(ApplicationNotFoundException::new);
-        InformationResponse result = applicantExportService.getInformation(receiptCode);
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
+
+        GraduatedInformationResponse result = new GraduatedInformationResponse()
+                .setInformation(applicantExportService.getInformation(receiptCode));
+
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+
+            result.setSchoolCode(graduationApplication.getSchoolCode());
+            result.setSchoolTel(graduationApplication.getSchoolTel());
+            result.setIsGraduated(graduationApplication.getIsGraduated() != null
+                    && graduationApplication.getIsGraduated());
+            result.setStudentNumber(graduationApplication.getStudentNumber());
+        }
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
-        result.setSchoolCode(graduationApplication.getSchoolCode());
-        result.setSchoolTel(graduationApplication.getSchoolTel());
-        result.setIsGraduated(graduationApplication.getIsGraduated() != null
-                && graduationApplication.getIsGraduated());
-        result.setStudentNumber(graduationApplication.getStudentNumber());
 
         return result;
     }
 
     @Override
-    public String uploadPhoto(MultipartFile multipartFile) throws IOException {
+    public GedInformationResponse getGedInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        InformationResponse result = applicantExportService.getInformation(receiptCode);
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
+
+        GedInformationResponse result = new GedInformationResponse()
+                .setInformation(applicantExportService.getInformation(receiptCode));
+
+        result.setGedAverageScore(getQualificationExamApplication(receiptCode).getAverageScore());
+
+        result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
+
+        return result;
+    }
+
+    @Override
+    public String uploadPhoto(MultipartFile multipartFile) {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        Information result = applicantExportService.getInformation(receiptCode);
         if(result.getPhotoFileName() != null)
             imageService.delete(result.getPhotoFileName());
-        String fileName = imageService.upload(multipartFile, receiptCode);
+        String fileName;
+        try{
+            fileName = imageService.upload(multipartFile, receiptCode);
+        }catch (IOException e) {
+            fileName = null;
+        }
+
         applicantExportService.setPhotoFileName(receiptCode, fileName);
         return fileName;
     }
@@ -176,8 +258,13 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
 
-    private String getImageUrl(String photoFileName) throws MalformedURLException {
-        return (photoFileName != null) ? imageService.generateObjectUrl(photoFileName) : null;
+    private String getImageUrl(String photoFileName) {
+        try{
+            return (photoFileName != null) ? imageService.generateObjectUrl(photoFileName) : null;
+        }catch (MalformedURLException e){
+            return null;
+        }
+
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {
@@ -189,6 +276,18 @@ public class ApplicationManager implements ApplicationProcessing {
             graduationApplication = new GraduationApplication();
             graduationApplication.setReceiptCode(receiptCode);
             return graduationApplication;
+        }
+    }
+
+    private QualificationExamApplication getQualificationExamApplication(long receiptCode) {
+        QualificationExamApplication qualificationExamApplication;
+        if(qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            return qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        }else {
+            qualificationExamApplication = new QualificationExamApplication();
+            qualificationExamApplication.setReceiptCode(receiptCode);
+            return qualificationExamApplication;
         }
     }
 

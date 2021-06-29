@@ -2,9 +2,11 @@ package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
-import kr.hs.entrydsm.application.usecase.dto.application.request.InformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.GedInformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
-import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.GedInformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.GedScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
@@ -14,8 +16,6 @@ import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreRespons
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 public interface ApplicationProcessing {
 
@@ -31,13 +31,17 @@ public interface ApplicationProcessing {
 
     void writeApplicationType(ApplicationRequest applicationRequest);
 
-    void writeInformation(InformationRequest information);
+    void writeGraduatedInformation(GraduatedInformationRequest information);
+
+    void writeGedInformation(GedInformationRequest information);
 
     ApplicationResponse getApplicationType();
 
-    InformationResponse getInformation() throws IOException;
+    GraduatedInformationResponse getGraduatedInformation();
 
-    String uploadPhoto(MultipartFile multipartFile) throws IOException;
+    GedInformationResponse getGedInformation();
+
+    String uploadPhoto(MultipartFile multipartFile);
 
     void updateSubjectScore(SubjectScoreRequest score);
 
