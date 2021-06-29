@@ -30,11 +30,14 @@ class GedInformationResponseTest {
 
     private static final GedInformationResponse response3 = new GedInformationResponse(BigDecimal.valueOf(80.80));
 
+    private static final GedInformationResponse response4 = new GedInformationResponse();
+
     @Test
     void setPhotoFileName() {
         response1.setPhotoFileName("test1.jpg");
         response2.setPhotoFileName("test2.jpg");
         response3.setPhotoFileName("test3.jpg");
+        response4.setPhotoFileName("test4.jpg");
     }
 
     @Test
@@ -42,6 +45,7 @@ class GedInformationResponseTest {
         response1.setInformation(information);
         response2.setInformation(information);
         response3.setInformation(information);
+        response4.setInformation(information);
     }
 
     @Test

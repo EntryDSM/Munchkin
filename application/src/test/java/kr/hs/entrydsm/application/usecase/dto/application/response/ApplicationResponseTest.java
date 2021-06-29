@@ -36,11 +36,15 @@ class ApplicationResponseTest {
                     .graduatedAt("202106")
                     .build();
 
+    private static final ApplicationResponse response4 =
+            new ApplicationResponse();
+
     @Test
     void setIsGraduated() {
         response1.setIsGraduated(false);
         response2.setIsGraduated(true);
         response3.setIsGraduated(false);
+        response4.setIsGraduated(false);
     }
 
     @Test
@@ -48,6 +52,7 @@ class ApplicationResponseTest {
         response1.setGraduatedAt("202203");
         response2.setGraduatedAt("202103");
         response3.setGraduatedAt("202106");
+        response4.setGraduatedAt("202107");
     }
 
     @Test
@@ -87,8 +92,8 @@ class ApplicationResponseTest {
 
     @Test
     void isGraduated() {
-        assertTrue(response1.isDaejeon());
-        assertTrue(response2.isDaejeon());
-        assertFalse(response3.isDaejeon());
+        assertTrue(response1.isGraduated);
+        assertTrue(response2.isGraduated);
+        assertFalse(response3.isGraduated);
     }
 }

@@ -34,11 +34,15 @@ class GraduatedInformationResponseTest {
             new GraduatedInformationResponse("2220134567", "3333333",
                     "30131", false);
 
+    private static final GraduatedInformationResponse response4 =
+            new GraduatedInformationResponse();
+
     @Test
     void setIsGraduated() {
         response1.setIsGraduated(true);
         response2.setIsGraduated(true);
         response3.setIsGraduated(false);
+        response4.setIsGraduated(false);
     }
 
     @Test
@@ -46,6 +50,7 @@ class GraduatedInformationResponseTest {
         response1.setInformation(information);
         response2.setInformation(information);
         response3.setInformation(information);
+        response4.setInformation(information);
     }
 
     @Test
@@ -53,6 +58,7 @@ class GraduatedInformationResponseTest {
         response1.setPhotoFileName("test1.jpg");
         response2.setPhotoFileName("test2.jpg");
         response3.setPhotoFileName("test3.jpg");
+        response4.setPhotoFileName("test4.jpg");
     }
 
     @Test
