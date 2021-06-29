@@ -89,7 +89,7 @@ public class GraduationApplication extends Application {
 
     @Override
     public boolean isGraduation() {
-        return this.isGraduated;
+        return true;
     }
 
     public String getSchoolName() {

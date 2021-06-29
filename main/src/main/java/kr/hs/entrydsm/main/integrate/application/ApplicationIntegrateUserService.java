@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.entity.Applicant;
+import kr.hs.entrydsm.application.entity.ApplicationType;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;
@@ -54,12 +55,12 @@ public class ApplicationIntegrateUserService
         return Applicant.builder()
                 .receiptCode(user.getReceiptCode())
                 .telephoneNumber(user.getTelephoneNumber())
-                .applicationType(user.getApplicationType().name())
-                .applicationRemark(user.getApplicationRemark().name())
-                .educationalStatus(user.getEducationalStatus().name())
+                .applicationType(getNameIfNull(user.getApplicationType()))
+                .applicationRemark(getNameIfNull(user.getApplicationRemark()))
+                .educationalStatus(getNameIfNull(user.getEducationalStatus()))
                 .isDaejeon(user.isDaejeon())
                 .name(user.getName())
-                .sex(user.getSex().name())
+                .sex(getNameIfNull(user.getSex()))
                 .birthday(user.getBirthday())
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
@@ -70,5 +71,9 @@ public class ApplicationIntegrateUserService
                 .selfIntroduce(user.getSelfIntroduce())
                 .studyPlan(user.getStudyPlan())
                 .build();
+    }
+
+    private <T extends Enum<T>> String getNameIfNull(Enum<T> object) {
+        return object != null ? object.name() : null;
     }
 }
