@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ApplicationResponseTest {
 
-    private static final ApplicationResponse response1 =
+    private static final ApplicationResponse RESPONSE_1 =
             ApplicationResponse.builder()
             .educationalStatus("PROSPECTIVE_GRADUATE")
             .applicationType("COMMON")
@@ -16,7 +16,7 @@ class ApplicationResponseTest {
             .graduatedAt("202203")
             .build();
 
-    private static final ApplicationResponse response2 =
+    private static final ApplicationResponse RESPONSE_2 =
             ApplicationResponse.builder()
                     .educationalStatus("GRADUATE")
                     .applicationType("MEISTER")
@@ -26,7 +26,7 @@ class ApplicationResponseTest {
                     .graduatedAt("202103")
                     .build();
 
-    private static final ApplicationResponse response3 =
+    private static final ApplicationResponse RESPONSE_3 =
             ApplicationResponse.builder()
                     .educationalStatus("QUALIFICATION_EXAM")
                     .applicationType("SOCIAL")
@@ -36,64 +36,64 @@ class ApplicationResponseTest {
                     .graduatedAt("202106")
                     .build();
 
-    private static final ApplicationResponse response4 =
+    private static final ApplicationResponse RESPONSE =
             new ApplicationResponse();
 
     @Test
     void setIsGraduated() {
-        response1.setIsGraduated(false);
-        response2.setIsGraduated(true);
-        response3.setIsGraduated(false);
-        response4.setIsGraduated(false);
+        RESPONSE_1.setIsGraduated(false);
+        RESPONSE_2.setIsGraduated(true);
+        RESPONSE_3.setIsGraduated(false);
+        RESPONSE.setIsGraduated(false);
     }
 
     @Test
     void setGraduatedAt() {
-        response1.setGraduatedAt("202203");
-        response2.setGraduatedAt("202103");
-        response3.setGraduatedAt("202106");
-        response4.setGraduatedAt("202107");
+        RESPONSE_1.setGraduatedAt("202203");
+        RESPONSE_2.setGraduatedAt("202103");
+        RESPONSE_3.setGraduatedAt("202106");
+        RESPONSE.setGraduatedAt("202107");
     }
 
     @Test
     void getEducationalStatus() {
-        assertEquals(response1.getEducationalStatus(), "PROSPECTIVE_GRADUATE");
-        assertEquals(response2.getEducationalStatus(), "GRADUATE");
-        assertEquals(response3.getEducationalStatus(), "QUALIFICATION_EXAM");
+        assertEquals(RESPONSE_1.getEducationalStatus(), "PROSPECTIVE_GRADUATE");
+        assertEquals(RESPONSE_2.getEducationalStatus(), "GRADUATE");
+        assertEquals(RESPONSE_3.getEducationalStatus(), "QUALIFICATION_EXAM");
     }
 
     @Test
     void getApplicationType() {
-        assertEquals(response1.getApplicationType(), "COMMON");
-        assertEquals(response2.getApplicationType(), "MEISTER");
-        assertEquals(response3.getApplicationType(), "SOCIAL");
+        assertEquals(RESPONSE_1.getApplicationType(), "COMMON");
+        assertEquals(RESPONSE_2.getApplicationType(), "MEISTER");
+        assertEquals(RESPONSE_3.getApplicationType(), "SOCIAL");
     }
 
     @Test
     void isDaejeon() {
-        assertTrue(response1.isDaejeon());
-        assertTrue(response2.isDaejeon());
-        assertFalse(response3.isDaejeon());
+        assertTrue(RESPONSE_1.isDaejeon());
+        assertTrue(RESPONSE_2.isDaejeon());
+        assertFalse(RESPONSE_3.isDaejeon());
     }
 
     @Test
     void getApplicationRemark() {
-        assertEquals(response1.getApplicationRemark(), "ONE_PARENT");
-        assertEquals(response2.getApplicationRemark(), "FROM_NORTH");
-        assertEquals(response3.getApplicationRemark(), "MULTICULTURAL");
+        assertEquals(RESPONSE_1.getApplicationRemark(), "ONE_PARENT");
+        assertEquals(RESPONSE_2.getApplicationRemark(), "FROM_NORTH");
+        assertEquals(RESPONSE_3.getApplicationRemark(), "MULTICULTURAL");
     }
 
     @Test
     void getGraduatedAt() {
-        assertEquals(response1.getGraduatedAt(), "202203");
-        assertEquals(response2.getGraduatedAt(), "202103");
-        assertEquals(response3.getGraduatedAt(), "202106");
+        assertEquals(RESPONSE_1.getGraduatedAt(), "202203");
+        assertEquals(RESPONSE_2.getGraduatedAt(), "202103");
+        assertEquals(RESPONSE_3.getGraduatedAt(), "202106");
     }
 
     @Test
     void isGraduated() {
-        assertFalse(response1.isGraduated);
-        assertTrue(response2.isGraduated);
-        assertFalse(response3.isGraduated);
+        assertFalse(RESPONSE_1.isGraduated());
+        assertTrue(RESPONSE_2.isGraduated());
+        assertFalse(RESPONSE_3.isGraduated());
     }
 }

@@ -8,16 +8,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GedInformationRequestTest {
 
-    private static final GedInformationRequest lowScore = new GedInformationRequest(BigDecimal.valueOf(21.14));
+    private static final GedInformationRequest LOW_SCORE = new GedInformationRequest(BigDecimal.valueOf(21.14));
 
-    private static final GedInformationRequest middleScore = new GedInformationRequest(BigDecimal.valueOf(50.50));
+    private static final GedInformationRequest MIDDLE_SCORE = new GedInformationRequest(BigDecimal.valueOf(50.50));
 
-    private static final GedInformationRequest highScore = new GedInformationRequest(BigDecimal.valueOf(80.80));
+    private static final GedInformationRequest HIGH_SCORE = new GedInformationRequest(BigDecimal.valueOf(80.80));
+
+    private static final GedInformationRequest REQUEST = new GedInformationRequest();
 
     @Test
     void getGedAverageScore() {
-        assertEquals(lowScore.getGedAverageScore(), BigDecimal.valueOf(21.14));
-        assertEquals(middleScore.getGedAverageScore(), BigDecimal.valueOf(50.50));
-        assertEquals(highScore.getGedAverageScore(), BigDecimal.valueOf(80.80));
+        assertNull(REQUEST.getGedAverageScore());
+        assertEquals(LOW_SCORE.getGedAverageScore(), BigDecimal.valueOf(21.14));
+        assertEquals(MIDDLE_SCORE.getGedAverageScore(), BigDecimal.valueOf(50.50));
+        assertEquals(HIGH_SCORE.getGedAverageScore(), BigDecimal.valueOf(80.80));
     }
 }

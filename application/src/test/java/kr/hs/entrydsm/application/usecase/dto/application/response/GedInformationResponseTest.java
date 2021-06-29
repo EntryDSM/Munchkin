@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
-import kr.hs.entrydsm.application.usecase.dto.application.request.GedInformationRequest;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -10,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GedInformationResponseTest {
 
-    private static final Information information = Information.builder()
+    private static final Information INFORMATION = Information.builder()
             .name("test1")
             .sex("MALE")
             .birthday("20040728")
@@ -24,41 +23,41 @@ class GedInformationResponseTest {
             .photoFileName("test.jpg")
             .build();
 
-    private static final GedInformationResponse response1 = new GedInformationResponse(BigDecimal.valueOf(21.14));
+    private static final GedInformationResponse RESPONSE_1 = new GedInformationResponse(BigDecimal.valueOf(21.14));
 
-    private static final GedInformationResponse response2 = new GedInformationResponse(BigDecimal.valueOf(50.50));
+    private static final GedInformationResponse RESPONSE_2 = new GedInformationResponse(BigDecimal.valueOf(50.50));
 
-    private static final GedInformationResponse response3 = new GedInformationResponse(BigDecimal.valueOf(80.80));
+    private static final GedInformationResponse RESPONSE_3 = new GedInformationResponse(BigDecimal.valueOf(80.80));
 
-    private static final GedInformationResponse response4 = new GedInformationResponse();
+    private static final GedInformationResponse RESPONSE = new GedInformationResponse();
 
     @Test
     void setPhotoFileName() {
-        response1.setPhotoFileName("test1.jpg");
-        response2.setPhotoFileName("test2.jpg");
-        response3.setPhotoFileName("test3.jpg");
-        response4.setPhotoFileName("test4.jpg");
+        RESPONSE_1.setPhotoFileName("test1.jpg");
+        RESPONSE_2.setPhotoFileName("test2.jpg");
+        RESPONSE_3.setPhotoFileName("test3.jpg");
+        RESPONSE.setPhotoFileName("test4.jpg");
     }
 
     @Test
     void setInformation() {
-        response1.setInformation(information);
-        response2.setInformation(information);
-        response3.setInformation(information);
-        response4.setInformation(information);
+        RESPONSE_1.setInformation(INFORMATION);
+        RESPONSE_2.setInformation(INFORMATION);
+        RESPONSE_3.setInformation(INFORMATION);
+        RESPONSE.setInformation(INFORMATION);
     }
 
     @Test
     void getGedAverageScore() {
-        assertEquals(response1.getGedAverageScore(), BigDecimal.valueOf(21.14));
-        assertEquals(response2.getGedAverageScore(), BigDecimal.valueOf(50.50));
-        assertEquals(response3.getGedAverageScore(), BigDecimal.valueOf(80.80));
+        assertEquals(RESPONSE_1.getGedAverageScore(), BigDecimal.valueOf(21.14));
+        assertEquals(RESPONSE_2.getGedAverageScore(), BigDecimal.valueOf(50.50));
+        assertEquals(RESPONSE_3.getGedAverageScore(), BigDecimal.valueOf(80.80));
     }
 
     @Test
     void setGedAverageScore() {
-        response1.setGedAverageScore(BigDecimal.valueOf(21.14));
-        response2.setGedAverageScore(BigDecimal.valueOf(50.50));
-        response3.setGedAverageScore(BigDecimal.valueOf(80.80));
+        RESPONSE_1.setGedAverageScore(BigDecimal.valueOf(21.14));
+        RESPONSE_2.setGedAverageScore(BigDecimal.valueOf(50.50));
+        RESPONSE_3.setGedAverageScore(BigDecimal.valueOf(80.80));
     }
 }

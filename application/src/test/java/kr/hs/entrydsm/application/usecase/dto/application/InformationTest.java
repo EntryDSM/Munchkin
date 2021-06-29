@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InformationTest {
 
-    private static final Information firstInformation =
+    private static final Information FIRST_INFORMATION =
             Information.builder()
             .name("test1")
             .sex("MALE")
@@ -23,56 +23,56 @@ class InformationTest {
 
     @Test
     void getName() {
-        assertEquals(firstInformation.getName(), "test1");
+        assertEquals(FIRST_INFORMATION.getName(), "test1");
     }
 
     @Test
     void getSex() {
-        assertEquals(firstInformation.getSex(), "MALE");
+        assertEquals(FIRST_INFORMATION.getSex(), "MALE");
     }
 
     @Test
     void getBirthday() {
-        assertEquals(firstInformation.getBirthday(), "20040728");
+        assertEquals(FIRST_INFORMATION.getBirthday(), "20040728");
     }
 
     @Test
     void getParentName() {
-        assertEquals(firstInformation.getParentName(), "test1parent");
+        assertEquals(FIRST_INFORMATION.getParentName(), "test1parent");
     }
 
     @Test
     void getTelephoneNumber() {
-        assertEquals(firstInformation.getTelephoneNumber(), "01012345678");
+        assertEquals(FIRST_INFORMATION.getTelephoneNumber(), "01012345678");
     }
 
     @Test
     void getParentTel() {
-        assertEquals(firstInformation.getParentTel(), "01087654321");
+        assertEquals(FIRST_INFORMATION.getParentTel(), "01087654321");
     }
 
     @Test
     void getHomeTel() {
-        assertEquals(firstInformation.getHomeTel(), "0510231564");
+        assertEquals(FIRST_INFORMATION.getHomeTel(), "0510231564");
     }
 
     @Test
     void getAddress() {
-        assertEquals(firstInformation.getAddress(), "homeaddr");
+        assertEquals(FIRST_INFORMATION.getAddress(), "homeaddr");
     }
 
     @Test
     void getDetailAddress() {
-        assertEquals(firstInformation.getDetailAddress(), "thisismyhome");
+        assertEquals(FIRST_INFORMATION.getDetailAddress(), "thisismyhome");
     }
 
     @Test
     void getPostCode() {
-        assertEquals(firstInformation.getPostCode(), "12345");
+        assertEquals(FIRST_INFORMATION.getPostCode(), "12345");
     }
 
     @Test
     void getPhotoFileName() {
-        assertEquals(firstInformation.getPhotoFileName(), "test.jpg");
+        assertEquals(FIRST_INFORMATION.getPhotoFileName(), "test.jpg");
     }
 }

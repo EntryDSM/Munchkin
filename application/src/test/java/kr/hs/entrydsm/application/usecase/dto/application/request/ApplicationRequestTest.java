@@ -18,11 +18,14 @@ class ApplicationRequestTest {
             new ApplicationRequest("QUALIFICATION_EXAM", "SOCIAL", true,
                     "BASIC_LIVING", "202108");
 
+    private static final ApplicationRequest REQUEST = new ApplicationRequest();
+
     @Test
     public void educationalStatus() {
         assertEquals(PROSPECTIVE_COMMON.getEducationalStatus(), "PROSPECTIVE_GRADUATE");
         assertEquals(GRADUATE_MEISTER.getEducationalStatus(), "GRADUATE");
         assertEquals(QUALIFICATION_SOCIAL.getEducationalStatus(), "QUALIFICATION_EXAM");
+        assertNull(REQUEST.getEducationalStatus());
     }
 
     @Test
@@ -30,6 +33,7 @@ class ApplicationRequestTest {
         assertEquals(PROSPECTIVE_COMMON.getApplicationType(), "COMMON");
         assertEquals(GRADUATE_MEISTER.getApplicationType(), "MEISTER");
         assertEquals(QUALIFICATION_SOCIAL.getApplicationType(), "SOCIAL");
+        assertNull(REQUEST.getEducationalStatus());
     }
 
     @Test
@@ -37,13 +41,15 @@ class ApplicationRequestTest {
         assertFalse(PROSPECTIVE_COMMON.isDaejeon());
         assertTrue(GRADUATE_MEISTER.isDaejeon());
         assertTrue(QUALIFICATION_SOCIAL.isDaejeon());
+        assertFalse(REQUEST.isDaejeon());
     }
 
     @Test
-    public void applicatioNRemark() {
+    public void applicationRemark() {
         assertEquals(PROSPECTIVE_COMMON.getApplicationRemark(), "ONE_PARENT");
         assertEquals(GRADUATE_MEISTER.getApplicationRemark(), "FROM_NORTH");
         assertEquals(QUALIFICATION_SOCIAL.getApplicationRemark(), "BASIC_LIVING");
+        assertNull(REQUEST.getApplicationRemark());
     }
 
     @Test
@@ -51,6 +57,7 @@ class ApplicationRequestTest {
         assertEquals(PROSPECTIVE_COMMON.getGraduatedAt(), "202106");
         assertEquals(GRADUATE_MEISTER.getGraduatedAt(), "202107");
         assertEquals(QUALIFICATION_SOCIAL.getGraduatedAt(), "202108");
+        assertNull(REQUEST.getGraduatedAt());
     }
 
 }
