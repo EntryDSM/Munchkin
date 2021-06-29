@@ -3,12 +3,14 @@ package kr.hs.entrydsm.application.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
@@ -27,10 +29,6 @@ public class QualificationExamApplication extends Application {
     @Override
     public boolean isGraduation() {
         return false;
-    }
-
-    public void setAverageScore(BigDecimal averageScore){
-        this.averageScore = averageScore;
     }
 
 }
