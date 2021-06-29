@@ -29,8 +29,8 @@ public class ApplicantController {
 
     //지원자 정보 상세 보기
     @AdminJWTRequired
-    @GetMapping("/applicant")
-    public Object getDetail(@RequestParam(name = "receipt-code") int receiptCode) {
+    @GetMapping("/applicant/{receipt-code}")
+    public Object getDetail(@PathVariable("receipt-code") int receiptCode) {
         return applicantService.getDetail(receiptCode);
     }
 
