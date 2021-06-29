@@ -136,7 +136,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
         if(educationalStatus == null)
             throw new EducationalStatusNotFoundException();
-        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
             throw new EducationalStatusUnmatchedException();
 
         QualificationExamApplication qualificationExamApplication = getQualificationExamApplication(receiptCode);
@@ -215,7 +215,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
         if(educationalStatus == null)
             throw new EducationalStatusNotFoundException();
-        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
             throw new EducationalStatusUnmatchedException();
 
         GedInformationResponse result = new GedInformationResponse()
