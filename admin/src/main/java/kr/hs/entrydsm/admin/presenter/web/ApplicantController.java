@@ -37,15 +37,15 @@ public class ApplicantController {
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
-                                            @RequestParam(required = false, name = "receipt-code") Long receiptCode,
+                                            @RequestParam(required = false, name = "receipt-code", defaultValue = " ") Long receiptCode,
                                             @RequestParam(name = "is-daejeon") boolean isDaejeon,
                                             @RequestParam(name = "is-nationwide") boolean isNationwide,
-                                            @RequestParam(required = false, name = "telephone-number") String telephoneNumber,
-                                            @RequestParam(required = false) String name,
+                                            @RequestParam(required = false, name = "telephone-number", defaultValue = "0") String telephoneNumber,
+                                            @RequestParam(required = false, defaultValue = " ") String name,
                                             @RequestParam(name = "is-common") boolean isCommon,
                                             @RequestParam(name = "is-meister") boolean isMeister,
                                             @RequestParam(name = "is-social") boolean isSocial,
-                                            @RequestParam(required = false, name = "is-printed-arrived") boolean isPrintedArrived) {
+                                            @RequestParam(required = false, name = "is-printed-arrived", defaultValue = "true") boolean isPrintedArrived) {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 
