@@ -1,14 +1,13 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
-import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraduatedInformationResponseTest {
 
-    private static final Information information = Information.builder()
+    private static final Information INFORMATION = Information.builder()
             .name("test1")
             .sex("MALE")
             .birthday("20040728")
@@ -22,91 +21,91 @@ class GraduatedInformationResponseTest {
             .photoFileName("test.jpg")
             .build();
 
-    private static final GraduatedInformationResponse response1 =
+    private static final GraduatedInformationResponse RESPONSE_1 =
             new GraduatedInformationResponse("0001234567", "1111111",
                     "10529", true);
 
-    private static final GraduatedInformationResponse response2 =
+    private static final GraduatedInformationResponse RESPONSE_2 =
             new GraduatedInformationResponse("1110234567", "2222222",
                     "20532", true);
 
-    private static final GraduatedInformationResponse response3 =
+    private static final GraduatedInformationResponse RESPONSE_3 =
             new GraduatedInformationResponse("2220134567", "3333333",
                     "30131", false);
 
-    private static final GraduatedInformationResponse response4 =
+    private static final GraduatedInformationResponse RESPONSE =
             new GraduatedInformationResponse();
 
     @Test
     void setIsGraduated() {
-        response1.setIsGraduated(true);
-        response2.setIsGraduated(true);
-        response3.setIsGraduated(false);
-        response4.setIsGraduated(false);
+        RESPONSE_1.setIsGraduated(true);
+        RESPONSE_2.setIsGraduated(true);
+        RESPONSE_3.setIsGraduated(false);
+        RESPONSE.setIsGraduated(false);
     }
 
     @Test
     void setInformation() {
-        response1.setInformation(information);
-        response2.setInformation(information);
-        response3.setInformation(information);
-        response4.setInformation(information);
+        RESPONSE_1.setInformation(INFORMATION);
+        RESPONSE_2.setInformation(INFORMATION);
+        RESPONSE_3.setInformation(INFORMATION);
+        RESPONSE.setInformation(INFORMATION);
     }
 
     @Test
     void setPhotoFileName() {
-        response1.setPhotoFileName("test1.jpg");
-        response2.setPhotoFileName("test2.jpg");
-        response3.setPhotoFileName("test3.jpg");
-        response4.setPhotoFileName("test4.jpg");
+        RESPONSE_1.setPhotoFileName("test1.jpg");
+        RESPONSE_2.setPhotoFileName("test2.jpg");
+        RESPONSE_3.setPhotoFileName("test3.jpg");
+        RESPONSE.setPhotoFileName("test4.jpg");
     }
 
     @Test
     void getSchoolTel() {
-        assertEquals(response1.getSchoolTel(), "0001234567");
-        assertEquals(response2.getSchoolTel(), "1110234567");
-        assertEquals(response3.getSchoolTel(), "2220134567");
+        assertEquals(RESPONSE_1.getSchoolTel(), "0001234567");
+        assertEquals(RESPONSE_2.getSchoolTel(), "1110234567");
+        assertEquals(RESPONSE_3.getSchoolTel(), "2220134567");
     }
 
     @Test
     void getSchoolCode() {
-        assertEquals(response1.getSchoolCode(), "1111111");
-        assertEquals(response2.getSchoolCode(), "2222222");
-        assertEquals(response3.getSchoolCode(), "3333333");
+        assertEquals(RESPONSE_1.getSchoolCode(), "1111111");
+        assertEquals(RESPONSE_2.getSchoolCode(), "2222222");
+        assertEquals(RESPONSE_3.getSchoolCode(), "3333333");
     }
 
     @Test
     void getStudentNumber() {
-        assertEquals(response1.getStudentNumber(), "10529");
-        assertEquals(response2.getStudentNumber(), "20532");
-        assertEquals(response3.getStudentNumber(), "30131");
+        assertEquals(RESPONSE_1.getStudentNumber(), "10529");
+        assertEquals(RESPONSE_2.getStudentNumber(), "20532");
+        assertEquals(RESPONSE_3.getStudentNumber(), "30131");
     }
 
     @Test
     void isGraduated() {
-        assertTrue(response1.isGraduated());
-        assertTrue(response2.isGraduated());
-        assertFalse(response3.isGraduated());
+        assertTrue(RESPONSE_1.isGraduated());
+        assertTrue(RESPONSE_2.isGraduated());
+        assertFalse(RESPONSE_3.isGraduated());
     }
 
     @Test
     void setSchoolTel() {
-        response1.setSchoolTel("0001234567");
-        response2.setSchoolTel("1110234567");
-        response3.setSchoolTel("2220134567");
+        RESPONSE_1.setSchoolTel("0001234567");
+        RESPONSE_2.setSchoolTel("1110234567");
+        RESPONSE_3.setSchoolTel("2220134567");
     }
 
     @Test
     void setSchoolCode() {
-        response1.setSchoolCode("1111111");
-        response2.setSchoolTel("2222222");
-        response3.setSchoolCode("3333333");
+        RESPONSE_1.setSchoolCode("1111111");
+        RESPONSE_2.setSchoolTel("2222222");
+        RESPONSE_3.setSchoolCode("3333333");
     }
 
     @Test
     void setStudentNumber() {
-        response1.setStudentNumber("10529");
-        response2.setStudentNumber("20532");
-        response3.setStudentNumber("30131");
+        RESPONSE_1.setStudentNumber("10529");
+        RESPONSE_2.setStudentNumber("20532");
+        RESPONSE_3.setStudentNumber("30131");
     }
 }
