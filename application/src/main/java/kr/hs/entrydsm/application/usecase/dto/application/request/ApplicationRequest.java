@@ -27,4 +27,12 @@ public class ApplicationRequest {
 
     @Length(min = 6, max = 6, message = "INVALID DATE")
     private String graduatedAt;
+
+    @JsonProperty(value = "is_graduated")
+    protected boolean isGraduated;
+
+    public boolean getIsGraduated() {
+        return this.isGraduated;
+    }
+
 }
