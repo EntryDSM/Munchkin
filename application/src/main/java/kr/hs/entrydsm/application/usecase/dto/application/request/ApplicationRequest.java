@@ -9,10 +9,10 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApplicationRequest {
 
     private String educationalStatus;

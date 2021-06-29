@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Size;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UpdateDocsRequest {
 
     @Size(max = 1600)
