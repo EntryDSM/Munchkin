@@ -67,7 +67,7 @@ public class ApplicantServiceManager implements ApplicantService {
                                             boolean isDaejeon, boolean isNationwide,
                                             String telephoneNumber, String name,
                                             boolean isCommon, boolean isMeister, boolean isSocial,
-                                            boolean isPrintedArrived) {
+                                            Boolean isPrintedArrived) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
