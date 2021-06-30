@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @Repository
-public class ScoreExportAdminAdminManager implements ScoreExportAdminRepository {
+public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     private final ScoreRepository scoreRepository;
     private final ScorerRepository scorerRepository;
 
