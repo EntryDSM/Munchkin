@@ -7,6 +7,7 @@ import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.TotalScoreResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
@@ -95,6 +96,31 @@ public class ScoreServiceImpl implements ScoreService{
         QualificationExamApplication qualificationExamApplication = getQualificationExamApplication(receiptCode);
 
         return new GedScoreResponse(qualificationExamApplication.getAverageScore());
+    }
+
+    @Override
+    public TotalScoreResponse getScore() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
+        SubjectScoreResponse subject = SubjectScoreResponse.builder()
+                .koreanScore(graduationApplication.getKoreanScore())
+                .englishScore(graduationApplication.getEnglishScore())
+                .mathScore(graduationApplication.getMathScore())
+                .socialScore(graduationApplication.getSocialScore())
+                .scienceScore(graduationApplication.getScienceScore())
+                .historyScore(graduationApplication.getHistoryScore())
+                .techAndHomeScore(graduationApplication.getTechAndHomeScore())
+                .build();
+
+        EtcScoreResponse etc = EtcScoreResponse.builder()
+                .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
+                .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
+                .latenessCount(graduationApplication.getLatenessCount())
+                .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
+                .volunteerTime(graduationApplication.getVolunteerTime())
+                .build();
+
+        return new TotalScoreResponse(subject, etc);
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {

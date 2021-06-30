@@ -16,6 +16,7 @@ import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.TotalScoreResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusUnmatchedException;
@@ -264,17 +265,51 @@ public class ApplicationManager implements ApplicationProcessing {
 
     @Override
     public SubjectScoreResponse getSubjectScore() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
         return scoreService.getSubjectScore();
     }
 
     @Override
     public EtcScoreResponse getEtcScore() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
         return scoreService.getEtcScore();
     }
 
     @Override
     public GedScoreResponse getGedScore() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
+
         return scoreService.getGedScore();
+    }
+
+    @Override
+    public TotalScoreResponse getScore() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+
+        if(educationalStatus == null)
+            throw new EducationalStatusNotFoundException();
+        if(educationalStatus.equals("QUALIFICATION_EXAM"))
+            throw new EducationalStatusUnmatchedException();
+        return scoreService.getScore();
     }
 
 
