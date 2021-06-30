@@ -3,6 +3,7 @@ package kr.hs.entrydsm.admin.auth;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
