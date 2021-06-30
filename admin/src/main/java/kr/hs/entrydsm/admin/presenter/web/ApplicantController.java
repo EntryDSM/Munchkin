@@ -22,7 +22,7 @@ public class ApplicantController {
     @AdminJWTRequired
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/applicant/printed-arrived")
-    public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
+    public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") long receiptCode,
                                        @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
         applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
     }
