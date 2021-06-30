@@ -20,4 +20,6 @@ public abstract class Application extends BaseTimeEntity {
     private Long receiptCode;
 
     public abstract boolean isGraduation();
+
+    public abstract boolean isAnyGradeNull();
 }

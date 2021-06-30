@@ -31,4 +31,8 @@ public class QualificationExamApplication extends Application {
         return false;
     }
 
+    @Override
+    public boolean isAnyGradeNull() {
+        return averageScore == null;
+    }
 }

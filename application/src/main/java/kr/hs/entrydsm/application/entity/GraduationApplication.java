@@ -109,6 +109,7 @@ public class GraduationApplication extends Application {
         return schoolClass;
     }
 
+    @Override
     public boolean isAnyGradeNull() {
         return volunteerTime == null || dayAbsenceCount == null || lectureAbsenceCount == null ||
                 latenessCount == null || earlyLeaveCount == null || koreanScore == null || mathScore == null ||
