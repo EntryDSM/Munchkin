@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
-import kr.hs.entrydsm.application.integrate.score.ApplicationExportRepository;
+import kr.hs.entrydsm.application.integrate.score.ApplicationExportScoreRepository;
 import kr.hs.entrydsm.score.integrate.application.QualificationExamCase;
 import kr.hs.entrydsm.score.integrate.application.QualificationExamCaseRepository;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class ScoreIntegrateQualificationExamCaseService implements QualificationExamCaseRepository {
 
-    private final ApplicationExportRepository applicationExportRepository;
+    private final ApplicationExportScoreRepository applicationExportRepository;
     private final ScorerRepository scorerRepository;
 
     @Override

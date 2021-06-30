@@ -4,14 +4,13 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplicationRepository;
-import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class ApplicationExportManager implements ApplicationExportRepository{
+public class ApplicationExportScoreManager implements ApplicationExportScoreRepository {
 
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;

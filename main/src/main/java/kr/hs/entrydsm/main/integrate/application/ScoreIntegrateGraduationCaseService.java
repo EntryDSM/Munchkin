@@ -1,10 +1,9 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.entity.GraduationApplication;
-import kr.hs.entrydsm.application.integrate.score.ApplicationExportRepository;
+import kr.hs.entrydsm.application.integrate.score.ApplicationExportScoreRepository;
 import kr.hs.entrydsm.score.integrate.application.GraduationCase;
 import kr.hs.entrydsm.score.integrate.application.GraduationCaseRepository;
-import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class ScoreIntegrateGraduationCaseService implements GraduationCaseRepository {
-    private final ApplicationExportRepository applicationExportRepository;
+
+    private final ApplicationExportScoreRepository applicationExportRepository;
     private final ScorerRepository scorerRepository;
 
     @Override
