@@ -109,4 +109,10 @@ public class GraduationApplication extends Application {
         return schoolClass;
     }
 
+    public boolean isAnyGradeNull() {
+        return volunteerTime == null || dayAbsenceCount == null || lectureAbsenceCount == null ||
+                latenessCount == null || earlyLeaveCount == null || koreanScore == null || mathScore == null ||
+                socialScore == null || historyScore == null || scienceScore == null || englishScore == null || techAndHomeScore == null;
+    }
+
 }

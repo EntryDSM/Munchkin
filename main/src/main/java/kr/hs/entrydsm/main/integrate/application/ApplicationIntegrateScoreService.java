@@ -7,6 +7,7 @@ import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.*;
 import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
+import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.integrate.application.ScoreExportApplicationRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
@@ -36,8 +37,16 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     public CalculatedScore getScore(Application application) {
         CalculatedScore result;
         if (application.isGraduation()) {
-            result = getGraduationScore((GraduationApplication) application);
+            GraduationApplication graduationApplication = (GraduationApplication) application;
+            if (graduationApplication.isAnyGradeNull()) {
+                throw new NullGradeExistException();
+            }
+            result = getGraduationScore(graduationApplication);
         } else {
+            QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
+            if (qualificationExamApplication.getAverageScore() == null) {
+                throw new NullGradeExistException();
+            }
             result = getQualificationExamScore((QualificationExamApplication) application);
         }
         return result;
