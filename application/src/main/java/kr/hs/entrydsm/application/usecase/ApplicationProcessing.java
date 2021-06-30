@@ -13,6 +13,7 @@ import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.TotalScoreResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,5 +55,7 @@ public interface ApplicationProcessing {
     EtcScoreResponse getEtcScore();
 
     GedScoreResponse getGedScore();
+
+    TotalScoreResponse getScore();
 
 }

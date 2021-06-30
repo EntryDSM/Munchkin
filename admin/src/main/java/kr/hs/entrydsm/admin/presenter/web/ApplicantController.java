@@ -52,7 +52,7 @@ public class ApplicantController {
 
     //지원자 수험번호 저장
     @AdminJWTRequired
-    @GetMapping("/applicants/examcode")
+    @PatchMapping("/applicants/examcode")
     public void saveExamCode() throws Exception {
         applicantService.saveExamCode() ;
     }

@@ -5,9 +5,10 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class QualificationExamGrade {
 
     private final BigDecimal averageScore;
+
 }
