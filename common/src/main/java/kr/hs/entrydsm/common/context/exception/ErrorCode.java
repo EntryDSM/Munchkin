@@ -37,7 +37,10 @@ public enum ErrorCode {
     APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found"),
     SCHOOL_NOT_FOUND(404, "APPLICATION404-1", "The school could not be found"),
     EDUCATIONAL_STATUS_NOT_FOUND(404, "APPLICATION404-2", "The educational status could not be found"),
-    FINAL_SUBMIT_REQUIRED(406, "APPLICATION406-0", "Final submit required");
+    FINAL_SUBMIT_REQUIRED(406, "APPLICATION406-0", "Final submit required"),
+    NULL_GRADE_EXIST(400, "APPLICATION400-3", "Null grade column exist"),
+    EDUCATIONAL_STATUS_NULL(400, "APPLICATION400-4", "Educational status is null")
+    ;
 
     private final int status;
     private final String code;
