@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
@@ -12,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
 
