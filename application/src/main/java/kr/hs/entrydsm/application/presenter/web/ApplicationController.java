@@ -8,6 +8,7 @@ import kr.hs.entrydsm.application.usecase.dto.application.request.UpdateDocsRequ
 import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.TotalScoreResponse;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -78,6 +79,11 @@ public class ApplicationController {
     @GetMapping("/score/ged")
     public GedScoreResponse getGedScore() {
         return applicationProcessing.getGedScore();
+    }
+
+    @GetMapping("/score")
+    public TotalScoreResponse getScore() {
+        return applicationProcessing.getScore();
     }
 
 }
