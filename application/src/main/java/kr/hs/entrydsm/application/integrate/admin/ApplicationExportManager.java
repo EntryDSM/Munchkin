@@ -7,6 +7,7 @@ import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
 import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,11 @@ public class ApplicationExportManager implements ApplicationExportRepository {
     @Override
     public ReportCard getReportCard(long receiptCode) {
         Application application = null;
+        
+        if (applicantRepository.findByReceiptCode(receiptCode).getEducationalStatus() == null) {
+            throw new EducationalStatusNullException();
+        }
+
         switch (applicantRepository.findByReceiptCode(receiptCode).getEducationalStatus()) {
             case EducationalStatus.GRADUATE:
             case EducationalStatus.PROSPECTIVE_GRADUATE:
