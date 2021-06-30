@@ -38,7 +38,7 @@ public class ApplicantController {
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
-                                            @RequestParam(name = "receipt-code", defaultValue="") Long receiptCode,
+                                            @RequestParam(name = "receipt-code", required = false) Long receiptCode,
                                             @RequestParam(name = "is-daejeon") boolean isDaejeon,
                                             @RequestParam(name = "is-nationwide") boolean isNationwide,
                                             @RequestParam(name = "telephone-number", defaultValue="") String telephoneNumber,
