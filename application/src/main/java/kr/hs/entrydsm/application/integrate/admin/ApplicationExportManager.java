@@ -15,14 +15,14 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class ApplicationExportManager implements ApplicationExportRepository {
-
-    private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
-    private final GraduationApplicationRepository graduationApplicationRepository;
     private final ApplicantRepository applicantRepository;
+    private final GraduationApplicationRepository graduationApplicationRepository;
+    private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
     private final ScoreCalculator scoreCalculator;
 
     @Override
