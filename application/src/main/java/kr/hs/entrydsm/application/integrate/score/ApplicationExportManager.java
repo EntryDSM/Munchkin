@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationExportManager implements ApplicationExportRepository{
 
-    private final ApplicantRepository applicantRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
-    private final ScoreCalculator scoreCalculator;
 
     @Override
     public GraduationApplication getGraduationApplication(long receiptCode) {
