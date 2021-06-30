@@ -45,7 +45,7 @@ public abstract class ScheduleBaseTest extends AdminBaseTest{
             .build();
 
     protected static final ScheduleRequest SCHEDULE_REQUEST = ScheduleRequest.builder()
-            .type(Type.INTERVIEW)
+            .type("INTERVIEW")
             .date("2021-06-28")
             .build();
 
