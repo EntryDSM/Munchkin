@@ -7,6 +7,7 @@ import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,10 @@ public class ApplicationExportManager implements ApplicationExportRepository {
                 break;
             case EducationalStatus.QUALIFICATION_EXAM:
                 application = getQualificationExamApplication(receiptCode);
+        }
+
+        if (application.isAnyGradeNull()) {
+            throw new NullGradeExistException();
         }
 
         CalculatedScore calculatedScore = scoreCalculator.getScore(application);
