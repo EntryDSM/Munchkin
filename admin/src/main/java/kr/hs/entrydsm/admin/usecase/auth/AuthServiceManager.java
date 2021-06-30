@@ -84,7 +84,7 @@ public class AuthServiceManager implements AuthService {
         Admin admin = adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
-        if(!admin.getPassword().equals(passwordEncoder.encode(password))) {
+        if(!passwordEncoder.matches(password, admin.getPassword())) {
             throw new PasswordNotValidException();
         }
         return "Authorization completed.";

@@ -156,10 +156,11 @@ public class ApplicationManager implements ApplicationProcessing {
             if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)
-                        .orElseThrow(ApplicationNotFoundException::new);
+                                .orElseThrow(ApplicationNotFoundException::new);
                 if (graduationApplication.getGraduateAt() != null)
                     return applicantExportService.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                                    .withZone(ZoneId.of("Asia/Seoul"))
                                     .format(graduationApplication.getGraduateAt()))
                             .setIsGraduated(graduationApplication.getIsGraduated());
                 return applicantExportService.getApplicationType(receiptCode)
@@ -169,10 +170,11 @@ public class ApplicationManager implements ApplicationProcessing {
             if (qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
                 QualificationExamApplication qualificationExamApplication =
                         qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
-                        .orElseThrow(ApplicationNotFoundException::new);
+                                .orElseThrow(ApplicationNotFoundException::new);
                 if (qualificationExamApplication.getQualifiedAt() != null)
                     return applicantExportService.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
+                                    .withZone(ZoneId.of("Asia/Seoul"))
                                     .format(qualificationExamApplication.getQualifiedAt()));
                 return applicantExportService.getApplicationType(receiptCode);
             }

@@ -7,8 +7,8 @@ import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
-import reactor.util.annotation.Nullable;
 
 @RequiredArgsConstructor
 @Published
@@ -22,15 +22,15 @@ public class ApplicantController {
     @AdminJWTRequired
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/applicant/printed-arrived")
-    public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") int receiptCode,
+    public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") long receiptCode,
                                        @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
         applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
     }
 
     //지원자 정보 상세 보기
     @AdminJWTRequired
-    @GetMapping("/applicant")
-    public Object getDetail(@RequestParam(name = "receipt-code") int receiptCode) {
+    @GetMapping("/applicant/{receipt-code}")
+    public Object getDetail(@PathVariable("receipt-code") int receiptCode) {
         return applicantService.getDetail(receiptCode);
     }
 
@@ -38,15 +38,15 @@ public class ApplicantController {
     @AdminJWTRequired
     @GetMapping("/applicants")
     public ApplicantsResponse getApplicants(Pageable page,
-                                            @RequestParam(name = "receipt-code", defaultValue="") Long receiptCode,
+                                            @RequestParam(name = "receipt-code", required = false) @Nullable Long receiptCode,
                                             @RequestParam(name = "is-daejeon") boolean isDaejeon,
                                             @RequestParam(name = "is-nationwide") boolean isNationwide,
-                                            @RequestParam(name = "telephone-number", defaultValue="") String telephoneNumber,
-                                            @RequestParam(defaultValue="") @Nullable String name,
+                                            @RequestParam(name = "telephone-number", required = false) @Nullable String telephoneNumber,
+                                            @RequestParam(required = false) @Nullable String name,
                                             @RequestParam(name = "is-common") boolean isCommon,
                                             @RequestParam(name = "is-meister") boolean isMeister,
                                             @RequestParam(name = "is-social") boolean isSocial,
-                                            @RequestParam(name = "is-printed-arrived", defaultValue="") Boolean isPrintedArrived) {
+                                            @RequestParam(name = "is-printed-arrived", required = false) @Nullable Boolean isPrintedArrived) {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 

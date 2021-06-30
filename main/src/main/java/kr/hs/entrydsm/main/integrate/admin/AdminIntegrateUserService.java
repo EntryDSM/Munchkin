@@ -30,7 +30,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                                    boolean isDaejeon, boolean isNationwide,
                                    String telephoneNumber, String name,
                                    boolean isCommon, boolean isMeister, boolean isSocial,
-                                   boolean isPrintedArrived) {
+                                   Boolean isPrintedArrived) {
         Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
@@ -79,7 +79,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     public Applicant getUserInfo(long receiptCode) {
         User user = userExportRepository.findByReceiptCode((int) receiptCode);
 
-        ReportCard reportCard = applicationExportRepository.getReportCard(receiptCode);
+        ReportCard reportCard = applicationExportRepository.getReportCard(user.getReceiptCode());
 
         return Applicant.builder()
                 .receiptCode(user.getReceiptCode())

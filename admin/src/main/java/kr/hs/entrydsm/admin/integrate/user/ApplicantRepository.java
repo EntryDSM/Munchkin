@@ -14,7 +14,7 @@ public interface ApplicantRepository {
                             boolean isDaejeon, boolean isNationwide,
                             String telephoneNumber, String name,
                             boolean isCommon, boolean isMeister, boolean isSocial,
-                            boolean isPrintedArrived);
+                            Boolean isPrintedArrived);
     void changeExamCode(long receiptCode, String examCode);
     List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
     Applicant getUserInfo(long receiptCode);
