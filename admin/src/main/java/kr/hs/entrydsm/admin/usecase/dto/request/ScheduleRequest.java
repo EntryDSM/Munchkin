@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.admin.usecase.dto.request;
 
-import kr.hs.entrydsm.admin.entity.schedule.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class ScheduleRequest {
 
     @NotBlank
-    private Type type;
+    private String type;
 
     @NotBlank
     private String date;
