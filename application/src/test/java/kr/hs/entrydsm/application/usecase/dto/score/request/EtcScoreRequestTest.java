@@ -69,10 +69,10 @@ class EtcScoreRequestTest {
 
     @Test
     void getEarlyLeaveCount() {
-        assertEquals(REQUEST_1.getLatenessCount(), 0);
-        assertEquals(REQUEST_2.getLatenessCount(), 5);
-        assertEquals(REQUEST_3.getLatenessCount(), 9);
-        assertNull(REQUEST.getLatenessCount());
+        assertEquals(REQUEST_1.getEarlyLeaveCount(), 0);
+        assertEquals(REQUEST_2.getEarlyLeaveCount(), 5);
+        assertEquals(REQUEST_3.getEarlyLeaveCount(), 9);
+        assertNull(REQUEST.getEarlyLeaveCount());
     }
 
     @Test
