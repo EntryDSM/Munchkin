@@ -1,3 +1,0 @@
-2021-06-29 20:50:38.821 :: 0:0:0:0:0:0:0:1 [POST] (/user/auth 200) {"email":"sung07288346@gmail.com","password":"SECURED"}
-2021-06-29 20:51:37.694 :: 0:0:0:0:0:0:0:1 [PATCH] (/application/users 200) {"name":"?´?„œì¤?","sex":"MALE","birthday":"20040728","parent_name":"?´?•¡?•¡","parent_tel":"01087654321","telephone_number":"01012345678"}
-2021-06-29 20:54:56.954 :: 0:0:0:0:0:0:0:1 [PATCH] (/application/users 200) {"name":"?´?„œì¤?","sex":"MALE","birthday":"20040728","parent_name":"?´?•¡?•¡","parent_tel":"01087654321","telephone_number":"01012345678"}
