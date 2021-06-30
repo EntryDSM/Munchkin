@@ -25,7 +25,7 @@ public class ScheduleServiceManager implements ScheduleService {
     @Override //스케줄 업데이트
     public void updateSchedules(ScheduleRequest scheduleRequest) {
         String year = scheduleRequest.getDate().substring(0, 4);
-        Schedule schedule = scheduleRepository.findByYearAndType(year, Type.valueOf(scheduleRequest.getType()))
+        Schedule schedule = scheduleRepository.findByType(Type.valueOf(scheduleRequest.getType()))
                 .orElseThrow(ScheduleNotFoundException::new);
 
         schedule.update(year, scheduleRequest.getDate());

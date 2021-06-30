@@ -5,5 +5,6 @@ import java.util.Optional;
 
 public interface ScheduleRepository {
     List<Schedule> findAllBy();
+    Optional<Schedule> findByType(Type type);
     Optional<Schedule> findByYearAndType(String year, Type type);
 }
