@@ -81,7 +81,7 @@ public class JWTTokenHandler implements HandlerInterceptor {
             refreshRequired = true;
         }
         if (refreshRequired) {
-            String token = tokenProvider.resoleRefreshToken(request);
+            String token = tokenProvider.resolveRefreshToken(request);
             if (tokenProvider.validateToken(token) && tokenProvider.isRefreshToken(token)) {
                 return true;
             }

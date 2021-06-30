@@ -61,7 +61,7 @@ public class JWTTokenProvider {
         return null;
     }
 
-    public String resoleRefreshToken(HttpServletRequest request) {
+    public String resolveRefreshToken(HttpServletRequest request) {
         return Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("refresh-token"))
                 .findFirst()

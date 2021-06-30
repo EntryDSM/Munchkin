@@ -5,7 +5,6 @@ import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.infrastructure.database.StatusRepositoryManager;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +29,7 @@ public class UserExportManager implements UserExportRepository {
     @Override
     public Page<User> findAll(Pageable page, Long receiptCode,
                               boolean isDaejeon, boolean isNationwide,
-                              @NonNull String telephoneNumber, @NonNull String name,
+                              String telephoneNumber, String name,
                               boolean isCommon, boolean isMeister, boolean isSocial,
                               Boolean isPrintedArrived) {
 
