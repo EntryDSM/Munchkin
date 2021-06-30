@@ -17,9 +17,6 @@ public interface ScheduleRepositoryManager extends CrudRepository<Schedule, Sche
     List<Schedule> findAllBy();
 
     @Override
-    Optional<Schedule> findByType(Type type);
-
-    @Override
     Optional<Schedule> findByYearAndType(String year, Type type);
 
 }

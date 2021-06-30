@@ -18,11 +18,6 @@ public class MockScheduleRepositoryManager implements ScheduleRepository {
     }
 
     @Override
-    public Optional<Schedule> findByType(Type type) {
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<Schedule> findByYearAndType(String year, Type type) {
         return Optional.ofNullable(START_DATE);
     }
