@@ -2,6 +2,7 @@ package kr.hs.entrydsm.application.integrate.admin;
 
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
+import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
@@ -17,8 +18,9 @@ import java.util.List;
 @Service
 public class ApplicationExportManager implements ApplicationExportRepository {
 
-    private final ApplicationRepository applicationRepository;
+    private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
+    private final ApplicantRepository applicantRepository;
     private final ScoreCalculator scoreCalculator;
 
     @Override
@@ -44,11 +46,44 @@ public class ApplicationExportManager implements ApplicationExportRepository {
 
     @Override
     public ReportCard getReportCard(long receiptCode) {
-        Application application = applicationRepository.findByReceiptCode(receiptCode)
-                .orElseThrow(ApplicationNotFoundException::new);
+        Application application = null;
+        switch (applicantRepository.findByReceiptCode(receiptCode).getEducationalStatus()) {
+            case EducationalStatus.GRADUATE:
+            case EducationalStatus.PROSPECTIVE_GRADUATE:
+                application = getGraduationApplication(receiptCode);
+                break;
+            case EducationalStatus.QUALIFICATION_EXAM:
+                application = getQualificationExamApplication(receiptCode);
+        }
 
         CalculatedScore calculatedScore = scoreCalculator.getScore(application);
 
         return ReportCard.from(application, calculatedScore);
+    }
+
+    private GraduationApplication getGraduationApplication(long receiptCode) {
+        GraduationApplication graduationApplication;
+        if(graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            return  graduationApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        }else {
+            graduationApplication = new GraduationApplication();
+            graduationApplication.setReceiptCode(receiptCode);
+            graduationApplicationRepository.save(graduationApplication);
+            return graduationApplication;
+        }
+    }
+
+    private QualificationExamApplication getQualificationExamApplication(long receiptCode) {
+        QualificationExamApplication qualificationExamApplication;
+        if(qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
+            return qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
+                    .orElseThrow(ApplicationNotFoundException::new);
+        }else {
+            qualificationExamApplication = new QualificationExamApplication();
+            qualificationExamApplication.setReceiptCode(receiptCode);
+            qualificationExamApplicationRepository.save(qualificationExamApplication);
+            return qualificationExamApplication;
+        }
     }
 }
