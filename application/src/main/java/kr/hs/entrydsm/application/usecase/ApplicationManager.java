@@ -201,6 +201,10 @@ public class ApplicationManager implements ApplicationProcessing {
                     .orElseThrow(ApplicationNotFoundException::new);
 
             result.setSchoolCode(graduationApplication.getSchoolCode());
+            result.setSchoolName(
+                    schoolRepository.findByCode(graduationApplication.getSchoolCode())
+                    .orElseThrow(SchoolNotFoundException::new).getName()
+            );
             result.setSchoolTel(graduationApplication.getSchoolTel());
             result.setIsGraduated(graduationApplication.getIsGraduated() != null
                     && graduationApplication.getIsGraduated());

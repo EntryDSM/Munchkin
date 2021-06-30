@@ -22,15 +22,15 @@ class GraduatedInformationResponseTest {
             .build();
 
     private static final GraduatedInformationResponse RESPONSE_1 =
-            new GraduatedInformationResponse("0001234567", "1111111",
+            new GraduatedInformationResponse("0001234567", "1111111", "학교",
                     "10529", true);
 
     private static final GraduatedInformationResponse RESPONSE_2 =
-            new GraduatedInformationResponse("1110234567", "2222222",
+            new GraduatedInformationResponse("1110234567", "2222222", "하악교",
                     "20532", true);
 
     private static final GraduatedInformationResponse RESPONSE_3 =
-            new GraduatedInformationResponse("2220134567", "3333333",
+            new GraduatedInformationResponse("2220134567", "3333333", "학꾜",
                     "30131", false);
 
     private static final GraduatedInformationResponse RESPONSE =
@@ -61,6 +61,13 @@ class GraduatedInformationResponseTest {
     }
 
     @Test
+    void setSchoolName() {
+        RESPONSE_1.setSchoolName("학교");
+        RESPONSE_2.setSchoolName("하악교");
+        RESPONSE_3.setSchoolName("학꾜");
+    }
+
+    @Test
     void getSchoolTel() {
         assertEquals(RESPONSE_1.getSchoolTel(), "0001234567");
         assertEquals(RESPONSE_2.getSchoolTel(), "1110234567");
@@ -72,6 +79,13 @@ class GraduatedInformationResponseTest {
         assertEquals(RESPONSE_1.getSchoolCode(), "1111111");
         assertEquals(RESPONSE_2.getSchoolCode(), "2222222");
         assertEquals(RESPONSE_3.getSchoolCode(), "3333333");
+    }
+
+    @Test
+    void getSchoolName() {
+        assertEquals(RESPONSE_1.getSchoolName(), "학교");
+        assertEquals(RESPONSE_2.getSchoolName(), "하악교");
+        assertEquals(RESPONSE_3.getSchoolName(), "학꾜");
     }
 
     @Test

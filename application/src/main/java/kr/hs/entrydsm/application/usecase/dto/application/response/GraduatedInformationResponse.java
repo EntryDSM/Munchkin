@@ -3,9 +3,6 @@ package kr.hs.entrydsm.application.usecase.dto.application.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
@@ -13,14 +10,12 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class GraduatedInformationResponse extends Information {
 
-    @Length(max = 11)
-    @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     private String schoolTel;
 
-    @Length(max = 7, message = "INVALID SCHOOL_CODE")
     private String schoolCode;
 
-    @Length(max = 5, message = "INVALID STUDENT_NUMBER")
+    private String schoolName;
+
     private String studentNumber;
 
     @JsonProperty(value = "is_graduated")
