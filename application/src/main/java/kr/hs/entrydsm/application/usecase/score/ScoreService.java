@@ -6,6 +6,7 @@ import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
 import kr.hs.entrydsm.application.usecase.dto.score.response.EtcScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.GedScoreResponse;
 import kr.hs.entrydsm.application.usecase.dto.score.response.SubjectScoreResponse;
+import kr.hs.entrydsm.application.usecase.dto.score.response.TotalScoreResponse;
 
 public interface ScoreService {
 
@@ -20,5 +21,7 @@ public interface ScoreService {
     EtcScoreResponse getEtcScore();
 
     GedScoreResponse getGedScore();
+
+    TotalScoreResponse getScore();
 
 }
