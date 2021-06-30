@@ -12,9 +12,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "tbl_graduation_application")
 public class GraduationApplication extends Application {
 
