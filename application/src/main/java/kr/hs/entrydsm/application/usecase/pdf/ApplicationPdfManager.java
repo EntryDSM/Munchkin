@@ -54,7 +54,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     }
 
     private Application getApplication(Applicant applicant) {
-        Application result = null;
+        Application result;
         if (applicant.isGraduation()) {
             result = getGraduationApplication(applicant.getReceiptCode());
         } else {
