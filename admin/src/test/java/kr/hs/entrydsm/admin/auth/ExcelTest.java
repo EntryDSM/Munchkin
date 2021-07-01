@@ -23,7 +23,7 @@ public class ExcelTest extends ExcelBaseTest {
         assertTrue(EXCEL_USER.getApplicationType().equals("COMMON"));
         assertTrue(EXCEL_USER.getExamCode().equals("123456"));
         assertEquals(EXCEL_USER.getReceiptCode(), 123456L);
-        assertEquals(EXCEL_USER.getApplicationRemrk(), null);
+        assertEquals(EXCEL_USER.getApplicationRemark(), null);
         assertTrue(EXCEL_USER.getArea().equals("대전"));
         assertEquals(EXCEL_USER.getName(), "홍길동");
         assertEquals(EXCEL_USER.getParentName(),"홍상순");

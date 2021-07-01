@@ -21,7 +21,7 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void applicant() {
-        assertTrue(APPLICANT.getIsDaejeon()==false);
+        assertTrue(!APPLICANT.getIsDaejeon());
         assertFalse(APPLICANT.getEmail().isBlank());
         assertFalse(APPLICANT.getName().isBlank());
         assertFalse(APPLICANT.getPhotoFileName().isBlank());

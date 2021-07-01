@@ -9,7 +9,7 @@ public class ExcelBaseTest {
             .examCode("123456")
             .receiptCode(123456L)
             .applicationType("COMMON")
-            .applicationRemrk(null)
+            .applicationRemark(null)
             .area("대전")
             .name("홍길동")
             .birthDay("2000-00-00")

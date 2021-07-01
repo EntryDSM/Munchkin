@@ -13,17 +13,17 @@ import java.util.List;
 public class AdminApplicantBaseTest {
 
     protected static final Applicant APPLICANT = Applicant.builder()
-            .examCode("12036") //수험번호
-            .receiptCode(123456L) //접수 번호
-            .applicationType("COMMON") //전형 유형 COMMON, MEISTER, SOCIAL
+            .examCode("12036")
+            .receiptCode(123456L)
+            .applicationType("COMMON")
             .isDaejeon(false)
-            .name("리슴뮴") //이름
-            .birthDate(LocalDate.of(2000,11,12)) //생년월일
-            .address("서울 중구 한강대로 405 서울역") //주소
+            .name("리슴뮴")
+            .birthDate(LocalDate.of(2000,11,12))
+            .address("서울 중구 한강대로 405 서울역")
             .detailAddress(null)
-            .telephoneNumber("010-0000-0000") //학생 전화번호
-            .educationalStatus("PROSPECTIVE_GRADUATE") //학력구분 PROSPECTIVE_GRADUATE, GRADUATE, QUALIFICATION_EXAM
-            .parentTel("010-8888-8888") //보호자 전화번호
+            .telephoneNumber("010-0000-0000")
+            .educationalStatus("PROSPECTIVE_GRADUATE")
+            .parentTel("010-8888-8888")
             .homeTel("02-000-0000")
             .schoolTel("02-031-031")
             .photoFileName("asdf")
@@ -68,17 +68,6 @@ public class AdminApplicantBaseTest {
             .parentTel("010-0505-0505")
             .schoolTel("02-0202-0502")
             .homeTel("031-0505-0909")
-            .build();
-
-    protected static final SpecialScore SOCIAL_SCORE = SpecialScore.builder()
-            .score_20(1)
-            .score21_30(3)
-            .score31_40(5)
-            .score41_50(9)
-            .score51_60(6)
-            .score61_70(8)
-            .score71_80(7)
-            .score81_90(10)
             .build();
 
     protected static final CommonScore COMMON_SCORE = CommonScore.builder()

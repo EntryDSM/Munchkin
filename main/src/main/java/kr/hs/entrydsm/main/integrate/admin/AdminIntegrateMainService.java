@@ -17,18 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdminIntegrateMainService implements MainRepository {
 
-    //user domain
     private final UserRepositoryManager userRepositoryManager;
     private final StatusRepositoryManager statusRepositoryManager;
 
-    //admin domain
     private final AdminRepositoryManager adminRepositoryManager;
     private final ScheduleRepositoryManager scheduleRepositoryManager;
 
-    //score domain
     private final ScoreRepositoryManager scoreRepositoryManager;
 
-    //application domain
     private final ApplicationRepositoryManager applicationRepositoryManager;
     private final GraduationApplicationRepositoryManager graduationApplicationRepositoryManager;
     private final QualificationExamApplicationRepositoryManager qualificationExamApplicationRepositoryManager;
