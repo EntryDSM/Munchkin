@@ -44,7 +44,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
-        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        UserNameAndTelephoneNumber applicant = applicantRepository.getUserNameAndTel(receiptCode);
         String template;
         if(isPrintedArrived) template = "PRINTED_ARRIVED";
         else template = "PRINTED_NOT_ARRIVED";
@@ -70,10 +70,10 @@ public class ApplicantServiceManager implements ApplicantService {
             isSocial = true;
         }
 
-        Page<Applicant> applicants = applicantRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
+        Page<ApplicantsInformationResponse> applicants = applicantRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
         
-        for (Applicant applicant : applicants) {
+        for (ApplicantsInformationResponse applicant : applicants) {
             applicantsInformationResponses.add(
                     ApplicantsInformationResponse.builder()
                             .receiptCode(applicant.getReceiptCode())
