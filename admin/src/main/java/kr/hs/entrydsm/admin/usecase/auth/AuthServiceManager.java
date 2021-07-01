@@ -5,12 +5,10 @@ import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
 import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.infrastructure.database.AdminRefreshTokenRepositoryManager;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
-import kr.hs.entrydsm.admin.usecase.dto.account.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.account.AccessTokenResponse;
 import kr.hs.entrydsm.admin.usecase.dto.account.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.dto.account.TokenResponse;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.admin.usecase.exception.AlreadyExistAdminIdException;
 import kr.hs.entrydsm.admin.usecase.exception.InvalidTokenException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
@@ -32,22 +30,6 @@ public class AuthServiceManager implements AuthService {
 
     @Value("${auth.jwt.exp.refresh}")
     private Long refreshExp;
-
-    @Override
-    public void signUp(SignUpRequest request) {
-        adminRepository.findById(request.getId())
-                .ifPresent(u -> {
-                    throw new AlreadyExistAdminIdException();
-                });
-
-        adminRepository.save(
-                Admin.builder()
-                        .id(request.getId())
-                        .password(passwordEncoder.encode(request.getPassword()))
-                        .name(request.getName())
-                        .build()
-        );
-    }
 
     @Override
     public TokenResponse login(SignInRequest signInRequest) {

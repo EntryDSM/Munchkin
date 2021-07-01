@@ -4,7 +4,6 @@ import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
 import kr.hs.entrydsm.admin.usecase.dto.account.SignInRequest;
-import kr.hs.entrydsm.admin.usecase.dto.account.SignUpRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
@@ -38,12 +37,6 @@ public abstract class AdminBaseTest {
     static {
         ADMINS.add(TEACHER_ADMIN);
     }
-
-    protected static final SignUpRequest SIGN_UP_REQUEST = SignUpRequest.builder()
-            .id("12345612")
-            .password("123456")
-            .name("asdfg")
-            .build();
 
     protected static final SignInRequest SIGN_IN_REQUEST = SignInRequest.builder()
             .id("asdf1234")
