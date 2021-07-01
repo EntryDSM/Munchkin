@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase.pdf;
 
+import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
@@ -16,9 +17,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ApplicationPdfManager implements ApplicationPdfService {
 
+    private final ApplicationFactory applicationFactory;
     private final ApplicationPdfGenerator applicationPdfGenerator;
-    private final GraduationApplicationRepository graduationApplicationRepository;
-    private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
     private final ApplicationRepository applicationRepository;
     private final ApplicantStatusService applicantStatusService;
     private final ScoreCalculator scoreCalculator;
@@ -56,36 +56,11 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     private Application getApplication(Applicant applicant) {
         Application result;
         if (applicant.isGraduation()) {
-            result = getGraduationApplication(applicant.getReceiptCode());
+            result = applicationFactory.saveGraduationApplicationIfNotExists(applicant.getReceiptCode());
         } else {
-            result = getQualificationExamApplication(applicant.getReceiptCode());
+            result = applicationFactory.saveQualificationExamApplicationIfNotExists(applicant.getReceiptCode());
         }
         return result;
     }
 
-    private GraduationApplication getGraduationApplication(long receiptCode) {
-        GraduationApplication graduationApplication;
-        if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
-            return graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        } else {
-            graduationApplication = new GraduationApplication();
-            graduationApplication.setReceiptCode(receiptCode);
-            graduationApplicationRepository.save(graduationApplication);
-            return graduationApplication;
-        }
-    }
-
-    private QualificationExamApplication getQualificationExamApplication(long receiptCode) {
-        QualificationExamApplication qualificationExamApplication;
-        if(qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
-            return qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        }else {
-            qualificationExamApplication = new QualificationExamApplication();
-            qualificationExamApplication.setReceiptCode(receiptCode);
-            qualificationExamApplicationRepository.save(qualificationExamApplication);
-            return qualificationExamApplication;
-        }
-    }
 }
