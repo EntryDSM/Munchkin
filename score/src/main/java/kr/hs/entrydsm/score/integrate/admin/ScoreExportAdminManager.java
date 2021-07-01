@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.score.integrate.admin;
 
-import kr.hs.entrydsm.score.entity.Score;
-import kr.hs.entrydsm.score.entity.ScoreRepository;
+import kr.hs.entrydsm.score.entity.*;
+import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
 import kr.hs.entrydsm.score.integrate.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
@@ -20,6 +20,8 @@ import java.util.stream.StreamSupport;
 public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     private final ScoreRepository scoreRepository;
     private final ScorerRepository scorerRepository;
+    private final GraduationCaseRepository graduationCaseRepository;
+    private final QualificationExamCaseRepository qualificationExamCaseRepository;
 
     @Override
     public ApplicationStatusResponse getApplicationStatus() {
@@ -32,7 +34,53 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
 
     @Override
     public ApplicantScore getApplicantScore(Long receiptCode) {
-        return null;
+        Scorer scorer = scorerRepository.findByReceiptCode(receiptCode);
+        Score score = scoreRepository.findByReceiptCode(receiptCode);
+        
+        if (scorer.isQualificationExam()) {
+            return ApplicantScore.builder()
+                    .koreanGrade(null)
+                    .englishGrade(null)
+                    .historyGrade(null)
+                    .scienceGrade(null)
+                    .socialGrade(null)
+                    .mathGrade(null)
+                    .techAndHomeGrade(null)
+                    .earlyLeaveCount(null)
+                    .lectureAbsenceCount(null)
+                    .latenessCount(null)
+                    .dayAbsenceCount(null)
+                    .totalFirstGradeScores(score.getFirstGradeScore())
+                    .totalSecondGradeScores(score.getSecondGradeScore())
+                    .totalThirdGradeScores(score.getThirdGradeScore())
+                    .conversionScore(score.getTotalGradeScore())
+                    .volunteerScore(score.getVolunteerScore())
+                    .attendanceScore(score.getAttendanceScore())
+                    .totalScoreFirstRound(score.getTotalScore())
+                    .build();
+        } else {
+            GraduationCase applicationCase = graduationCaseRepository.findByReceiptCode(receiptCode).orElseThrow();
+            return ApplicantScore.builder()
+                    .koreanGrade(applicationCase.getKoreanGrade())
+                    .englishGrade(applicationCase.getEnglishGrade())
+                    .historyGrade(applicationCase.getHistoryGrade())
+                    .scienceGrade(applicationCase.getScienceGrade())
+                    .socialGrade(applicationCase.getSocialGrade())
+                    .mathGrade(applicationCase.getMathGrade())
+                    .techAndHomeGrade(applicationCase.getTechAndHomeGrade())
+                    .earlyLeaveCount(applicationCase.getEarlyLeaveCount())
+                    .lectureAbsenceCount(applicationCase.getLectureAbsenceCount())
+                    .latenessCount(applicationCase.getLatenessCount())
+                    .dayAbsenceCount(applicationCase.getDayAbsenceCount())
+                    .totalFirstGradeScores(score.getFirstGradeScore())
+                    .totalSecondGradeScores(score.getSecondGradeScore())
+                    .totalThirdGradeScores(score.getThirdGradeScore())
+                    .conversionScore(score.getTotalGradeScore())
+                    .volunteerScore(score.getVolunteerScore())
+                    .attendanceScore(score.getAttendanceScore())
+                    .totalScoreFirstRound(score.getTotalScore())
+                    .build();
+        }
     }
 
     private List<BigDecimal> getScores(ApplicationType applicationType) {
