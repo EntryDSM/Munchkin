@@ -33,13 +33,13 @@ public class GraduationApplication extends Application {
 
     @Builder
     public GraduationApplication(long receiptCode, boolean isGraduated, String studentNumber, School school,
-                                 String schoolTel, LocalDate graduateAt) {
+                                 String schoolTel, LocalDate graduatedAt) {
         super(receiptCode);
         this.isGraduated = isGraduated;
         this.studentNumber = studentNumber;
         this.school = school;
         this.schoolTel = schoolTel;
-        this.graduatedAt = graduateAt;
+        this.graduatedAt = graduatedAt;
     }
 
     @Override

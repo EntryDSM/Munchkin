@@ -29,19 +29,13 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     public byte[] getPreviewApplicationPdf() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
+
         if (applicant.getEducationalStatus() == null) {
             throw new EducationalStatusNullException();
         }
-        Application application = null;
-        switch (applicant.getEducationalStatus()) {
-            case EducationalStatus.GRADUATE:
-            case EducationalStatus.PROSPECTIVE_GRADUATE:
-                application = getGraduationApplication(receiptCode);
-                break;
-            case EducationalStatus.QUALIFICATION_EXAM:
-                application = getQualificationExamApplication(receiptCode);
-        }
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+
+        Application application = getApplication(applicant);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
 
@@ -55,8 +49,18 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
+    }
+
+    private Application getApplication(Applicant applicant) {
+        Application result = null;
+        if (applicant.isGraduation()) {
+            result = getGraduationApplication(applicant.getReceiptCode());
+        } else {
+            result = getQualificationExamApplication(applicant.getReceiptCode());
+        }
+        return result;
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {

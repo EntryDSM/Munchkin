@@ -126,4 +126,8 @@ public class Applicant {
     public boolean isRecommendationsRequired() {
         return !isEducationalStatusEmpty() && !isCommonApplicationType() && !isProspectiveGraduate();
     }
+
+    public boolean isGraduation() {
+        return educationalStatus.equals(EducationalStatus.GRADUATE) || educationalStatus.equals(EducationalStatus.PROSPECTIVE_GRADUATE);
+    }
 }
