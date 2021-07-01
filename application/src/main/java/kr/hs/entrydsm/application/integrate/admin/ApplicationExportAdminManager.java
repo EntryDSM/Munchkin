@@ -4,7 +4,6 @@ import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
@@ -14,9 +13,7 @@ import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +21,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
 
     private final ApplicationFactory applicationFactory;
     private final ApplicantRepository applicantRepository;
+    private final GraduationApplicationRepository graduationApplicationRepository;
     private final ScoreCalculator scoreCalculator;
 
     @Override
@@ -45,7 +43,18 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
 
     @Override
     public MiddleSchoolInfo getMiddleSchoolInfo(long receiptCode) {
-        return null;
+        Optional<GraduationApplication> application =
+                graduationApplicationRepository.findByReceiptCode(receiptCode);
+        if(application.isPresent()){
+            GraduationApplication graduationApplication =
+                    application.orElseThrow(ApplicationNotFoundException::new);
+            return MiddleSchoolInfo.builder()
+                    .middleSchool(graduationApplication.getSchoolName())
+                    .middleSchoolStudentNumber(graduationApplication.getSchoolName())
+                    .yearOfGraduation(graduationApplication.getGraduatedAt().getYear())
+                    .build();
+        }
+        return new MiddleSchoolInfo();
     }
 
     private Application getApplication(long receiptCode) {
