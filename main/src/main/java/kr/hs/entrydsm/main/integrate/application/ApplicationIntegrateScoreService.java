@@ -30,7 +30,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     @Override
-    public CalculatedScore getScore(Application application) {
+    public CalculatedScore calculateScore(Application application) {
         CalculatedScore result;
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;

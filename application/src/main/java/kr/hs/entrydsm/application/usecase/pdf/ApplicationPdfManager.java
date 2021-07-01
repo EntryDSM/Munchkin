@@ -41,7 +41,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
             case EducationalStatus.QUALIFICATION_EXAM:
                 application = getQualificationExamApplication(receiptCode);
         }
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
 
@@ -55,7 +55,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
 
