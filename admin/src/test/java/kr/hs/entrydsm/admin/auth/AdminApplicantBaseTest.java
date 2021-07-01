@@ -1,9 +1,12 @@
 package kr.hs.entrydsm.admin.auth;
 
-import kr.hs.entrydsm.admin.usecase.dto.*;
-import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
-import kr.hs.entrydsm.admin.usecase.dto.response.CommonScoreResponse;
-import kr.hs.entrydsm.admin.usecase.dto.response.SpecialScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceRequest;
+import kr.hs.entrydsm.admin.usecase.dto.score.CommonScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.score.SpecialScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.Coordinate;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.Properties;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteBody;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 

@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.admin.integrate.user;
 
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
-import kr.hs.entrydsm.admin.usecase.dto.SaveExamCodeUserResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

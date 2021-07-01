@@ -2,7 +2,7 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
-import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
+import kr.hs.entrydsm.admin.usecase.dto.account.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
 import kr.hs.entrydsm.admin.usecase.exception.PasswordNotValidException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;

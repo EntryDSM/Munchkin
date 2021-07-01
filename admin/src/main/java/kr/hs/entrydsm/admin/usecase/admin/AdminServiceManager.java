@@ -1,18 +1,16 @@
 package kr.hs.entrydsm.admin.usecase.admin;
 
-import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.integrate.main.MainRepository;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
-import kr.hs.entrydsm.admin.usecase.dto.response.CommonScoreResponse;
-import kr.hs.entrydsm.admin.usecase.dto.response.SpecialScoreResponse;
-import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicationStatus;
+import kr.hs.entrydsm.admin.usecase.dto.score.CommonScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.score.SpecialScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ReceiptStatusResponse;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicationPeriodNotOverException;
 import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
-import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
