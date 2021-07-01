@@ -73,7 +73,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         BufferedImage outputImage = makeThumbnail(file);
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        ImageIO.write(outputImage, "jpeg", os);
+        ImageIO.write(outputImage, "png", os);
         InputStream is = new ByteArrayInputStream(os.toByteArray());
 
 
