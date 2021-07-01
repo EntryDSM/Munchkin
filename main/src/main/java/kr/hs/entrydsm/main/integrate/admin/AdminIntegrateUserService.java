@@ -1,9 +1,9 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
-import kr.hs.entrydsm.admin.usecase.dto.SaveExamCodeUserResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;

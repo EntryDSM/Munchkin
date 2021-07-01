@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.entity.schedule.Type;
-import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.schedule.ScheduleRequest;
 import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
 import kr.hs.entrydsm.admin.usecase.schedule.ScheduleService;
 import kr.hs.entrydsm.admin.usecase.schedule.ScheduleServiceManager;

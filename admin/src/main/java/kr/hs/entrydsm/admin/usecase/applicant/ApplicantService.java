@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.usecase.applicant;
 
-import kr.hs.entrydsm.admin.usecase.dto.response.ApplicantsResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsResponse;
 import org.springframework.data.domain.Pageable;
 
 public interface ApplicantService {

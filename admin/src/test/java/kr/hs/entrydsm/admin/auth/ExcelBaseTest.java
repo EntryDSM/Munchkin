@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.admin.auth;
 
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
 
 public class ExcelBaseTest {
 

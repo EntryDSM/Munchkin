@@ -1,8 +1,8 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicationStatus;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
 import kr.hs.entrydsm.score.integrate.admin.ScoreExportAdminRepository;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
