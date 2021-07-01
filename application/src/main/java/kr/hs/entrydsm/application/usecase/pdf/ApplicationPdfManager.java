@@ -1,7 +1,9 @@
 package kr.hs.entrydsm.application.usecase.pdf;
 
 import kr.hs.entrydsm.application.ApplicationFactory;
-import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.entity.Applicant;
+import kr.hs.entrydsm.application.entity.Application;
+import kr.hs.entrydsm.application.entity.ApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;

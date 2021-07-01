@@ -1,6 +1,9 @@
 package kr.hs.entrydsm.application;
 
-import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.entity.GraduationApplication;
+import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
+import kr.hs.entrydsm.application.entity.QualificationExamApplication;
+import kr.hs.entrydsm.application.entity.QualificationExamApplicationRepository;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

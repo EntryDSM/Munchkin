@@ -8,7 +8,6 @@ import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
-import kr.hs.entrydsm.application.usecase.dto.application.response.GedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;

@@ -1,13 +1,14 @@
 package kr.hs.entrydsm.application.integrate.admin;
 
 import kr.hs.entrydsm.application.ApplicationFactory;
-import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.entity.Application;
+import kr.hs.entrydsm.application.entity.GraduationApplication;
+import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
-import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
 import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import lombok.RequiredArgsConstructor;

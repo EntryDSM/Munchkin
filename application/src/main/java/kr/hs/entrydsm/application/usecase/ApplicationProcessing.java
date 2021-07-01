@@ -5,7 +5,6 @@ import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
-import kr.hs.entrydsm.application.usecase.dto.application.response.GedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -3,7 +3,6 @@ package kr.hs.entrydsm.application.entity;
 import lombok.*;
 
 import javax.persistence.Entity;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter

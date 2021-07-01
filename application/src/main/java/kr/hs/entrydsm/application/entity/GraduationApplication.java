@@ -2,8 +2,6 @@ package kr.hs.entrydsm.application.entity;
 
 import lombok.*;
 
-import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
