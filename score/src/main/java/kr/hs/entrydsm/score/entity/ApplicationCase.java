@@ -1,10 +1,13 @@
-package kr.hs.entrydsm.score.integrate.application;
+package kr.hs.entrydsm.score.entity;
 
-import kr.hs.entrydsm.score.integrate.ExternalEntity;
+import kr.hs.entrydsm.score.integrate.user.Scorer;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
-public abstract class ApplicationCase extends ExternalEntity {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
+public abstract class ApplicationCase {
     protected static final int MAX_VOLUNTEER_TIME = 45;
     protected static final int MIN_VOLUNTEER_TIME = 10;
 
@@ -12,6 +15,17 @@ public abstract class ApplicationCase extends ExternalEntity {
     protected static final int MIN_VOLUNTEER_SCORE = 3;
 
     protected static final int MAX_ATTENDANCE_SCORE = 15;
+
+    @Transient
+    protected Scorer scorer;
+
+    @Id
+    protected Long receiptCode;
+
+    public ApplicationCase(Scorer scorer) {
+        this.scorer = scorer;
+        this.receiptCode = scorer.getReceiptCode();
+    }
 
     abstract public BigDecimal calculateVolunteerScore();
     abstract public Integer calculateAttendanceScore();

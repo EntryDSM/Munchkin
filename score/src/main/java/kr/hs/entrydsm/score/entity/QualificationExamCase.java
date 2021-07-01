@@ -1,26 +1,24 @@
-package kr.hs.entrydsm.score.integrate.application;
+package kr.hs.entrydsm.score.entity;
 
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Getter
-@AllArgsConstructor
+@Entity(name = "tbl_qualification_exam_case")
 public class QualificationExamCase extends ApplicationCase {
-
-    @Builder(builderMethodName = "builder")
-    public static QualificationExamCase initializer(Scorer scorer, BigDecimal averageScore) {
-       QualificationExamCase qualificationExamCase = new QualificationExamCase(scorer, averageScore);
-       return nullCheck(qualificationExamCase);
-    }
-
-    private final Scorer scorer;
-
     @Digits(integer = 3, fraction = 2)
-    private final BigDecimal averageScore;
+    private BigDecimal averageScore;
+
+    @Builder
+    public QualificationExamCase(Scorer scorer, BigDecimal averageScore) {
+        super(scorer);
+        this.averageScore = averageScore;
+    }
 
     @Override
     public BigDecimal calculateVolunteerScore() { return volunteerScoreFormula(); }

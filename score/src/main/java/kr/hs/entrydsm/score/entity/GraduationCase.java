@@ -1,67 +1,60 @@
-package kr.hs.entrydsm.score.integrate.application;
+package kr.hs.entrydsm.score.entity;
 
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import lombok.*;
 
-import java.lang.reflect.Member;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Getter
-@AllArgsConstructor
+@Entity(name = "tbl_graduation_case")
 public class GraduationCase extends ApplicationCase {
+    private Integer volunteerTime;
 
-    @Builder(builderMethodName = "builder")
-    public static GraduationCase initializer(Scorer scorer,
-                                             Integer volunteerTime,
-                                             Integer dayAbsenceCount,
-                                             Integer lectureAbsenceCount,
-                                             Integer latenessCount,
-                                             Integer earlyLeaveCount,
-                                             String koreanGrade,
-                                             String socialGrade,
-                                             String historyGrade,
-                                             String mathGrade,
-                                             String scienceGrade,
-                                             String englishGrade,
-                                             String techAndHomeGrade) {
+    private Integer dayAbsenceCount;
+    private Integer lectureAbsenceCount;
+    private Integer latenessCount;
+    private Integer earlyLeaveCount;
 
-        GraduationCase graduationCase = new GraduationCase(scorer,
-                                                           volunteerTime,
-                                                           dayAbsenceCount,
-                                                           lectureAbsenceCount,
-                                                           latenessCount,
-                                                           earlyLeaveCount,
-                                                           koreanGrade,
-                                                           socialGrade,
-                                                           historyGrade,
-                                                           mathGrade,
-                                                           scienceGrade,
-                                                           englishGrade,
-                                                           techAndHomeGrade);
-        return nullCheck(graduationCase);
+    private String koreanGrade;
+    private String socialGrade;
+    private String historyGrade;
+    private String mathGrade;
+    private String scienceGrade;
+    private String englishGrade;
+    private String techAndHomeGrade;
+
+    @Builder
+    public GraduationCase(Scorer scorer, Integer volunteerTime, Integer dayAbsenceCount,
+                          Integer lectureAbsenceCount, Integer latenessCount,
+                          Integer earlyLeaveCount, String koreanGrade,
+                          String socialGrade, String historyGrade,
+                          String mathGrade, String scienceGrade,
+                          String englishGrade, String techAndHomeGrade) {
+        super(scorer);
+        this.volunteerTime = volunteerTime;
+        this.dayAbsenceCount = dayAbsenceCount;
+        this.lectureAbsenceCount = lectureAbsenceCount;
+        this.latenessCount = latenessCount;
+        this.earlyLeaveCount = earlyLeaveCount;
+        this.koreanGrade = koreanGrade;
+        this.socialGrade = socialGrade;
+        this.historyGrade = historyGrade;
+        this.mathGrade = mathGrade;
+        this.scienceGrade = scienceGrade;
+        this.englishGrade = englishGrade;
+        this.techAndHomeGrade = techAndHomeGrade;
     }
 
-
-    private final Scorer scorer;
-
-    private final Integer volunteerTime;
-
-    private final Integer dayAbsenceCount;
-    private final Integer lectureAbsenceCount;
-    private final Integer latenessCount;
-    private final Integer earlyLeaveCount;
-
-    private final String koreanGrade;
-    private final String socialGrade;
-    private final String historyGrade;
-    private final String mathGrade;
-    private final String scienceGrade;
-    private final String englishGrade;
-    private final String techAndHomeGrade;
-
+    @Transient
     private final BigDecimal FIRST_SECOND_GRADE_RATE = BigDecimal.valueOf(4.5);
+
+    @Transient
     private final BigDecimal THIRD_GRADE_RATE = BigDecimal.valueOf(6);
+
+    @Transient
     private final BigDecimal MEISTER_RATE = BigDecimal.valueOf(0.6);
 
     @Override

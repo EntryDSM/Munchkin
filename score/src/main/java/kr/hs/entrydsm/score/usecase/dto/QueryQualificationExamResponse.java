@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.score.usecase.dto;
 
-import kr.hs.entrydsm.score.integrate.application.QualificationExamCase;
+import kr.hs.entrydsm.score.entity.QualificationExamCase;
 import lombok.Getter;
 
 import java.math.BigDecimal;

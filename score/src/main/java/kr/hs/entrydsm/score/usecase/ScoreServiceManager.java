@@ -2,7 +2,6 @@ package kr.hs.entrydsm.score.usecase;
 
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import kr.hs.entrydsm.score.entity.*;
-import kr.hs.entrydsm.score.integrate.application.*;
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
 import kr.hs.entrydsm.score.usecase.dto.QueryGraduationResponse;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ScoreServiceManager implements ScoreService {
-
     private final ScoreRepository scoreRepository;
     private final ScorerRepository scorerRepository;
     private final GraduationCaseRepository graduationCaseRepository;
@@ -40,6 +38,7 @@ public class ScoreServiceManager implements ScoreService {
     @Override
     public Score updateGraduation(UpdateGraduationRequest request) {
         if (currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
+
 
         GraduationCase graduationCase = GraduationCase.builder()
                                                       .scorer(currentScorer())
