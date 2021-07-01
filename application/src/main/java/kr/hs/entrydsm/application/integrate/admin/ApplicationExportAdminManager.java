@@ -27,15 +27,13 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
     @Override
     public ReportCard getReportCard(long receiptCode) {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
-        if (applicant.getEducationalStatus() == null) {
+        if (applicant.getEducationalStatus() == null)
             throw new EducationalStatusNullException();
-        }
 
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
 
-        if (scoreCalculator.isAnyGradeNull(receiptCode)) {
+        if (scoreCalculator.isAnyGradeNull(receiptCode))
             throw new NullGradeExistException();
-        }
 
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return ReportCard.from(application, calculatedScore);

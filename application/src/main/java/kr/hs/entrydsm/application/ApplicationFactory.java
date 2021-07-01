@@ -14,41 +14,42 @@ public class ApplicationFactory {
 
     public Application saveAndGetApplicationFrom(Applicant applicant) {
         Application result;
-        if (applicant.isGraduation()) {
+        if (applicant.isGraduation())
             result = saveGraduationApplicationIfNotExists(applicant.getReceiptCode());
-        } else {
+        else
             result = saveQualificationExamApplicationIfNotExists(applicant.getReceiptCode());
-        }
         return result;
     }
 
-    public GraduationApplication saveGraduationApplicationIfNotExists(long receiptCode) {
+    private GraduationApplication saveGraduationApplicationIfNotExists(long receiptCode) {
         GraduationApplication graduationApplication = createGraduationApplicationIfNotExists(receiptCode);
         graduationApplicationRepository.save(graduationApplication);
         return graduationApplication;
     }
 
-    public QualificationExamApplication saveQualificationExamApplicationIfNotExists(long receiptCode) {
+    private QualificationExamApplication saveQualificationExamApplicationIfNotExists(long receiptCode) {
         QualificationExamApplication qualificationExamApplication = createQualificationExamApplicationIfNotExists(receiptCode);
         qualificationExamApplicationRepository.save(qualificationExamApplication);
         return qualificationExamApplication;
     }
 
     public GraduationApplication createGraduationApplicationIfNotExists(long receiptCode) {
-        if (graduationApplicationRepository.existsByReceiptCode(receiptCode)) {
-            return graduationApplicationRepository.findByReceiptCode(receiptCode)
+        GraduationApplication result;
+        if (graduationApplicationRepository.existsByReceiptCode(receiptCode))
+            result = graduationApplicationRepository.findByReceiptCode(receiptCode)
                     .orElseThrow(ApplicationNotFoundException::new);
-        } else {
-            return new GraduationApplication(receiptCode);
-        }
+        else
+            result = new GraduationApplication(receiptCode);
+        return result;
     }
 
     public QualificationExamApplication createQualificationExamApplicationIfNotExists(long receiptCode) {
-        if (qualificationExamApplicationRepository.existsByReceiptCode(receiptCode)) {
-            return qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
+        QualificationExamApplication result;
+        if (qualificationExamApplicationRepository.existsByReceiptCode(receiptCode))
+            result = qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
                     .orElseThrow(ApplicationNotFoundException::new);
-        } else {
-            return new QualificationExamApplication(receiptCode);
-        }
+        else
+            result = new QualificationExamApplication(receiptCode);
+        return result;
     }
 }

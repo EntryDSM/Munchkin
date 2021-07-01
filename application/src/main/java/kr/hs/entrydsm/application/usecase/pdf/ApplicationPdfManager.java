@@ -32,9 +32,8 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         long receiptCode = authenticationManager.getUserReceiptCode();
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
 
-        if (applicant.getEducationalStatus() == null) {
+        if (applicant.getEducationalStatus() == null)
             throw new EducationalStatusNullException();
-        }
 
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
@@ -44,9 +43,8 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     @Override
     public byte[] getFinalApplicationPdf() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        if (!applicantStatusService.isFinalSubmit(receiptCode)) {
+        if (!applicantStatusService.isFinalSubmit(receiptCode))
             throw new FinalSubmitRequiredException();
-        }
 
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationRepository.findByReceiptCode(receiptCode)

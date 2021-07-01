@@ -41,9 +41,8 @@ public class ApplicationPdfGenerator {
                 TemplateFileName.NON_SMOKING
         ));
 
-        if (!applicant.isQualificationExam() && !applicant.isCommonApplicationType()) {
+        if (!applicant.isQualificationExam() && !applicant.isCommonApplicationType())
             result.add(2, TemplateFileName.RECOMMENDATION);
-        }
 
         return result;
     }
