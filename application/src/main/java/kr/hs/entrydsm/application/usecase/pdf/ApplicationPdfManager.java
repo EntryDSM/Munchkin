@@ -29,18 +29,12 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     public byte[] getPreviewApplicationPdf() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
+
         if (applicant.getEducationalStatus() == null) {
             throw new EducationalStatusNullException();
         }
-        Application application = null;
-        switch (applicant.getEducationalStatus()) {
-            case EducationalStatus.GRADUATE:
-            case EducationalStatus.PROSPECTIVE_GRADUATE:
-                application = getGraduationApplication(receiptCode);
-                break;
-            case EducationalStatus.QUALIFICATION_EXAM:
-                application = getQualificationExamApplication(receiptCode);
-        }
+
+        Application application = getApplication(applicant);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
@@ -57,6 +51,16 @@ public class ApplicationPdfManager implements ApplicationPdfService {
                 .orElseThrow(ApplicationNotFoundException::new);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
+    }
+
+    private Application getApplication(Applicant applicant) {
+        Application result = null;
+        if (applicant.isGraduation()) {
+            result = getGraduationApplication(applicant.getReceiptCode());
+        } else {
+            result = getQualificationExamApplication(applicant.getReceiptCode());
+        }
+        return result;
     }
 
     private GraduationApplication getGraduationApplication(long receiptCode) {
