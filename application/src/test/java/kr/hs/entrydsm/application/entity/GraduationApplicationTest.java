@@ -23,7 +23,7 @@ public class GraduationApplicationTest {
         assertThat(application.getIsGraduated()).isFalse();
         assertThat(application.getStudentNumber()).isEqualTo("30401");
         assertThat(application.getSchoolTel()).isEqualTo("0420000000");
-        assertThat(application.getGraduateAt()).isEqualTo(LocalDate.of(2019, 2, 1));
+        assertThat(application.getGraduatedAt()).isEqualTo(LocalDate.of(2019, 2, 1));
     }
 
     @Test
