@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -31,28 +33,28 @@ public class ExcelUserScore {
 
     private String techAndHomeGrade;
 
-    private String totalFirstGradeScores;
+    private BigDecimal totalFirstGradeScores;
 
-    private String totalSecondGradeScores;
+    private BigDecimal totalSecondGradeScores;
 
-    private String totalThirdGradeScores;
+    private BigDecimal totalThirdGradeScores;
 
-    private String volunteerTime;
+    private Integer volunteerTime;
 
-    private String volunteerScore;
+    private Integer volunteerScore;
 
-    private String dayAbsenceCount;
+    private Integer dayAbsenceCount;
 
-    private String lectureAbsenceCount;
+    private Integer lectureAbsenceCount;
 
-    private String latenessCount;
+    private Integer latenessCount;
 
-    private String earlyLeaveCount;
+    private Integer earlyLeaveCount;
 
-    private String conversionScore;
+    private BigDecimal conversionScore;
 
-    private String attendanceScore;
+    private Integer attendanceScore;
 
-    private String totalScoreFirstRound;
+    private BigDecimal totalScoreFirstRound;
 
 }

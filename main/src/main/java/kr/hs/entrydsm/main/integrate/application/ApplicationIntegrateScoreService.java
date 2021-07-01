@@ -43,7 +43,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     @Override
-    public boolean isAnyGradeNull(long receiptCode) {
+    public boolean isAnyGradeNull(long receiptCode) { // 총 점수 관련된 컬럼 중에서 하나라도 null이 있으면 true를 반환하는 함수입니다~~
         return false;
     }
 
