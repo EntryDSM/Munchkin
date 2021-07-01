@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase;
 
+import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
@@ -31,6 +32,7 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class ApplicationManager implements ApplicationProcessing {
 
+    private final ApplicationFactory applicationFactory;
     private final ImageService imageService;
     private final ApplicantDocsService applicantDocsService;
     private final ApplicationApplicantRepository applicantExportService;
@@ -74,7 +76,7 @@ public class ApplicationManager implements ApplicationProcessing {
 
         if(applicationRequest.getEducationalStatus().equals("QUALIFICATION_EXAM")){
             QualificationExamApplication qualificationExamApplication =
-                    getQualificationExamApplication(receiptCode);
+                    applicationFactory.createQualificationExamApplicationIfNotExists(receiptCode);
             qualificationExamApplication.setQualifiedAt(
                     YearMonth.parse(applicationRequest.getGraduatedAt(),
                             DateTimeFormatter.ofPattern("yyyyMM")
@@ -82,9 +84,9 @@ public class ApplicationManager implements ApplicationProcessing {
                             .atDay(1));
             qualificationExamApplicationRepository.save(qualificationExamApplication);
         }else {
-            GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
+            GraduationApplication graduationApplication = applicationFactory.createGraduationApplicationIfNotExists(receiptCode);
             if(applicationRequest.getGraduatedAt() != null){
-                graduationApplication.setGraduateAt(
+                graduationApplication.setGraduatedAt(
                         YearMonth.parse(applicationRequest.getGraduatedAt(),
                                 DateTimeFormatter.ofPattern("yyyyMM")
                                         .withZone(ZoneId.of("Asia/Seoul")))
@@ -109,7 +111,7 @@ public class ApplicationManager implements ApplicationProcessing {
         if(educationalStatus.equals("QUALIFICATION_EXAM"))
             throw new EducationalStatusUnmatchedException();
 
-        GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
+        GraduationApplication graduationApplication = applicationFactory.createGraduationApplicationIfNotExists(receiptCode);
 
         graduationApplication.setSchoolTel(information.getSchoolTel());
         graduationApplication.setSchool(schoolRepository.findByCode(information.getSchoolCode())
@@ -133,14 +135,14 @@ public class ApplicationManager implements ApplicationProcessing {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)
                                 .orElseThrow(ApplicationNotFoundException::new);
-                if (graduationApplication.getGraduateAt() != null)
+                if (graduationApplication.getGraduatedAt() != null)
                     return applicantExportService.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                                     .withZone(ZoneId.of("Asia/Seoul"))
-                                    .format(graduationApplication.getGraduateAt()))
+                                    .format(graduationApplication.getGraduatedAt()))
                             .setIsGraduated(graduationApplication.getIsGraduated());
                 return applicantExportService.getApplicationType(receiptCode)
-                        .setIsGraduated(graduationApplication.getIsGraduated());
+                        .setIsGraduated(graduationApplication.getIsGraduated() != null && graduationApplication.getIsGraduated());
             }
         }else {
             if (qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
@@ -191,17 +193,10 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public GedInformationResponse getGedInformation() {
+    public Information getInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
 
-        if(educationalStatus == null)
-            throw new EducationalStatusNotFoundException();
-        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
-            throw new EducationalStatusUnmatchedException();
-
-        GedInformationResponse result = new GedInformationResponse()
-                .setInformation(applicantExportService.getInformation(receiptCode));
+        Information result = applicantExportService.getInformation(receiptCode);
 
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
 
@@ -297,30 +292,6 @@ public class ApplicationManager implements ApplicationProcessing {
             return null;
         }
 
-    }
-
-    private GraduationApplication getGraduationApplication(long receiptCode) {
-        GraduationApplication graduationApplication;
-        if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
-            return graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        } else {
-            graduationApplication = new GraduationApplication();
-            graduationApplication.setReceiptCode(receiptCode);
-            return graduationApplication;
-        }
-    }
-
-    private QualificationExamApplication getQualificationExamApplication(long receiptCode) {
-        QualificationExamApplication qualificationExamApplication;
-        if(qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
-            return qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        }else {
-            qualificationExamApplication = new QualificationExamApplication();
-            qualificationExamApplication.setReceiptCode(receiptCode);
-            return qualificationExamApplication;
-        }
     }
 
 }

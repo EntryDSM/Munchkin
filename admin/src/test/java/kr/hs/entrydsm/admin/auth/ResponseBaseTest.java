@@ -1,6 +1,10 @@
 package kr.hs.entrydsm.admin.auth;
 
-import kr.hs.entrydsm.admin.usecase.dto.response.*;
+import kr.hs.entrydsm.admin.usecase.dto.account.AccessTokenResponse;
+import kr.hs.entrydsm.admin.usecase.dto.account.TokenResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
+import kr.hs.entrydsm.admin.usecase.dto.schedule.ScheduleResponse;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceResponse;
 
 public abstract class ResponseBaseTest {
 

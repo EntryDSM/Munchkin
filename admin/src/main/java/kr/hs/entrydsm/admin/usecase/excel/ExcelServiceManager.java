@@ -7,12 +7,12 @@ import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUserScore;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicationPeriodNotOverException;
 import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -113,8 +113,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(1).setCellValue(excelApplicants.get(i).getReceiptCode());
             row.createCell(2).setCellValue(excelApplicants.get(i).getApplicationType());
 
-            String area = excelApplicants.get(i).getArea().equals("1")?"대전":"전국";
-            row.createCell(3).setCellValue(area);
+            row.createCell(3).setCellValue(excelApplicants.get(i).getArea());
             row.createCell(4).setCellValue(excelApplicants.get(i).getApplicationRemark());
             row.createCell(5).setCellValue(excelApplicants.get(i).getName());
             row.createCell(6).setCellValue(excelApplicants.get(i).getBirthDay());
@@ -191,10 +190,10 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(56).setCellValue(englishScore[0]);
             row.createCell(57).setCellValue(englishScore[0]);
 
-            row.createCell(58).setCellValue(excelUserScore.getTotalFirstGradeScores());
-            row.createCell(59).setCellValue(excelUserScore.getTotalSecondGradeScores());
-            row.createCell(60).setCellValue(excelUserScore.getTotalThirdGradeScores());
-            row.createCell(61).setCellValue(excelUserScore.getConversionScore());
+            row.createCell(58).setCellValue(excelUserScore.getTotalFirstGradeScores().toString());
+            row.createCell(59).setCellValue(excelUserScore.getTotalSecondGradeScores().toString());
+            row.createCell(60).setCellValue(excelUserScore.getTotalThirdGradeScores().toString());
+            row.createCell(61).setCellValue(excelUserScore.getConversionScore().toString());
 
             row.createCell(62).setCellValue(excelUserScore.getVolunteerTime());
             row.createCell(63).setCellValue(excelUserScore.getVolunteerScore());
@@ -206,7 +205,7 @@ public class ExcelServiceManager implements ExcelService {
 
             row.createCell(68).setCellValue(excelUserScore.getAttendanceScore());
 
-            row.createCell(69).setCellValue(excelUserScore.getTotalScoreFirstRound());
+            row.createCell(69).setCellValue(excelUserScore.getTotalScoreFirstRound().toString());
 
             row.createCell(70).setCellValue(excelApplicants.get(i).getSelfIntroduce());
             row.createCell(71).setCellValue(excelApplicants.get(i).getSelfIntroduce());

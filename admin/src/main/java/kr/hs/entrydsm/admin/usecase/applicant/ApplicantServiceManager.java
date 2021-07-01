@@ -2,14 +2,12 @@ package kr.hs.entrydsm.admin.usecase.applicant;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.admin.usecase.dto.*;
-import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
-import kr.hs.entrydsm.admin.usecase.dto.response.*;
-import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
-import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceRequest;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.Coordinate;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteBody;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceResponse;
 import kr.hs.entrydsm.common.context.sender.ContentSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,9 +28,6 @@ import java.util.*;
 public class ApplicantServiceManager implements ApplicantService {
 
     private final ApplicantRepository applicantRepository;
-    private final AdminRepository adminRepository;
-
-    private final AuthenticationManager authenticationManager;
 
     private final ContentSender contentSender;
 
@@ -47,11 +42,9 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
         applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
-        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        UserNameAndTelephoneNumber applicant = applicantRepository.getUserNameAndTel(receiptCode);
         String template;
         if(isPrintedArrived) template = "PRINTED_ARRIVED";
         else template = "PRINTED_NOT_ARRIVED";
@@ -61,15 +54,12 @@ public class ApplicantServiceManager implements ApplicantService {
         contentSender.sendMessage(applicant.getTelephoneNumber(), template, params);
     }
 
-    @Override //지원자 목록
+    @Override
     public ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                             boolean isDaejeon, boolean isNationwide,
                                             String telephoneNumber, String name,
                                             boolean isCommon, boolean isMeister, boolean isSocial,
                                             Boolean isPrintedArrived) {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
-
         if(!isDaejeon && !isNationwide) {
             isDaejeon = true;
             isNationwide = true;
@@ -80,10 +70,10 @@ public class ApplicantServiceManager implements ApplicantService {
             isSocial = true;
         }
 
-        Page<Applicant> applicants = applicantRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
+        Page<ApplicantsInformationResponse> applicants = applicantRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
         
-        for (Applicant applicant : applicants) {
+        for (ApplicantsInformationResponse applicant : applicants) {
             applicantsInformationResponses.add(
                     ApplicantsInformationResponse.builder()
                             .receiptCode(applicant.getReceiptCode())
@@ -105,9 +95,6 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public Object getDetailApplicantInfo(int receiptCode) {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
-
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
         if(!applicant.getIsSubmit()) {
             NotSubmitApplicant notSubmitApplicant

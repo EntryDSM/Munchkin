@@ -1,9 +1,11 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.admin.usecase.dto.Applicant;
-import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
-import kr.hs.entrydsm.admin.usecase.dto.SaveExamCodeUserResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsInformationResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.UserNameAndTelephoneNumber;
+import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
@@ -26,17 +28,17 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final ApplicationExportAdminRepository applicationExportRepository;
 
     @Override
-    public Page<Applicant> findAll(Pageable page, Long receiptCode,
-                                   boolean isDaejeon, boolean isNationwide,
-                                   String telephoneNumber, String name,
-                                   boolean isCommon, boolean isMeister, boolean isSocial,
-                                   Boolean isPrintedArrived) {
+    public Page<ApplicantsInformationResponse> findAll(Pageable page, Long receiptCode,
+                                                       boolean isDaejeon, boolean isNationwide,
+                                                       String telephoneNumber, String name,
+                                                       boolean isCommon, boolean isMeister, boolean isSocial,
+                                                       Boolean isPrintedArrived) {
         Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         long totalElements = users.getTotalElements();
-        List<Applicant> applicants = new ArrayList<>();
+        List<ApplicantsInformationResponse> applicants = new ArrayList<>();
         for (User user : users) {
             applicants.add(
-                    Applicant.builder()
+                    ApplicantsInformationResponse.builder()
                             .receiptCode(user.getReceiptCode())
                             .name(user.getName())
                             .isDaejeon(user.isDaejeon())
@@ -116,11 +118,19 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     }
 
     @Override
+    public UserNameAndTelephoneNumber getUserNameAndTel(long receiptCode) {
+        User user = userExportRepository.findByReceiptCode((int)receiptCode);
+
+        return new UserNameAndTelephoneNumber(user.getName(), user.getTelephoneNumber());
+    }
+
+    @Override
     public List<ExcelUser> findAllForExcel() {
         List<User> users = userExportRepository.findAllForExcel();
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
+            String area;
             String sex;
             String educationalStatus;
             String applicationRemark;
@@ -130,6 +140,12 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 sex = "남자";
             } else {
                 sex = "여자";
+            }
+
+            if(user.isDaejeon()) {
+                area = "대전";
+            } else {
+                area = "전국";
             }
 
             switch (user.getApplicationType()) {
@@ -195,7 +211,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                             .receiptCode(user.getReceiptCode())
                             .applicationType(applicationType)
                             .applicationRemark(applicationRemark)
-                            .area(String.valueOf(user.isDaejeon()))
+                            .area(area)
                             .name(user.getName())
                             .birthDay(user.getBirthday().toString())
                             .sex(sex)

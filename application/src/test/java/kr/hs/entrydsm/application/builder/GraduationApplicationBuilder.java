@@ -17,7 +17,7 @@ public class GraduationApplicationBuilder {
                 .studentNumber(null)
                 .school(SchoolBuilder.build())
                 .schoolTel("0420000000")
-                .graduateAt(LocalDate.of(2019, 2, 1))
+                .graduatedAt(LocalDate.of(2019, 2, 1))
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class GraduationApplicationBuilder {
                 .studentNumber("30401")
                 .school(SchoolBuilder.build())
                 .schoolTel("0420000000")
-                .graduateAt(LocalDate.of(2019, 2, 1))
+                .graduatedAt(LocalDate.of(2019, 2, 1))
                 .build();
     }
 }

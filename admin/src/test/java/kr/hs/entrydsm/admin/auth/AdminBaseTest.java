@@ -3,8 +3,8 @@ package kr.hs.entrydsm.admin.auth;
 import kr.hs.entrydsm.admin.entity.admin.Admin;
 import kr.hs.entrydsm.admin.entity.refreshtoken.AdminRefreshToken;
 import kr.hs.entrydsm.admin.security.JwtTokenProvider;
-import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
-import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
+import kr.hs.entrydsm.admin.usecase.dto.account.SignInRequest;
+import kr.hs.entrydsm.admin.usecase.dto.account.SignUpRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;

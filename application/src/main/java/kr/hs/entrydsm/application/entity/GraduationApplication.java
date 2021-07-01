@@ -29,17 +29,21 @@ public class GraduationApplication extends Application {
     @Column(length = 11)
     private String schoolTel;
 
-    private LocalDate graduateAt;
+    private LocalDate graduatedAt;
+
+    public GraduationApplication(long receiptCode) {
+        super(receiptCode);
+    }
 
     @Builder
     public GraduationApplication(long receiptCode, boolean isGraduated, String studentNumber, School school,
-                                 String schoolTel, LocalDate graduateAt) {
+                                 String schoolTel, LocalDate graduatedAt) {
         super(receiptCode);
         this.isGraduated = isGraduated;
         this.studentNumber = studentNumber;
         this.school = school;
         this.schoolTel = schoolTel;
-        this.graduateAt = graduateAt;
+        this.graduatedAt = graduatedAt;
     }
 
     @Override

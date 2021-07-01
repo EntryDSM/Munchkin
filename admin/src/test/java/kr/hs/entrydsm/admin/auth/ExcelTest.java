@@ -49,18 +49,18 @@ public class ExcelTest extends ExcelBaseTest {
         assertFalse(EXCEL_USER_SCORE.getScienceGrade().isBlank());
         assertFalse(EXCEL_USER_SCORE.getEnglishGrade().isBlank());
         assertFalse(EXCEL_USER_SCORE.getTechAndHomeGrade().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getTotalFirstGradeScores().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getTotalSecondGradeScores().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getTotalThirdGradeScores().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getVolunteerScore().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getVolunteerTime().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getDayAbsenceCount().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getLectureAbsenceCount().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getLatenessCount().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getEarlyLeaveCount().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getConversionScore().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getAttendanceScore().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getTotalScoreFirstRound().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalFirstGradeScores().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalSecondGradeScores().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalThirdGradeScores().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getVolunteerScore().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getVolunteerTime().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getDayAbsenceCount().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getLectureAbsenceCount().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getLatenessCount().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getEarlyLeaveCount().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getConversionScore().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getAttendanceScore().toString().isBlank());
+        assertFalse(EXCEL_USER_SCORE.getTotalScoreFirstRound().toString().isBlank());
     }
 
     @Test

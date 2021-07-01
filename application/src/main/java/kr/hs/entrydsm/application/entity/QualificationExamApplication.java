@@ -16,6 +16,10 @@ public class QualificationExamApplication extends Application {
 
     private LocalDate qualifiedAt;
 
+    public QualificationExamApplication(long receiptCode) {
+        super(receiptCode);
+    }
+
     @Builder
     public QualificationExamApplication(long receiptCode, LocalDate qualifiedAt) {
         super(receiptCode);

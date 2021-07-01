@@ -3,8 +3,8 @@ package kr.hs.entrydsm.admin.auth;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleId;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
-import kr.hs.entrydsm.admin.usecase.dto.Schedules;
-import kr.hs.entrydsm.admin.usecase.dto.request.ScheduleRequest;
+import kr.hs.entrydsm.admin.usecase.dto.schedule.Schedules;
+import kr.hs.entrydsm.admin.usecase.dto.schedule.ScheduleRequest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

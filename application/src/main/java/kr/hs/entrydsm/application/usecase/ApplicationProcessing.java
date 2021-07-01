@@ -33,7 +33,7 @@ public interface ApplicationProcessing {
 
     GraduatedInformationResponse getGraduatedInformation();
 
-    GedInformationResponse getGedInformation();
+    Information getInformation();
 
     String uploadPhoto(MultipartFile multipartFile);
 

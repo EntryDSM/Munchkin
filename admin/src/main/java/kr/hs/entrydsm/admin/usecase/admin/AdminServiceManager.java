@@ -1,19 +1,16 @@
 package kr.hs.entrydsm.admin.usecase.admin;
 
-import kr.hs.entrydsm.admin.entity.admin.AdminRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.integrate.main.MainRepository;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
-import kr.hs.entrydsm.admin.usecase.dto.ApplicationStatus;
-import kr.hs.entrydsm.admin.usecase.dto.CommonScore;
-import kr.hs.entrydsm.admin.usecase.dto.SpecialScore;
-import kr.hs.entrydsm.admin.usecase.dto.response.ReceiptStatusResponse;
-import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicationStatus;
+import kr.hs.entrydsm.admin.usecase.dto.score.CommonScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.score.SpecialScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ReceiptStatusResponse;
 import kr.hs.entrydsm.admin.usecase.exception.ApplicationPeriodNotOverException;
 import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
-import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +22,6 @@ import java.time.LocalDate;
 public class AdminServiceManager implements AdminService {
 
     private final ScoreRepository scoreRepository;
-    private final AdminRepository adminRepository;
-    private final AuthenticationManager authenticationManager;
     private final MainRepository mainRepository;
     private final ScheduleRepository scheduleRepository;
 
@@ -37,8 +32,6 @@ public class AdminServiceManager implements AdminService {
 
     @Override
     public ReceiptStatusResponse getApplyStaticsStatistics() {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
 
         ApplicationStatus applicationStatus = scoreRepository.getScore();
         int commonCount = applicationStatus.getCommonScores().size();
@@ -48,9 +41,9 @@ public class AdminServiceManager implements AdminService {
         int totalApplicantCount = commonCount + meisterCount + socialCount;
         double totalCompetitionRate = (double)totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE;
 
-        CommonScore commonScore = new CommonScore();
-        SpecialScore meisterScore = new SpecialScore();
-        SpecialScore socialScore = new SpecialScore();
+        CommonScoreResponse commonScore = new CommonScoreResponse();
+        SpecialScoreResponse meisterScore = new SpecialScoreResponse();
+        SpecialScoreResponse socialScore = new SpecialScoreResponse();
 
         for(BigDecimal scoreDecimal : applicationStatus.getCommonScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));

@@ -1,10 +1,10 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
-import kr.hs.entrydsm.admin.usecase.dto.request.SignUpRequest;
-import kr.hs.entrydsm.admin.usecase.dto.response.AccessTokenResponse;
-import kr.hs.entrydsm.admin.usecase.dto.request.SignInRequest;
-import kr.hs.entrydsm.admin.usecase.dto.response.TokenResponse;
+import kr.hs.entrydsm.admin.usecase.dto.account.SignUpRequest;
+import kr.hs.entrydsm.admin.usecase.dto.account.AccessTokenResponse;
+import kr.hs.entrydsm.admin.usecase.dto.account.SignInRequest;
+import kr.hs.entrydsm.admin.usecase.dto.account.TokenResponse;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,6 @@ public class AdminAuthController {
         return authService.login(signInRequest);
     }
 
-    @AdminJWTRequired
     @PutMapping
     public AccessTokenResponse tokenRefresh(@RequestHeader("X-Refresh-Token") String refreshToken) {
         return authService.tokenRefresh(refreshToken);

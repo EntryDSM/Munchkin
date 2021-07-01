@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase.pdf;
 
+import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
@@ -16,9 +17,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ApplicationPdfManager implements ApplicationPdfService {
 
+    private final ApplicationFactory applicationFactory;
     private final ApplicationPdfGenerator applicationPdfGenerator;
-    private final GraduationApplicationRepository graduationApplicationRepository;
-    private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
     private final ApplicationRepository applicationRepository;
     private final ApplicantStatusService applicantStatusService;
     private final ScoreCalculator scoreCalculator;
@@ -29,19 +29,13 @@ public class ApplicationPdfManager implements ApplicationPdfService {
     public byte[] getPreviewApplicationPdf() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
+
         if (applicant.getEducationalStatus() == null) {
             throw new EducationalStatusNullException();
         }
-        Application application = null;
-        switch (applicant.getEducationalStatus()) {
-            case EducationalStatus.GRADUATE:
-            case EducationalStatus.PROSPECTIVE_GRADUATE:
-                application = getGraduationApplication(receiptCode);
-                break;
-            case EducationalStatus.QUALIFICATION_EXAM:
-                application = getQualificationExamApplication(receiptCode);
-        }
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+
+        Application application = getApplication(applicant);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
 
@@ -55,33 +49,18 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(ApplicationNotFoundException::new);
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
 
-    private GraduationApplication getGraduationApplication(long receiptCode) {
-        GraduationApplication graduationApplication;
-        if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
-            return graduationApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
+    private Application getApplication(Applicant applicant) {
+        Application result;
+        if (applicant.isGraduation()) {
+            result = applicationFactory.saveGraduationApplicationIfNotExists(applicant.getReceiptCode());
         } else {
-            graduationApplication = new GraduationApplication();
-            graduationApplication.setReceiptCode(receiptCode);
-            graduationApplicationRepository.save(graduationApplication);
-            return graduationApplication;
+            result = applicationFactory.saveQualificationExamApplicationIfNotExists(applicant.getReceiptCode());
         }
+        return result;
     }
 
-    private QualificationExamApplication getQualificationExamApplication(long receiptCode) {
-        QualificationExamApplication qualificationExamApplication;
-        if(qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()){
-            return qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
-                    .orElseThrow(ApplicationNotFoundException::new);
-        }else {
-            qualificationExamApplication = new QualificationExamApplication();
-            qualificationExamApplication.setReceiptCode(receiptCode);
-            qualificationExamApplicationRepository.save(qualificationExamApplication);
-            return qualificationExamApplication;
-        }
-    }
 }
