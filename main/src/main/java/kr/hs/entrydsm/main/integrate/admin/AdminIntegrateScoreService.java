@@ -30,8 +30,6 @@ public class AdminIntegrateScoreService implements ScoreRepository {
     public ExcelUserScore findUserScore(Long receiptCode) {
         ApplicantScore score = scoreExportRepository.getApplicantScore(receiptCode);
         return ExcelUserScore.builder()
-                .middleSchool(score.getMiddleSchool())
-                .middleSchoolStudentNumber(score.getMiddleSchoolStudentNumber())
                 .koreanGrade(score.getKoreanGrade())
                 .socialGrade(score.getSocialGrade())
                 .historyGrade(score.getHistoryGrade())
@@ -51,7 +49,6 @@ public class AdminIntegrateScoreService implements ScoreRepository {
                 .conversionScore(score.getConversionScore())
                 .attendanceScore(score.getAttendanceScore())
                 .totalScoreFirstRound(score.getTotalScoreFirstRound())
-                .yearOfGraduation(score.getYearOfGraduation())
                 .build();
     }
 

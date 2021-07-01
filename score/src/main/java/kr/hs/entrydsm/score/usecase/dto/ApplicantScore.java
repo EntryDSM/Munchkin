@@ -9,12 +9,6 @@ import java.math.BigDecimal;
 @Builder
 public class ApplicantScore {
 
-    private String yearOfGraduation;
-
-    private String middleSchoolStudentNumber;
-
-    private String middleSchool;
-
     private String koreanGrade;
 
     private String socialGrade;
@@ -37,7 +31,7 @@ public class ApplicantScore {
 
     private Integer volunteerTime;
 
-    private Integer volunteerScore;
+    private BigDecimal volunteerScore;
 
     private Integer dayAbsenceCount;
 

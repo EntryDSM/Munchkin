@@ -6,17 +6,16 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.Applicant;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
+import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
+import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
 import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -26,27 +25,6 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
     private final ApplicantRepository applicantRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final ScoreCalculator scoreCalculator;
-
-    @Override
-    public List<Applicant> getApplicants() {
-        List<GraduationApplication> graduationApplications = new ArrayList<>();
-        graduationApplicationRepository.findAll().forEach(graduationApplications::add);
-        graduationApplications.sort(Comparator.comparing(Application::getReceiptCode));
-        List<CalculatedScore> calculatedScores = new ArrayList<>();
-        scoreCalculator.getAll().forEach(calculatedScores::add);
-        calculatedScores.sort(Comparator.comparing(CalculatedScore::getReceiptCode));
-
-        List<Applicant> applicants = new ArrayList<>();
-        for(int i=0,size=graduationApplications.size(); i<size; i++){
-            Applicant applicant = new Applicant();
-            GraduationApplication graduationApplication = graduationApplications.get(i);
-            CalculatedScore calculatedScore = calculatedScores.get(i);
-            applicant.setGraduationApplication(graduationApplication);
-            applicant.setScore(calculatedScore);
-            applicants.add(applicant);
-        }
-        return applicants;
-    }
 
     @Override
     public ReportCard getReportCard(long receiptCode) {
@@ -63,6 +41,22 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
 
         return ReportCard.from(application, calculatedScore);
+    }
+
+    @Override
+    public MiddleSchoolInfo getMiddleSchoolInfo(long receiptCode) {
+        Optional<GraduationApplication> application =
+                graduationApplicationRepository.findByReceiptCode(receiptCode);
+        if(application.isPresent()){
+            GraduationApplication graduationApplication =
+                    application.orElseThrow(ApplicationNotFoundException::new);
+            return MiddleSchoolInfo.builder()
+                    .middleSchool(graduationApplication.getSchoolName())
+                    .middleSchoolStudentNumber(graduationApplication.getSchoolName())
+                    .yearOfGraduation(graduationApplication.getGraduatedAt().getYear())
+                    .build();
+        }
+        return new MiddleSchoolInfo();
     }
 
     private Application getApplication(long receiptCode) {
