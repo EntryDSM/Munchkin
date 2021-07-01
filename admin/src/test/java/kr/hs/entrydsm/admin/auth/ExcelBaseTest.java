@@ -3,6 +3,8 @@ package kr.hs.entrydsm.admin.auth;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
 
+import java.math.BigDecimal;
+
 public class ExcelBaseTest {
 
     protected static final ExcelUser EXCEL_USER = ExcelUser.builder()
@@ -34,18 +36,18 @@ public class ExcelBaseTest {
             .scienceGrade("AAAAAA")
             .englishGrade("AAAAAA")
             .techAndHomeGrade("AAAAAA")
-            .totalFirstGradeScores("123")
-            .totalSecondGradeScores("123")
-            .totalThirdGradeScores("123")
-            .volunteerScore("10")
-            .volunteerTime("50")
-            .dayAbsenceCount("1")
-            .lectureAbsenceCount("1")
-            .latenessCount("1")
-            .earlyLeaveCount("1")
-            .conversionScore("123")
-            .attendanceScore("123")
-            .totalScoreFirstRound("150")
+            .totalFirstGradeScores(BigDecimal.valueOf(123))
+            .totalSecondGradeScores(BigDecimal.valueOf(123))
+            .totalThirdGradeScores(BigDecimal.valueOf(123))
+            .volunteerScore(10)
+            .volunteerTime(50)
+            .dayAbsenceCount(1)
+            .lectureAbsenceCount(1)
+            .latenessCount(1)
+            .earlyLeaveCount(1)
+            .conversionScore(BigDecimal.valueOf(123))
+            .attendanceScore(1)
+            .totalScoreFirstRound(BigDecimal.valueOf(123))
             .build();
 
 
