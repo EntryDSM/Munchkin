@@ -37,7 +37,7 @@ public class ApplicationUserController {
         return applicationProcessing.getApplicationType();
     }
 
-    @PatchMapping
+    @PatchMapping("/graduation")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertGraduatedInfo(@RequestBody @Valid GraduatedInformationRequest information){
         applicationProcessing.writeGraduatedInformation(information);
@@ -48,10 +48,10 @@ public class ApplicationUserController {
         return applicationProcessing.getGraduatedInformation();
     }
 
-    @PatchMapping("/ged")
+    @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertGedInfo(@RequestBody @Valid GedInformationRequest information) {
-        applicationProcessing.writeGedInformation(information);
+        applicationProcessing.writeInformation(information);
     }
 
     @GetMapping("/ged")

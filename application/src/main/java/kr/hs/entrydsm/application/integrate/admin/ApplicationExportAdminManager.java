@@ -62,7 +62,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
                 application = getQualificationExamApplication(receiptCode);
         }
 
-        if (application.isAnyGradeNull()) {
+        if (scoreCalculator.isAnyGradeNull(receiptCode)) {
             throw new NullGradeExistException();
         }
 

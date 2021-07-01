@@ -42,18 +42,6 @@ public class Applicant {
         this.schoolName = graduationApplication.getSchoolName();
         this.receiptCode = graduationApplication.getReceiptCode();
         this.studentNumber = graduationApplication.getStudentNumber();
-        this.volunteerTime = graduationApplication.getVolunteerTime();
-        this.dayAbsenceCount = graduationApplication.getDayAbsenceCount();
-        this.lectureAbsenceCount = graduationApplication.getLectureAbsenceCount();
-        this.latenessCount = graduationApplication.getLatenessCount();
-        this.earlyLeaveCount = graduationApplication.getEarlyLeaveCount();
-        this.koreanScore = graduationApplication.getKoreanScore();
-        this.socialScore = graduationApplication.getSocialScore();
-        this.historyScore = graduationApplication.getHistoryScore();
-        this.mathScore = graduationApplication.getMathScore();
-        this.scienceScore = graduationApplication.getScienceScore();
-        this.englishScore = graduationApplication.getEnglishScore();
-        this.techAndHomeScore = graduationApplication.getTechAndHomeScore();
     }
 
     public void setScore(CalculatedScore calculatedScore){

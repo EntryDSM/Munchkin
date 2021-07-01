@@ -4,6 +4,6 @@ import kr.hs.entrydsm.main.configuration.DependentModule;
 import kr.hs.entrydsm.score.EnableScoreModule;
 
 @EnableScoreModule
-@DependentModule(ApplicationConfiguration.class)
+@DependentModule(UserConfiguration.class)
 public class ScoreConfiguration {
 }
