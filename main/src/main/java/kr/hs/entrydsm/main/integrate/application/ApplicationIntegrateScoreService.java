@@ -31,20 +31,22 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     @Override
     public CalculatedScore calculateScore(Application application) {
-        CalculatedScore result;
-        if (application.isGraduation()) {
-            GraduationApplication graduationApplication = (GraduationApplication) application;
-            result = getGraduationScore(graduationApplication);
-        } else {
-            QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
-            result = getQualificationExamScore((QualificationExamApplication) application);
-        }
-        return result;
+        return getCalculatedScore(application);
     }
 
     @Override
     public boolean isAnyGradeNull(long receiptCode) { // 총 점수 관련된 컬럼 중에서 하나라도 null이 있으면 true를 반환하는 함수입니다~~
         return false;
+    }
+
+    private CalculatedScore getCalculatedScore(Application application) {
+        CalculatedScore result;
+        if (application.isGraduation()) {
+            result = getGraduationScore((GraduationApplication) application);
+        } else {
+            result = getQualificationExamScore((QualificationExamApplication) application);
+        }
+        return result;
     }
 
     private CalculatedScore getGraduationScore(GraduationApplication application) {
