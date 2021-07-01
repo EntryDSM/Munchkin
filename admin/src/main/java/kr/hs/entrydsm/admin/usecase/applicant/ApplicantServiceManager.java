@@ -44,7 +44,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
-        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        UserNameAndTelephoneNumber applicant = applicantRepository.getUserNameAndTel(receiptCode);
         String template;
         if(isPrintedArrived) template = "PRINTED_ARRIVED";
         else template = "PRINTED_NOT_ARRIVED";

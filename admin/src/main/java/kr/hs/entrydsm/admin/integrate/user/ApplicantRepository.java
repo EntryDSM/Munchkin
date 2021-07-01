@@ -2,6 +2,7 @@ package kr.hs.entrydsm.admin.integrate.user;
 
 import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsInformationResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.UserNameAndTelephoneNumber;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ public interface ApplicantRepository {
     List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
     Applicant getUserInfo(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
+    UserNameAndTelephoneNumber getUserNameAndTel(long receiptCode);
     List<ExcelUser> findAllForExcel();
     List<Long> getUserReceiptCodes();
 }

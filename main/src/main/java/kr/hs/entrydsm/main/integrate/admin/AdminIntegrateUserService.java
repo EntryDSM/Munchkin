@@ -3,6 +3,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsInformationResponse;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.UserNameAndTelephoneNumber;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
@@ -34,10 +35,10 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                                                        Boolean isPrintedArrived) {
         Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         long totalElements = users.getTotalElements();
-        List<Applicant> applicants = new ArrayList<>();
+        List<ApplicantsInformationResponse> applicants = new ArrayList<>();
         for (User user : users) {
             applicants.add(
-                    Applicant.builder()
+                    ApplicantsInformationResponse.builder()
                             .receiptCode(user.getReceiptCode())
                             .name(user.getName())
                             .isDaejeon(user.isDaejeon())
@@ -114,6 +115,13 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         userExportRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+    }
+
+    @Override
+    public UserNameAndTelephoneNumber getUserNameAndTel(long receiptCode) {
+        User user = userExportRepository.findByReceiptCode((int)receiptCode);
+
+        return new UserNameAndTelephoneNumber(user.getName(), user.getTelephoneNumber());
     }
 
     @Override
