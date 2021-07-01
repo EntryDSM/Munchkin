@@ -45,18 +45,13 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
 
     @Override
     public MiddleSchoolInfo getMiddleSchoolInfo(long receiptCode) {
-        Optional<GraduationApplication> application =
-                graduationApplicationRepository.findByReceiptCode(receiptCode);
-        if(application.isPresent()){
-            GraduationApplication graduationApplication =
-                    application.orElseThrow(ApplicationNotFoundException::new);
-            return MiddleSchoolInfo.builder()
-                    .middleSchool(graduationApplication.getSchoolName())
-                    .middleSchoolStudentNumber(graduationApplication.getSchoolName())
-                    .yearOfGraduation(graduationApplication.getGraduatedAt().getYear())
-                    .build();
-        }
-        return new MiddleSchoolInfo();
+        GraduationApplication application =
+                graduationApplicationRepository.findByReceiptCode(receiptCode).orElseThrow();
+        return MiddleSchoolInfo.builder()
+                .middleSchool(application.getSchoolName())
+                .middleSchoolStudentNumber(application.getSchoolName())
+                .yearOfGraduation(application.getGraduatedAt().getYear())
+                .build();
     }
 
     private Application getApplication(long receiptCode) {
