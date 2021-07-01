@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application;
 
-import kr.hs.entrydsm.application.entity.GraduationApplication;
-import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
-import kr.hs.entrydsm.application.entity.QualificationExamApplication;
-import kr.hs.entrydsm.application.entity.QualificationExamApplicationRepository;
+import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,6 +11,16 @@ public class ApplicationFactory {
 
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
+
+    public Application saveAndGetApplicationFrom(Applicant applicant) {
+        Application result;
+        if (applicant.isGraduation()) {
+            result = saveGraduationApplicationIfNotExists(applicant.getReceiptCode());
+        } else {
+            result = saveQualificationExamApplicationIfNotExists(applicant.getReceiptCode());
+        }
+        return result;
+    }
 
     public GraduationApplication saveGraduationApplicationIfNotExists(long receiptCode) {
         GraduationApplication graduationApplication = createGraduationApplicationIfNotExists(receiptCode);

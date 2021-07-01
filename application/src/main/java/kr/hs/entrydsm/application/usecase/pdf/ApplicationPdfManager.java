@@ -36,7 +36,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
             throw new EducationalStatusNullException();
         }
 
-        Application application = getApplication(applicant);
+        Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
     }
@@ -53,16 +53,6 @@ public class ApplicationPdfManager implements ApplicationPdfService {
                 .orElseThrow(ApplicationNotFoundException::new);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
-    }
-
-    private Application getApplication(Applicant applicant) {
-        Application result;
-        if (applicant.isGraduation()) {
-            result = applicationFactory.saveGraduationApplicationIfNotExists(applicant.getReceiptCode());
-        } else {
-            result = applicationFactory.saveQualificationExamApplicationIfNotExists(applicant.getReceiptCode());
-        }
-        return result;
     }
 
 }

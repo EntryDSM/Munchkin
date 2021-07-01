@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application.integrate.admin;
 
 import kr.hs.entrydsm.application.ApplicationFactory;
+import kr.hs.entrydsm.application.entity.Applicant;
 import kr.hs.entrydsm.application.entity.Application;
 import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
@@ -9,13 +10,10 @@ import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
-import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
 import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -28,18 +26,18 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
 
     @Override
     public ReportCard getReportCard(long receiptCode) {
-        if (applicantRepository.findByReceiptCode(receiptCode).getEducationalStatus() == null) {
+        Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
+        if (applicant.getEducationalStatus() == null) {
             throw new EducationalStatusNullException();
         }
 
-        Application application = getApplication(receiptCode);
+        Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
 
         if (scoreCalculator.isAnyGradeNull(receiptCode)) {
             throw new NullGradeExistException();
         }
 
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
-
         return ReportCard.from(application, calculatedScore);
     }
 
@@ -52,16 +50,6 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
                 .middleSchoolStudentNumber(application.getSchoolName())
                 .yearOfGraduation(application.getGraduatedAt().getYear())
                 .build();
-    }
-
-    private Application getApplication(long receiptCode) {
-        Application result;
-        if (applicantRepository.findByReceiptCode(receiptCode).isGraduation()) {
-            result = applicationFactory.saveGraduationApplicationIfNotExists(receiptCode);
-        } else {
-            result = applicationFactory.saveQualificationExamApplicationIfNotExists(receiptCode);
-        }
-        return result;
     }
 
 }
