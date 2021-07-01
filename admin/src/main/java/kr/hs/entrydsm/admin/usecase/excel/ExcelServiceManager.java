@@ -190,10 +190,10 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(56).setCellValue(englishScore[0]);
             row.createCell(57).setCellValue(englishScore[0]);
 
-            row.createCell(58).setCellValue(excelUserScore.getTotalFirstGradeScores());
-            row.createCell(59).setCellValue(excelUserScore.getTotalSecondGradeScores());
-            row.createCell(60).setCellValue(excelUserScore.getTotalThirdGradeScores());
-            row.createCell(61).setCellValue(excelUserScore.getConversionScore());
+            row.createCell(58).setCellValue(excelUserScore.getTotalFirstGradeScores().toString());
+            row.createCell(59).setCellValue(excelUserScore.getTotalSecondGradeScores().toString());
+            row.createCell(60).setCellValue(excelUserScore.getTotalThirdGradeScores().toString());
+            row.createCell(61).setCellValue(excelUserScore.getConversionScore().toString());
 
             row.createCell(62).setCellValue(excelUserScore.getVolunteerTime());
             row.createCell(63).setCellValue(excelUserScore.getVolunteerScore());
@@ -205,7 +205,7 @@ public class ExcelServiceManager implements ExcelService {
 
             row.createCell(68).setCellValue(excelUserScore.getAttendanceScore());
 
-            row.createCell(69).setCellValue(excelUserScore.getTotalScoreFirstRound());
+            row.createCell(69).setCellValue(excelUserScore.getTotalScoreFirstRound().toString());
 
             row.createCell(70).setCellValue(excelApplicants.get(i).getSelfIntroduce());
             row.createCell(71).setCellValue(excelApplicants.get(i).getSelfIntroduce());
