@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
-import kr.hs.entrydsm.admin.infrastructure.database.AdminRepositoryManager;
 import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
 import kr.hs.entrydsm.admin.integrate.main.MainRepository;
 import kr.hs.entrydsm.application.infrastructure.database.ApplicationRepositoryManager;
@@ -13,6 +12,8 @@ import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
+
 @RequiredArgsConstructor
 @Component
 public class AdminIntegrateMainService implements MainRepository {
@@ -20,7 +21,6 @@ public class AdminIntegrateMainService implements MainRepository {
     private final UserRepositoryManager userRepositoryManager;
     private final StatusRepositoryManager statusRepositoryManager;
 
-    private final AdminRepositoryManager adminRepositoryManager;
     private final ScheduleRepositoryManager scheduleRepositoryManager;
 
     private final ScoreRepositoryManager scoreRepositoryManager;
@@ -32,11 +32,11 @@ public class AdminIntegrateMainService implements MainRepository {
 
 
     @Override
+    @Transactional
     public void deleteAll() {
         userRepositoryManager.deleteAll();
         statusRepositoryManager.deleteAll();
 
-        adminRepositoryManager.deleteAll();
         scheduleRepositoryManager.deleteAll();
 
         scoreRepositoryManager.deleteAll();
