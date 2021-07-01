@@ -8,6 +8,7 @@ import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ExcelUserInfo;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
@@ -106,6 +107,7 @@ public class ExcelServiceManager implements ExcelService {
 
         for(int i = 0; i < excelApplicants.size() ; i++) {
             ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i).getReceiptCode());
+            ExcelUserInfo excelUserInfo = applicantRepository.getExcelUserInfo(excelApplicants.get(i).getReceiptCode());
 
             Row row = sheet.createRow(i);
 
@@ -121,9 +123,9 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(8).setCellValue(excelApplicants.get(i).getTelephoneNumber());
             row.createCell(9).setCellValue(excelApplicants.get(i).getSex());
             row.createCell(10).setCellValue(excelApplicants.get(i).getEducationalStatus());
-            row.createCell(11).setCellValue(excelUserScore.getYearOfGraduation());
-            row.createCell(12).setCellValue(excelUserScore.getMiddleSchool());
-            row.createCell(13).setCellValue(excelUserScore.getMiddleSchoolStudentNumber());
+            row.createCell(11).setCellValue(excelUserInfo.getYearOfGraduation());
+            row.createCell(12).setCellValue(excelUserInfo.getMiddleSchool());
+            row.createCell(13).setCellValue(excelUserInfo.getMiddleSchoolStudentNumber());
             row.createCell(14).setCellValue(excelApplicants.get(i).getParentName());
             row.createCell(15).setCellValue(excelApplicants.get(i).getParentTel());
 
