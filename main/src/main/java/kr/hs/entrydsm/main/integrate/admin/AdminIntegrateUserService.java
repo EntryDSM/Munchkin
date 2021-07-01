@@ -1,12 +1,10 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
-import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
-import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsInformationResponse;
-import kr.hs.entrydsm.admin.usecase.dto.applicant.UserNameAndTelephoneNumber;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
-import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
+import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
@@ -232,6 +230,17 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     @Override
     public List<Long> getUserReceiptCodes() {
         return userExportRepository.findAllReceiptCode();
+    }
+
+    @Override
+    public ExcelUserInfo getExcelUserInfo(long receiptCode) {
+        MiddleSchoolInfo middleSchoolInfo = applicationExportRepository.getMiddleSchoolInfo(receiptCode);
+
+        return ExcelUserInfo.builder()
+                .yearOfGraduation(middleSchoolInfo.getYearOfGraduation())
+                .middleSchool(middleSchoolInfo.getMiddleSchool())
+                .middleSchoolStudentNumber(middleSchoolInfo.getMiddleSchoolStudentNumber())
+                .build();
     }
 
 }

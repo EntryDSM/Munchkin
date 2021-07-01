@@ -21,7 +21,6 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     private final ScoreRepository scoreRepository;
     private final ScorerRepository scorerRepository;
     private final GraduationCaseRepository graduationCaseRepository;
-    private final QualificationExamCaseRepository qualificationExamCaseRepository;
 
     @Override
     public ApplicationStatusResponse getApplicationStatus() {

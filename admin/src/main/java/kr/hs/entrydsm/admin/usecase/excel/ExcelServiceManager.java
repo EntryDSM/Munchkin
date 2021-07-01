@@ -196,7 +196,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(61).setCellValue(excelUserScore.getConversionScore().toString());
 
             row.createCell(62).setCellValue(excelUserScore.getVolunteerTime());
-            row.createCell(63).setCellValue(excelUserScore.getVolunteerScore());
+            row.createCell(63).setCellValue(excelUserScore.getVolunteerScore().toString());
 
             row.createCell(64).setCellValue(excelUserScore.getDayAbsenceCount());
             row.createCell(65).setCellValue(excelUserScore.getLatenessCount());
