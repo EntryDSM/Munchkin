@@ -15,11 +15,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class ApplicationExportManager implements ApplicationExportRepository {
+public class ApplicationExportAdminManager implements ApplicationExportAdminRepository {
     private final ApplicantRepository applicantRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
@@ -63,7 +62,7 @@ public class ApplicationExportManager implements ApplicationExportRepository {
                 application = getQualificationExamApplication(receiptCode);
         }
 
-        if (application.isAnyGradeNull()) {
+        if (scoreCalculator.isAnyGradeNull(receiptCode)) {
             throw new NullGradeExistException();
         }
 

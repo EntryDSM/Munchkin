@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Published
-public interface ApplicationExportRepository {
+public interface ApplicationExportAdminRepository {
     List<Applicant> getApplicants();
     ReportCard getReportCard(long receiptCode);
 }

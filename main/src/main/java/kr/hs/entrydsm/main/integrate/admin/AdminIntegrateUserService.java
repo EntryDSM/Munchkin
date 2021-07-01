@@ -4,7 +4,7 @@ import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.Applicant;
 import kr.hs.entrydsm.admin.usecase.dto.ExcelUser;
 import kr.hs.entrydsm.admin.usecase.dto.SaveExamCodeUserResponse;
-import kr.hs.entrydsm.application.integrate.admin.ApplicationExportRepository;
+import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
@@ -23,7 +23,7 @@ import java.util.List;
 public class AdminIntegrateUserService implements ApplicantRepository {
 
     private final UserExportRepository userExportRepository;
-    private final ApplicationExportRepository applicationExportRepository;
+    private final ApplicationExportAdminRepository applicationExportRepository;
 
     @Override
     public Page<Applicant> findAll(Pageable page, Long receiptCode,

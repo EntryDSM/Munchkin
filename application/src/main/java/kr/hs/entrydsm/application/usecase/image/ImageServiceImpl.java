@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
+import kr.hs.entrydsm.application.usecase.exception.BadFileExtensionException;
 import kr.hs.entrydsm.application.usecase.exception.FileIsEmptyException;
 import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
@@ -64,6 +65,10 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String randomName = UUID.randomUUID().toString();
         String filename = randomName + "." + ext;
+
+        if (!(ext.contains("jpg") || ext.contains("HEIC") || ext.contains("jpeg") || ext.contains("png") || ext.contains("heic"))) {
+            throw new BadFileExtensionException();
+        }
 
         BufferedImage outputImage = makeThumbnail(file);
 

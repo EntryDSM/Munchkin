@@ -19,7 +19,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -219,7 +218,7 @@ public class ApplicantServiceManager implements ApplicantService {
         }
     }
 
-    private Coordinate getCoordinate(String address) throws URISyntaxException, UnsupportedEncodingException, JsonProcessingException {
+    private Coordinate getCoordinate(String address) throws URISyntaxException, JsonProcessingException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 

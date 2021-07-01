@@ -13,24 +13,17 @@ import java.time.LocalDate;
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
 
-    private BigDecimal averageScore;
 
     private LocalDate qualifiedAt;
 
     @Builder
-    public QualificationExamApplication(long receiptCode, BigDecimal averageScore, LocalDate qualifiedAt) {
+    public QualificationExamApplication(long receiptCode, LocalDate qualifiedAt) {
         super(receiptCode);
-        this.averageScore = averageScore;
         this.qualifiedAt = qualifiedAt;
     }
 
     @Override
     public boolean isGraduation() {
         return false;
-    }
-
-    @Override
-    public boolean isAnyGradeNull() {
-        return averageScore == null;
     }
 }

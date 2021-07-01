@@ -21,5 +21,4 @@ public abstract class Application extends BaseTimeEntity {
 
     public abstract boolean isGraduation();
 
-    public abstract boolean isAnyGradeNull();
 }

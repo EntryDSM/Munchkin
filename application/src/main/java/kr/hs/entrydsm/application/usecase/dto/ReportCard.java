@@ -66,18 +66,12 @@ public class ReportCard {
                     .isGraduated(graduationApplication.getIsGraduated())
                     .schoolTel(graduationApplication.getSchoolTel())
                     .schoolName(graduationApplication.getSchoolName())
-                    .volunteerTime(graduationApplication.getVolunteerTime())
-                    .latenessCount(graduationApplication.getLatenessCount())
-                    .earlyLeaveCount(graduationApplication.getEarlyLeaveCount())
-                    .dayAbsenceCount(graduationApplication.getDayAbsenceCount())
-                    .lectureAbsenceCount(graduationApplication.getLectureAbsenceCount())
                     .build();
         } else {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
             result = ReportCard.qualificationBuilder()
                     .receiptCode(application.getReceiptCode())
                     .calculatedScore(calculatedScore)
-                    .averageScore(qualificationExamApplication.getAverageScore())
                     .build();
         }
         return result;

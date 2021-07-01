@@ -5,13 +5,9 @@ import kr.hs.entrydsm.application.entity.GraduationApplication;
 import kr.hs.entrydsm.application.entity.QualificationExamApplication;
 import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.usecase.dto.*;
-import kr.hs.entrydsm.application.usecase.dto.score.request.EtcScoreRequest;
-import kr.hs.entrydsm.application.usecase.dto.score.request.SubjectScoreRequest;
-import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
 import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.integrate.application.ScoreExportApplicationRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
-import kr.hs.entrydsm.score.usecase.dto.UpdateGraduationRequest;
 import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,41 +34,21 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
         CalculatedScore result;
         if (application.isGraduation()) {
             GraduationApplication graduationApplication = (GraduationApplication) application;
-            if (graduationApplication.isAnyGradeNull()) {
-                throw new NullGradeExistException();
-            }
             result = getGraduationScore(graduationApplication);
         } else {
             QualificationExamApplication qualificationExamApplication = (QualificationExamApplication) application;
-            if (qualificationExamApplication.getAverageScore() == null) {
-                throw new NullGradeExistException();
-            }
             result = getQualificationExamScore((QualificationExamApplication) application);
         }
         return result;
     }
 
+    @Override
+    public boolean isAnyGradeNull(long receiptCode) {
+        return false;
+    }
+
     private CalculatedScore getGraduationScore(GraduationApplication application) {
-        TotalGrade totalGrade = makeTotalGrade(application);
-        SubjectScoreRequest subjectScore = totalGrade.getSubjectScore();
-        EtcScoreRequest etcScore = totalGrade.getEtcScore();
-
-        Score score = scoreService.updateGraduation(UpdateGraduationRequest.builder()
-                .volunteerTime(etcScore.getVolunteerTime())
-                .latenessCount(etcScore.getLatenessCount())
-                .dayAbsenceCount(etcScore.getDayAbsenceCount())
-                .earlyLeaveCount(etcScore.getEarlyLeaveCount())
-                .lectureAbsenceCount(etcScore.getLectureAbsenceCount())
-                .englishGrade(subjectScore.getEnglishScore())
-                .historyGrade(subjectScore.getHistoryScore())
-                .koreanGrade(subjectScore.getKoreanScore())
-                .mathGrade(subjectScore.getMathScore())
-                .scienceGrade(subjectScore.getScienceScore())
-                .socialGrade(subjectScore.getSocialScore())
-                .techAndHomeGrade(subjectScore.getTechAndHomeScore())
-                .build());
-
-        return entityToDTO(score);
+        return null;
     }
 
     private CalculatedScore getQualificationExamScore(QualificationExamApplication application) {
@@ -86,13 +62,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     private QualificationExamGrade makeQualificationExamGrade(QualificationExamApplication application) {
-        return new QualificationExamGrade(application.getAverageScore());
-    }
-
-    private TotalGrade makeTotalGrade(GraduationApplication application) {
-        SubjectScoreRequest subjectScore = SubjectScoreRequest.from(application);
-        EtcScoreRequest etcScore = EtcScoreRequest.from(application);
-        return TotalGrade.from(subjectScore, etcScore);
+        return null;
     }
 
     private CalculatedScore entityToDTO(Score score) {
