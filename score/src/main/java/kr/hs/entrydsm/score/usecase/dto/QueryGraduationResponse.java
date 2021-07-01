@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.score.usecase.dto;
 
-import kr.hs.entrydsm.score.integrate.application.GraduationCase;
+import kr.hs.entrydsm.score.entity.GraduationCase;
 import lombok.Getter;
 
 @Getter

@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.score.entity;
 
-import kr.hs.entrydsm.score.integrate.application.ApplicationCase;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity(name = "tbl_calculated_score")
 public class Score {
-
     @Id
     private long receiptCode;
 

@@ -1,8 +1,8 @@
-package kr.hs.entrydsm.score.integrate.application;
+package kr.hs.entrydsm.score.entity;
 
 import java.util.Optional;
 
 public interface GraduationCaseRepository {
     Optional<GraduationCase> findByReceiptCode(long receiptCode);
-    void save(GraduationCase graduationCase);
+    GraduationCase save(GraduationCase graduationCase);
 }

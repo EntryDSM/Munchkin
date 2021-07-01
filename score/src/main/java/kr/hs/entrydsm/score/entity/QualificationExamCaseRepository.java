@@ -1,8 +1,8 @@
-package kr.hs.entrydsm.score.integrate.application;
+package kr.hs.entrydsm.score.entity;
 
 import java.util.Optional;
 
 public interface QualificationExamCaseRepository {
     Optional<QualificationExamCase> findByReceiptCode(long receiptCode);
-    void save(QualificationExamCase qualificationExamCase);
+    QualificationExamCase save(QualificationExamCase qualificationExamCase);
 }

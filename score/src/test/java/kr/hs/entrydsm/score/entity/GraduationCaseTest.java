@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.score.entity;
 
-import kr.hs.entrydsm.score.integrate.application.GraduationCase;
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import org.junit.jupiter.api.Test;
 
