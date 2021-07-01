@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @Published
-@RequestMapping("/admin")
+@RequestMapping("/admin/schedules")
 @RestController
 public class ScheduleController {
 
@@ -21,12 +21,12 @@ public class ScheduleController {
 
     @AdminJWTRequired
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PatchMapping("/schedules")
+    @PatchMapping
     public void updateSchedules(@RequestBody @Valid ScheduleRequest scheduleRequest) {
         scheduleService.updateSchedule(scheduleRequest);
     }
 
-    @GetMapping("/schedules")
+    @GetMapping
     public ScheduleResponse getSchedules() {
         return scheduleService.getSchedules();
     }
