@@ -2,6 +2,7 @@ package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsInformationResponse;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.SaveExamCodeUserResponse;
 import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
@@ -26,11 +27,11 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     private final ApplicationExportAdminRepository applicationExportRepository;
 
     @Override
-    public Page<Applicant> findAll(Pageable page, Long receiptCode,
-                                   boolean isDaejeon, boolean isNationwide,
-                                   String telephoneNumber, String name,
-                                   boolean isCommon, boolean isMeister, boolean isSocial,
-                                   Boolean isPrintedArrived) {
+    public Page<ApplicantsInformationResponse> findAll(Pageable page, Long receiptCode,
+                                                       boolean isDaejeon, boolean isNationwide,
+                                                       String telephoneNumber, String name,
+                                                       boolean isCommon, boolean isMeister, boolean isSocial,
+                                                       Boolean isPrintedArrived) {
         Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         long totalElements = users.getTotalElements();
         List<Applicant> applicants = new ArrayList<>();
