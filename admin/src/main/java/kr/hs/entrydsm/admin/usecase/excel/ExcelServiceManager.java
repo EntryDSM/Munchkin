@@ -113,8 +113,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(1).setCellValue(excelApplicants.get(i).getReceiptCode());
             row.createCell(2).setCellValue(excelApplicants.get(i).getApplicationType());
 
-            String area = excelApplicants.get(i).getArea().equals("1")?"대전":"전국";
-            row.createCell(3).setCellValue(area);
+            row.createCell(3).setCellValue(excelApplicants.get(i).getArea());
             row.createCell(4).setCellValue(excelApplicants.get(i).getApplicationRemark());
             row.createCell(5).setCellValue(excelApplicants.get(i).getName());
             row.createCell(6).setCellValue(excelApplicants.get(i).getBirthDay());

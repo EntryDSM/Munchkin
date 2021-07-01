@@ -1,7 +1,5 @@
 package kr.hs.entrydsm.admin.usecase.dto.response;
 
-import kr.hs.entrydsm.admin.usecase.dto.CommonScore;
-import kr.hs.entrydsm.admin.usecase.dto.SpecialScore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,11 +15,11 @@ public class ReceiptStatusResponse {
 
     private Double totalCompetitionRate;
 
-    private CommonScore commonScore;
+    private CommonScoreResponse commonScore;
 
-    private SpecialScore meisterScore;
+    private SpecialScoreResponse meisterScore;
 
-    private SpecialScore socialScore;
+    private SpecialScoreResponse socialScore;
 
     private Integer commonCount;
 

@@ -121,6 +121,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
+            String area;
             String sex;
             String educationalStatus;
             String applicationRemark;
@@ -130,6 +131,12 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 sex = "남자";
             } else {
                 sex = "여자";
+            }
+
+            if(user.isDaejeon()) {
+                area = "대전";
+            } else {
+                area = "전국";
             }
 
             switch (user.getApplicationType()) {
@@ -195,7 +202,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                             .receiptCode(user.getReceiptCode())
                             .applicationType(applicationType)
                             .applicationRemark(applicationRemark)
-                            .area(String.valueOf(user.isDaejeon()))
+                            .area(area)
                             .name(user.getName())
                             .birthDay(user.getBirthday().toString())
                             .sex(sex)

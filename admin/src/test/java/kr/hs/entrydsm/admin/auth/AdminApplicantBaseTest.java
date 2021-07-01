@@ -2,6 +2,8 @@ package kr.hs.entrydsm.admin.auth;
 
 import kr.hs.entrydsm.admin.usecase.dto.*;
 import kr.hs.entrydsm.admin.usecase.dto.request.RouteGuidanceRequest;
+import kr.hs.entrydsm.admin.usecase.dto.response.CommonScoreResponse;
+import kr.hs.entrydsm.admin.usecase.dto.response.SpecialScoreResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -70,7 +72,7 @@ public class AdminApplicantBaseTest {
             .homeTel("031-0505-0909")
             .build();
 
-    protected static final CommonScore COMMON_SCORE = CommonScore.builder()
+    protected static final CommonScoreResponse COMMON_SCORE = CommonScoreResponse.builder()
             .score_80(1)
             .score81_90(0)
             .score91_100(5)
@@ -81,7 +83,7 @@ public class AdminApplicantBaseTest {
             .score141_150(9)
             .build();
 
-    protected static final SpecialScore MEISTER_SCORE = SpecialScore.builder()
+    protected static final SpecialScoreResponse MEISTER_SCORE = SpecialScoreResponse.builder()
             .score_20(1)
             .score21_30(3)
             .score31_40(0)

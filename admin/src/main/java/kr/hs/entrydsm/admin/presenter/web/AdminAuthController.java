@@ -33,7 +33,6 @@ public class AdminAuthController {
         return authService.login(signInRequest);
     }
 
-    @AdminJWTRequired
     @PutMapping
     public AccessTokenResponse tokenRefresh(@RequestHeader("X-Refresh-Token") String refreshToken) {
         return authService.tokenRefresh(refreshToken);

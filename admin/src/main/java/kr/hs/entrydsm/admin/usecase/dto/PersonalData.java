@@ -14,26 +14,26 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PersonalData {
 
-    private String photoFileName; //사진 경로
+    private String photoFileName;
 
-    private String name; //이름
+    private String name;
 
-    private String email; //이메일
+    private String email;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDate; //생일
+    private LocalDate birthDate;
 
-    private String schoolName; //학교이름
+    private String schoolName;
 
-    private boolean isGraduated; //졸업 여부
+    private boolean isGraduated;
 
-    private String educationalStatus; //학력
+    private String educationalStatus;
 
-    private String applicationType; //전형
+    private String applicationType;
 
-    private String address; //주소
+    private String address;
 
-    private String detailAddress; //상세주소
+    private String detailAddress;
 
     private String telephoneNumber;
 

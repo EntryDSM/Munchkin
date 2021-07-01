@@ -30,9 +30,6 @@ import java.util.*;
 public class ApplicantServiceManager implements ApplicantService {
 
     private final ApplicantRepository applicantRepository;
-    private final AdminRepository adminRepository;
-
-    private final AuthenticationManager authenticationManager;
 
     private final ContentSender contentSender;
 
@@ -47,8 +44,6 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
         applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
@@ -61,15 +56,12 @@ public class ApplicantServiceManager implements ApplicantService {
         contentSender.sendMessage(applicant.getTelephoneNumber(), template, params);
     }
 
-    @Override //지원자 목록
+    @Override
     public ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                             boolean isDaejeon, boolean isNationwide,
                                             String telephoneNumber, String name,
                                             boolean isCommon, boolean isMeister, boolean isSocial,
                                             Boolean isPrintedArrived) {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
-
         if(!isDaejeon && !isNationwide) {
             isDaejeon = true;
             isNationwide = true;
@@ -105,9 +97,6 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public Object getDetailApplicantInfo(int receiptCode) {
-        adminRepository.findById(authenticationManager.getAdminId())
-                .orElseThrow(AdminNotFoundException::new);
-
         Applicant applicant = applicantRepository.getUserInfo(receiptCode);
         if(!applicant.getIsSubmit()) {
             NotSubmitApplicant notSubmitApplicant

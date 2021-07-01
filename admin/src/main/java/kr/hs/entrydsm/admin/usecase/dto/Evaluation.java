@@ -13,22 +13,22 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Evaluation {
 
-    private Integer volunteerTime; //봉사 시간
+    private Integer volunteerTime;
 
-    private BigDecimal conversionScore; //총 점수
+    private BigDecimal conversionScore;
 
-    private Integer dayAbsenceCount; //무단 결석
+    private Integer dayAbsenceCount;
 
-    private Integer lectureAbsenceCount; //무단 결과
+    private Integer lectureAbsenceCount;
 
-    private Integer earlyLeaveCount; //조퇴
+    private Integer earlyLeaveCount;
     
-    private Integer latenessCount; //지각
+    private Integer latenessCount;
     
-    private String selfIntroduce; //자기소개서
+    private String selfIntroduce;
     
-    private String studyPlan; //학업계획서
+    private String studyPlan;
 
-    private BigDecimal averageScore; //검정고시 총 점수
+    private BigDecimal averageScore;
 
 }

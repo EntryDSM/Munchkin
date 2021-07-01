@@ -1,4 +1,4 @@
-package kr.hs.entrydsm.admin.usecase.dto;
+package kr.hs.entrydsm.admin.usecase.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpecialScore {
+public class SpecialScoreResponse {
 
     @JsonFormat(pattern = "81-90")
     private int score81_90;
