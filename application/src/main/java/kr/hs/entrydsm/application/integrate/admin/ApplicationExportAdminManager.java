@@ -47,7 +47,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
                 graduationApplicationRepository.findByReceiptCode(receiptCode).orElseThrow();
         return MiddleSchoolInfo.builder()
                 .middleSchool(application.getSchoolName())
-                .middleSchoolStudentNumber(application.getSchoolName())
+                .middleSchoolStudentNumber(application.getStudentNumber())
                 .yearOfGraduation(application.getGraduatedAt().getYear())
                 .build();
     }
