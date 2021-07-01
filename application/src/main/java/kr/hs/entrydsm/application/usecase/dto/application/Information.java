@@ -1,9 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto.application;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
@@ -49,5 +46,9 @@ public class Information {
     protected String postCode;
 
     protected String photoFileName;
+
+    public void setPhotoFileName(String photoFileName) {
+        this.photoFileName = photoFileName;
+    }
 
 }
