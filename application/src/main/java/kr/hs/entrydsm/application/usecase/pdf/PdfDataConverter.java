@@ -119,17 +119,17 @@ public class PdfDataConverter {
                 break;
             case EducationalStatus.GRADUATE:
                 graduationRepository.findByReceiptCode(applicant.getReceiptCode())
-                        .filter(graduation -> graduation.getGraduateAt() != null)
+                        .filter(graduation -> graduation.getGraduatedAt() != null)
                         .ifPresent(graduation -> {
-                            values.put("graduateYear", String.valueOf(graduation.getGraduateAt().getYear()));
-                            values.put("graduateMonth", String.valueOf(graduation.getGraduateAt().getMonthValue()));
+                            values.put("graduateYear", String.valueOf(graduation.getGraduatedAt().getYear()));
+                            values.put("graduateMonth", String.valueOf(graduation.getGraduatedAt().getMonthValue()));
                         });
                 break;
             case EducationalStatus.PROSPECTIVE_GRADUATE:
                 graduationRepository.findByReceiptCode(applicant.getReceiptCode())
-                        .filter(graduation -> graduation.getGraduateAt() != null)
+                        .filter(graduation -> graduation.getGraduatedAt() != null)
                         .ifPresent(graduation -> {
-                            values.put("prospectiveGraduateMonth", String.valueOf(graduation.getGraduateAt().getMonthValue()));
+                            values.put("prospectiveGraduateMonth", String.valueOf(graduation.getGraduatedAt().getMonthValue()));
                         });
                 break;
         }

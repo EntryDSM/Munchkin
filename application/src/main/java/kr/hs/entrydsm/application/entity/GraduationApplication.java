@@ -29,7 +29,7 @@ public class GraduationApplication extends Application {
     @Column(length = 11)
     private String schoolTel;
 
-    private LocalDate graduateAt;
+    private LocalDate graduatedAt;
 
     @Builder
     public GraduationApplication(long receiptCode, boolean isGraduated, String studentNumber, School school,
@@ -39,7 +39,7 @@ public class GraduationApplication extends Application {
         this.studentNumber = studentNumber;
         this.school = school;
         this.schoolTel = schoolTel;
-        this.graduateAt = graduateAt;
+        this.graduatedAt = graduateAt;
     }
 
     @Override

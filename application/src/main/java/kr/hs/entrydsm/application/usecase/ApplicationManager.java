@@ -84,7 +84,7 @@ public class ApplicationManager implements ApplicationProcessing {
         }else {
             GraduationApplication graduationApplication = getGraduationApplication(receiptCode);
             if(applicationRequest.getGraduatedAt() != null){
-                graduationApplication.setGraduateAt(
+                graduationApplication.setGraduatedAt(
                         YearMonth.parse(applicationRequest.getGraduatedAt(),
                                 DateTimeFormatter.ofPattern("yyyyMM")
                                         .withZone(ZoneId.of("Asia/Seoul")))
@@ -133,14 +133,14 @@ public class ApplicationManager implements ApplicationProcessing {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)
                                 .orElseThrow(ApplicationNotFoundException::new);
-                if (graduationApplication.getGraduateAt() != null)
+                if (graduationApplication.getGraduatedAt() != null)
                     return applicantExportService.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                                     .withZone(ZoneId.of("Asia/Seoul"))
-                                    .format(graduationApplication.getGraduateAt()))
+                                    .format(graduationApplication.getGraduatedAt()))
                             .setIsGraduated(graduationApplication.getIsGraduated());
                 return applicantExportService.getApplicationType(receiptCode)
-                        .setIsGraduated(graduationApplication.getIsGraduated());
+                        .setIsGraduated(graduationApplication.getIsGraduated() != null && graduationApplication.getIsGraduated());
             }
         }else {
             if (qualificationExamApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
@@ -191,17 +191,10 @@ public class ApplicationManager implements ApplicationProcessing {
     }
 
     @Override
-    public GedInformationResponse getGedInformation() {
+    public Information getInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
 
-        if(educationalStatus == null)
-            throw new EducationalStatusNotFoundException();
-        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
-            throw new EducationalStatusUnmatchedException();
-
-        GedInformationResponse result = new GedInformationResponse()
-                .setInformation(applicantExportService.getInformation(receiptCode));
+        Information result = applicantExportService.getInformation(receiptCode);
 
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
 

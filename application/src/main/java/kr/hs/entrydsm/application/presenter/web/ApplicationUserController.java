@@ -1,11 +1,10 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
+import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
-import kr.hs.entrydsm.application.usecase.dto.application.request.GedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
-import kr.hs.entrydsm.application.usecase.dto.application.response.GedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
@@ -43,20 +42,20 @@ public class ApplicationUserController {
         applicationProcessing.writeGraduatedInformation(information);
     }
 
-    @GetMapping
+    @GetMapping("/graduation")
     public GraduatedInformationResponse getGraduatedInfo() {
         return applicationProcessing.getGraduatedInformation();
     }
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void insertGedInfo(@RequestBody @Valid GedInformationRequest information) {
+    public void insertGedInfo(@RequestBody @Valid Information information) {
         applicationProcessing.writeInformation(information);
     }
 
-    @GetMapping("/ged")
-    public GedInformationResponse getGedInfo() {
-        return applicationProcessing.getGedInformation();
+    @GetMapping
+    public Information getGedInfo() {
+        return applicationProcessing.getInformation();
     }
 
     @PostMapping("/photo")
