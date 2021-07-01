@@ -104,9 +104,9 @@ public class AdminApplicantBaseTest {
             .build();
 
     protected final ApplicationStatus APPLICATION_STATUS = ApplicationStatus.builder()
-            .commonScore(commonScore)
-            .meisterScore(meisterScore)
-            .specialScore(specialScore)
+            .commonScores(commonScore)
+            .meisterScores(meisterScore)
+            .specialScores(specialScore)
             .build();
 
     protected static final SaveExamCodeUserResponse SAVE_EXAM_CODE_USER_RESPONSE = SaveExamCodeUserResponse.builder()

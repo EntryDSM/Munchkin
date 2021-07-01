@@ -65,7 +65,7 @@ public class ScheduleTest extends ScheduleBaseTest {
     @Order(2)
     public void modify_schedule() {
         try {
-            scheduleService.updateSchedules(new ScheduleRequest("START_DATE", "2021-06-22"));
+            scheduleService.updateSchedule(new ScheduleRequest("START_DATE", "2021-06-22"));
         } catch (ScheduleNotFoundException e) {
         }
     }

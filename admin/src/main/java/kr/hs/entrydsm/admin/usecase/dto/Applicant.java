@@ -15,65 +15,62 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Applicant {
 
-    //공통
-    private Long receiptCode; //접수 번호
+    private Long receiptCode;
 
-    private String email; //이메일
+    private String email;
 
-    private String name; //이름
+    private String name;
 
-    private Boolean isDaejeon; //대전 사는지 여부
+    private Boolean isDaejeon;
 
-    private String photoFileName; //사진 경로
+    private String photoFileName;
 
-    private LocalDate birthDate; //생일
+    private LocalDate birthDate;
 
-    private Boolean isPrintedArrived; //원서 도착 여부
+    private Boolean isPrintedArrived;
 
-    private Boolean isSubmit; //최종 제출 여부
+    private Boolean isSubmit;
 
-    private String address; //주소
+    private String address;
 
-    private String detailAddress; //상세 주소
+    private String detailAddress;
 
-    private String telephoneNumber; //전화번호
+    private String telephoneNumber;
 
-    private String parentTel; //부모님 전화번호
+    private String parentTel;
 
-    private String schoolTel; //학교 전화번호
+    private String schoolTel;
 
-    private String homeTel; //집 전화번호
+    private String homeTel;
 
-    private String educationalStatus; //학력
+    private String educationalStatus;
 
-    private String applicationType; //전형
+    private String applicationType;
 
-    private String selfIntroduce; //자기소개서
+    private String selfIntroduce;
 
-    private String studyPlan; //학업계획서
+    private String studyPlan;
 
-    private String examCode; // 수험번호
+    private String examCode;
 
-    //검정고시 O
-    private BigDecimal averageScore; //검정고시 평균 점수
+    private BigDecimal averageScore;
 
-    //검정고시 X
     private String schoolName;
 
-    private Integer volunteerTime; //봉사 시간
+    private Integer volunteerTime;
 
-    private BigDecimal conversionScore; //총 점수
+    private BigDecimal conversionScore;
 
-    private Integer dayAbsenceCount; //무단 결석
+    private Integer dayAbsenceCount;
 
-    private Integer lectureAbsenceCount; //무단 결과
+    private Integer lectureAbsenceCount;
 
-    private Integer earlyLeaveCount; //조퇴
+    private Integer earlyLeaveCount;
 
-    private Integer latenessCount; //지각
+    private Integer latenessCount;
 
-    private Boolean isGraduated; // 졸업 여부
+    private Boolean isGraduated;
 
-    private Double distance; // 학교까지의 거리
+    private Double distance;
 
 }

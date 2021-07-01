@@ -11,33 +11,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ExcelUser {
 
-    private String examCode; //수험번호
+    private String examCode;
 
-    private Long receiptCode; //접수 번호
+    private Long receiptCode;
 
-    private String applicationType; //전형 유형
+    private String applicationType;
 
-    private String applicationRemrk; //추가유형
+    private String applicationRemark;
 
-    private String area; //지역
+    private String area;
 
-    private String name; //이름
+    private String name;
 
-    private String birthDay; //생년월일
+    private String birthDay;
 
-    private String address; //주소
+    private String address;
 
-    private String telephoneNumber; //학생 전화번호
+    private String telephoneNumber;
 
-    private String sex; //성별
+    private String sex;
 
-    private String educationalStatus; //학력구분
+    private String educationalStatus;
 
-    private String studyPlan; //학업 계획서
+    private String studyPlan;
 
-    private String selfIntroduce; //자기소개서
+    private String selfIntroduce;
 
-    private String parentName; //보호자 이름
+    private String parentName;
 
-    private String parentTel; //보호자 전화번호
+    private String parentTel;
 }

@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 @AllArgsConstructor
-public class AdmissionTicket { //수험표 틀 만들기
+public class AdmissionTicket {
     private final HSSFWorkbook workbook = new HSSFWorkbook();
     private final HSSFSheet sheet = workbook.createSheet("admission ticket");
 

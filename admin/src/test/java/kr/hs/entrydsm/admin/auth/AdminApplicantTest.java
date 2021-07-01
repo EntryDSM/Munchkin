@@ -67,9 +67,9 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void application_status() {
-        assertEquals(APPLICATION_STATUS.getCommonScore().get(0), BigDecimal.valueOf(123.5));
-        assertEquals(APPLICATION_STATUS.getMeisterScore().get(0), BigDecimal.valueOf(121.2));
-        assertEquals(APPLICATION_STATUS.getSpecialScore().get(0), BigDecimal.valueOf(122.5));
+        assertEquals(APPLICATION_STATUS.getCommonScores().get(0), BigDecimal.valueOf(123.5));
+        assertEquals(APPLICATION_STATUS.getMeisterScores().get(0), BigDecimal.valueOf(121.2));
+        assertEquals(APPLICATION_STATUS.getSpecialScores().get(0), BigDecimal.valueOf(122.5));
     }
 
     @Test
@@ -212,12 +212,12 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void saveExamCode() throws Exception {
-        applicantService.saveExamCode();
+        applicantService.saveAllApplicantsExamCode();
     }
 
     @Test
     public void getDetail() {
-        applicantService.getDetail(123456);
+        applicantService.getDetailApplicantInfo(123456);
     }
 
     @Test

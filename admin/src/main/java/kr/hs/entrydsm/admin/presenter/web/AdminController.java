@@ -19,21 +19,18 @@ public class AdminController {
     private final AdminService adminService;
     private final ExcelService excelService;
 
-    //접수 현황 통계
     @AdminJWTRequired
     @GetMapping("/statics")
     public ReceiptStatusResponse getStatics() {
-        return adminService.getStatics();
+        return adminService.getApplyStaticsStatistics();
     }
 
-    //수험표 만들기
     @AdminJWTRequired
     @GetMapping("/excel/admission-ticket/{receipt-code}")
     public void createAdmissionTicket(@PathVariable("receipt-code") Long receiptCode) throws IOException {
         excelService.createAdmissionTicket(receiptCode);
     }
 
-    //지원자 목록 엑셀
     @AdminJWTRequired
     @GetMapping("/excel/applicants")
     public void createApplicantInformation() throws IOException {
@@ -48,8 +45,8 @@ public class AdminController {
 
     @AdminJWTRequired
     @DeleteMapping("/data")
-    public void deleteAll() {
-        adminService.deleteAll();
+    public void deleteAllTables() {
+        adminService.deleteAllTables();
     }
 
 }

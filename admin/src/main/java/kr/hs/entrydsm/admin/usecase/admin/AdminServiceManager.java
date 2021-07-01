@@ -36,14 +36,14 @@ public class AdminServiceManager implements AdminService {
     private static final Integer SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT = 4;
 
     @Override
-    public ReceiptStatusResponse getStatics() { // 접수 현황 통계
+    public ReceiptStatusResponse getApplyStaticsStatistics() {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
         ApplicationStatus applicationStatus = scoreRepository.getScore();
-        int commonCount = applicationStatus.getCommonScore().size();
-        int meisterCount = applicationStatus.getMeisterScore().size();
-        int socialCount = applicationStatus.getSpecialScore().size();
+        int commonCount = applicationStatus.getCommonScores().size();
+        int meisterCount = applicationStatus.getMeisterScores().size();
+        int socialCount = applicationStatus.getSpecialScores().size();
 
         int totalApplicantCount = commonCount + meisterCount + socialCount;
         double totalCompetitionRate = (double)totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE;
@@ -52,22 +52,18 @@ public class AdminServiceManager implements AdminService {
         SpecialScore meisterScore = new SpecialScore();
         SpecialScore socialScore = new SpecialScore();
 
-        //일반전형 점수별 지원자 통계
-        for(BigDecimal scoreDecimal : applicationStatus.getCommonScore()) {
+        for(BigDecimal scoreDecimal : applicationStatus.getCommonScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
             commonScore.addScore(Math.round(score));
         }
 
-        //마이스터전형
-        for(BigDecimal scoreDecimal : applicationStatus.getMeisterScore()) {
+        for(BigDecimal scoreDecimal : applicationStatus.getMeisterScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
             score = Math.round(score);
             meisterScore.addScore(score);
         }
 
-        //사회통합
-        //마이스터전형
-        for(BigDecimal scoreDecimal : applicationStatus.getSpecialScore()) {
+        for(BigDecimal scoreDecimal : applicationStatus.getSpecialScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
             score = Math.round(score);
             meisterScore.addScore(score);
@@ -89,7 +85,7 @@ public class AdminServiceManager implements AdminService {
     }
 
     @Override
-    public void deleteAll() {
+    public void deleteAllTables() {
         LocalDate now = LocalDate.now();
         Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
                 .orElseThrow(ScheduleNotFoundException::new);

@@ -14,10 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 public class ApplicationStatus {
 
-    private List<BigDecimal> commonScore; //일반 전형 성적 점수 리스트
+    private List<BigDecimal> commonScores;
 
-    private List<BigDecimal> meisterScore; //마이스터 전형 성적 점수 리스트
+    private List<BigDecimal> meisterScores;
 
-    private List<BigDecimal> specialScore; //사회통합 전형 성적 점수 리스트
+    private List<BigDecimal> specialScores;
 
 }

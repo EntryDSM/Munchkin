@@ -10,6 +10,6 @@ public interface ApplicantService {
                                      String telephoneNumber, String name,
                                      boolean isCommon, boolean isMeister, boolean isSocial,
                                      Boolean isPrintedArrived);
-    Object getDetail(int receiptCode);
-    void saveExamCode() throws Exception;
+    Object getDetailApplicantInfo(int receiptCode);
+    void saveAllApplicantsExamCode() throws Exception;
 }

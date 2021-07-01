@@ -74,7 +74,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
         return applicants;
     }
 
-    //지원자 목록, 상세 보기
     @Override
     public Applicant getUserInfo(long receiptCode) {
         User user = userExportRepository.findByReceiptCode((int) receiptCode);
@@ -88,7 +87,7 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .email(user.getEmail())
                 .applicationType(String.valueOf(user.getApplicationType()))
                 .address(user.getAddress())
-                .detailAddress(null)
+                .detailAddress(user.getDetailAddress())
                 .birthDate(user.getBirthday())
                 .isPrintedArrived(user.getStatus().isPrintedArrived())
                 .isSubmit(user.getStatus().isSubmit())
@@ -98,17 +97,16 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .selfIntroduce(user.getSelfIntroduce())
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
-                //수정 필요
-                .averageScore(reportCard.getAverageScore()) // 검정고시 평균 점수
-                .isGraduated(reportCard.getIsGraduated()) // 검x 졸업 여부
-                .volunteerTime(reportCard.getVolunteerTime()) // 검X 봉사점수
-                .schoolTel(reportCard.getSchoolTel()) //검x 학교 전화번호
-                .schoolName(reportCard.getSchoolName()) // 검x 학교 이름
-                .latenessCount(reportCard.getLatenessCount()) // 지각 횟수
-                .earlyLeaveCount(reportCard.getEarlyLeaveCount()) // 조퇴 횟수
-                .lectureAbsenceCount(reportCard.getLectureAbsenceCount()) // 무단 결과
-                .dayAbsenceCount(reportCard.getDayAbsenceCount()) // 무단 결석
-                .conversionScore(reportCard.getTotalScore()) // 총 점수
+                .averageScore(reportCard.getAverageScore())
+                .isGraduated(reportCard.getIsGraduated())
+                .volunteerTime(reportCard.getVolunteerTime())
+                .schoolTel(reportCard.getSchoolTel())
+                .schoolName(reportCard.getSchoolName())
+                .latenessCount(reportCard.getLatenessCount())
+                .earlyLeaveCount(reportCard.getEarlyLeaveCount())
+                .lectureAbsenceCount(reportCard.getLectureAbsenceCount())
+                .dayAbsenceCount(reportCard.getDayAbsenceCount())
+                .conversionScore(reportCard.getTotalScore())
                 .build();
     }
 
@@ -125,11 +123,29 @@ public class AdminIntegrateUserService implements ApplicantRepository {
         for (User user : users) {
             String sex;
             String educationalStatus;
+            String applicationRemark;
+            String applicationType;
+
             if(user.getSex().equals(Sex.MALE)) {
                 sex = "남자";
             } else {
                 sex = "여자";
             }
+
+            switch (user.getApplicationType()) {
+                case COMMON:
+                    applicationType = "일반전형";
+                    break;
+                case MEISTER:
+                    applicationType = "마이스터전형";
+                    break;
+                case SOCIAL:
+                    applicationType = "사회통합전형";
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + user.getApplicationType());
+            }
+
             switch (user.getEducationalStatus()) {
                 case PROSPECTIVE_GRADUATE :
                     educationalStatus = "졸업예정자";
@@ -144,23 +160,52 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                     throw new IllegalStateException("Unexpected value: " + user.getEducationalStatus());
             }
 
+            switch (user.getApplicationRemark()) {
+                case ONE_PARENT :
+                    applicationRemark = "한부모가족";
+                    break;
+                case FROM_NORTH:
+                    applicationRemark = "북한이탈주민";
+                    break;
+                case MULTICULTURAL:
+                    applicationRemark = "다문화가정";
+                    break;
+                case BASIC_LIVING:
+                    applicationRemark = "기초생활수급자";
+                    break;
+                case LOWEST_INCOME:
+                    applicationRemark = "차상위계층";
+                    break;
+                case TEEN_HOUSEHOLDER:
+                    applicationRemark = "소년소녀가장";
+                    break;
+                case PRIVILEGED_ADMISSION:
+                    applicationRemark = "특례입학대상자";
+                    break;
+                case NATIONAL_MERIT:
+                    applicationRemark = "국가유공자";
+                    break;
+                default:
+                    applicationRemark = "일반";
+            }
+
             excelUsers.add(
                     ExcelUser.builder()
-                            .examCode(user.getStatus().getExamCode()) //수험번호
-                            .receiptCode(user.getReceiptCode()) //접수 번호
-                            .applicationType(String.valueOf(user.getApplicationType())) //전형 유형
-                            .applicationRemrk(String.valueOf(user.getApplicationRemark())) //추가 유형
-                            .area(String.valueOf(user.isDaejeon())) //지역
-                            .name(user.getName()) //이름
-                            .birthDay(user.getBirthday().toString()) //생년월일
-                            .sex(sex) //성별
-                            .address(user.getAddress()) //주소
-                            .educationalStatus(educationalStatus) //학력구분
-                            .telephoneNumber(user.getTelephoneNumber()) //학생 전화번호
-                            .studyPlan(user.getStudyPlan()) //자기소개서
-                            .selfIntroduce(user.getSelfIntroduce()) //학업 계획서
-                            .parentName(user.getParentName()) //보호자 이름
-                            .parentTel(user.getParentTel()) //보호자 전화번호
+                            .examCode(user.getStatus().getExamCode())
+                            .receiptCode(user.getReceiptCode())
+                            .applicationType(applicationType)
+                            .applicationRemark(applicationRemark)
+                            .area(String.valueOf(user.isDaejeon()))
+                            .name(user.getName())
+                            .birthDay(user.getBirthday().toString())
+                            .sex(sex)
+                            .address(user.getAddress())
+                            .educationalStatus(educationalStatus)
+                            .telephoneNumber(user.getTelephoneNumber())
+                            .studyPlan(user.getStudyPlan())
+                            .selfIntroduce(user.getSelfIntroduce())
+                            .parentName(user.getParentName())
+                            .parentTel(user.getParentTel())
                     .build()
             );
         }

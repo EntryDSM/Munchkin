@@ -20,9 +20,9 @@ public class AdminIntegrateScoreService implements ScoreRepository {
         ApplicationStatusResponse statusResponse = scoreExportRepository.getApplicationStatus();
 
         return ApplicationStatus.builder()
-                .commonScore(statusResponse.getCommonScore())
-                .meisterScore(statusResponse.getMeisterScore())
-                .specialScore(statusResponse.getSpecialScore())
+                .commonScores(statusResponse.getCommonScore())
+                .meisterScores(statusResponse.getMeisterScore())
+                .specialScores(statusResponse.getSpecialScore())
                 .build();
     }
 

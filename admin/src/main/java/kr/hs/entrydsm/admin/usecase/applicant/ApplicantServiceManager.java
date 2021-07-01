@@ -36,8 +36,8 @@ public class ApplicantServiceManager implements ApplicantService {
 
     private final ContentSender contentSender;
 
-    private static final double SCHOOL_LAT = 36.391636; // 위도
-    private static final double SCHOOL_LNG = 127.363585; // 경도
+    private static final double SCHOOL_LATITUDE = 36.391636;
+    private static final double SCHOOL_LONGITUDE = 127.363585;
 
     private static final String ROUTE_URL = "https://apis.openapi.sk.com/tmap/routes?version=1";
     private static final String GEO_BASIC_URL="https://apis.openapi.sk.com/tmap/geo/postcode?version=1&appKey=";
@@ -45,7 +45,7 @@ public class ApplicantServiceManager implements ApplicantService {
     @Value("${tmap.app.key}")
     private String appKey;
 
-    @Override //지원자 원서 도착 여부 변경
+    @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
@@ -103,8 +103,8 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
     }
 
-    @Override //지원자 상세보기
-    public Object getDetail(int receiptCode) {
+    @Override
+    public Object getDetailApplicantInfo(int receiptCode) {
         adminRepository.findById(authenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
@@ -156,14 +156,13 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
     }
 
-    @Override //지원자 수험번호 저장
-    public void saveExamCode() throws Exception {
+    @Override
+    public void saveAllApplicantsExamCode() throws Exception {
         List<SaveExamCodeUserResponse> applicants = applicantRepository.findAllIsSubmitTrue();
         List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>(applicants);
         int commonDaejeon = 1, commonNationwide = 1, meisterDaejeon = 1,
                 meisterNationwide = 1, socialDaejeon = 1, socialNationwide = 1;
 
-        //첫번째, 두번째 자리 채우기
         for (SaveExamCodeUserResponse applicant : applicants) {
             StringBuilder examCode = new StringBuilder();
             switch (applicant.getApplicationType()) {
@@ -185,8 +184,8 @@ public class ApplicantServiceManager implements ApplicantService {
         for (SaveExamCodeUserResponse applicant : applicants) {
             Coordinate coordinate = getCoordinate(applicant.getAddress());
             RouteGuidanceRequest request = RouteGuidanceRequest.builder()
-                    .lng(SCHOOL_LNG)
-                    .lat(SCHOOL_LAT)
+                    .lng(SCHOOL_LONGITUDE)
+                    .lat(SCHOOL_LATITUDE)
                     .startX(Double.parseDouble(coordinate.getLon()))
                     .startY(Double.parseDouble(coordinate.getLat()))
                     .build();
