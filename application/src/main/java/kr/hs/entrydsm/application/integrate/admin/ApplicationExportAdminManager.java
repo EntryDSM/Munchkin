@@ -66,7 +66,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
             throw new NullGradeExistException();
         }
 
-        CalculatedScore calculatedScore = scoreCalculator.getScore(application);
+        CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
 
         return ReportCard.from(application, calculatedScore);
     }
