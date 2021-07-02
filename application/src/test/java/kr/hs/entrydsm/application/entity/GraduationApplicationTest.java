@@ -66,14 +66,14 @@ public class GraduationApplicationTest {
     public void getSchoolName() {
         GraduationApplication application = GraduationApplicationBuilder.buildEmptyStudentNumber();
 
-        assertEquals(application.getSchoolName(), "대덕소프트웨어마이스터중학교");
+        assertEquals(application.getSchoolName(), "대전하기중학교");
     }
 
     @Test
     public void getSchoolCode() {
         GraduationApplication application = GraduationApplicationBuilder.buildEmptyStudentNumber();
 
-        assertEquals(application.getSchoolCode(), "44444");
+        assertEquals(application.getSchoolCode(), "33333");
     }
 
 }
