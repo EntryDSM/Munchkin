@@ -15,7 +15,7 @@ class SchoolTest {
 
     private static final School SCHOOL_2 = School.builder()
             .address("부산광역시")
-            .code("222222")
+            .code("2222222")
             .name("부산중학교")
             .information("정보정보정보")
             .build();
