@@ -21,8 +21,6 @@ public class ApplicantsInformationResponse {
 
     private Boolean isPrintedArrived;
 
-    private Boolean isPaid;
-
     private Boolean isSubmit;
 
 }

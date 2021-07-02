@@ -22,7 +22,6 @@ public abstract class ResponseBaseTest {
             .isDaejeon(true)
             .applicationType("COMMON")
             .isPrintedArrived(true)
-            .isPaid(true)
             .isSubmit(true)
             .build();
 
