@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public abstract class EntityTest {
 
+    protected static final Applicant APPLICANT = new Applicant();
+
     protected static final Applicant graduateCommonMale = Applicant.builder()
             .receiptCode(1)
             .telephoneNumber("01012345678")
