@@ -134,6 +134,7 @@ public class ApplicationManager implements ApplicationProcessing {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)
                                 .orElseThrow(ApplicationNotFoundException::new);
+                System.out.println(graduationApplication.getIsGraduated() + "asdf");
                 if (graduationApplication.getGraduatedAt() != null)
                     return applicationApplicantRepository.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
@@ -177,10 +178,12 @@ public class ApplicationManager implements ApplicationProcessing {
                     .orElseThrow(ApplicationNotFoundException::new);
 
             result.setSchoolCode(graduationApplication.getSchoolCode());
-            result.setSchoolName(
+            if(graduationApplication.getSchoolCode() != null)
+                result.setSchoolName(
                     schoolRepository.findByCode(graduationApplication.getSchoolCode())
                     .orElseThrow(SchoolNotFoundException::new).getName()
-            );
+                );
+            else result.setSchoolName(null);
             result.setSchoolTel(graduationApplication.getSchoolTel());
             result.setIsGraduated(graduationApplication.getIsGraduated() != null
                     && graduationApplication.getIsGraduated());
