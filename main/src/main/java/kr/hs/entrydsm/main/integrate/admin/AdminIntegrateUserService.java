@@ -4,6 +4,9 @@ import kr.hs.entrydsm.admin.integrate.user.UserRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
 import kr.hs.entrydsm.user.entity.user.User;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
+import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
 import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
@@ -112,80 +115,11 @@ public class AdminIntegrateUserService implements UserRepository {
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
-            String area;
-            String sex;
-            String educationalStatus;
-            String applicationRemark;
-            String applicationType;
-
-            if(user.getSex().equals(Sex.MALE)) {
-                sex = "남자";
-            } else {
-                sex = "여자";
-            }
-
-            if(user.isDaejeon()) {
-                area = "대전";
-            } else {
-                area = "전국";
-            }
-
-            switch (user.getApplicationType()) {
-                case COMMON:
-                    applicationType = "일반전형";
-                    break;
-                case MEISTER:
-                    applicationType = "마이스터전형";
-                    break;
-                case SOCIAL:
-                    applicationType = "사회통합전형";
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + user.getApplicationType());
-            }
-
-            switch (user.getEducationalStatus()) {
-                case PROSPECTIVE_GRADUATE :
-                    educationalStatus = "졸업예정자";
-                    break;
-                case GRADUATE :
-                    educationalStatus = "졸업자";
-                    break;
-                case QUALIFICATION_EXAM :
-                    educationalStatus = "검정고시합격자";
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + user.getEducationalStatus());
-            }
-
-            switch (user.getApplicationRemark()) {
-                case ONE_PARENT :
-                    applicationRemark = "한부모가족";
-                    break;
-                case FROM_NORTH:
-                    applicationRemark = "북한이탈주민";
-                    break;
-                case MULTICULTURAL:
-                    applicationRemark = "다문화가정";
-                    break;
-                case BASIC_LIVING:
-                    applicationRemark = "기초생활수급자";
-                    break;
-                case LOWEST_INCOME:
-                    applicationRemark = "차상위계층";
-                    break;
-                case TEEN_HOUSEHOLDER:
-                    applicationRemark = "소년소녀가장";
-                    break;
-                case PRIVILEGED_ADMISSION:
-                    applicationRemark = "특례입학대상자";
-                    break;
-                case NATIONAL_MERIT:
-                    applicationRemark = "국가유공자";
-                    break;
-                default:
-                    applicationRemark = "일반";
-            }
+            String area = user.isDaejeon()?"대전":"전국";
+            String sex = user.getSex().equals(Sex.MALE)?"남자":"여자";
+            String educationalStatus = getEducationalStatus(user.getEducationalStatus());
+            String applicationRemark = getApplicationRemark(user.getApplicationRemark());
+            String applicationType = getApplicationType(user.getApplicationType());
 
             excelUsers.add(
                     ExcelUser.builder()
@@ -214,6 +148,55 @@ public class AdminIntegrateUserService implements UserRepository {
     @Override
     public List<Long> getUserReceiptCodes() {
         return userExportRepository.findAllReceiptCode();
+    }
+
+    private String getApplicationType(ApplicationType applicationType) {
+        switch (applicationType) {
+            case COMMON:
+                return "일반전형";
+            case MEISTER:
+                return "마이스터전형";
+            case SOCIAL:
+                return "사회통합전형";
+            default:
+                throw new IllegalStateException("Unexpected value: " + applicationType);
+        }
+    }
+
+    private String getEducationalStatus(EducationalStatus educationalStatus) {
+        switch (educationalStatus) {
+            case PROSPECTIVE_GRADUATE :
+                return "졸업예정자";
+            case GRADUATE :
+                return "졸업자";
+            case QUALIFICATION_EXAM :
+                return "검정고시합격자";
+            default:
+                throw new IllegalStateException("Unexpected value: " + educationalStatus);
+        }
+    }
+
+    private String getApplicationRemark(ApplicationRemark applicationRemark) {
+        switch (applicationRemark) {
+            case ONE_PARENT :
+                return "한부모가족";
+            case FROM_NORTH:
+                return "북한이탈주민";
+            case MULTICULTURAL:
+                return "다문화가정";
+            case BASIC_LIVING:
+                return "기초생활수급자";
+            case LOWEST_INCOME:
+                return "차상위계층";
+            case TEEN_HOUSEHOLDER:
+                return "소년소녀가장";
+            case PRIVILEGED_ADMISSION:
+                return "특례입학대상자";
+            case NATIONAL_MERIT:
+                return "국가유공자";
+            default:
+                return "일반";
+        }
     }
 
 }
