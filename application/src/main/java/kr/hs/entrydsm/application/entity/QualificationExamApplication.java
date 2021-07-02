@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
 

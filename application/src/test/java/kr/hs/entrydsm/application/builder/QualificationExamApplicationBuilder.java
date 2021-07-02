@@ -17,4 +17,11 @@ public class QualificationExamApplicationBuilder {
                 .qualifiedAt(LocalDate.of(2020, 8, 13))
                 .build();
     }
+
+    public static final QualificationExamApplication APPLICATION_1 =
+            new QualificationExamApplication(1L);
+
+    public static final QualificationExamApplication APPLICATION_2 =
+            new QualificationExamApplication();
+
 }
