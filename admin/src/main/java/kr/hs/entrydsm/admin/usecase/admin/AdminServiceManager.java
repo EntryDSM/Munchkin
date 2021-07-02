@@ -32,7 +32,6 @@ public class AdminServiceManager implements AdminService {
 
     @Override
     public ReceiptStatusResponse getApplyStaticsStatistics() {
-
         ApplicationStatus applicationStatus = scoreRepository.getScore();
         int commonCount = applicationStatus.getCommonScores().size();
         int meisterCount = applicationStatus.getMeisterScores().size();

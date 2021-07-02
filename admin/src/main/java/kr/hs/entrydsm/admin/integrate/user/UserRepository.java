@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 
-public interface ApplicantRepository {
+public interface UserRepository {
     Page<ApplicantsInformationResponse> findAll(Pageable page, Long receiptCode,
                                                 boolean isDaejeon, boolean isNationwide,
                                                 String telephoneNumber, String name,
@@ -16,10 +16,9 @@ public interface ApplicantRepository {
                                                 Boolean isPrintedArrived);
     void changeExamCode(long receiptCode, String examCode);
     List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
-    Applicant getUserInfo(long receiptCode);
+    UserInfo getUserInfo(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     UserNameAndTelephoneNumber getUserNameAndTel(long receiptCode);
     List<ExcelUser> findAllForExcel();
     List<Long> getUserReceiptCodes();
-    ExcelUserInfo getExcelUserInfo(long receiptCode);
 }

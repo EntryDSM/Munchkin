@@ -1,11 +1,8 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
-import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.admin.integrate.user.UserRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
-import kr.hs.entrydsm.application.integrate.admin.ApplicationExportAdminRepository;
-import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
-import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
@@ -20,10 +17,9 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class AdminIntegrateUserService implements ApplicantRepository {
+public class AdminIntegrateUserService implements UserRepository {
 
     private final UserExportRepository userExportRepository;
-    private final ApplicationExportAdminRepository applicationExportRepository;
 
     @Override
     public Page<ApplicantsInformationResponse> findAll(Pageable page, Long receiptCode,
@@ -75,12 +71,10 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     }
 
     @Override
-    public Applicant getUserInfo(long receiptCode) {
+    public UserInfo getUserInfo(long receiptCode) {
         User user = userExportRepository.findByReceiptCode((int) receiptCode);
 
-        ReportCard reportCard = applicationExportRepository.getReportCard(user.getReceiptCode());
-
-        return Applicant.builder()
+        return UserInfo.builder()
                 .receiptCode(user.getReceiptCode())
                 .name(user.getName())
                 .photoFileName(user.getPhotoFileName())
@@ -97,16 +91,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
                 .selfIntroduce(user.getSelfIntroduce())
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
-                .averageScore(reportCard.getAverageScore())
-                .isGraduated(reportCard.getIsGraduated())
-                .volunteerTime(reportCard.getVolunteerTime())
-                .schoolTel(reportCard.getSchoolTel())
-                .schoolName(reportCard.getSchoolName())
-                .latenessCount(reportCard.getLatenessCount())
-                .earlyLeaveCount(reportCard.getEarlyLeaveCount())
-                .lectureAbsenceCount(reportCard.getLectureAbsenceCount())
-                .dayAbsenceCount(reportCard.getDayAbsenceCount())
-                .conversionScore(reportCard.getTotalScore())
                 .build();
     }
 
@@ -230,17 +214,6 @@ public class AdminIntegrateUserService implements ApplicantRepository {
     @Override
     public List<Long> getUserReceiptCodes() {
         return userExportRepository.findAllReceiptCode();
-    }
-
-    @Override
-    public ExcelUserInfo getExcelUserInfo(long receiptCode) {
-        MiddleSchoolInfo middleSchoolInfo = applicationExportRepository.getMiddleSchoolInfo(receiptCode);
-
-        return ExcelUserInfo.builder()
-                .yearOfGraduation(middleSchoolInfo.getYearOfGraduation())
-                .middleSchool(middleSchoolInfo.getMiddleSchool())
-                .middleSchoolStudentNumber(middleSchoolInfo.getMiddleSchoolStudentNumber())
-                .build();
     }
 
 }

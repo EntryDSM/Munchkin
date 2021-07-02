@@ -6,11 +6,13 @@ import com.amazonaws.util.IOUtils;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
+import kr.hs.entrydsm.admin.integrate.applicaton.ApplicationRepository;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
-import kr.hs.entrydsm.admin.usecase.dto.applicant.Applicant;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantInfo;
+import kr.hs.entrydsm.admin.usecase.dto.applicant.UserInfo;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ExcelUserInfo;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUser;
-import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.admin.integrate.user.UserRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
@@ -34,7 +36,8 @@ import java.util.*;
 @Service
 public class ExcelServiceManager implements ExcelService {
 
-    private final ApplicantRepository applicantRepository;
+    private final UserRepository userRepository;
+    private final ApplicationRepository applicationRepository;
     private final ScoreRepository scoreRepository;
     private final ScheduleRepository scheduleRepository;
 
@@ -61,7 +64,7 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void getAllExcels() throws IOException {
-        List<Long> applicantReceiptCodes = applicantRepository.getUserReceiptCodes();
+        List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
         LocalDate now = LocalDate.now();
         Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
                 .orElseThrow(ScheduleNotFoundException::new);
@@ -76,15 +79,16 @@ public class ExcelServiceManager implements ExcelService {
     }
 
     private void getAdmissionTicket(long receiptCode) throws IOException {
-        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
+        UserInfo userInfo = userRepository.getUserInfo(receiptCode);
+        ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
 
-        String examCode = applicant.getExamCode();
-        String name = applicant.getName();
-        String middleSchool = applicant.getSchoolName();
-        String area = applicant.getIsDaejeon()?"대전":"전국";
-        String applicationType = applicant.getApplicationType();
+        String examCode = userInfo.getExamCode();
+        String name = userInfo.getName();
+        String middleSchool = applicantInfo.getSchoolName();
+        String area = userInfo.getIsDaejeon()?"대전":"전국";
+        String applicationType = userInfo.getApplicationType();
 
-        byte[] imageBytes = getObject(applicant.getPhotoFileName());
+        byte[] imageBytes = getObject(userInfo.getPhotoFileName());
 
         AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
         admissionTicket.format(0,0);
@@ -96,18 +100,18 @@ public class ExcelServiceManager implements ExcelService {
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, applicant.getExamCode() + name+" 수험표.xls")));
+        admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, userInfo.getExamCode() + name+" 수험표.xls")));
     }
 
     private void getApplicationInformation() throws IOException {
         ApplicantInformation applicantInformation = new ApplicantInformation();
         applicantInformation.format();
         Sheet sheet = applicantInformation.getSheet();
-        List<ExcelUser> excelApplicants = applicantRepository.findAllForExcel();
+        List<ExcelUser> excelApplicants = userRepository.findAllForExcel();
 
         for(int i = 0; i < excelApplicants.size() ; i++) {
             ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i).getReceiptCode());
-            ExcelUserInfo excelUserInfo = applicantRepository.getExcelUserInfo(excelApplicants.get(i).getReceiptCode());
+            ExcelUserInfo excelUserInfo = applicationRepository.getExcelUserInfo(excelApplicants.get(i).getReceiptCode());
 
             Row row = sheet.createRow(i);
 

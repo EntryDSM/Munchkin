@@ -2,8 +2,9 @@ package kr.hs.entrydsm.admin.usecase.applicant;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.hs.entrydsm.admin.integrate.applicaton.ApplicationRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
-import kr.hs.entrydsm.admin.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.admin.integrate.user.UserRepository;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.Coordinate;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteBody;
@@ -27,7 +28,8 @@ import java.util.*;
 @Service
 public class ApplicantServiceManager implements ApplicantService {
 
-    private final ApplicantRepository applicantRepository;
+    private final UserRepository userRepository;
+    private final ApplicationRepository applicationRepository;
 
     private final ContentSender contentSender;
 
@@ -42,9 +44,9 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
-        applicantRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+        userRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
-        UserNameAndTelephoneNumber applicant = applicantRepository.getUserNameAndTel(receiptCode);
+        UserNameAndTelephoneNumber applicant = userRepository.getUserNameAndTel(receiptCode);
         String template;
         if(isPrintedArrived) template = "PRINTED_ARRIVED";
         else template = "PRINTED_NOT_ARRIVED";
@@ -70,7 +72,7 @@ public class ApplicantServiceManager implements ApplicantService {
             isSocial = true;
         }
 
-        Page<ApplicantsInformationResponse> applicants = applicantRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
+        Page<ApplicantsInformationResponse> applicants = userRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
         List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
         
         for (ApplicantsInformationResponse applicant : applicants) {
@@ -95,45 +97,47 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public Object getDetailApplicantInfo(int receiptCode) {
-        Applicant applicant = applicantRepository.getUserInfo(receiptCode);
-        if(!applicant.getIsSubmit()) {
+        UserInfo userInfo = userRepository.getUserInfo(receiptCode);
+        ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
+
+        if(!userInfo.getIsSubmit()) {
             NotSubmitApplicant notSubmitApplicant
-                    = new NotSubmitApplicant(applicant.getTelephoneNumber(), applicant.getParentTel(), applicant.getHomeTel(), applicant.getSchoolTel());
+                    = new NotSubmitApplicant(userInfo.getTelephoneNumber(), userInfo.getParentTel(), userInfo.getHomeTel(), applicantInfo.getSchoolTel());
             return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
         }
 
         Status status = Status.builder()
-                .isPrintedArrived(applicant.getIsPrintedArrived())
-                .isSubmit(applicant.getIsSubmit())
+                .isPrintedArrived(userInfo.getIsPrintedArrived())
+                .isSubmit(userInfo.getIsSubmit())
                 .build();
 
         PersonalData personalData = PersonalData.builder()
-                .photoFileName(applicant.getPhotoFileName())
-                .name(applicant.getName())
-                .birthDate(applicant.getBirthDate())
-                .schoolName(applicant.getSchoolName())
-                .email(applicant.getEmail())
-                .isGraduated(applicant.getIsGraduated())
-                .educationalStatus(applicant.getEducationalStatus())
-                .applicationType(applicant.getApplicationType())
-                .address(applicant.getAddress())
-                .detailAddress(applicant.getDetailAddress())
-                .telephoneNumber(applicant.getTelephoneNumber())
-                .parentTel(applicant.getParentTel())
-                .schoolTel(applicant.getSchoolTel())
-                .homeTel(applicant.getHomeTel())
+                .photoFileName(userInfo.getPhotoFileName())
+                .name(userInfo.getName())
+                .birthDate(userInfo.getBirthDate())
+                .schoolName(applicantInfo.getSchoolName())
+                .email(userInfo.getEmail())
+                .isGraduated(applicantInfo.getIsGraduated())
+                .educationalStatus(userInfo.getEducationalStatus())
+                .applicationType(userInfo.getApplicationType())
+                .address(userInfo.getAddress())
+                .detailAddress(userInfo.getDetailAddress())
+                .telephoneNumber(userInfo.getTelephoneNumber())
+                .parentTel(userInfo.getParentTel())
+                .schoolTel(applicantInfo.getSchoolTel())
+                .homeTel(userInfo.getHomeTel())
                 .build();
 
         Evaluation evaluation = Evaluation.builder()
-                .volunteerTime(applicant.getVolunteerTime())
-                .conversionScore(applicant.getAverageScore())
-                .dayAbsenceCount(applicant.getDayAbsenceCount())
-                .lectureAbsenceCount(applicant.getLectureAbsenceCount())
-                .earlyLeaveCount(applicant.getEarlyLeaveCount())
-                .latenessCount(applicant.getLatenessCount())
-                .averageScore(applicant.getAverageScore())
-                .selfIntroduce(applicant.getSelfIntroduce())
-                .studyPlan(applicant.getStudyPlan())
+                .volunteerTime(applicantInfo.getVolunteerTime())
+                .conversionScore(applicantInfo.getAverageScore())
+                .dayAbsenceCount(applicantInfo.getDayAbsenceCount())
+                .lectureAbsenceCount(applicantInfo.getLectureAbsenceCount())
+                .earlyLeaveCount(applicantInfo.getEarlyLeaveCount())
+                .latenessCount(applicantInfo.getLatenessCount())
+                .averageScore(applicantInfo.getAverageScore())
+                .selfIntroduce(userInfo.getSelfIntroduce())
+                .studyPlan(userInfo.getStudyPlan())
                 .build();
 
         return ApplicantDetailResponse.builder()
@@ -145,7 +149,7 @@ public class ApplicantServiceManager implements ApplicantService {
 
     @Override
     public void saveAllApplicantsExamCode() throws Exception {
-        List<SaveExamCodeUserResponse> applicants = applicantRepository.findAllIsSubmitTrue();
+        List<SaveExamCodeUserResponse> applicants = userRepository.findAllIsSubmitTrue();
         List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>(applicants);
         int commonDaejeon = 1, commonNationwide = 1, meisterDaejeon = 1,
                 meisterNationwide = 1, socialDaejeon = 1, socialNationwide = 1;
@@ -200,7 +204,7 @@ public class ApplicantServiceManager implements ApplicantService {
             }
 
             applicant.updateExamCode(applicant.getExamCode() + String.format("%03d", examOrder));
-            applicantRepository.changeExamCode(applicant.getReceiptCode(), applicant.getExamCode());
+            userRepository.changeExamCode(applicant.getReceiptCode(), applicant.getExamCode());
         }
     }
 
