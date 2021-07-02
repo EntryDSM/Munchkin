@@ -27,7 +27,6 @@ public class ResponseTest extends ResponseBaseTest {
         assertNotNull(APPLICANTS_INFORMATION_RESPONSE.getIsDaejeon());
         assertNotNull(APPLICANTS_INFORMATION_RESPONSE.getIsPrintedArrived());
         assertNotNull(APPLICANTS_INFORMATION_RESPONSE.getApplicationType());
-        assertNotNull(APPLICANTS_INFORMATION_RESPONSE.getIsPaid());
         assertNotNull(APPLICANTS_INFORMATION_RESPONSE.getIsSubmit());
     }
 

@@ -26,9 +26,6 @@ public class ExcelBaseTest {
             .build();
 
     protected static final ExcelUserScore EXCEL_USER_SCORE = ExcelUserScore.builder()
-            .yearOfGraduation("2020")
-            .middleSchool("용인백현중학교")
-            .middleSchoolStudentNumber("30115")
             .koreanGrade("AAAAAA")
             .socialGrade("AAAAAA")
             .historyGrade("AAAAAA")
@@ -39,7 +36,7 @@ public class ExcelBaseTest {
             .totalFirstGradeScores(BigDecimal.valueOf(123))
             .totalSecondGradeScores(BigDecimal.valueOf(123))
             .totalThirdGradeScores(BigDecimal.valueOf(123))
-            .volunteerScore(10)
+            .volunteerScore(BigDecimal.valueOf(10))
             .volunteerTime(50)
             .dayAbsenceCount(1)
             .lectureAbsenceCount(1)

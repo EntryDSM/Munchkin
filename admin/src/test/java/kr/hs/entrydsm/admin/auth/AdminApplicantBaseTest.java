@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AdminApplicantBaseTest {
 
-    protected static final Applicant APPLICANT = Applicant.builder()
+    protected static final UserInfo APPLICANT = UserInfo.builder()
             .examCode("12036")
             .receiptCode(123456L)
             .applicationType("COMMON")
@@ -30,22 +30,12 @@ public class AdminApplicantBaseTest {
             .educationalStatus("PROSPECTIVE_GRADUATE")
             .parentTel("010-8888-8888")
             .homeTel("02-000-0000")
-            .schoolTel("02-031-031")
             .photoFileName("asdf")
             .isSubmit(true)
             .isPrintedArrived(false)
             .email("test@test.com")
-            .averageScore(BigDecimal.valueOf(80.95))
-            .conversionScore(BigDecimal.valueOf(143.5))
-            .dayAbsenceCount(0)
-            .earlyLeaveCount(0)
-            .schoolName("이상해지는중")
-            .latenessCount(0)
-            .volunteerTime(100)
-            .lectureAbsenceCount(0)
-            .isGraduated(false)
-            .studyPlan("누가 dto를 이렇게 뭉텅그려 만든거죠?")
-            .selfIntroduce("저 테스트 못하겠어요 살려주세요 뭘 넣었는지도 이제 모르겠고 그냥 다 모르겠어요")
+            .selfIntroduce("hello")
+            .studyPlan("hello")
             .build();
 
     protected static final Evaluation EVALUATION = Evaluation.builder()

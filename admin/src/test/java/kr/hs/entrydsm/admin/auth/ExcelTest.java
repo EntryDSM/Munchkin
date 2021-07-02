@@ -39,9 +39,6 @@ public class ExcelTest extends ExcelBaseTest {
 
     @Test
     public void excel_user_score() {
-        assertFalse(EXCEL_USER_SCORE.getYearOfGraduation().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getMiddleSchoolStudentNumber().isBlank());
-        assertFalse(EXCEL_USER_SCORE.getMiddleSchool().isBlank());
         assertFalse(EXCEL_USER_SCORE.getKoreanGrade().isBlank());
         assertFalse(EXCEL_USER_SCORE.getSocialGrade().isBlank());
         assertFalse(EXCEL_USER_SCORE.getHistoryGrade().isBlank());

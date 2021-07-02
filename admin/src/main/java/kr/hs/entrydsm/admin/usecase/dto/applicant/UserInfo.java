@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Applicant {
+public class UserInfo {
 
     private Long receiptCode;
 
@@ -39,8 +39,6 @@ public class Applicant {
 
     private String parentTel;
 
-    private String schoolTel;
-
     private String homeTel;
 
     private String educationalStatus;
@@ -52,24 +50,6 @@ public class Applicant {
     private String studyPlan;
 
     private String examCode;
-
-    private BigDecimal averageScore;
-
-    private String schoolName;
-
-    private Integer volunteerTime;
-
-    private BigDecimal conversionScore;
-
-    private Integer dayAbsenceCount;
-
-    private Integer lectureAbsenceCount;
-
-    private Integer earlyLeaveCount;
-
-    private Integer latenessCount;
-
-    private Boolean isGraduated;
 
     private Double distance;
 

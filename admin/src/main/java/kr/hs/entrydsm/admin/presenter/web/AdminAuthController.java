@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.admin.presenter.web;
 
 import kr.hs.entrydsm.admin.usecase.auth.AuthService;
-import kr.hs.entrydsm.admin.usecase.dto.account.SignUpRequest;
 import kr.hs.entrydsm.admin.usecase.dto.account.AccessTokenResponse;
 import kr.hs.entrydsm.admin.usecase.dto.account.SignInRequest;
 import kr.hs.entrydsm.admin.usecase.dto.account.TokenResponse;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RequiredArgsConstructor
 @RequestMapping("/admin/auth")
 @Published
@@ -20,12 +17,6 @@ import javax.validation.Valid;
 public class AdminAuthController {
 
     private final AuthService authService;
-
-    @PostMapping("/account")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void signUp(@RequestBody @Valid SignUpRequest request) {
-        authService.signUp(request);
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
