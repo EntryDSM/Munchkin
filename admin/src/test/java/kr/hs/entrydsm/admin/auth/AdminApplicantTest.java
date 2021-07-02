@@ -197,7 +197,7 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void changeIsPrintedArrived() {
-        applicantService.changeIsPrintedArrived(APPLICANT.getReceiptCode(), true);
+        applicantService.changePrintArrivedOrNot(APPLICANT.getReceiptCode(), true);
     }
 
     @Test

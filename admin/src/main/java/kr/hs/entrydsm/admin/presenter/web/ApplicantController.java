@@ -24,7 +24,7 @@ public class ApplicantController {
     @PatchMapping("/applicant/printed-arrived")
     public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") long receiptCode,
                                        @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
-        applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+        applicantService.changePrintArrivedOrNot(receiptCode, isPrintedArrived);
     }
 
     @AdminJWTRequired

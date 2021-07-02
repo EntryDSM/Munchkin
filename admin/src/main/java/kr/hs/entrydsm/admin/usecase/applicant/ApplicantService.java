@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface ApplicantService {
-    void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
+    void changePrintArrivedOrNot(long receiptCode, boolean isPrintedArrived);
     ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                      boolean isDaejeon, boolean isNationwide,
                                      String telephoneNumber, String name,

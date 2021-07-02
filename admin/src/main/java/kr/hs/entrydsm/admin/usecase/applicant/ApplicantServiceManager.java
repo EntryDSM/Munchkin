@@ -43,7 +43,7 @@ public class ApplicantServiceManager implements ApplicantService {
     private String appKey;
 
     @Override
-    public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
+    public void changePrintArrivedOrNot(long receiptCode, boolean isPrintedArrived) {
         userRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
         UserNameAndTelephoneNumber applicant = userRepository.getUserNameAndTel(receiptCode);
