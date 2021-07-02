@@ -151,6 +151,9 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getApplicationType(ApplicationType applicationType) {
+        if (applicationType == null) {
+            return null;
+        }
         switch (applicationType) {
             case COMMON:
                 return "일반전형";
@@ -188,6 +191,9 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getEducationalStatus(EducationalStatus educationalStatus) {
+        if (educationalStatus == null) {
+            return null;
+        }
         switch (educationalStatus) {
             case PROSPECTIVE_GRADUATE :
                 return "졸업예정자";
@@ -201,6 +207,10 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getApplicationRemark(ApplicationRemark applicationRemark) {
+        if (applicationRemark == null) {
+            return null;
+        }
+
         switch (applicationRemark) {
             case ONE_PARENT :
                 return "한부모가족";
