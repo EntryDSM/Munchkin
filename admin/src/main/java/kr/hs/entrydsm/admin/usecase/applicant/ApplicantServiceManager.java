@@ -96,7 +96,7 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
-    public Object getDetailApplicantInfo(int receiptCode) {
+    public ResponseEntity getDetailApplicantInfo(int receiptCode) {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
 
@@ -140,11 +140,12 @@ public class ApplicantServiceManager implements ApplicantService {
                 .studyPlan(userInfo.getStudyPlan())
                 .build();
 
-        return ApplicantDetailResponse.builder()
+        ApplicantDetailResponse applicantDetailResponse = ApplicantDetailResponse.builder()
                 .status(status)
                 .personalData(personalData)
                 .evaluation(evaluation)
                 .build();
+        return new ResponseEntity<>(applicantDetailResponse, HttpStatus.OK);
     }
 
     @Override

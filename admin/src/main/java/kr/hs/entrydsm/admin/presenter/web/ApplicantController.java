@@ -7,6 +7,7 @@ import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class ApplicantController {
 
     @AdminJWTRequired
     @GetMapping("/applicant/{receipt-code}")
-    public Object getDetail(@PathVariable("receipt-code") int receiptCode) {
+    public ResponseEntity getDetail(@PathVariable("receipt-code") int receiptCode) {
         return applicantService.getDetailApplicantInfo(receiptCode);
     }
 
