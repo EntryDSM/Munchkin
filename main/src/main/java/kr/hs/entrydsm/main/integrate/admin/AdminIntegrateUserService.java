@@ -123,21 +123,21 @@ public class AdminIntegrateUserService implements UserRepository {
 
             excelUsers.add(
                     ExcelUser.builder()
-                            .examCode(user.getStatus().getExamCode()==null?null:user.getStatus().getExamCode())
+                            .examCode(user.getStatus().getExamCode())
                             .receiptCode(user.getReceiptCode())
                             .applicationType(applicationType)
                             .applicationRemark(applicationRemark)
                             .area(area)
                             .name(user.getName())
-                            .birthDay(user.getBirthday()==null?null:user.getBirthday().toString())
+                            .birthDay(user.getBirthday().toString())
                             .sex(sex)
-                            .address(user.getAddress()==null?null:user.getAddress())
+                            .address(user.getAddress())
                             .educationalStatus(educationalStatus)
-                            .telephoneNumber(user.getTelephoneNumber()==null?null:user.getTelephoneNumber())
-                            .studyPlan(user.getStudyPlan()==null?null:user.getStudyPlan())
-                            .selfIntroduce(user.getSelfIntroduce()==null?null:user.getSelfIntroduce())
-                            .parentName(user.getParentName()==null?null:user.getParentName())
-                            .parentTel(user.getParentTel()==null?null:user.getParentTel())
+                            .telephoneNumber(user.getTelephoneNumber())
+                            .studyPlan(user.getStudyPlan())
+                            .selfIntroduce(user.getSelfIntroduce())
+                            .parentName(user.getParentName())
+                            .parentTel(user.getParentTel())
                     .build()
             );
         }
@@ -151,9 +151,6 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getApplicationType(ApplicationType applicationType) {
-        if (applicationType == null) {
-            return null;
-        }
         switch (applicationType) {
             case COMMON:
                 return "일반전형";
@@ -167,9 +164,6 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getArea(Boolean isDaejeon) {
-        if(isDaejeon == null) {
-            return null;
-        }
         if(isDaejeon) {
             return "대전";
         } else if(!isDaejeon) {
@@ -179,9 +173,6 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getSex(Sex sex) {
-        if(sex == null) {
-            return null;
-        }
         if(sex.equals(Sex.MALE)) {
             return "남자";
         } else if(sex.equals(Sex.FEMALE)) {
@@ -191,9 +182,6 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getEducationalStatus(EducationalStatus educationalStatus) {
-        if (educationalStatus == null) {
-            return null;
-        }
         switch (educationalStatus) {
             case PROSPECTIVE_GRADUATE :
                 return "졸업예정자";
@@ -207,10 +195,6 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getApplicationRemark(ApplicationRemark applicationRemark) {
-        if (applicationRemark == null) {
-            return null;
-        }
-
         switch (applicationRemark) {
             case ONE_PARENT :
                 return "한부모가족";
