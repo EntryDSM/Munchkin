@@ -3,6 +3,7 @@ package kr.hs.entrydsm.admin.entity.refreshtoken;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class AdminRefreshToken implements Serializable {
     @Indexed
     private String refreshToken;
 
-    @Indexed
+    @TimeToLive
     private Long refreshExp;
 
     public AdminRefreshToken update(Long refreshExp) {
