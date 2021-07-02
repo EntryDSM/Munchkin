@@ -89,7 +89,7 @@ public class ApplicantServiceManager implements ApplicantService {
         }
 
         return  ApplicantsResponse.builder()
-                .totalElements((int)applicants.getTotalElements())
+                .totalElements(applicants.getTotalElements())
                 .totalPages(applicants.getTotalPages())
                 .applicantsInformationResponses(applicantsInformationResponses)
                 .build();
