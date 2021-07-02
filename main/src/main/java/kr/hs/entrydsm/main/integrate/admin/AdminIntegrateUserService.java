@@ -115,8 +115,8 @@ public class AdminIntegrateUserService implements UserRepository {
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
-            String area = user.isDaejeon()?"대전":"전국";
-            String sex = user.getSex().equals(Sex.MALE)?"남자":"여자";
+            String area = getArea(user.isDaejeon());
+            String sex = getSex(user.getSex());
             String educationalStatus = getEducationalStatus(user.getEducationalStatus());
             String applicationRemark = getApplicationRemark(user.getApplicationRemark());
             String applicationType = getApplicationType(user.getApplicationType());
@@ -159,7 +159,27 @@ public class AdminIntegrateUserService implements UserRepository {
             case SOCIAL:
                 return "사회통합전형";
             default:
-                throw new IllegalStateException("Unexpected value: " + applicationType);
+                return null;
+        }
+    }
+
+    private String getArea(Boolean isDaejeon) {
+        if(isDaejeon) {
+            return "대전";
+        } else if(!isDaejeon) {
+            return "전국";
+        } else {
+            return null;
+        }
+    }
+
+    private String getSex(Sex sex) {
+        if(sex.equals(Sex.MALE)) {
+            return "남자";
+        } else if(sex.equals(Sex.FEMALE)) {
+            return "여자";
+        } else {
+            return null;
         }
     }
 
@@ -172,7 +192,7 @@ public class AdminIntegrateUserService implements UserRepository {
             case QUALIFICATION_EXAM :
                 return "검정고시합격자";
             default:
-                throw new IllegalStateException("Unexpected value: " + educationalStatus);
+                return null;
         }
     }
 
