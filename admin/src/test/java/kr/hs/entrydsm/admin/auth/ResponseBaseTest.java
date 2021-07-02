@@ -31,7 +31,7 @@ public abstract class ResponseBaseTest {
 
     protected static final PageResponse PAGE_RESPONSE = new PageResponse(1, 2);
 
-    protected static final ApplicantsResponse APPLICANTS_RESPONSE2 = new ApplicantsResponse(PAGE_RESPONSE.getTotalElements(), PAGE_RESPONSE.getTotalPages(),null);
+    protected static final ApplicantsResponse APPLICANTS_RESPONSE2 = new ApplicantsResponse(null);
 
     protected static final ReceiptStatusResponse RECEIPT_STATUS_RESPONSE = ReceiptStatusResponse.builder()
             .totalApplicantCount(0)
