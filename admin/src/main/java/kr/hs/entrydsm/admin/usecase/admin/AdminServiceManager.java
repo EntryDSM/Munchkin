@@ -25,10 +25,10 @@ public class AdminServiceManager implements AdminService {
     private final MainRepository mainRepository;
     private final ScheduleRepository scheduleRepository;
 
-    private static final Integer RECRUITMENT_NUMBER_OF_PEOPLE = 80;
-    private static final Integer COMMON_ADMISSION_NUMBER_OF_RECRUITMENT = 40;
-    private static final Integer MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT = 36;
-    private static final Integer SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT = 4;
+    private static final double RECRUITMENT_NUMBER_OF_PEOPLE = 80.0;
+    private static final double COMMON_ADMISSION_NUMBER_OF_RECRUITMENT = 40.0;
+    private static final double MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT = 36.0;
+    private static final double SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT = 4.0;
 
     @Override
     public ReceiptStatusResponse getApplyStaticsStatistics() {
@@ -38,7 +38,7 @@ public class AdminServiceManager implements AdminService {
         int socialCount = applicationStatus.getSpecialScores().size();
 
         int totalApplicantCount = commonCount + meisterCount + socialCount;
-        double totalCompetitionRate = (double)totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE;
+        double totalCompetitionRate = totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE;
 
         CommonScoreResponse commonScore = new CommonScoreResponse();
         SpecialScoreResponse meisterScore = new SpecialScoreResponse();
@@ -51,14 +51,12 @@ public class AdminServiceManager implements AdminService {
 
         for(BigDecimal scoreDecimal : applicationStatus.getMeisterScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            score = Math.round(score);
-            meisterScore.addScore(score);
+            meisterScore.addScore(Math.round(score));
         }
 
         for(BigDecimal scoreDecimal : applicationStatus.getSpecialScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            score = Math.round(score);
-            meisterScore.addScore(score);
+            meisterScore.addScore(Math.round(score));
         }
 
         return ReceiptStatusResponse.builder()
@@ -68,11 +66,11 @@ public class AdminServiceManager implements AdminService {
                 .meisterScore(meisterScore)
                 .socialScore(socialScore)
                 .commonCount(commonCount)
-                .commonCompetitionRate((double)commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)
+                .commonCompetitionRate(commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)
                 .meisterCount(meisterCount)
-                .meisterCompetitionRate((double)meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT)
+                .meisterCompetitionRate(meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT)
                 .socialCount(socialCount)
-                .socialCompetitionRate((double)socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)
+                .socialCompetitionRate(socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)
                 .build();
     }
 

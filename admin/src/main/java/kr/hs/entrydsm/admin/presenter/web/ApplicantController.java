@@ -7,6 +7,7 @@ import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +24,12 @@ public class ApplicantController {
     @PatchMapping("/applicant/printed-arrived")
     public void updateIsPrintedArrived(@RequestParam(name = "receipt-code") long receiptCode,
                                        @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
-        applicantService.changeIsPrintedArrived(receiptCode, isPrintedArrived);
+        applicantService.changePrintArrivedOrNot(receiptCode, isPrintedArrived);
     }
 
     @AdminJWTRequired
     @GetMapping("/applicant/{receipt-code}")
-    public Object getDetail(@PathVariable("receipt-code") int receiptCode) {
+    public ResponseEntity getDetailApplicantInfo(@PathVariable("receipt-code") int receiptCode) {
         return applicantService.getDetailApplicantInfo(receiptCode);
     }
 
