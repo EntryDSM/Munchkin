@@ -51,14 +51,12 @@ public class AdminServiceManager implements AdminService {
 
         for(BigDecimal scoreDecimal : applicationStatus.getMeisterScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            score = Math.round(score);
-            meisterScore.addScore(score);
+            meisterScore.addScore(Math.round(score));
         }
 
         for(BigDecimal scoreDecimal : applicationStatus.getSpecialScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            score = Math.round(score);
-            meisterScore.addScore(score);
+            meisterScore.addScore(Math.round(score));
         }
 
         return ReceiptStatusResponse.builder()

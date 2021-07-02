@@ -29,7 +29,7 @@ public class ApplicantController {
 
     @AdminJWTRequired
     @GetMapping("/applicant/{receipt-code}")
-    public ResponseEntity getDetail(@PathVariable("receipt-code") int receiptCode) {
+    public ResponseEntity getDetailApplicantInfo(@PathVariable("receipt-code") int receiptCode) {
         return applicantService.getDetailApplicantInfo(receiptCode);
     }
 
