@@ -8,8 +8,7 @@ class SexTest {
 
     @Test
     public void sex() {
-        assertEquals(Sex.MALE, "MALE");
-        assertEquals(Sex.FEMALE, "FEMALE");
+        Sex sex = new Sex();
     }
 
 }
