@@ -217,7 +217,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(71).setCellValue(excelApplicants.get(i).getSelfIntroduce());
         }
 
-        applicantInformation.getWorkbook().write(new FileOutputStream(applicantInformationPath +"지원자 목록.xls"));
+        applicantInformation.getWorkbook().write(new FileOutputStream(applicantInformationPath));
     }
 
     private byte[] getObject(String fileName) throws IOException {

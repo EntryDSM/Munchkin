@@ -18,5 +18,5 @@ public interface UserExportRepository {
     void changeExamCode(long receiptCode, String examCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     List<User> findAllIsSubmitTrue();
-    List<Long> findAllReceiptCode(); // isSubmitTrue인 유저의 접수 번호가 필요합니다.
+    List<Long> findAllReceiptCode();
 }
