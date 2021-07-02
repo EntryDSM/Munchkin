@@ -492,6 +492,30 @@ public class ApplicantTest extends EntityTest{
     }
 
     @Test
+    public void isRecommendationsRequired() {
+        assertFalse(graduateCommonMale.isRecommendationsRequired());
+        assertFalse(graduateCommonFemale.isRecommendationsRequired());
+        assertTrue(graduateMeisterMale.isRecommendationsRequired());
+        assertTrue(graduateMeisterFemale.isRecommendationsRequired());
+        assertTrue(graduateSocialMale.isRecommendationsRequired());
+        assertTrue(graduateSocialFemale.isRecommendationsRequired());
+
+        assertFalse(prospectiveGraduateCommonMale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateCommonFemale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateMeisterMale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateMeisterFemale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateSocialMale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateSocialFemale.isRecommendationsRequired());
+
+        assertFalse(qualificationExamCommonMale.isRecommendationsRequired());
+        assertFalse(qualificationExamCommonFemale.isRecommendationsRequired());
+        assertTrue(qualificationExamMeisterMale.isRecommendationsRequired());
+        assertTrue(qualificationExamMeisterFemale.isRecommendationsRequired());
+        assertTrue(qualificationExamSocialMale.isRecommendationsRequired());
+        assertTrue(qualificationExamSocialFemale.isRecommendationsRequired());
+    }
+
+    @Test
     public void getApplicationRemark() {
         assertEquals(basicLiving.getApplicationRemark(), ApplicationRemark.BASIC_LIVING);
         assertEquals(fromNorth.getApplicationRemark(), ApplicationRemark.FROM_NORTH);

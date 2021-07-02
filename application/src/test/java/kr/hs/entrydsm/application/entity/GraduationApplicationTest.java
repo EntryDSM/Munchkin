@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GraduationApplicationTest {
 
@@ -18,6 +19,7 @@ public class GraduationApplicationTest {
     @Test
     public void graduationApplicationValues() {
         GraduationApplication application = GraduationApplicationBuilder.build(1);
+        application.setReceiptCode(1L);
 
         assertThat(application.getReceiptCode()).isEqualTo(1);
         assertThat(application.getIsGraduated()).isFalse();
@@ -59,4 +61,19 @@ public class GraduationApplicationTest {
 
         assertThat(application.getSchoolClass()).isNull();
     }
+
+    @Test
+    public void getSchoolName() {
+        GraduationApplication application = GraduationApplicationBuilder.buildEmptyStudentNumber();
+
+        assertEquals(application.getSchoolName(), "대덕소프트웨어마이스터중학교");
+    }
+
+    @Test
+    public void getSchoolCode() {
+        GraduationApplication application = GraduationApplicationBuilder.buildEmptyStudentNumber();
+
+        assertEquals(application.getSchoolCode(), "44444");
+    }
+
 }

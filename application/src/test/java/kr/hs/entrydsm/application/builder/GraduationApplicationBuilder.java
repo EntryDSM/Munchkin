@@ -12,7 +12,6 @@ public class GraduationApplicationBuilder {
 
     public static GraduationApplication buildEmptyStudentNumber() {
         return GraduationApplication.builder()
-                .receiptCode(1)
                 .isGraduated(false)
                 .studentNumber(null)
                 .school(SchoolBuilder.build())
