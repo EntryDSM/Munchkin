@@ -75,4 +75,10 @@ class InformationTest {
     void getPhotoFileName() {
         assertEquals(FIRST_INFORMATION.getPhotoFileName(), "test.jpg");
     }
+
+    @Test
+    void setPhotoFileName() {
+        FIRST_INFORMATION.setPhotoFileName("test.jpg");
+    }
+
 }
