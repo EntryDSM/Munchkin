@@ -12,7 +12,6 @@ public class GraduationApplicationBuilder {
 
     public static GraduationApplication buildEmptyStudentNumber() {
         return GraduationApplication.builder()
-                .receiptCode(1)
                 .isGraduated(false)
                 .studentNumber(null)
                 .school(SchoolBuilder.build())
@@ -31,4 +30,8 @@ public class GraduationApplicationBuilder {
                 .graduatedAt(LocalDate.of(2019, 2, 1))
                 .build();
     }
+
+    public static final GraduationApplication APPLICATION_1 = new GraduationApplication(1L);
+
+    public static final GraduationApplication APPLICATION_2 = new GraduationApplication();
 }

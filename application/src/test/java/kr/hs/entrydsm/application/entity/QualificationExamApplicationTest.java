@@ -19,6 +19,7 @@ public class QualificationExamApplicationTest {
     @Test
     public void qualificationExamApplicationValues() {
         QualificationExamApplication application = QualificationExamApplicationBuilder.build();
+        application.setQualifiedAt(LocalDate.of(2020, 8, 13));
 
         assertThat(application.getQualifiedAt()).isEqualTo(LocalDate.of(2020, 8, 13));
     }

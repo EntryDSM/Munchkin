@@ -395,4 +395,136 @@ public class ApplicantTest extends EntityTest{
         assertFalse(nationalMerit.hasSchoolInfo());
     }
 
+    @Test
+    public void getApplicationType() {
+        assertEquals(graduateCommonMale.getApplicationType(), "COMMON");
+        assertEquals(graduateCommonFemale.getApplicationType(), "COMMON");
+        assertEquals(graduateMeisterMale.getApplicationType(), "MEISTER");
+        assertEquals(graduateMeisterFemale.getApplicationType(), "MEISTER");
+        assertEquals(graduateSocialMale.getApplicationType(), "SOCIAL");
+        assertEquals(graduateSocialFemale.getApplicationType(), "SOCIAL");
+
+        assertEquals(prospectiveGraduateCommonMale.getApplicationType(), "COMMON");
+        assertEquals(prospectiveGraduateCommonFemale.getApplicationType(), "COMMON");
+        assertEquals(prospectiveGraduateMeisterMale.getApplicationType(), "MEISTER");
+        assertEquals(prospectiveGraduateMeisterFemale.getApplicationType(), "MEISTER");
+        assertEquals(prospectiveGraduateSocialMale.getApplicationType(), "SOCIAL");
+        assertEquals(prospectiveGraduateSocialFemale.getApplicationType(), "SOCIAL");
+
+        assertEquals(qualificationExamCommonMale.getApplicationType(), "COMMON");
+        assertEquals(qualificationExamCommonFemale.getApplicationType(), "COMMON");
+        assertEquals(qualificationExamMeisterMale.getApplicationType(), "MEISTER");
+        assertEquals(qualificationExamMeisterFemale.getApplicationType(), "MEISTER");
+        assertEquals(qualificationExamSocialMale.getApplicationType(), "SOCIAL");
+        assertEquals(qualificationExamSocialFemale.getApplicationType(), "SOCIAL");
+    }
+
+    @Test
+    public void getSex() {
+        assertEquals(graduateCommonMale.getSex(), Sex.MALE);
+        assertEquals(graduateCommonFemale.getSex(), Sex.FEMALE);
+        assertEquals(graduateMeisterMale.getSex(), Sex.MALE);
+        assertEquals(graduateMeisterFemale.getSex(), Sex.FEMALE);
+        assertEquals(graduateSocialMale.getSex(), Sex.MALE);
+        assertEquals(graduateSocialFemale.getSex(), Sex.FEMALE);
+
+        assertEquals(prospectiveGraduateCommonMale.getSex(), Sex.MALE);
+        assertEquals(prospectiveGraduateCommonFemale.getSex(), Sex.FEMALE);
+        assertEquals(prospectiveGraduateMeisterMale.getSex(), Sex.MALE);
+        assertEquals(prospectiveGraduateMeisterFemale.getSex(), Sex.FEMALE);
+        assertEquals(prospectiveGraduateSocialMale.getSex(), Sex.MALE);
+        assertEquals(prospectiveGraduateSocialFemale.getSex(), Sex.FEMALE);
+
+        assertEquals(qualificationExamCommonMale.getSex(), Sex.MALE);
+        assertEquals(qualificationExamCommonFemale.getSex(), Sex.FEMALE);
+        assertEquals(qualificationExamMeisterMale.getSex(), Sex.MALE);
+        assertEquals(qualificationExamMeisterFemale.getSex(), Sex.FEMALE);
+        assertEquals(qualificationExamSocialMale.getSex(), Sex.MALE);
+        assertEquals(qualificationExamSocialFemale.getSex(), Sex.FEMALE);
+    }
+
+    @Test
+    public void getPostCode() {
+        assertEquals(graduateCommonMale.getPostCode(), "12345");
+        assertEquals(graduateCommonFemale.getPostCode(), "12345");
+        assertEquals(graduateMeisterMale.getPostCode(), "12345");
+        assertEquals(graduateMeisterFemale.getPostCode(), "12345");
+        assertEquals(graduateSocialMale.getPostCode(), "12345");
+        assertEquals(graduateSocialFemale.getPostCode(), "12345");
+
+        assertEquals(prospectiveGraduateCommonMale.getPostCode(), "12345");
+        assertEquals(prospectiveGraduateCommonFemale.getPostCode(), "12345");
+        assertEquals(prospectiveGraduateMeisterMale.getPostCode(), "12345");
+        assertEquals(prospectiveGraduateMeisterFemale.getPostCode(), "12345");
+        assertEquals(prospectiveGraduateSocialMale.getPostCode(), "12345");
+        assertEquals(prospectiveGraduateSocialFemale.getPostCode(), "12345");
+
+        assertEquals(qualificationExamCommonMale.getPostCode(), "12345");
+        assertEquals(qualificationExamCommonFemale.getPostCode(), "12345");
+        assertEquals(qualificationExamMeisterMale.getPostCode(), "12345");
+        assertEquals(qualificationExamMeisterFemale.getPostCode(), "12345");
+        assertEquals(qualificationExamSocialMale.getPostCode(), "12345");
+        assertEquals(qualificationExamSocialFemale.getPostCode(), "12345");
+    }
+
+    @Test
+    public void isGraduation() {
+        assertTrue(graduateCommonMale.isGraduation());
+        assertTrue(graduateCommonFemale.isGraduation());
+        assertTrue(graduateMeisterMale.isGraduation());
+        assertTrue(graduateMeisterFemale.isGraduation());
+        assertTrue(graduateSocialMale.isGraduation());
+        assertTrue(graduateSocialFemale.isGraduation());
+
+        assertTrue(prospectiveGraduateCommonMale.isGraduation());
+        assertTrue(prospectiveGraduateCommonFemale.isGraduation());
+        assertTrue(prospectiveGraduateMeisterMale.isGraduation());
+        assertTrue(prospectiveGraduateMeisterFemale.isGraduation());
+        assertTrue(prospectiveGraduateSocialMale.isGraduation());
+        assertTrue(prospectiveGraduateSocialFemale.isGraduation());
+
+        assertFalse(qualificationExamCommonMale.isGraduation());
+        assertFalse(qualificationExamCommonFemale.isGraduation());
+        assertFalse(qualificationExamMeisterMale.isGraduation());
+        assertFalse(qualificationExamMeisterFemale.isGraduation());
+        assertFalse(qualificationExamSocialMale.isGraduation());
+        assertFalse(qualificationExamSocialFemale.isGraduation());
+    }
+
+    @Test
+    public void isRecommendationsRequired() {
+        assertFalse(graduateCommonMale.isRecommendationsRequired());
+        assertFalse(graduateCommonFemale.isRecommendationsRequired());
+        assertTrue(graduateMeisterMale.isRecommendationsRequired());
+        assertTrue(graduateMeisterFemale.isRecommendationsRequired());
+        assertTrue(graduateSocialMale.isRecommendationsRequired());
+        assertTrue(graduateSocialFemale.isRecommendationsRequired());
+
+        assertFalse(prospectiveGraduateCommonMale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateCommonFemale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateMeisterMale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateMeisterFemale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateSocialMale.isRecommendationsRequired());
+        assertFalse(prospectiveGraduateSocialFemale.isRecommendationsRequired());
+
+        assertFalse(qualificationExamCommonMale.isRecommendationsRequired());
+        assertFalse(qualificationExamCommonFemale.isRecommendationsRequired());
+        assertTrue(qualificationExamMeisterMale.isRecommendationsRequired());
+        assertTrue(qualificationExamMeisterFemale.isRecommendationsRequired());
+        assertTrue(qualificationExamSocialMale.isRecommendationsRequired());
+        assertTrue(qualificationExamSocialFemale.isRecommendationsRequired());
+    }
+
+    @Test
+    public void getApplicationRemark() {
+        assertEquals(basicLiving.getApplicationRemark(), ApplicationRemark.BASIC_LIVING);
+        assertEquals(fromNorth.getApplicationRemark(), ApplicationRemark.FROM_NORTH);
+        assertEquals(lowestIncome.getApplicationRemark(), ApplicationRemark.LOWEST_INCOME);
+        assertEquals(multicultural.getApplicationRemark(), ApplicationRemark.MULTICULTURAL);
+        assertEquals(oneParent.getApplicationRemark(), ApplicationRemark.ONE_PARENT);
+        assertEquals(teenHouseholder.getApplicationRemark(), ApplicationRemark.TEEN_HOUSEHOLDER);
+        assertEquals(privilegedAdmission.getApplicationRemark(), ApplicationRemark.PRIVILEGED_ADMISSION);
+        assertEquals(nationalMerit.getApplicationRemark(), ApplicationRemark.NATIONAL_MERIT);
+    }
+
 }

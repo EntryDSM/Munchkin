@@ -34,7 +34,7 @@ public class ApplicationManager implements ApplicationProcessing {
     private final ApplicationFactory applicationFactory;
     private final ImageService imageService;
     private final ApplicantDocsService applicantDocsService;
-    private final ApplicationApplicantRepository applicantExportService;
+    private final ApplicationApplicantRepository applicationApplicantRepository;
     private final SchoolRepository schoolRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
@@ -97,13 +97,13 @@ public class ApplicationManager implements ApplicationProcessing {
             graduationApplicationRepository.save(graduationApplication);
         }
 
-        applicantExportService.writeApplicationType(receiptCode, applicationRequest);
+        applicationApplicantRepository.writeApplicationType(receiptCode, applicationRequest);
     }
 
     @Override
     public void writeGraduatedInformation(GraduatedInformationRequest information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+        String educationalStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
 
         if (educationalStatus == null)
             throw new EducationalStatusNotFoundException();
@@ -122,25 +122,25 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public void writeInformation(Information information) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        applicantExportService.writeInformation(receiptCode, information);
+        applicationApplicantRepository.writeInformation(receiptCode, information);
     }
 
     @Override
     public ApplicationResponse getApplicationType() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        String educationStatus = applicantExportService.getEducationalStatus(receiptCode);
+        String educationStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
         if (!educationStatus.equals("QUALIFICATION_EXAM")) {
             if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)
                                 .orElseThrow(ApplicationNotFoundException::new);
                 if (graduationApplication.getGraduatedAt() != null)
-                    return applicantExportService.getApplicationType(receiptCode)
+                    return applicationApplicantRepository.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                                     .withZone(ZoneId.of("Asia/Seoul"))
                                     .format(graduationApplication.getGraduatedAt()))
                             .setIsGraduated(graduationApplication.getIsGraduated());
-                return applicantExportService.getApplicationType(receiptCode)
+                return applicationApplicantRepository.getApplicationType(receiptCode)
                         .setIsGraduated(graduationApplication.getIsGraduated() != null && graduationApplication.getIsGraduated());
             }
         } else {
@@ -149,20 +149,20 @@ public class ApplicationManager implements ApplicationProcessing {
                         qualificationExamApplicationRepository.findByReceiptCode(receiptCode)
                                 .orElseThrow(ApplicationNotFoundException::new);
                 if (qualificationExamApplication.getQualifiedAt() != null)
-                    return applicantExportService.getApplicationType(receiptCode)
+                    return applicationApplicantRepository.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
                                     .withZone(ZoneId.of("Asia/Seoul"))
                                     .format(qualificationExamApplication.getQualifiedAt()));
-                return applicantExportService.getApplicationType(receiptCode);
+                return applicationApplicantRepository.getApplicationType(receiptCode);
             }
         }
-        return applicantExportService.getApplicationType(receiptCode);
+        return applicationApplicantRepository.getApplicationType(receiptCode);
     }
 
     @Override
     public GraduatedInformationResponse getGraduatedInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
+        String educationalStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
 
         if (educationalStatus == null)
             throw new EducationalStatusNotFoundException();
@@ -170,7 +170,7 @@ public class ApplicationManager implements ApplicationProcessing {
             throw new EducationalStatusUnmatchedException();
 
         GraduatedInformationResponse result = new GraduatedInformationResponse()
-                .setInformation(applicantExportService.getInformation(receiptCode));
+                .setInformation(applicationApplicantRepository.getInformation(receiptCode));
 
         if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
             GraduationApplication graduationApplication = graduationApplicationRepository.findByReceiptCode(receiptCode)
@@ -195,7 +195,7 @@ public class ApplicationManager implements ApplicationProcessing {
     public Information getInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
 
-        Information result = applicantExportService.getInformation(receiptCode);
+        Information result = applicationApplicantRepository.getInformation(receiptCode);
 
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
 
@@ -205,7 +205,7 @@ public class ApplicationManager implements ApplicationProcessing {
     @Override
     public String uploadPhoto(MultipartFile multipartFile) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        Information result = applicantExportService.getInformation(receiptCode);
+        Information result = applicationApplicantRepository.getInformation(receiptCode);
         if(result.getPhotoFileName() != null)
             imageService.delete(result.getPhotoFileName());
         String fileName;
@@ -215,7 +215,7 @@ public class ApplicationManager implements ApplicationProcessing {
             fileName = null;
         }
 
-        applicantExportService.setPhotoFileName(receiptCode, fileName);
+        applicationApplicantRepository.setPhotoFileName(receiptCode, fileName);
         return fileName;
     }
 
