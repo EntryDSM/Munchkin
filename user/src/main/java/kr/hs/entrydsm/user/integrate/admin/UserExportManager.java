@@ -73,11 +73,6 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public List<User> findAllForExcel() {
-        return userRepository.findAllBy();
-    }
-
-    @Override
     public List<Long> findAllReceiptCode() {
         return userRepository.findAllBy()
                 .stream().map(User::getReceiptCode)
