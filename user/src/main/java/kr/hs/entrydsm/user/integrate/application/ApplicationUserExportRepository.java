@@ -11,7 +11,7 @@ public interface ApplicationUserExportRepository {
     void changeApplication(long receiptCode, String educationalStatus, String applicationType, boolean isDaejeon, String applicationRemark); //
     void changeInformation(long receiptCode, String name, String sex, LocalDate birthday, String parentName,
                            String parentTel, String telephoneNumber, String homeTel, String address, String postCode,
-                           String photoFileName, String detailAddress);
+                           String detailAddress);
     void changePhotoFileName(long receiptCode, String photoFileName);
     void changeSelfIntroduce(long receiptCode, String content);
     void changeStudyPlan(long receiptCode, String content);

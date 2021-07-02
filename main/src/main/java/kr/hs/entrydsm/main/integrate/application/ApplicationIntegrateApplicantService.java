@@ -36,7 +36,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
         userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
                 birthday, information.getParentName(), information.getParentTel(),
                 information.getTelephoneNumber(), information.getHomeTel(), information.getAddress(),
-                information.getPostCode(), information.getPhotoFileName(), information.getDetailAddress());
+                information.getPostCode(), information.getDetailAddress());
     }
 
     @Override
