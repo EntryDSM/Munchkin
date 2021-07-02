@@ -164,23 +164,27 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getArea(Boolean isDaejeon) {
+        if(isDaejeon == null) {
+            return null;
+        }
         if(isDaejeon) {
             return "대전";
         } else if(!isDaejeon) {
             return "전국";
-        } else {
-            return null;
         }
+        return null;
     }
 
     private String getSex(Sex sex) {
+        if(sex == null) {
+            return null;
+        }
         if(sex.equals(Sex.MALE)) {
             return "남자";
         } else if(sex.equals(Sex.FEMALE)) {
             return "여자";
-        } else {
-            return null;
         }
+        return null;
     }
 
     private String getEducationalStatus(EducationalStatus educationalStatus) {
