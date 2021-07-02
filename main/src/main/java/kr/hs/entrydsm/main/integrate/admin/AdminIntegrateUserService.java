@@ -129,7 +129,7 @@ public class AdminIntegrateUserService implements UserRepository {
                             .applicationRemark(applicationRemark)
                             .area(area)
                             .name(user.getName())
-                            .birthDay(user.getBirthday().toString().isBlank()?null:user.getBirthday().toString())
+                            .birthDay(user.getBirthday()==null?null:user.getBirthday().toString())
                             .sex(sex)
                             .address(user.getAddress()==null?null:user.getAddress())
                             .educationalStatus(educationalStatus)
