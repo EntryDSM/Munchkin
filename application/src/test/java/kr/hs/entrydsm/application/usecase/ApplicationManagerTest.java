@@ -1,20 +1,26 @@
 package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.ApplicationFactory;
-import kr.hs.entrydsm.application.entity.GraduationApplication;
-import kr.hs.entrydsm.application.entity.GraduationApplicationRepository;
-import kr.hs.entrydsm.application.entity.QualificationExamApplicationRepository;
-import kr.hs.entrydsm.application.entity.SchoolRepository;
+import kr.hs.entrydsm.application.builder.GraduationApplicationBuilder;
+import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
+import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
+import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,36 +81,126 @@ class ApplicationManagerTest {
     }
 
     @Test
-    void writeApplicationType() {
+    public void writeApplicationType() {
         ApplicationRequest request =
                 new ApplicationRequest("GRADUATE", "MEISTER",
                         false, null,
                         "202003");
-        Mockito.when(graduationApplicationRepository.existsByReceiptCode(1L))
+        Mockito.when(graduationApplicationRepository.existsByReceiptCode(0L))
                 .thenReturn(true);
-        Mockito.when(graduationApplicationRepository.findByReceiptCode(1L))
+        Mockito.when(graduationApplicationRepository.findByReceiptCode(0L))
                 .thenReturn(
                         Optional.of(
                                 GraduationApplication.builder()
-                                        .receiptCode(1L)
+                                        .receiptCode(0L)
                                         .build()
                         )
                 );
-        
+
         applicationProcessing.writeApplicationType(request);
 
     }
 
     @Test
-    void writeGraduatedInformation() {
+    public void writeGraduatedInformation() {
+        GraduatedInformationRequest request =
+                new GraduatedInformationRequest("01012345678",
+                        "1111111", "1234");
+
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn("GRADUTE");
+
+        Mockito.when(schoolRepository
+                .findByCode(request.getSchoolCode()))
+                .thenReturn(Optional.of(School.builder().build()));
+
+        applicationProcessing.writeGraduatedInformation(request);
+
+    }
+
+    @Test
+    public void invalidSchoolCode() {
+        GraduatedInformationRequest request =
+                new GraduatedInformationRequest("01012345678",
+                        "1111111", "1234");
+
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn("GRADUTE");
+
+        Mockito.when(schoolRepository
+                .findByCode(request.getSchoolCode()))
+                .thenReturn(Optional.empty());
+
+        assertThrows(SchoolNotFoundException.class, () -> {
+            applicationProcessing.writeGraduatedInformation(request);
+        });
+    }
+
+    @Test
+    void educationalStatusisNull() throws IllegalAccessException {
+        GraduatedInformationRequest request = new GraduatedInformationRequest();
+        Map<String, String> map = new HashMap<>();
+        map.put("schoolTel", "01012345678");
+        map.put("schoolCode", "1111111");
+        map.put("studentNumber", "1234");
+        Field[] fields = request.getClass().getFields();
+        for(Field field : fields) {
+            field.set(request, map.get(field.getName()));
+        }
+
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn(null);
+
+        assertThrows(EducationalStatusNotFoundException.class, () -> {
+            applicationProcessing.writeGraduatedInformation(request);
+        });
     }
 
     @Test
     void writeInformation() {
+        Information information =
+                Information.builder()
+                        .name("test1")
+                        .sex("MALE")
+                        .birthday("20040728")
+                        .parentName("test1parent")
+                        .telephoneNumber("01012345678")
+                        .parentTel("01087654321")
+                        .homeTel("0510231564")
+                        .address("homeaddr")
+                        .detailAddress("thisismyhome")
+                        .postCode("12345")
+                        .photoFileName("test.jpg")
+                        .build();
+
+        applicationProcessing.writeInformation(information);
+
     }
 
     @Test
     void getApplicationType() {
+
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn("GRADUTE");
+
+        Mockito.when(graduationApplicationRepository
+                .findByReceiptCode(0L))
+                .thenReturn(Optional.of(
+                        GraduationApplicationBuilder.build(0L)
+                ));
+
+        Mockito.when(applicationApplicantRepository
+                .getApplicationType(0L))
+                .thenReturn(
+                        ApplicationResponse.builder().build()
+                );
+
+        applicationProcessing.getApplicationType();
+
     }
 
     @Test
