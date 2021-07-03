@@ -49,9 +49,6 @@ public class ExcelServiceManager implements ExcelService {
     @Value("${munchkin.applicant-information-path}")
     private String applicantInformationPath;
 
-    @Value("${munchkin.admission-ticket-path}")
-    private String admissionTicketPath;
-
     @Override
     public void createAdmissionTicket(long receiptCode) throws IOException {
         getAdmissionTicket(receiptCode);
@@ -100,7 +97,7 @@ public class ExcelServiceManager implements ExcelService {
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream(new File(admissionTicketPath, userInfo.getExamCode() + name+" 수험표.xls")));
+        admissionTicket.getWorkbook().write(new FileOutputStream(new File("../../../", userInfo.getExamCode() + "-수험표.xls")));
     }
 
     private void getApplicationInformation() throws IOException {
@@ -217,7 +214,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(71).setCellValue(excelApplicants.get(i).getSelfIntroduce());
         }
 
-        applicantInformation.getWorkbook().write(new FileOutputStream(applicantInformationPath +"지원자 목록.xls"));
+        applicantInformation.getWorkbook().write(new FileOutputStream(applicantInformationPath));
     }
 
     private byte[] getObject(String fileName) throws IOException {

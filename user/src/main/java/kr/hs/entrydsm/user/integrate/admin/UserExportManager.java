@@ -73,11 +73,6 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
-    public List<User> findAllForExcel() { //수험번호, 접수 번호, 전형 유형, 추가 유형, 지역, 이름, 생년월일, 주소, 학생 전화번호, 자기소개서, 학업 계획서, 보호자 이름, 보호자 전화번호 필요함
-        return userRepository.findAllBy();
-    }
-
-    @Override
     public List<Long> findAllReceiptCode() {
         return userRepository.findAllBy()
                 .stream().map(User::getReceiptCode)

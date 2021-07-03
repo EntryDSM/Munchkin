@@ -111,7 +111,7 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public List<ExcelUser> findAllForExcel() {
-        List<User> users = userExportRepository.findAllForExcel();
+        List<User> users = userExportRepository.findAllIsSubmitTrue();
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
