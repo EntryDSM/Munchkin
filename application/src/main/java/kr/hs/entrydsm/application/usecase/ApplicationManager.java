@@ -134,7 +134,7 @@ public class ApplicationManager implements ApplicationProcessing {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)
                                 .orElseThrow(ApplicationNotFoundException::new);
-                System.out.println(graduationApplication.getIsGraduated() + "asdf");
+
                 if (graduationApplication.getGraduatedAt() != null)
                     return applicationApplicantRepository.getApplicationType(receiptCode)
                             .setGraduatedAt(DateTimeFormatter.ofPattern("yyyyMM")
