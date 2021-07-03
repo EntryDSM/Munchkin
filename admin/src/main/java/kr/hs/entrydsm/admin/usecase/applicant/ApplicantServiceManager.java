@@ -190,7 +190,7 @@ public class ApplicantServiceManager implements ApplicantService {
         for(SaveExamCodeUserResponse applicant : applicantSort) {
             int examOrder = 0;
             String examCode = applicant.getExamCode();
-            if(examCode.startsWith("11")) { ;
+            if(examCode.startsWith("11")) { 
                 examOrder = commonDaejeon++;
             } else if(examCode.startsWith("12")) {
                 examOrder = commonNationwide++;
