@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.score.usecase.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
