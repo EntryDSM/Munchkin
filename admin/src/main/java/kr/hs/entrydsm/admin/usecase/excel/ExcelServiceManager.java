@@ -97,7 +97,7 @@ public class ExcelServiceManager implements ExcelService {
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream(new File("../../../", userInfo.getExamCode() + "-수험표.xls")));
+        admissionTicket.getWorkbook().write(new FileOutputStream(new File("./", userInfo.getExamCode() + "-수험표.xls")));
     }
 
     private void getApplicationInformation() throws IOException {
