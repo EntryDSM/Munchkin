@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Getter
+@NoArgsConstructor
 @Entity(name = "tbl_graduation_case")
 public class GraduationCase extends ApplicationCase {
     private Integer volunteerTime;
