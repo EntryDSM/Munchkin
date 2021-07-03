@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto.application.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -10,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ApplicationRequest {
 
     private String educationalStatus;

@@ -36,15 +36,12 @@ class ApplicationResponseTest {
                     .graduatedAt("202106")
                     .build();
 
-    private static final ApplicationResponse RESPONSE =
-            new ApplicationResponse();
 
     @Test
     void setIsGraduated() {
         RESPONSE_1.setIsGraduated(false);
         RESPONSE_2.setIsGraduated(true);
         RESPONSE_3.setIsGraduated(false);
-        RESPONSE.setIsGraduated(false);
     }
 
     @Test
@@ -52,7 +49,6 @@ class ApplicationResponseTest {
         RESPONSE_1.setGraduatedAt("202203");
         RESPONSE_2.setGraduatedAt("202103");
         RESPONSE_3.setGraduatedAt("202106");
-        RESPONSE.setGraduatedAt("202107");
     }
 
     @Test
