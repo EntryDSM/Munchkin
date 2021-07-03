@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application.usecase.dto.application.request;
 
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class GedInformationRequest extends Information {
 
     @NotNull
