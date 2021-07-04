@@ -1,7 +1,6 @@
 munchkin:
   admin-module:
     name: 'Admin Module'
-  applicant-information-path: './지원자목록.xlsx'
 
 tmap:
   app:
