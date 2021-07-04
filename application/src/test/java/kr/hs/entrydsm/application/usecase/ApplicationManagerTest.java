@@ -140,15 +140,9 @@ class ApplicationManagerTest {
 
     @Test
     void educationalStatusisNull() throws IllegalAccessException {
-        GraduatedInformationRequest request = new GraduatedInformationRequest();
-        Map<String, String> map = new HashMap<>();
-        map.put("schoolTel", "01012345678");
-        map.put("schoolCode", "1111111");
-        map.put("studentNumber", "1234");
-        Field[] fields = request.getClass().getFields();
-        for(Field field : fields) {
-            field.set(request, map.get(field.getName()));
-        }
+        GraduatedInformationRequest request =
+                new GraduatedInformationRequest("01012345678",
+                        "1111111", "1234");
 
         Mockito.when(applicationApplicantRepository
                 .getEducationalStatus(0L))
@@ -205,6 +199,43 @@ class ApplicationManagerTest {
 
     @Test
     void getGraduatedInformation() {
+
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn("GRADUTE");
+
+        Mockito.when(graduationApplicationRepository
+                .findByReceiptCode(0L))
+                .thenReturn(Optional.of(
+                        GraduationApplicationBuilder.build(0L)
+                ));
+
+        Mockito.when(schoolRepository
+                .findByCode("33333"))
+                .thenReturn(Optional.of(School.builder().build()));
+
+        Mockito.when(applicationApplicantRepository
+                .getInformation(0L))
+                .thenReturn(
+                                Information.builder()
+                                        .name("test1")
+                                        .sex("MALE")
+                                        .birthday("20040728")
+                                        .parentName("test1parent")
+                                        .telephoneNumber("01012345678")
+                                        .parentTel("01087654321")
+                                        .homeTel("0510231564")
+                                        .address("homeaddr")
+                                        .detailAddress("thisismyhome")
+                                        .postCode("12345")
+                                        .photoFileName("test.jpg")
+                                        .build()
+                );
+
+        applicationProcessing.getGraduatedInformation();
+
+
+
     }
 
     @Test
