@@ -2,8 +2,6 @@ package kr.hs.entrydsm.score.entity;
 
 import kr.hs.entrydsm.score.integrate.FieldNotExistException;
 import kr.hs.entrydsm.score.integrate.user.Scorer;
-import kr.hs.entrydsm.score.integrate.user.enumeration.ApplicationType;
-import kr.hs.entrydsm.score.integrate.user.enumeration.EducationalStatus;
 import org.junit.jupiter.api.Test;
 
 public class ExternalEntityTest {
@@ -23,7 +21,7 @@ public class ExternalEntityTest {
     @Test
     public void testValidExternalEntity() {
         Scorer.builder().receiptCode(0)
-                        .applicationType(ApplicationType.COMMON)
-                        .educationalStatus(EducationalStatus.PROSPECTIVE_GRADUATE);
+                        .applicationType(Scorer.ApplicationType.COMMON)
+                        .educationalStatus(Scorer.EducationalStatus.PROSPECTIVE_GRADUATE);
     }
 }

@@ -60,19 +60,4 @@ public class ExcelTest extends ExcelBaseTest {
         assertFalse(EXCEL_USER_SCORE.getTotalScoreFirstRound().toString().isBlank());
     }
 
-    @Test
-    public void createAdmissionTicket() throws IOException {
-        excelService.createAdmissionTicket(EXCEL_USER.getReceiptCode());
-    }
-
-    @Test
-    public void createApplicantInformation() throws IOException {
-        excelService.createApplicantInformation();
-    }
-
-    @Test
-    public void getAllExcels() throws IOException {
-        excelService.getAllExcels();
-    }
-
 }

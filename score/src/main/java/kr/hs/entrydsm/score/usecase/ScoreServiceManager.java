@@ -9,6 +9,7 @@ import kr.hs.entrydsm.score.usecase.dto.QueryQualificationExamResponse;
 import kr.hs.entrydsm.score.usecase.dto.UpdateGraduationRequest;
 import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
 import kr.hs.entrydsm.score.usecase.exception.ApplicationTypeUnmatchedException;
+import kr.hs.entrydsm.score.usecase.exception.GradeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,21 +25,20 @@ public class ScoreServiceManager implements ScoreService {
     @Override
     public QueryGraduationResponse queryGraduation() {
         GraduationCase graduationCase = graduationCaseRepository.findByReceiptCode(currentScorer().getReceiptCode())
-                                                                .orElseThrow();
+                                                                .orElseThrow(GradeNotFoundException::new);
         return new QueryGraduationResponse(graduationCase);
     }
 
     @Override
     public QueryQualificationExamResponse queryQualificationExam() {
         QualificationExamCase qualificationExamCase = qualificationExamCaseRepository.findByReceiptCode(currentScorer().getReceiptCode())
-                                                                                     .orElseThrow();
+                                                                                     .orElseThrow(GradeNotFoundException::new);
         return new QueryQualificationExamResponse(qualificationExamCase);
     }
 
     @Override
     public Score updateGraduation(UpdateGraduationRequest request) {
-        if (currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
-
+        if (!currentScorer().isGraduated()) throw new ApplicationTypeUnmatchedException();
 
         GraduationCase graduationCase = GraduationCase.builder()
                                                       .scorer(currentScorer())

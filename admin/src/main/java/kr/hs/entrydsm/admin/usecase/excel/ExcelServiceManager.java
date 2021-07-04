@@ -28,8 +28,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -46,21 +49,18 @@ public class ExcelServiceManager implements ExcelService {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
-    @Value("${munchkin.applicant-information-path}")
-    private String applicantInformationPath;
-
     @Override
-    public void createAdmissionTicket(long receiptCode) throws IOException {
-        getAdmissionTicket(receiptCode);
+    public void createAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException {
+        getAdmissionTicket(response, receiptCode);
     }
 
     @Override
-    public void createApplicantInformation() throws IOException {
-        getApplicationInformation();
+    public void createApplicantInformation(HttpServletResponse response) throws IOException {
+        getApplicationInformation(response);
     }
 
     @Override
-    public void getAllExcels() throws IOException {
+    public void getAllExcels(HttpServletResponse response) throws IOException {
         List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
         LocalDate now = LocalDate.now();
         Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
@@ -69,13 +69,13 @@ public class ExcelServiceManager implements ExcelService {
             throw new ApplicationPeriodNotOverException();
         }
 
-        getApplicationInformation();
+        getApplicationInformation(response);
         for(Long receiptCode : applicantReceiptCodes) {
-            getAdmissionTicket(receiptCode);
+            getAdmissionTicket(response, receiptCode);
         }
     }
 
-    private void getAdmissionTicket(long receiptCode) throws IOException {
+    private void getAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
 
@@ -97,10 +97,16 @@ public class ExcelServiceManager implements ExcelService {
         anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
         patriarch.createPicture(anchor, index);
 
-        admissionTicket.getWorkbook().write(new FileOutputStream(new File("../../../", userInfo.getExamCode() + "-수험표.xls")));
+        response.setContentType("ms-vnd/excel");
+        String formatFilename = "attachment;filename=\"";
+        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년MM월dd일_HH시mm분"));
+        String fileName = new String((formatFilename + userInfo.getExamCode() +  " 수험표 " + time + ".xls\"").getBytes("KSC5601"), "8859_1");
+        response.setHeader("Content-Disposition", fileName);
+
+        admissionTicket.getWorkbook().write(response.getOutputStream());
     }
 
-    private void getApplicationInformation() throws IOException {
+    private void getApplicationInformation(HttpServletResponse response) throws IOException {
         ApplicantInformation applicantInformation = new ApplicantInformation();
         applicantInformation.format();
         Sheet sheet = applicantInformation.getSheet();
@@ -214,7 +220,13 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(71).setCellValue(excelApplicants.get(i).getSelfIntroduce());
         }
 
-        applicantInformation.getWorkbook().write(new FileOutputStream(applicantInformationPath));
+        response.setContentType("ms-vnd/excel");
+        String formatFilename = "attachment;filename=\"지원자 목록";
+        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년MM월dd일_HH시mm분"));
+        String fileName = new String((formatFilename + time + ".xls\"").getBytes("KSC5601"), "8859_1");
+        response.setHeader("Content-Disposition", fileName);
+
+        applicantInformation.getWorkbook().write(response.getOutputStream());
     }
 
     private byte[] getObject(String fileName) throws IOException {

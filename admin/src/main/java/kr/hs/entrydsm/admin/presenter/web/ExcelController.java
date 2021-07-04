@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
@@ -21,20 +22,20 @@ public class ExcelController {
 
     @AdminJWTRequired
     @GetMapping("/admission-ticket/{receipt-code}")
-    public void createAdmissionTicket(@PathVariable("receipt-code") Long receiptCode) throws IOException {
-        excelService.createAdmissionTicket(receiptCode);
+    public void createAdmissionTicket(HttpServletResponse response, @PathVariable("receipt-code") Long receiptCode) throws IOException {
+        excelService.createAdmissionTicket(response, receiptCode);
     }
 
     @AdminJWTRequired
-    @GetMapping("/applicants")
-    public void createApplicantInformation() throws IOException {
-        excelService.createApplicantInformation();
+    @GetMapping( "/applicants")
+    public void createApplicantInformation(HttpServletResponse response) throws IOException {
+        excelService.createApplicantInformation(response);
     }
 
     @AdminJWTRequired
     @GetMapping
-    public void getAllExcels() throws IOException {
-        excelService.getAllExcels();
+    public void getAllExcels(HttpServletResponse response) throws IOException {
+        excelService.getAllExcels(response);
     }
 
 }

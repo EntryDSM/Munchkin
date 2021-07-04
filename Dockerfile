@@ -1,4 +1,6 @@
 FROM openjdk:11-jre-slim
-COPY ./main/build/libs/*.jar app.jar
 ENV TZ=Asia/Seoul
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN mkdir /munchkin /munchkin/log /munchkin/excel
+WORKDIR /munchkin
+COPY ./main/build/libs/*.jar ./app.jar
+ENTRYPOINT ["java","-jar","./app.jar"]

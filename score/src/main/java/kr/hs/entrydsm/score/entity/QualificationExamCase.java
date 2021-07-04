@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Getter
+@NoArgsConstructor
 @Entity(name = "tbl_qualification_exam_case")
 public class QualificationExamCase extends ApplicationCase {
     @Digits(integer = 3, fraction = 2)

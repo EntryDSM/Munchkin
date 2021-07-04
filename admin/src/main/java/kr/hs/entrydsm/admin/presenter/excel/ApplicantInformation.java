@@ -43,7 +43,8 @@ public class ApplicantInformation {
         sheet.setColumnWidth(8, 3000);
         sheet.setColumnWidth(11, 3000);
         sheet.setColumnWidth(12, 4000);
-        sheet.setColumnWidth(15, 3000);
+        sheet.setColumnWidth(14, 3500);
+        sheet.setColumnWidth(15, 4000);
 
         row.createCell(16).setCellValue("국어 1학년 1학기");
         row.createCell(17).setCellValue("국어 1학년 2학기");
@@ -99,7 +100,7 @@ public class ApplicantInformation {
         row.createCell(60).setCellValue("3학년 성적 총합");
         row.createCell(61).setCellValue("교과성적환산점수");
 
-        for (int index = 16 ; index <= 61 ; index++) { sheet.setColumnWidth(index, 4000); }
+        for (int index = 16 ; index <= 61 ; index++) { sheet.setColumnWidth(index, 5000); }
 
         row.createCell(62).setCellValue("봉사시간");
         row.createCell(63).setCellValue("봉사점수");

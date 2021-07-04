@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Getter
+@NoArgsConstructor
 @Entity(name = "tbl_graduation_case")
 public class GraduationCase extends ApplicationCase {
     private Integer volunteerTime;
@@ -108,9 +109,9 @@ public class GraduationCase extends ApplicationCase {
         int lastScoreIndex = scoresPerYear().length - 1;
 
         for (int i = 0 ; i < lastScoreIndex ; i++) {
-            gradeScores[i] = scoresPerYear[i].multiply(FIRST_SECOND_GRADE_RATE);
+            gradeScores[i] = scoresPerYear[i].multiply(FIRST_SECOND_GRADE_RATE).setScale(3, RoundingMode.HALF_UP);
         }
-        gradeScores[lastScoreIndex] = scoresPerYear[lastScoreIndex].multiply(THIRD_GRADE_RATE);
+        gradeScores[lastScoreIndex] = scoresPerYear[lastScoreIndex].multiply(THIRD_GRADE_RATE).setScale(3, RoundingMode.HALF_UP);
 
         return gradeScores;
     }

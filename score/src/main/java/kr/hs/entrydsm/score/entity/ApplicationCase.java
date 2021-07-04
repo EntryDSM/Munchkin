@@ -1,10 +1,12 @@
 package kr.hs.entrydsm.score.entity;
 
 import kr.hs.entrydsm.score.integrate.user.Scorer;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 public abstract class ApplicationCase {

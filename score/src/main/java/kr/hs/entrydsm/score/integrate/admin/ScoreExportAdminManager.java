@@ -3,7 +3,6 @@ package kr.hs.entrydsm.score.integrate.admin;
 import kr.hs.entrydsm.score.entity.*;
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
-import kr.hs.entrydsm.score.integrate.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +24,9 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     @Override
     public ApplicationStatusResponse getApplicationStatus() {
         return ApplicationStatusResponse.builder()
-                .commonScore(getScores(ApplicationType.COMMON))
-                .meisterScore(getScores(ApplicationType.MEISTER))
-                .specialScore(getScores(ApplicationType.SOCIAL))
+                .commonScore(getScores(Scorer.ApplicationType.COMMON))
+                .meisterScore(getScores(Scorer.ApplicationType.MEISTER))
+                .specialScore(getScores(Scorer.ApplicationType.SOCIAL))
                 .build();
     }
 
@@ -82,7 +81,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
         }
     }
 
-    private List<BigDecimal> getScores(ApplicationType applicationType) {
+    private List<BigDecimal> getScores(Scorer.ApplicationType applicationType) {
         return scoreStream().filter(score -> getScorerType(score).equals(applicationType))
                 .map(Score::getTotalScore).collect(Collectors.toList());
     }
@@ -91,7 +90,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
         return StreamSupport.stream(scoreRepository.findAll().spliterator(), false);
     }
 
-    private ApplicationType getScorerType(Score score) {
+    private Scorer.ApplicationType getScorerType(Score score) {
         return scorerRepository.findByReceiptCode(score.getReceiptCode()).getApplicationType();
     }
 
