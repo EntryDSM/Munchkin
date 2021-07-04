@@ -1,9 +1,10 @@
 package kr.hs.entrydsm.admin.usecase.excel;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ExcelService {
-    void createAdmissionTicket(long receiptCode) throws IOException;
-    void createApplicantInformation() throws IOException;
-    void getAllExcels() throws IOException;
+    void createAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException;
+    void createApplicantInformation(HttpServletResponse response) throws IOException;
+    void getAllExcels(HttpServletResponse response) throws IOException;
 }
