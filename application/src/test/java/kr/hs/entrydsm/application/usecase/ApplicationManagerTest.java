@@ -16,6 +16,8 @@ import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -240,9 +242,50 @@ class ApplicationManagerTest {
 
     @Test
     void getInformation() {
+
+        Mockito.when(applicationApplicantRepository
+                .getInformation(0L))
+                .thenReturn(
+                        Information.builder()
+                                .name("test1")
+                                .sex("MALE")
+                                .birthday("20040728")
+                                .parentName("test1parent")
+                                .telephoneNumber("01012345678")
+                                .parentTel("01087654321")
+                                .homeTel("0510231564")
+                                .address("homeaddr")
+                                .detailAddress("thisismyhome")
+                                .postCode("12345")
+                                .photoFileName("test.jpg")
+                                .build()
+                );
+
+        applicationProcessing.getInformation();
+
     }
 
     @Test
     void uploadPhoto() {
+
+        Mockito.when(applicationApplicantRepository
+                .getInformation(0L))
+                .thenReturn(
+                        Information.builder()
+                                .name("test1")
+                                .sex("MALE")
+                                .birthday("20040728")
+                                .parentName("test1parent")
+                                .telephoneNumber("01012345678")
+                                .parentTel("01087654321")
+                                .homeTel("0510231564")
+                                .address("homeaddr")
+                                .detailAddress("thisismyhome")
+                                .postCode("12345")
+                                .photoFileName("test.jpg")
+                                .build()
+                );
+
+        applicationProcessing.uploadPhoto(new MockMultipartFile("test.png", new byte[0]));
     }
 }
