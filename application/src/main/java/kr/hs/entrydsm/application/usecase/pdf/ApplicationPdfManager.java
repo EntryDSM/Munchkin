@@ -11,6 +11,7 @@ import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
 import kr.hs.entrydsm.application.usecase.exception.FinalSubmitRequiredException;
+import kr.hs.entrydsm.application.usecase.exception.ScoreNotFoundException;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,9 @@ public class ApplicationPdfManager implements ApplicationPdfService {
 
         if (applicant.getEducationalStatus() == null)
             throw new EducationalStatusNullException();
+
+        if (!scoreCalculator.isExists(receiptCode))
+            throw new ScoreNotFoundException();
 
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
