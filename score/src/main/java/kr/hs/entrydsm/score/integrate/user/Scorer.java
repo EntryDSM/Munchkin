@@ -34,8 +34,16 @@ public class Scorer extends ExternalEntity {
         PROSPECTIVE_GRADUATE, GRADUATE, QUALIFICATION_EXAM
     }
 
+    public boolean isMeister() {
+        return applicationType == ApplicationType.MEISTER;
+    }
 
-    public boolean isMeister() { return applicationType == ApplicationType.MEISTER; }
-    public boolean isQualificationExam() { return educationalStatus == EducationalStatus.QUALIFICATION_EXAM; }
-    public boolean isGraduated() { return educationalStatus == EducationalStatus.GRADUATE; }
+    public boolean isQualificationExam() {
+        return educationalStatus == EducationalStatus.QUALIFICATION_EXAM;
+    }
+
+    public boolean isGraduated() {
+        return educationalStatus == EducationalStatus.GRADUATE ||
+                educationalStatus == EducationalStatus.PROSPECTIVE_GRADUATE;
+    }
 }
