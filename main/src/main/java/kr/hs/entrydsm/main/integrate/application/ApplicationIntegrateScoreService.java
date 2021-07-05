@@ -36,7 +36,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     @Override
     public boolean isExists(long receiptCode) {
-        return false;
+        return scoreService.isExistsByReceiptCode(receiptCode);
     }
 
     private CalculatedScore getCalculatedScore(Application application) {
@@ -49,11 +49,33 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     private CalculatedScore getGraduationScore(GraduationApplication application) {
-        return null;
+        Score score = scoreService.findByReceiptCode(application.getReceiptCode());
+
+        return CalculatedScore.builder()
+                .receiptCode(application.getReceiptCode())
+                .attendanceScore(score.getAttendanceScore())
+                .volunteerScore(score.getVolunteerScore())
+                .conversionScore(score.getTotalGradeScore())
+                .totalFirstGradeScore(score.getFirstGradeScore())
+                .totalSecondGradeScore(score.getSecondGradeScore())
+                .totalThirdGradeScore(score.getThirdGradeScore())
+                .totalScoreFirstRound(score.getTotalScore())
+                .build();
     }
 
     private CalculatedScore getQualificationExamScore(QualificationExamApplication application) {
-        return null;
+        Score score = scoreService.findByReceiptCode(application.getReceiptCode());
+
+        return CalculatedScore.builder()
+                .receiptCode(application.getReceiptCode())
+                .attendanceScore(score.getAttendanceScore())
+                .volunteerScore(score.getVolunteerScore())
+                .conversionScore(score.getTotalGradeScore())
+                .totalFirstGradeScore(null)
+                .totalSecondGradeScore(null)
+                .totalThirdGradeScore(null)
+                .totalScoreFirstRound(score.getTotalScore())
+                .build();
     }
 
     private CalculatedScore entityToDTO(Score score) {

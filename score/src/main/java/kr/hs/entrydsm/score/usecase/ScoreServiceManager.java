@@ -71,6 +71,16 @@ public class ScoreServiceManager implements ScoreService {
         return updateScore(qualificationExamCase);
     }
 
+    @Override
+    public Score findByReceiptCode(long receiptCode) {
+        return scoreRepository.findByReceiptCode(receiptCode);
+    }
+
+    @Override
+    public boolean isExistsByReceiptCode(long receiptCode) {
+        return scoreRepository.existsByReceiptCode(receiptCode);
+    }
+
     private Score updateScore(ApplicationCase applicationCase) {
         Score score = new Score(currentScorer().getReceiptCode(), applicationCase);
         return scoreRepository.save(score);
