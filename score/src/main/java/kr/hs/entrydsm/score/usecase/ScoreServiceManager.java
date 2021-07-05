@@ -38,7 +38,9 @@ public class ScoreServiceManager implements ScoreService {
 
     @Override
     public Score updateGraduation(UpdateGraduationRequest request) {
-        if (!currentScorer().isGraduated()) throw new ApplicationTypeUnmatchedException();
+        if (!currentScorer().isGraduated() && !currentScorer().isProspectiveGraduate()) {
+            throw new ApplicationTypeUnmatchedException();
+        }
 
         GraduationCase graduationCase = GraduationCase.builder()
                                                       .scorer(currentScorer())
