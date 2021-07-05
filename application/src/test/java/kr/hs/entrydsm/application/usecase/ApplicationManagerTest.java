@@ -2,6 +2,7 @@ package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.builder.GraduationApplicationBuilder;
+import kr.hs.entrydsm.application.builder.QualificationExamApplicationBuilder;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
@@ -10,6 +11,7 @@ import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationReq
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.EducationalStatusUnmatchedException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
@@ -83,7 +85,7 @@ class ApplicationManagerTest {
     }
 
     @Test
-    public void writeApplicationType() {
+    public void writeGraduateApplicationType() {
         ApplicationRequest request =
                 new ApplicationRequest("GRADUATE", "MEISTER",
                         false, null,
@@ -104,6 +106,28 @@ class ApplicationManagerTest {
     }
 
     @Test
+    public void writeQualificationApplicationType() {
+        ApplicationRequest request =
+                new ApplicationRequest("QUALIFICATION_EXAM", "MEISTER",
+                        false, null,
+                        "202003");
+
+        Mockito.when(qualificationExamApplicationRepository.existsByReceiptCode(0L))
+                .thenReturn(true);
+
+        Mockito.when(qualificationExamApplicationRepository.findByReceiptCode(0L))
+                .thenReturn(
+                        Optional.of(
+                                QualificationExamApplication.builder()
+                                        .receiptCode(0L)
+                                        .build()
+                        )
+                );
+
+        applicationProcessing.writeApplicationType(request);
+    }
+
+    @Test
     public void writeGraduatedInformation() {
         GraduatedInformationRequest request =
                 new GraduatedInformationRequest("01012345678",
@@ -119,6 +143,22 @@ class ApplicationManagerTest {
 
         applicationProcessing.writeGraduatedInformation(request);
 
+    }
+
+    @Test
+    public void invalidEducationStatusQualification() {
+
+        GraduatedInformationRequest request =
+                new GraduatedInformationRequest("01012345678",
+                        "1111111", "1234");
+
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn("QUALIFICATION_EXAM");
+
+        assertThrows(EducationalStatusUnmatchedException.class, () -> {
+            applicationProcessing.writeGraduatedInformation(request);
+        });
     }
 
     @Test
@@ -177,7 +217,7 @@ class ApplicationManagerTest {
     }
 
     @Test
-    void getApplicationType() {
+    void getGraduateApplicationType() {
 
         Mockito.when(applicationApplicantRepository
                 .getEducationalStatus(0L))
@@ -197,6 +237,27 @@ class ApplicationManagerTest {
 
         applicationProcessing.getApplicationType();
 
+    }
+
+    @Test
+    void getQualificationApplicationType() {
+        Mockito.when(applicationApplicantRepository
+                .getEducationalStatus(0L))
+                .thenReturn("QUALIFICATION_EXAM");
+
+        Mockito.when(qualificationExamApplicationRepository
+                .findByReceiptCode(0L))
+                .thenReturn(Optional.of(
+                        QualificationExamApplicationBuilder.build(0L)
+                ));
+
+        Mockito.when(applicationApplicantRepository
+                .getApplicationType(0L))
+                .thenReturn(
+                        ApplicationResponse.builder().build()
+                );
+
+        applicationProcessing.getApplicationType();
     }
 
     @Test
