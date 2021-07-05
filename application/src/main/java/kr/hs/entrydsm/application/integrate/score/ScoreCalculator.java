@@ -6,5 +6,5 @@ import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 public interface ScoreCalculator {
     Iterable<CalculatedScore> getAll();
     CalculatedScore calculateScore(Application application);
-    boolean isAnyGradeNull(long receiptCode);
+    boolean isExists(long receiptCode);
 }

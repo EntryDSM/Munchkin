@@ -35,7 +35,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     @Override
-    public boolean isAnyGradeNull(long receiptCode) { // 총 점수 관련된 컬럼 중에서 하나라도 null이 있으면 true를 반환하는 함수입니다~~
+    public boolean isExists(long receiptCode) {
         return false;
     }
 
@@ -54,16 +54,6 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     private CalculatedScore getQualificationExamScore(QualificationExamApplication application) {
-        QualificationExamGrade qualificationExamGrade = makeQualificationExamGrade(application);
-
-        Score score = scoreService.updateQualificationExam(UpdateQualificationExamRequest.builder()
-                .gedAverageScore(qualificationExamGrade.getAverageScore())
-                .build());
-
-        return entityToDTO(score);
-    }
-
-    private QualificationExamGrade makeQualificationExamGrade(QualificationExamApplication application) {
         return null;
     }
 
