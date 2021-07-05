@@ -35,36 +35,47 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
     }
 
     @Override
-    public boolean isAnyGradeNull(long receiptCode) { // 총 점수 관련된 컬럼 중에서 하나라도 null이 있으면 true를 반환하는 함수입니다~~
-        return false;
+    public boolean isExists(long receiptCode) {
+        return scoreService.isExistsByReceiptCode(receiptCode);
     }
 
     private CalculatedScore getCalculatedScore(Application application) {
         CalculatedScore result;
-        if (application.isGraduation()) {
+        if (application.isGraduation())
             result = getGraduationScore((GraduationApplication) application);
-        } else {
+        else
             result = getQualificationExamScore((QualificationExamApplication) application);
-        }
         return result;
     }
 
     private CalculatedScore getGraduationScore(GraduationApplication application) {
-        return null;
+        Score score = scoreService.findByReceiptCode(application.getReceiptCode());
+
+        return CalculatedScore.builder()
+                .receiptCode(application.getReceiptCode())
+                .attendanceScore(score.getAttendanceScore())
+                .volunteerScore(score.getVolunteerScore())
+                .conversionScore(score.getTotalGradeScore())
+                .totalFirstGradeScore(score.getFirstGradeScore())
+                .totalSecondGradeScore(score.getSecondGradeScore())
+                .totalThirdGradeScore(score.getThirdGradeScore())
+                .totalScoreFirstRound(score.getTotalScore())
+                .build();
     }
 
     private CalculatedScore getQualificationExamScore(QualificationExamApplication application) {
-        QualificationExamGrade qualificationExamGrade = makeQualificationExamGrade(application);
+        Score score = scoreService.findByReceiptCode(application.getReceiptCode());
 
-        Score score = scoreService.updateQualificationExam(UpdateQualificationExamRequest.builder()
-                .gedAverageScore(qualificationExamGrade.getAverageScore())
-                .build());
-
-        return entityToDTO(score);
-    }
-
-    private QualificationExamGrade makeQualificationExamGrade(QualificationExamApplication application) {
-        return null;
+        return CalculatedScore.builder()
+                .receiptCode(application.getReceiptCode())
+                .attendanceScore(score.getAttendanceScore())
+                .volunteerScore(score.getVolunteerScore())
+                .conversionScore(score.getTotalGradeScore())
+                .totalFirstGradeScore(null)
+                .totalSecondGradeScore(null)
+                .totalThirdGradeScore(null)
+                .totalScoreFirstRound(score.getTotalScore())
+                .build();
     }
 
     private CalculatedScore entityToDTO(Score score) {

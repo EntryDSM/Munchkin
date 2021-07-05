@@ -14,4 +14,7 @@ public interface ScoreService {
 
     Score updateGraduation(UpdateGraduationRequest request);
     Score updateQualificationExam(UpdateQualificationExamRequest request);
+    Score findByReceiptCode(long receiptCode);
+
+    boolean isExistsByReceiptCode(long receiptCode);
 }

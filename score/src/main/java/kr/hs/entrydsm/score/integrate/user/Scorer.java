@@ -1,7 +1,5 @@
 package kr.hs.entrydsm.score.integrate.user;
 
-import kr.hs.entrydsm.score.integrate.user.enumeration.ApplicationType;
-import kr.hs.entrydsm.score.integrate.user.enumeration.EducationalStatus;
 import kr.hs.entrydsm.score.integrate.ExternalEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,10 +20,33 @@ public class Scorer extends ExternalEntity {
     }
 
     private final long receiptCode;
+
     private final ApplicationType applicationType;
+
+    public enum ApplicationType {
+        COMMON, MEISTER, SOCIAL
+    }
+
+
     private final EducationalStatus educationalStatus;
 
-    public boolean isMeister() { return applicationType == ApplicationType.MEISTER; }
-    public boolean isQualificationExam() { return educationalStatus == EducationalStatus.QUALIFICATION_EXAM; }
-    public boolean isGraduated() { return educationalStatus == EducationalStatus.GRADUATE; }
+    public enum EducationalStatus {
+        PROSPECTIVE_GRADUATE, GRADUATE, QUALIFICATION_EXAM
+    }
+
+    public boolean isMeister() {
+        return applicationType == ApplicationType.MEISTER;
+    }
+
+    public boolean isQualificationExam() {
+        return educationalStatus == EducationalStatus.QUALIFICATION_EXAM;
+    }
+
+    public boolean isProspectiveGraduate() {
+        return educationalStatus == EducationalStatus.PROSPECTIVE_GRADUATE;
+    }
+
+    public boolean isGraduated() {
+        return educationalStatus == EducationalStatus.GRADUATE;
+    }
 }

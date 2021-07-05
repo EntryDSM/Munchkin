@@ -38,7 +38,9 @@ public class ScoreServiceManager implements ScoreService {
 
     @Override
     public Score updateGraduation(UpdateGraduationRequest request) {
-        if (currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
+        if (!currentScorer().isGraduated() && !currentScorer().isProspectiveGraduate()) {
+            throw new ApplicationTypeUnmatchedException();
+        }
 
         GraduationCase graduationCase = GraduationCase.builder()
                                                       .scorer(currentScorer())
@@ -69,6 +71,16 @@ public class ScoreServiceManager implements ScoreService {
                                                                            .build();
         qualificationExamCaseRepository.save(qualificationExamCase);
         return updateScore(qualificationExamCase);
+    }
+
+    @Override
+    public Score findByReceiptCode(long receiptCode) {
+        return scoreRepository.findByReceiptCode(receiptCode);
+    }
+
+    @Override
+    public boolean isExistsByReceiptCode(long receiptCode) {
+        return scoreRepository.existsByReceiptCode(receiptCode);
     }
 
     private Score updateScore(ApplicationCase applicationCase) {

@@ -48,11 +48,11 @@ public class Applicant {
     private String studyPlan;
 
     public boolean isMale() {
-        return sex.equals("MALE");
+        return getFalseIfNull(sex, "MALE");
     }
 
     public boolean isFemale() {
-        return sex.equals("FEMALE");
+        return getFalseIfNull(sex, "FEMALE");
     }
 
     public boolean hasSchoolInfo() {
@@ -68,59 +68,59 @@ public class Applicant {
     }
 
     public boolean isQualificationExam() {
-        return educationalStatus.equals(EducationalStatus.QUALIFICATION_EXAM);
+        return getFalseIfNull(educationalStatus, EducationalStatus.QUALIFICATION_EXAM);
     }
 
     public boolean isGraduate() {
-        return educationalStatus.equals(EducationalStatus.GRADUATE);
+        return getFalseIfNull(educationalStatus, EducationalStatus.GRADUATE);
     }
 
     public boolean isProspectiveGraduate() {
-        return educationalStatus.equals(EducationalStatus.PROSPECTIVE_GRADUATE);
+        return getFalseIfNull(educationalStatus, EducationalStatus.PROSPECTIVE_GRADUATE);
     }
 
     public boolean isBasicLiving() {
-        return applicationRemark.equals(ApplicationRemark.BASIC_LIVING);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.BASIC_LIVING);
     }
 
     public boolean isFromNorth() {
-        return applicationRemark.equals(ApplicationRemark.FROM_NORTH);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.FROM_NORTH);
     }
 
     public boolean isLowestIncome() {
-        return applicationRemark.equals(ApplicationRemark.LOWEST_INCOME);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.LOWEST_INCOME);
     }
 
     public boolean isMulticultural() {
-        return applicationRemark.equals(ApplicationRemark.MULTICULTURAL);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.MULTICULTURAL);
     }
 
     public boolean isOneParent() {
-        return applicationRemark.equals(ApplicationRemark.ONE_PARENT);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.ONE_PARENT);
     }
 
     public boolean isTeenHouseholder() {
-        return applicationRemark.equals(ApplicationRemark.TEEN_HOUSEHOLDER);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.TEEN_HOUSEHOLDER);
     }
 
     public boolean isPrivilegedAdmission() {
-        return applicationRemark.equals(ApplicationRemark.PRIVILEGED_ADMISSION);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.PRIVILEGED_ADMISSION);
     }
 
     public boolean isNationalMerit() {
-        return applicationRemark.equals(ApplicationRemark.NATIONAL_MERIT);
+        return getFalseIfNull(applicationRemark, ApplicationRemark.NATIONAL_MERIT);
     }
 
     public boolean isCommonApplicationType() {
-        return applicationType.equals(ApplicationType.COMMON);
+        return getFalseIfNull(applicationType, ApplicationType.COMMON);
     }
 
     public boolean isMeisterApplicationType() {
-        return applicationType.equals(ApplicationType.MEISTER);
+        return getFalseIfNull(applicationType, ApplicationType.MEISTER);
     }
 
     public boolean isSocialApplicationType() {
-        return applicationType.equals(ApplicationType.SOCIAL);
+        return getFalseIfNull(applicationType, ApplicationType.SOCIAL);
     }
 
     public boolean isRecommendationsRequired() {
@@ -128,6 +128,10 @@ public class Applicant {
     }
 
     public boolean isGraduation() {
-        return educationalStatus.equals(EducationalStatus.GRADUATE) || educationalStatus.equals(EducationalStatus.PROSPECTIVE_GRADUATE);
+        return isGraduate() || isProspectiveGraduate();
+    }
+
+    private <T> boolean getFalseIfNull(T object, T comparison) {
+        return object != null && object.equals(comparison);
     }
 }

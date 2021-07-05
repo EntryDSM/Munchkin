@@ -11,7 +11,7 @@ import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
-import kr.hs.entrydsm.application.usecase.exception.NullGradeExistException;
+import kr.hs.entrydsm.application.usecase.exception.ScoreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +32,8 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
 
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
 
-        if (scoreCalculator.isAnyGradeNull(receiptCode))
-            throw new NullGradeExistException();
+        if (scoreCalculator.isExists(receiptCode))
+            throw new ScoreNotFoundException();
 
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return ReportCard.from(application, calculatedScore);
