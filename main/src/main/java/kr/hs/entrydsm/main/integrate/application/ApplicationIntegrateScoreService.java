@@ -41,11 +41,10 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     private CalculatedScore getCalculatedScore(Application application) {
         CalculatedScore result;
-        if (application.isGraduation()) {
+        if (application.isGraduation())
             result = getGraduationScore((GraduationApplication) application);
-        } else {
+        else
             result = getQualificationExamScore((QualificationExamApplication) application);
-        }
         return result;
     }
 
