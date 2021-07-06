@@ -5,17 +5,22 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.utils.PdfMerger;
+import kr.hs.entrydsm.application.config.ConverterPropertiesCreator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static kr.hs.entrydsm.application.config.PdfConfig.createConverterProperties;
-
+@Component
+@RequiredArgsConstructor
 public class PdfProcessor {
 
-    public static ByteArrayOutputStream concat(ByteArrayOutputStream first, ByteArrayOutputStream second) {
+    private final ConverterPropertiesCreator converterPropertiesCreator;
+
+    public ByteArrayOutputStream concat(ByteArrayOutputStream first, ByteArrayOutputStream second) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfDocument mergedDocument = new PdfDocument(new PdfWriter(outputStream));
         PdfMerger merger = new PdfMerger(mergedDocument);
@@ -30,13 +35,13 @@ public class PdfProcessor {
         return outputStream;
     }
 
-    public static ByteArrayOutputStream convertHtmlToPdf(String html) {
+    public ByteArrayOutputStream convertHtmlToPdf(String html) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        HtmlConverter.convertToPdf(html, outputStream, createConverterProperties());
+        HtmlConverter.convertToPdf(html, outputStream, converterPropertiesCreator.createConverterProperties());
         return outputStream;
     }
 
-    private static PdfDocument getPdfDocument(ByteArrayOutputStream outputStream) {
+    private PdfDocument getPdfDocument(ByteArrayOutputStream outputStream) {
         try {
             InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
             return new PdfDocument(new PdfReader(inputStream));
@@ -46,7 +51,7 @@ public class PdfProcessor {
         return null;
     }
 
-    private static void mergeDocument(PdfMerger merger, PdfDocument document) {
+    private void mergeDocument(PdfMerger merger, PdfDocument document) {
         if (document != null) {
             merger.merge(document, 1, document.getNumberOfPages());
             document.close();
