@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.usecase.dto.score;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,28 +12,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SpecialScoreResponse {
 
-    @JsonFormat(pattern = "81-90")
+    @JsonProperty(value = "81-90")
     private int score81_90;
 
-    @JsonFormat(pattern = "71-80")
+    @JsonProperty(value = "71-80")
     private int score71_80;
 
-    @JsonFormat(pattern = "61-70")
+    @JsonProperty(value = "61-70")
     private int score61_70;
 
-    @JsonFormat(pattern = "51-60")
+    @JsonProperty(value = "51-60")
     private int score51_60;
 
-    @JsonFormat(pattern = "41-50")
+    @JsonProperty(value = "41-50")
     private int score41_50;
 
-    @JsonFormat(pattern = "31-40")
+    @JsonProperty(value = "31-40")
     private int score31_40;
 
-    @JsonFormat(pattern = "21-30")
+    @JsonProperty(value = "21-30")
     private int score21_30;
 
-    @JsonFormat(pattern = "-20")
+    @JsonProperty(value = "-20")
     private int score_20;
 
     private Integer specialCount;
