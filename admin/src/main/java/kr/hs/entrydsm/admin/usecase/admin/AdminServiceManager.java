@@ -46,7 +46,6 @@ public class AdminServiceManager implements AdminService {
 
         for(BigDecimal scoreDecimal : applicationStatus.getCommonScores()) {
             double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            System.out.println(score);
             commonScore.addScore(Math.round(score));
         }
 
