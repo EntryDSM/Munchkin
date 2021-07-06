@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Getter
 @Builder
@@ -14,9 +15,6 @@ import javax.validation.constraints.NotBlank;
 public class ScheduleRequest {
 
     @NotBlank
-    private String type;
-
-    @NotBlank
-    private String date;
+    private List<Schedules> schedules;
 
 }
