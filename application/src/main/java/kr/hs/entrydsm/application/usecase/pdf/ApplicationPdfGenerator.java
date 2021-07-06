@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 public class ApplicationPdfGenerator {
 
+    private final PdfProcessor pdfProcessor;
     private final PdfDataConverter pdfDataConverter;
     private final TemplateProcessor templateProcessor;
 
@@ -27,8 +28,8 @@ public class ApplicationPdfGenerator {
 
         ByteArrayOutputStream result = getTemplateFileNames(applicant).parallelStream()
                 .map(template -> templateProcessor.convertTemplateIntoHtmlString(template, data.toMap()))
-                .map(PdfProcessor::convertHtmlToPdf)
-                .reduce(PdfProcessor::concat)
+                .map(pdfProcessor::convertHtmlToPdf)
+                .reduce(pdfProcessor::concat)
                 .orElseGet(() -> (ByteArrayOutputStream) ByteArrayOutputStream.nullOutputStream());
 
         return result.toByteArray();

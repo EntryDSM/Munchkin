@@ -37,3 +37,5 @@ munchkin:
     name: munchkin.log
     path: ${LOG_PATH:/}
     size: 10 # 10mb
+  font:
+    path: ${FONT_PATH:/fonts}
