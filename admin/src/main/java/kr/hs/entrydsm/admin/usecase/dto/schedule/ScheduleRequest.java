@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -14,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleRequest {
 
-    @NotBlank
     private List<Schedules> schedules;
 
 }
