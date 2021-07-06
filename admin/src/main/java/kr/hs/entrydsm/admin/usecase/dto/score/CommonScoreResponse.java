@@ -33,6 +33,10 @@ public class CommonScoreResponse {
     @JsonFormat(pattern = "-80")
     private int score_80;
 
+    private Integer commonCount;
+
+    private Double commonCompetitionRate;
+
     public void addScore(double score) {
         if (score <= 80) score_80++;
         else if (score <= 90) score81_90++;
@@ -42,6 +46,11 @@ public class CommonScoreResponse {
         else if (score <= 130) score121_130++;
         else if (score <= 140) score131_140++;
         else if (score <= 150) score141_150++;
+    }
+
+    public void updateCountAndRate(Integer count, Double competitionRate) {
+        this.commonCount = count;
+        this.commonCompetitionRate = competitionRate;
     }
 
 }

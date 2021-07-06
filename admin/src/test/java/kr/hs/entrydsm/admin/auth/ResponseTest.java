@@ -43,12 +43,6 @@ public class ResponseTest extends ResponseBaseTest {
         assertNull(RECEIPT_STATUS_RESPONSE.getCommonScore());
         assertNull(RECEIPT_STATUS_RESPONSE.getMeisterScore());
         assertNull(RECEIPT_STATUS_RESPONSE.getSocialScore());
-        assertTrue(RECEIPT_STATUS_RESPONSE.getCommonCount()==0);
-        assertTrue(RECEIPT_STATUS_RESPONSE.getCommonCompetitionRate()==0.0);
-        assertTrue(RECEIPT_STATUS_RESPONSE.getMeisterCount()==0);
-        assertTrue(RECEIPT_STATUS_RESPONSE.getMeisterCompetitionRate()==0.0);
-        assertTrue(RECEIPT_STATUS_RESPONSE.getSocialCount()==0);
-        assertTrue(RECEIPT_STATUS_RESPONSE.getSocialCompetitionRate()==0.0);
     }
 
     @Test

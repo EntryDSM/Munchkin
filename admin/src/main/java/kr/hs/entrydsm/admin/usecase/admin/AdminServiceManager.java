@@ -59,18 +59,17 @@ public class AdminServiceManager implements AdminService {
             meisterScore.addScore(Math.round(score));
         }
 
+        commonScore.updateCountAndRate(commonCount, commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT);
+        meisterScore.updateCountAndRate(meisterCount, meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT);
+        socialScore.updateCountAndRate(socialCount, socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT);
+
+
         return ReceiptStatusResponse.builder()
                 .totalApplicantCount(totalApplicantCount)
                 .totalCompetitionRate(totalCompetitionRate)
                 .commonScore(commonScore)
                 .meisterScore(meisterScore)
                 .socialScore(socialScore)
-                .commonCount(commonCount)
-                .commonCompetitionRate(commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)
-                .meisterCount(meisterCount)
-                .meisterCompetitionRate(meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT)
-                .socialCount(socialCount)
-                .socialCompetitionRate(socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)
                 .build();
     }
 

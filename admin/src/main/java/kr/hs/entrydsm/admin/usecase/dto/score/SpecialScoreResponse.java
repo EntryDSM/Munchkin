@@ -36,6 +36,10 @@ public class SpecialScoreResponse {
     @JsonFormat(pattern = "-20")
     private int score_20;
 
+    private Integer specialCount;
+
+    private Double specialCompetitionRate;
+
     public void addScore(double score) {
         if (score <= 20) score_20++;
         else if(score <= 30) score21_30++;
@@ -45,6 +49,11 @@ public class SpecialScoreResponse {
         else if(score <= 70) score61_70++;
         else if(score <= 80) score71_80++;
         else if (score <= 90) score81_90++;
+    }
+
+    public void updateCountAndRate(Integer count, Double competitionRate) {
+        this.specialCount = count;
+        this.specialCompetitionRate = competitionRate;
     }
 
 }
