@@ -36,11 +36,11 @@ public class ScheduleServiceManager implements ScheduleService {
 
     @Override
     public ScheduleResponse getSchedules() {
-        List<Schedule> schedule = scheduleRepository.findAllBy();
-        if (schedule.size() == 0) {
+
+        if (scheduleRepository.findAllBy().size() == 0) {
             createSchedules();
         }
-        
+        List<Schedule> schedule = scheduleRepository.findAllBy();
         List<Schedules> schedules = new ArrayList<>();
 
         for (Schedule s : schedule) {
