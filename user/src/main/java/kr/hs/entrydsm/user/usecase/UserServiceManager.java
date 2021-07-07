@@ -193,7 +193,7 @@ public class UserServiceManager implements UserAuthService, UserService {
         String refreshToken = tokenProvider.generateRefreshToken(receiptCode);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Set-Cookie",
-                String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/; domain=entrydsm.hs.kr", refreshToken, getExpireDateByString()));
+                String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/; domain=localhost:3002", refreshToken, getExpireDateByString()));
 
         refreshTokenRepository.findById(receiptCode)
                 .or(() -> Optional.of(new RefreshToken(receiptCode, refreshToken, refreshTokenExpiration)))
