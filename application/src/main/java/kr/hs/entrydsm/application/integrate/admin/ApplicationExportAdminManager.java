@@ -32,7 +32,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
 
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
 
-        if (scoreCalculator.isExists(receiptCode))
+        if (!scoreCalculator.isExists(receiptCode))
             throw new ScoreNotFoundException();
 
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);

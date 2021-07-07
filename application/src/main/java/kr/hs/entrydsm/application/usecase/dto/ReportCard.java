@@ -89,7 +89,7 @@ public class ReportCard {
         return calculatedScore.getConversionScore();
     }
 
-    public int attendanceScore() {
+    public int getAttendanceScore() {
         return calculatedScore.getAttendanceScore();
     }
 }
