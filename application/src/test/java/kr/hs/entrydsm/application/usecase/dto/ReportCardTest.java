@@ -31,6 +31,22 @@ public class ReportCardTest {
                             .build()
             ).build();
 
+    private final ReportCard qualificationExamReportCard = ReportCard.qualificationBuilder()
+            .receiptCode(1)
+            .averageScore(BigDecimal.TEN)
+            .calculatedScore(
+                    CalculatedScore.builder()
+                            .receiptCode(1)
+                            .attendanceScore(0)
+                            .volunteerScore(null)
+                            .conversionScore(null)
+                            .totalFirstGradeScore(null)
+                            .totalSecondGradeScore(null)
+                            .totalThirdGradeScore(null)
+                            .totalScoreFirstRound(BigDecimal.TEN)
+                            .build()
+            ).build();
+
     @Test
     public void graduationReportCardValueCheck() {
         assertThat(graduationReportCard.getReceiptCode()).isEqualTo(1);
@@ -45,6 +61,24 @@ public class ReportCardTest {
         assertThat(graduationReportCard.getGradeScore()).isEqualTo(BigDecimal.TEN);
         assertThat(graduationReportCard.getVolunteerScore()).isEqualTo(BigDecimal.TEN);
         assertThat(graduationReportCard.getTotalScore()).isEqualTo(BigDecimal.TEN);
+        assertThat(graduationReportCard.getAttendanceScore()).isEqualTo(10);
+    }
+
+    @Test
+    public void qualificationExamReportCardValueCheck() {
+        assertThat(qualificationExamReportCard.getReceiptCode()).isEqualTo(1);
+        assertThat(qualificationExamReportCard.getIsGraduated()).isNull();
+        assertThat(qualificationExamReportCard.getSchoolName()).isNull();
+        assertThat(qualificationExamReportCard.getSchoolTel()).isNull();
+        assertThat(qualificationExamReportCard.getVolunteerTime()).isNull();
+        assertThat(qualificationExamReportCard.getLatenessCount()).isNull();
+        assertThat(qualificationExamReportCard.getEarlyLeaveCount()).isNull();
+        assertThat(qualificationExamReportCard.getLectureAbsenceCount()).isNull();
+        assertThat(qualificationExamReportCard.getDayAbsenceCount()).isNull();
+        assertThat(qualificationExamReportCard.getGradeScore()).isNull();
+        assertThat(qualificationExamReportCard.getVolunteerScore()).isNull();
+        assertThat(qualificationExamReportCard.getTotalScore()).isEqualTo(BigDecimal.TEN);
+        assertThat(qualificationExamReportCard.getAttendanceScore()).isEqualTo(0);
     }
 
 }
