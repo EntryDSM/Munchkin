@@ -15,4 +15,5 @@ public interface UserService {
     void sendPasswordAuthCode(EmailRequest emailRequest);
     void sendAuthCode(EmailRequest emailRequest);
     void verifyAuthCode(AuthCodeRequest authCodeRequest);
+    void submitFinally();
 }
