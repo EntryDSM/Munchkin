@@ -19,4 +19,6 @@ public interface ScheduleRepositoryManager extends CrudRepository<Schedule, Sche
     @Override
     Optional<Schedule> findByYearAndType(String year, Type type);
 
+    @Override
+    Schedule save(Schedule schedule);
 }
