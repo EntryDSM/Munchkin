@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RequiredArgsConstructor
 @Published
 @RequestMapping("/admin/schedules")
@@ -22,7 +20,7 @@ public class ScheduleController {
     @AdminJWTRequired
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping
-    public void updateSchedules(@RequestBody @Valid ScheduleRequest scheduleRequest) {
+    public void updateSchedules(@RequestBody ScheduleRequest scheduleRequest) {
         scheduleService.updateSchedule(scheduleRequest);
     }
 

@@ -23,16 +23,4 @@ public class ReceiptStatusResponse {
 
     private SpecialScoreResponse socialScore;
 
-    private Integer commonCount;
-
-    private Double commonCompetitionRate;
-
-    private Integer meisterCount;
-
-    private Double meisterCompetitionRate;
-
-    private Integer socialCount;
-
-    private Double socialCompetitionRate;
-
 }

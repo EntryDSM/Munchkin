@@ -25,10 +25,10 @@ public class AdminServiceManager implements AdminService {
     private final MainRepository mainRepository;
     private final ScheduleRepository scheduleRepository;
 
-    private static final double RECRUITMENT_NUMBER_OF_PEOPLE = 80.0;
+    private static final double RECRUITMENT_NUMBER_OF_PEOPLE = 72.0;
     private static final double COMMON_ADMISSION_NUMBER_OF_RECRUITMENT = 40.0;
-    private static final double MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT = 36.0;
-    private static final double SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT = 4.0;
+    private static final double MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT = 18.0;
+    private static final double SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT = 2.0;
 
     @Override
     public ReceiptStatusResponse getApplyStaticsStatistics() {
@@ -59,18 +59,17 @@ public class AdminServiceManager implements AdminService {
             meisterScore.addScore(Math.round(score));
         }
 
+        commonScore.updateCountAndRate(commonCount, commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT);
+        meisterScore.updateCountAndRate(meisterCount, meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT);
+        socialScore.updateCountAndRate(socialCount, socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT);
+
+
         return ReceiptStatusResponse.builder()
                 .totalApplicantCount(totalApplicantCount)
                 .totalCompetitionRate(totalCompetitionRate)
                 .commonScore(commonScore)
                 .meisterScore(meisterScore)
                 .socialScore(socialScore)
-                .commonCount(commonCount)
-                .commonCompetitionRate(commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)
-                .meisterCount(meisterCount)
-                .meisterCompetitionRate(meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT)
-                .socialCount(socialCount)
-                .socialCompetitionRate(socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)
                 .build();
     }
 

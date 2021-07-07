@@ -233,7 +233,7 @@
     </tr>
     <tr class="thirdTr">
         <td class="firstTd">주 소</td>
-        <td colspan="5" class="addressblank" th:text="|${address} ${detailAddress}|"></td>
+        <td colspan="5" class="addressblank" th:text="|${address}|"></td>
     </tr>
     <tr></tr>
     <tr class="fifthTr">
@@ -293,7 +293,7 @@
             <br/>
             <br/>
             <p class="date">
-                <span th:text="${year}년">2020년</span>
+                <span th:text="${year} + '년'">2020년</span>
                 <span>월</span>
                 <span>일</span>
             </p>

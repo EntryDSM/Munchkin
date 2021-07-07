@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.admin.usecase.dto.score;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -9,29 +9,33 @@ import lombok.*;
 @AllArgsConstructor
 public class CommonScoreResponse {
 
-    @JsonFormat(pattern = "141-150")
+    @JsonProperty(value = "141-150")
     private int score141_150;
 
-    @JsonFormat(pattern = "131-140")
+    @JsonProperty(value = "131-140")
     private int score131_140;
 
-    @JsonFormat(pattern = "121-130")
+    @JsonProperty(value = "121-130")
     private int score121_130;
 
-    @JsonFormat(pattern = "111-120")
+    @JsonProperty(value = "111-120")
     private int score111_120;
 
-    @JsonFormat(pattern = "101-110")
+    @JsonProperty(value = "101-110")
     private int score101_110;
 
-    @JsonFormat(pattern = "91-100")
+    @JsonProperty(value = "91-100")
     private int score91_100;
 
-    @JsonFormat(pattern = "81-90")
+    @JsonProperty(value = "81-90")
     private int score81_90;
 
-    @JsonFormat(pattern = "-80")
+    @JsonProperty(value = "-80")
     private int score_80;
+
+    private Integer commonCount;
+
+    private Double commonCompetitionRate;
 
     public void addScore(double score) {
         if (score <= 80) score_80++;
@@ -42,6 +46,11 @@ public class CommonScoreResponse {
         else if (score <= 130) score121_130++;
         else if (score <= 140) score131_140++;
         else if (score <= 150) score141_150++;
+    }
+
+    public void updateCountAndRate(Integer count, Double competitionRate) {
+        this.commonCount = count;
+        this.commonCompetitionRate = competitionRate;
     }
 
 }

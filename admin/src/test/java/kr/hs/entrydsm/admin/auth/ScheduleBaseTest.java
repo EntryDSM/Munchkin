@@ -45,16 +45,10 @@ public abstract class ScheduleBaseTest extends AdminBaseTest{
             .build();
 
     protected static final ScheduleRequest SCHEDULE_REQUEST = ScheduleRequest.builder()
-            .type("INTERVIEW")
-            .date("2021-06-28")
+            .schedules(null)
             .build();
 
     protected static final List<Schedule> SCHEDULES = new ArrayList<>();
-
-    protected static boolean updateSchedule(String year, String date) {
-        START_DATE.update(year, date);
-        return true;
-    }
 
     protected static final Schedules SCHEDULES_DTO = Schedules.builder()
             .type(Type.START_DATE)

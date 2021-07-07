@@ -24,12 +24,14 @@ public class ScheduleServiceManager implements ScheduleService {
 
     @Override
     public void updateSchedule(ScheduleRequest scheduleRequest) {
-        String year = scheduleRequest.getDate().substring(0, 4);
-        Schedule schedule = scheduleRepository.findByYearAndType(year, Type.valueOf(scheduleRequest.getType()))
-                .orElseThrow(ScheduleNotFoundException::new);
+        for (Schedules schedule : scheduleRequest.getSchedules()) {
+            String year = schedule.getDate().substring(0, 4);
+            Schedule updateSchedule = scheduleRepository.findByYearAndType(year, Type.valueOf(schedule.getType().toString()))
+                    .orElseThrow(ScheduleNotFoundException::new);
 
-        schedule.update(year, scheduleRequest.getDate());
-        scheduleRepositoryManager.save(schedule);
+            updateSchedule.update(year, schedule.getDate());
+            scheduleRepositoryManager.save(updateSchedule);
+        }
     }
 
     @Override

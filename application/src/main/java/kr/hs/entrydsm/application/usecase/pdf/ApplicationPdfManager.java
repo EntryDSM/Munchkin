@@ -33,11 +33,7 @@ public class ApplicationPdfManager implements ApplicationPdfService {
         long receiptCode = authenticationManager.getUserReceiptCode();
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
 
-        if (applicant.getEducationalStatus() == null)
-            throw new EducationalStatusNullException();
-
-        if (!scoreCalculator.isExists(receiptCode))
-            throw new ScoreNotFoundException();
+        validatePrintableApplicant(applicant);
 
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
@@ -51,10 +47,20 @@ public class ApplicationPdfManager implements ApplicationPdfService {
             throw new FinalSubmitRequiredException();
 
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
-        Application application = applicationRepository.findByReceiptCode(receiptCode)
-                .orElseThrow(ApplicationNotFoundException::new);
+
+        validatePrintableApplicant(applicant);
+
+        Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
         CalculatedScore calculatedScore = scoreCalculator.calculateScore(application);
         return applicationPdfGenerator.generate(applicant, calculatedScore);
+    }
+
+    private void validatePrintableApplicant(Applicant applicant) {
+        if (applicant.isEducationalStatusEmpty())
+            throw new EducationalStatusNullException();
+
+        if (!scoreCalculator.isExists(applicant.getReceiptCode()))
+            throw new ScoreNotFoundException();
     }
 
 }

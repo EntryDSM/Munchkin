@@ -39,12 +39,6 @@ public abstract class ResponseBaseTest {
             .commonScore(null)
             .meisterScore(null)
             .socialScore(null)
-            .commonCount(0)
-            .commonCompetitionRate(0.0)
-            .meisterCount(0)
-            .meisterCompetitionRate(0.0)
-            .socialCount(0)
-            .socialCompetitionRate(0.0)
             .build();
 
     protected static final RouteGuidanceResponse ROUTE_GUIDANCE_RESPONSE = RouteGuidanceResponse.builder()
