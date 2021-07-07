@@ -36,6 +36,10 @@ public class ScheduleServiceManager implements ScheduleService {
 
     @Override
     public ScheduleResponse getSchedules() {
+
+        if (scheduleRepository.findAllBy().size() == 0) {
+            createSchedules();
+        }
         List<Schedule> schedule = scheduleRepository.findAllBy();
         List<Schedules> schedules = new ArrayList<>();
 
@@ -87,6 +91,17 @@ public class ScheduleServiceManager implements ScheduleService {
             return secondAnnounce.getType().toString();
         } else {
             return "END";
+        }
+    }
+
+    private void createSchedules() {
+        String[] types = new String[]{Type.START_DATE.toString(), Type.END_DATE.toString(), Type.FIRST_ANNOUNCEMENT.toString(), Type.INTERVIEW.toString(), Type.SECOND_ANNOUNCEMENT.toString()};
+        for (String type : types) {
+            scheduleRepository.save(Schedule.builder()
+                    .year(String.valueOf(LocalDate.now().getYear()))
+                    .type(Type.valueOf(type))
+                    .date(LocalDate.now())
+                    .build());
         }
     }
 

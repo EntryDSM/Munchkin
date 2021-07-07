@@ -180,12 +180,20 @@ public class UserServiceManager implements UserAuthService, UserService {
                 .orElseThrow(InvalidAuthCodeException::new);
     }
 
+    @Override
+    public void submitFinally() {
+        long receiptCode = authenticationManager.getUserReceiptCode();
+        userRepository.findByReceiptCode(receiptCode)
+                .map(User::submitFinally)
+                .ifPresent(userRepository::save);
+    }
+
     private ResponseEntity<AccessTokenResponse> getAccessToken(long receiptCode) {
         String accessToken = tokenProvider.generateAccessToken(receiptCode);
         String refreshToken = tokenProvider.generateRefreshToken(receiptCode);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Set-Cookie",
-                String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/; domain=entrydsm.hs.kr", refreshToken, getExpireDateByString()));
+                String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/; domain=localhost:3002", refreshToken, getExpireDateByString()));
 
         refreshTokenRepository.findById(receiptCode)
                 .or(() -> Optional.of(new RefreshToken(receiptCode, refreshToken, refreshTokenExpiration)))

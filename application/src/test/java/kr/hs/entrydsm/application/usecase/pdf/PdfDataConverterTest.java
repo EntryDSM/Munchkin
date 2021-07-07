@@ -28,6 +28,11 @@ import java.util.Optional;
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class PdfDataConverterTest {
 
+    private static final String checkedBallotBox = "☑";
+    private static final String emptyBallotBox = "☐";
+
+    private static final String mark = "◯";
+
     @InjectMocks
     private PdfDataConverter pdfDataConverter;
 
@@ -43,9 +48,6 @@ public class PdfDataConverterTest {
     @Test
     public void convertPdfData() throws IOException {
         LocalDateTime now = LocalDateTime.now();
-
-        final String checkedBallotBox = "☑";
-        final String emptyBallotBox = "☐";
 
         Applicant applicant = ApplicantBuilder.build(
                 ApplicationType.SOCIAL, ApplicationRemark.MULTICULTURAL, EducationalStatus.PROSPECTIVE_GRADUATE
@@ -111,5 +113,29 @@ public class PdfDataConverterTest {
         assertThat(result.getDay()).isEqualTo(String.valueOf(now.getDayOfMonth()));
         assertThat(result.getSelfIntroduction()).isEqualTo(applicant.getSelfIntroduce());
         assertThat(result.getStudyPlan()).isEqualTo(applicant.getStudyPlan());
+    }
+
+    @Test
+    public void convertRecommendationsRequiredPdfData() throws IOException {
+        Applicant applicant = ApplicantBuilder.build(
+                ApplicationType.SOCIAL, ApplicationRemark.MULTICULTURAL, EducationalStatus.GRADUATE
+        );
+        CalculatedScore calculatedScore = CalculatedScoreBuilder.build();
+
+        GraduationApplication graduationApplication = GraduationApplicationBuilder.build();
+        QualificationExamApplication qualificationExamApplication = QualificationExamApplicationBuilder.build();
+
+        given(graduationApplicationRepository.findByReceiptCode(applicant.getReceiptCode()))
+                .willReturn(Optional.of(graduationApplication));
+        given(qualificationExamApplicationRepository.findByReceiptCode(applicant.getReceiptCode()))
+                .willReturn(Optional.of(qualificationExamApplication));
+        given(imageService.getObject(applicant.getPhotoFileName())).willReturn(new byte[]{});
+
+        PdfData pdfData = pdfDataConverter.applicationToInfo(applicant, calculatedScore);
+
+        assertThat(pdfData.getIsDaejeonAndMeister()).isEqualTo("");
+        assertThat(pdfData.getIsDaejeonAndSocialMerit()).isEqualTo(mark);
+        assertThat(pdfData.getIsNotDaejeonAndMeister()).isEqualTo("");
+        assertThat(pdfData.getIsNotDaejeonAndSocialMerit()).isEqualTo("");
     }
 }
