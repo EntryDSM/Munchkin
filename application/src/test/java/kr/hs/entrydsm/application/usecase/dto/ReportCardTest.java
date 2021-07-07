@@ -1,5 +1,9 @@
 package kr.hs.entrydsm.application.usecase.dto;
 
+import kr.hs.entrydsm.application.builder.CalculatedScoreBuilder;
+import kr.hs.entrydsm.application.builder.GraduationApplicationBuilder;
+import kr.hs.entrydsm.application.builder.QualificationExamApplicationBuilder;
+import kr.hs.entrydsm.application.entity.Application;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -79,6 +83,23 @@ public class ReportCardTest {
         assertThat(qualificationExamReportCard.getVolunteerScore()).isNull();
         assertThat(qualificationExamReportCard.getTotalScore()).isEqualTo(BigDecimal.TEN);
         assertThat(qualificationExamReportCard.getAttendanceScore()).isEqualTo(0);
+        assertThat(qualificationExamReportCard.getAverageScore()).isEqualTo(BigDecimal.TEN);
+    }
+
+    @Test
+    public void reportCardStaticFactoryMethod() {
+        Application application = GraduationApplicationBuilder.build();
+        CalculatedScore calculatedScore = CalculatedScoreBuilder.build();
+
+        ReportCard.from(application, calculatedScore);
+    }
+
+    @Test
+    public void reportCardStaticFactoryMethodQ() {
+        Application application = QualificationExamApplicationBuilder.build();
+        CalculatedScore calculatedScore = CalculatedScoreBuilder.build();
+
+        ReportCard.from(application, calculatedScore);
     }
 
 }
