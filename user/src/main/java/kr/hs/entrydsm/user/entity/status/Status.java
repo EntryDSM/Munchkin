@@ -40,4 +40,8 @@ public class Status {
         this.isPrintedArrived = isPrintedArrived;
     }
 
+    public void setSubmitStatus(boolean isSubmit) {
+        this.isSubmit = isSubmit;
+    }
+
 }

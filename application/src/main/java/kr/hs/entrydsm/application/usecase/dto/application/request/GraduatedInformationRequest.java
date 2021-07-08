@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -16,12 +17,15 @@ public class GraduatedInformationRequest {
 
     @Length(max = 11)
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
+    @NotNull
     private String schoolTel;
 
     @Length(max = 7, message = "INVALID SCHOOL_CODE")
+    @NotNull
     private String schoolCode;
 
     @Length(max = 5, message = "INVALID STUDENT_NUMBER")
+    @NotNull
     private String studentNumber;
 
 }

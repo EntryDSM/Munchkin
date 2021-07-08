@@ -37,6 +37,8 @@ public class Applicant {
 
     private String address;
 
+    private String detailAddress;
+
     private String postCode;
 
     private String photoFileName;

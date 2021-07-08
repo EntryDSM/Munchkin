@@ -61,7 +61,7 @@ public class PdfDataConverterTest {
                 .willReturn(Optional.of(graduationApplication));
         given(qualificationExamApplicationRepository.findByReceiptCode(applicant.getReceiptCode()))
                 .willReturn(Optional.of(qualificationExamApplication));
-        given(imageService.getObject(applicant.getPhotoFileName())).willReturn(new byte[]{});
+        given(imageService.getObject("images/" + applicant.getPhotoFileName())).willReturn(new byte[]{});
 
         PdfData result = pdfDataConverter.applicationToInfo(applicant, calculatedScore);
 
@@ -129,7 +129,7 @@ public class PdfDataConverterTest {
                 .willReturn(Optional.of(graduationApplication));
         given(qualificationExamApplicationRepository.findByReceiptCode(applicant.getReceiptCode()))
                 .willReturn(Optional.of(qualificationExamApplication));
-        given(imageService.getObject(applicant.getPhotoFileName())).willReturn(new byte[]{});
+        given(imageService.getObject("images/" + applicant.getPhotoFileName())).willReturn(new byte[]{});
 
         PdfData pdfData = pdfDataConverter.applicationToInfo(applicant, calculatedScore);
 

@@ -56,4 +56,10 @@ public class UserController {
         userService.verifyAuthCode(authCodeRequest);
     }
 
+    @JWTRequired
+    @PatchMapping("/status")
+    public void submitFinally() {
+        userService.submitFinally();
+    }
+
 }
