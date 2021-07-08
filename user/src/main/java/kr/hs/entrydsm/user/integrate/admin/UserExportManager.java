@@ -59,6 +59,11 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
+    public void changeIsSubmitFalse(long receiptCode) {
+        //지원자의 isSubmit 상태를 false로 바꾸기
+    }
+
+    @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         userRepository.findByReceiptCode(receiptCode)
                 .map(user -> user.setPrintedArrived(isPrintedArrived))
