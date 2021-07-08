@@ -59,6 +59,13 @@ public class ApplicantServiceManager implements ApplicantService {
     @Override
     public void changeIsSubmitFalse(long receiptCode) {
         userRepository.changeIsSubmitFalse(receiptCode);
+
+        UserNameAndEmail applicant = userRepository.getUserNameAndEmail(receiptCode);
+        String template = "SUBMIT_FALSE";
+        Map<String, String> params = new HashMap<>();
+        params.put("name", applicant.getName());
+
+        contentSender.sendMessage(applicant.getEmail(), template, params);
     }
 
     @Override
