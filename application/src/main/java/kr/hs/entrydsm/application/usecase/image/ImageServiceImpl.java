@@ -66,7 +66,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         String randomName = UUID.randomUUID().toString();
         String filename = randomName + "." + ext;
 
-        if (!(ext.equals("jpg") || ext.equals("HEIC") || ext.equals("jpeg") || ext.equals("png") || ext.equals("heic"))) {
+        if (ext != null && !(ext.equals("jpg") || ext.equals("HEIC") || ext.equals("jpeg") || ext.equals("png") || ext.equals("heic"))) {
             throw new BadFileExtensionException();
         }
 
