@@ -40,13 +40,13 @@ jobs:
         wget ${{ secrets.KO_PUB_FONT_URL }} -O kopub_world.zip && \
         wget ${{ secrets.DEJAVU_SANS_FONT_URL }} -O dejavu_sans.zip
 
-#    - name: unzip fonts
-#      working-directory: ./application/src/main/resources
-#      run: |
-#        ls && \
-#        unzip ./kopub_world.zip -d ./fonts && rm ./kopub_world.zip && \
-#        unzip ./dejavu_sans.zip -d ./fonts && mv ./fonts/dejavu_sans/ttf/DejaVuSans.ttf ./fonts && \
-#        rm -r ./fonts/dejavu_sans && rm ./dejavu_sans.zip
+    - name: unzip fonts
+      working-directory: ./application/src/main/resources
+      run: |
+        ls && \
+        unzip kopub_world.zip -d ./fonts && rm kopub_world.zip && \
+        unzip dejavu_sans.zip -d ./fonts && mv ./fonts/dejavu_sans/ttf/DejaVuSans.ttf ./fonts && \
+        rm -r ./fonts/dejavu_sans && rm dejavu_sans.zip
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
