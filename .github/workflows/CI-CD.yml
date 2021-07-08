@@ -31,13 +31,11 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: make fonts directory
-      run: |
-        mkdir -p ./application/src/main/resources/fonts
+      run: mkdir -p ./application/src/main/resources/fonts
 
     - name: download fonts for pdf
       working-directory: ./application/src/main/resources
-      run: |
-        wget ${{ secrets.KO_PUB_FONT_URL }} -O kopub_world.zip && \
+      run: wget ${{ secrets.KO_PUB_FONT_URL }} -O kopub_world.zip && \
         wget ${{ secrets.DEJAVU_SANS_FONT_URL }} -O dejavu_sans.zip
 
     - name: install fastjar
