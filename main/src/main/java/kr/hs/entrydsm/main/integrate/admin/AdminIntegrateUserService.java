@@ -91,6 +91,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .address(user.getAddress())
                 .detailAddress(user.getDetailAddress())
                 .birthDate(user.getBirthday())
+                .isDaejeon(user.isDaejeon())
                 .isPrintedArrived(user.getStatus().isPrintedArrived())
                 .isSubmit(user.getStatus().isSubmit())
                 .telephoneNumber(user.getTelephoneNumber())
