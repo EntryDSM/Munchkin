@@ -45,8 +45,7 @@ jobs:
 
     - name: unzip fonts
       working-directory: ./application/src/main/resources
-      run: |
-        fastjar xfv kopub_world.zip && fastjar xfv dejavu_sans.zip && \
+      run: fastjar xfv kopub_world.zip && fastjar xfv dejavu_sans.zip && \
         mv dejavu-sans-ttf-2.37/ttf/DejaVuSans.ttf ./fonts && mv 'KoPubWorld Dotum Light.ttf' ./fonts && \
         mv 'KoPubWorld Dotum Bold.ttf' ./fonts && mv 'KoPubWorld Dotum Medium.ttf' ./fonts && ls
 
