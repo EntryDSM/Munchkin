@@ -66,6 +66,7 @@ public class PdfDataConverter {
         values.put("isMale", toBallotBox(applicant.isMale()));
         values.put("isFemale", toBallotBox(applicant.isFemale()));
         values.put("address", setBlankIfNull(applicant.getAddress()));
+        values.put("detailAddress", setBlankIfNull(applicant.getDetailAddress()));
 
         String birthday = "";
         if (applicant.getBirthday() != null) {
@@ -190,7 +191,7 @@ public class PdfDataConverter {
 
     private void setBase64Image(Applicant applicant) {
         try {
-            byte[] imageBytes = imageService.getObject(applicant.getPhotoFileName());
+            byte[] imageBytes = imageService.getObject("images/" + applicant.getPhotoFileName());
             values.put("base64Image", Arrays.toString(Base64.getEncoder().encode(imageBytes)));
         } catch (IOException ignored) {}
     }

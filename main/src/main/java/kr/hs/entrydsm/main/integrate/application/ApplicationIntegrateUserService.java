@@ -65,6 +65,7 @@ public class ApplicationIntegrateUserService
                 .parentName(user.getParentName())
                 .parentTel(user.getParentTel())
                 .address(user.getAddress())
+                .detailAddress(user.getDetailAddress())
                 .postCode(user.getPostCode())
                 .photoFileName(user.getPhotoFileName())
                 .homeTel(user.getHomeTel())
