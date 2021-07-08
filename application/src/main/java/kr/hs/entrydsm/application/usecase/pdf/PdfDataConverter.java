@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -192,7 +193,8 @@ public class PdfDataConverter {
     private void setBase64Image(Applicant applicant) {
         try {
             byte[] imageBytes = imageService.getObject("images/" + applicant.getPhotoFileName());
-            values.put("base64Image", Arrays.toString(Base64.getEncoder().encode(imageBytes)));
+            String base64EncodedImage = new String(Base64.getEncoder().encode(imageBytes), StandardCharsets.UTF_8);
+            values.put("base64Image", base64EncodedImage);
         } catch (IOException ignored) {}
     }
 
