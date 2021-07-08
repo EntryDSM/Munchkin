@@ -15,6 +15,7 @@ public interface UserRepository {
                                                 boolean isCommon, boolean isMeister, boolean isSocial,
                                                 Boolean isPrintedArrived);
     void changeExamCode(long receiptCode, String examCode);
+    void changeIsSubmitFalse(long receiptCode);
     List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
     UserInfo getUserInfo(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);

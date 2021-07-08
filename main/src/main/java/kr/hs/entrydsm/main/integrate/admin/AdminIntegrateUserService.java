@@ -56,6 +56,11 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     @Override
+    public void changeIsSubmitFalse(long receiptCode) {
+
+    }
+
+    @Override
     public List<SaveExamCodeUserResponse> findAllIsSubmitTrue() {
         List<User> users = userExportRepository.findAllIsSubmitTrue();
         List<SaveExamCodeUserResponse> applicants = new ArrayList<>();

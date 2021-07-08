@@ -57,6 +57,11 @@ public class ApplicantServiceManager implements ApplicantService {
     }
 
     @Override
+    public void changeIsSubmitFalse(long receiptCode) {
+        userRepository.changeIsSubmitFalse(receiptCode);
+    }
+
+    @Override
     public ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                             boolean isDaejeon, boolean isNationwide,
                                             String telephoneNumber, String name,
