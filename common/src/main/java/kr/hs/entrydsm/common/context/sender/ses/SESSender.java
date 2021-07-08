@@ -26,7 +26,7 @@ public class SESSender implements ContentSender {
     public boolean sendMessage(String email, String templateName, Map<String, String> params) {
         SendTemplatedEmailRequest request = new SendTemplatedEmailRequest()
                 .withDestination(new Destination().withToAddresses(email))
-                .withTemplate("EntryEmailConfirmTemplate")
+                .withTemplate(templateName)
                 .withSource(UTF_8_ENCODED_SOURCE_NAME + " <noreply@entrydsm.hs.kr>")
                 .withTemplateData(paramToJson(params));
 

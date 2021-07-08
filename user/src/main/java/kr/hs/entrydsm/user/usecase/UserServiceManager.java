@@ -229,7 +229,7 @@ public class UserServiceManager implements UserAuthService, UserService {
         authCodeRepository.findById(email)
                 .or(() -> Optional.of(new AuthCode(email, randomCode, false, authCodeTtl)))
                 .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
-                .ifPresent(authCode -> contentSender.sendMessage(email, "EntryEmailConfirmTemplate", params));
+                .ifPresent(authCode -> contentSender.sendMessage(email, "MunchkinEmailTemplate", params));
     }
 
     private boolean isOverRequestLimit(String email) {
