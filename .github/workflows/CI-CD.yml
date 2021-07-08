@@ -44,7 +44,7 @@ jobs:
       working-directory: ./application/src/main/resources
       run: |
         sudo apt install fastjar -y && ls && \
-        fastjar xfv kopub_world.zip && rm kopub_world.zip && \
+        fastjar xfv kopub_world.zip && ls && rm kopub_world.zip && \
         fastjar xfv dejavu_sans.zip && mv ./fonts/dejavu_sans/ttf/DejaVuSans.ttf ./fonts && \
         rm -r ./fonts/dejavu_sans && rm dejavu_sans.zip
 
