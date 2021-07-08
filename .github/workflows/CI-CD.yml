@@ -45,7 +45,7 @@ jobs:
       run: |
         sudo apt install fastjar -y && fastjar xfv kopub_world.zip && \
         fastjar xfv dejavu_sans.zip && mv dejavu-sans-ttf-2.37/ttf/DejaVuSans.ttf ./fonts && \
-        ll
+        ls fonts
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
