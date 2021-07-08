@@ -85,7 +85,7 @@ public class ExcelServiceManager implements ExcelService {
         String area = userInfo.getIsDaejeon()?"대전":"전국";
         String applicationType = userInfo.getApplicationType();
 
-        byte[] imageBytes = getObject(userInfo.getPhotoFileName());
+        byte[] imageBytes = getObject("images/" + userInfo.getPhotoFileName());
 
         AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
         admissionTicket.format(0,0);
