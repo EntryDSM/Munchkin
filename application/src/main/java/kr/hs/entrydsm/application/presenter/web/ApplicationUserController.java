@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.presenter.web;
 
-import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
+import kr.hs.entrydsm.application.usecase.ApplicationService;
 import kr.hs.entrydsm.application.usecase.dto.application.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
@@ -23,45 +23,45 @@ import javax.validation.Valid;
 @RequestMapping("/application/users")
 public class ApplicationUserController {
 
-    private final ApplicationProcessing applicationProcessing;
+    private final ApplicationService applicationService;
 
     @PatchMapping("/type")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void selectType(@RequestBody @Valid ApplicationRequest application){
-        applicationProcessing.writeApplicationType(application);
+        applicationService.writeApplicationType(application);
     }
 
     @GetMapping("/type")
     public ApplicationResponse getType(){
-        return applicationProcessing.getApplicationType();
+        return applicationService.getApplicationType();
     }
 
     @PatchMapping("/graduation")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertGraduatedInfo(@RequestBody @Valid GraduatedInformationRequest information){
-        applicationProcessing.writeGraduatedInformation(information);
+        applicationService.writeGraduatedInformation(information);
     }
 
     @GetMapping("/graduation")
     public GraduatedInformationResponse getGraduatedInfo() {
-        return applicationProcessing.getGraduatedInformation();
+        return applicationService.getGraduatedInformation();
     }
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void insertGedInfo(@RequestBody @Valid Information information) {
-        applicationProcessing.writeInformation(information);
+        applicationService.writeInformation(information);
     }
 
     @GetMapping
     public Information getGedInfo() {
-        return applicationProcessing.getInformation();
+        return applicationService.getInformation();
     }
 
     @PostMapping("/photo")
     @ResponseStatus(HttpStatus.CREATED)
     public String uploadPhoto(@RequestPart(name = "file") @Nullable MultipartFile multipartFile) {
-        return applicationProcessing.uploadPhoto(multipartFile);
+        return applicationService.uploadPhoto(multipartFile);
     }
 
 }
