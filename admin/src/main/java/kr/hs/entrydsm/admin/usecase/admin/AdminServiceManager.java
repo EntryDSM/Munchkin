@@ -38,7 +38,7 @@ public class AdminServiceManager implements AdminService {
         int socialCount = applicationStatus.getSpecialScores().size();
 
         int totalApplicantCount = commonCount + meisterCount + socialCount;
-        double totalCompetitionRate = totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE;
+        double totalCompetitionRate = Math.round(totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE);
 
         CommonScoreResponse commonScore = new CommonScoreResponse();
         SpecialScoreResponse meisterScore = new SpecialScoreResponse();
