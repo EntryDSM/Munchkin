@@ -29,7 +29,7 @@ import static kr.hs.entrydsm.application.usecase.image.AWS4SignerBase.*;
 
 @Service
 @RequiredArgsConstructor
-public class ImageServiceImpl extends AWS4Signer implements ImageService {
+public class ImageServiceManager extends AWS4Signer implements ImageService {
 
     private static final String SCHEME = "AWS4";
 
@@ -137,7 +137,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
 
         StringBuilder authString = new StringBuilder();
 
-        authString.append(endpointUrl.toString());
+        authString.append(endpointUrl);
         authString.append("?X-Amz-Algorithm=" + queryParameters.get("X-Amz-Algorithm"));
         authString.append("&X-Amz-Credential=" + queryParameters.get("X-Amz-Credential"));
         authString.append("&X-Amz-Date=" + queryParameters.get("X-Amz-Date"));
