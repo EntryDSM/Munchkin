@@ -29,7 +29,7 @@ import static kr.hs.entrydsm.application.usecase.image.AWS4SignerBase.*;
 
 @Service
 @RequiredArgsConstructor
-public class ImageServiceImpl extends AWS4Signer implements ImageService {
+public class ImageServiceManager extends AWS4Signer implements ImageService {
 
     private static final String SCHEME = "AWS4";
 
