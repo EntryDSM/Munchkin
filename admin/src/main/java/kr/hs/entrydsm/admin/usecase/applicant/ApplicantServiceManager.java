@@ -46,14 +46,14 @@ public class ApplicantServiceManager implements ApplicantService {
     public void changePrintArrivedOrNot(long receiptCode, boolean isPrintedArrived) {
         userRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
-        UserNameAndTelephoneNumber applicant = userRepository.getUserNameAndTel(receiptCode);
+        UserNameAndEmail applicant = userRepository.getUserNameAndEmail(receiptCode);
         String template;
         if(isPrintedArrived) template = "PRINTED_ARRIVED";
         else template = "PRINTED_NOT_ARRIVED";
         Map<String, String> params = new HashMap<>();
         params.put("name", applicant.getName());
 
-        contentSender.sendMessage(applicant.getTelephoneNumber(), template, params);
+        contentSender.sendMessage(applicant.getEmail(), template, params);
     }
 
     @Override

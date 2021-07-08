@@ -19,7 +19,7 @@ public interface UserRepository {
     List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
     UserInfo getUserInfo(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
-    UserNameAndTelephoneNumber getUserNameAndTel(long receiptCode);
+    UserNameAndEmail getUserNameAndEmail(long receiptCode);
     List<ExcelUser> findAllForExcel();
     List<Long> getUserReceiptCodes();
 }

@@ -108,10 +108,10 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     @Override
-    public UserNameAndTelephoneNumber getUserNameAndTel(long receiptCode) {
+    public UserNameAndEmail getUserNameAndEmail(long receiptCode) {
         User user = userExportRepository.findByReceiptCode((int)receiptCode);
 
-        return new UserNameAndTelephoneNumber(user.getName(), user.getTelephoneNumber());
+        return new UserNameAndEmail(user.getName(), user.getEmail());
     }
 
     @Override
