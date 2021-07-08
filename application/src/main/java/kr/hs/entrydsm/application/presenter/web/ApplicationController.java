@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.presenter.web;
 
-import kr.hs.entrydsm.application.usecase.ApplicationProcessing;
+import kr.hs.entrydsm.application.usecase.ApplicationService;
 import kr.hs.entrydsm.application.usecase.dto.application.request.UpdateDocsRequest;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
@@ -17,28 +17,28 @@ import javax.validation.Valid;
 @RequestMapping("/application")
 public class ApplicationController {
 
-    private final ApplicationProcessing applicationProcessing;
+    private final ApplicationService applicationService;
 
     @PatchMapping("/intro")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateIntro(@RequestBody @Valid UpdateDocsRequest dto) {
-        applicationProcessing.writeSelfIntroduce(dto.getContent());
+        applicationService.writeSelfIntroduce(dto.getContent());
     }
 
     @PatchMapping("/study-plan")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateStudyPlan(@RequestBody @Valid UpdateDocsRequest dto) {
-        applicationProcessing.writeStudyPlan(dto.getContent());
+        applicationService.writeStudyPlan(dto.getContent());
     }
 
     @GetMapping("/intro")
     public String getIntro() {
-        return applicationProcessing.getSelfIntroduce();
+        return applicationService.getSelfIntroduce();
     }
 
     @GetMapping("/study-plan")
     public String getStudyPlan() {
-        return applicationProcessing.getStudyPlan();
+        return applicationService.getStudyPlan();
     }
 
 //    @PatchMapping("/score/subject")

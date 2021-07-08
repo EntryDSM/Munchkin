@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
-public class ApplicationManager implements ApplicationProcessing {
+public class ApplicationManager implements ApplicationService {
 
     private final ApplicationFactory applicationFactory;
     private final ImageService imageService;
