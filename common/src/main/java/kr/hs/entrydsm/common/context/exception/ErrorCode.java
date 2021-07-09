@@ -20,6 +20,7 @@ public enum ErrorCode {
     AUTH_CODE_REQUEST_OVER_LIMIT(429, "USER429-0", "Auth Code Request Over Limit"),
 
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
+    GRADE_OR_SCORE_NOT_FOUND(404, "SCORE404-0", "The score does not exist"),
 
     INVALID_ADMIN_TOKEN(401, "ADMIN401-0","This token is invalid"),
     INVALID_ADMIN_PASSWORD(401, "ADMIN401-1", "The password is not valid"),
