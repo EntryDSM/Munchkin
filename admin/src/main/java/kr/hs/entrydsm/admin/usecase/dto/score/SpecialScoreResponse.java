@@ -12,43 +12,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SpecialScoreResponse {
 
-    @JsonProperty(value = "81-90")
-    private int score81_90;
+    @JsonProperty(value = "98-110")
+    private int score98_110;
 
-    @JsonProperty(value = "71-80")
-    private int score71_80;
+    @JsonProperty(value = "85-97")
+    private int score85_97;
 
-    @JsonProperty(value = "61-70")
-    private int score61_70;
+    @JsonProperty(value = "72-84")
+    private int score72_84;
 
-    @JsonProperty(value = "51-60")
-    private int score51_60;
+    @JsonProperty(value = "59-71")
+    private int score59_71;
 
-    @JsonProperty(value = "41-50")
-    private int score41_50;
+    @JsonProperty(value = "46-58")
+    private int score46_58;
 
-    @JsonProperty(value = "31-40")
-    private int score31_40;
+    @JsonProperty(value = "33-45")
+    private int score33_45;
 
-    @JsonProperty(value = "21-30")
-    private int score21_30;
+    @JsonProperty(value = "20-32")
+    private int score20_32;
 
-    @JsonProperty(value = "-20")
-    private int score_20;
+    @JsonProperty(value = "-19")
+    private int score_19;
 
     private Integer specialCount;
 
     private Double specialCompetitionRate;
 
     public void addScore(double score) {
-        if (score <= 20) score_20++;
-        else if(score <= 30) score21_30++;
-        else if(score <= 40) score31_40++;
-        else if(score <= 50) score41_50++;
-        else if(score <= 60) score51_60++;
-        else if(score <= 70) score61_70++;
-        else if(score <= 80) score71_80++;
-        else if (score <= 90) score81_90++;
+        if (score <= 19) score_19++;
+        else if(score <= 32) score20_32++;
+        else if(score <= 45) score33_45++;
+        else if(score <= 58) score46_58++;
+        else if(score <= 71) score59_71++;
+        else if(score <= 84) score72_84++;
+        else if(score <= 97) score85_97++;
+        else if(score <= 110) score98_110++;
     }
 
     public void updateCountAndRate(Integer count, Double competitionRate) {
