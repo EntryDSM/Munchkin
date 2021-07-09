@@ -179,7 +179,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 default:
                     examCode.append(3);
             }
-            if (applicant.isDaejeon()) examCode.append(1);
+            if (applicant.getIsDaejeon()) examCode.append(1);
             else examCode.append(2);
 
             applicant.updateExamCode(examCode.toString());

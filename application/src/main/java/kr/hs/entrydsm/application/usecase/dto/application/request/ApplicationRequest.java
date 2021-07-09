@@ -21,7 +21,7 @@ public class ApplicationRequest {
 
     @NotNull
     @JsonProperty(value = "is_daejeon")
-    private boolean isDaejeon;
+    private Boolean isDaejeon;
 
     private String applicationRemark;
 

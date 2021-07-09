@@ -38,7 +38,7 @@ public class AdminIntegrateUserService implements UserRepository {
                     ApplicantsInformationResponse.builder()
                             .receiptCode(user.getReceiptCode())
                             .name(user.getName())
-                            .isDaejeon(user.isDaejeon())
+                            .isDaejeon(user.getIsDaejeon())
                             .applicationType(String.valueOf(user.getApplicationType()))
                             .isPrintedArrived(user.getStatus().isPrintedArrived())
                             .isSubmit(user.getStatus().isSubmit())
@@ -46,7 +46,6 @@ public class AdminIntegrateUserService implements UserRepository {
             );
         }
         return new PageImpl<>(applicants, page, totalElements);
-
     }
 
     @Override
@@ -68,7 +67,7 @@ public class AdminIntegrateUserService implements UserRepository {
             applicants.add(
                     SaveExamCodeUserResponse.builder()
                             .applicationType(user.getApplicationType().toString())
-                            .isDaejeon(user.isDaejeon())
+                            .isDaejeon(user.getIsDaejeon())
                             .address(user.getAddress())
                             .receiptCode(user.getReceiptCode())
                             .build()
@@ -84,6 +83,7 @@ public class AdminIntegrateUserService implements UserRepository {
 
         return UserInfo.builder()
                 .receiptCode(user.getReceiptCode())
+                .examCode(user.getExamCode())
                 .name(user.getName())
                 .photoFileName(user.getPhotoFileName())
                 .email(user.getEmail())
@@ -91,7 +91,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .address(user.getAddress())
                 .detailAddress(user.getDetailAddress())
                 .birthDate(user.getBirthday())
-                .isDaejeon(user.isDaejeon())
+                .isDaejeon(user.getIsDaejeon())
                 .isPrintedArrived(user.getStatus().isPrintedArrived())
                 .isSubmit(user.getStatus().isSubmit())
                 .telephoneNumber(user.getTelephoneNumber())
@@ -100,6 +100,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .selfIntroduce(user.getSelfIntroduce())
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
+                .educationalStatus(user.getEducationalStatus().toString())
                 .build();
     }
 
@@ -111,7 +112,6 @@ public class AdminIntegrateUserService implements UserRepository {
     @Override
     public UserNameAndEmail getUserNameAndEmail(long receiptCode) {
         User user = userExportRepository.findByReceiptCode((int)receiptCode);
-
         return new UserNameAndEmail(user.getName(), user.getEmail());
     }
 
@@ -121,7 +121,7 @@ public class AdminIntegrateUserService implements UserRepository {
 
         List<ExcelUser> excelUsers = new ArrayList<>();
         for (User user : users) {
-            String area = getArea(user.isDaejeon());
+            String area = getArea(user.getIsDaejeon());
             String sex = getSex(user.getSex());
             String educationalStatus = getEducationalStatus(user.getEducationalStatus());
             String applicationRemark = getApplicationRemark(user.getApplicationRemark());
@@ -153,7 +153,11 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public List<Long> getUserReceiptCodes() {
-        return userExportRepository.findAllReceiptCode();
+        List<Long> receiptCodes = new ArrayList<>();
+        for (User user : userExportRepository.findAllIsSubmitTrue()) {
+            receiptCodes.add(user.getReceiptCode());
+        }
+        return receiptCodes;
     }
 
     private String getApplicationType(ApplicationType applicationType) {

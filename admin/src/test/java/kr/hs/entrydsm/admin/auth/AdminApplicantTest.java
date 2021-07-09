@@ -44,7 +44,7 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void save_exam_code_user_response() {
-        assertTrue(SAVE_EXAM_CODE_USER_RESPONSE.isDaejeon()==true);
+        assertTrue(SAVE_EXAM_CODE_USER_RESPONSE.getIsDaejeon()==true);
         assertFalse(SAVE_EXAM_CODE_USER_RESPONSE.getApplicationType().equals("COMMON"));
         assertFalse(SAVE_EXAM_CODE_USER_RESPONSE.getExamCode().isBlank());
         assertTrue(SAVE_EXAM_CODE_USER_RESPONSE.getAddress().equals("경상북도 상주시 경상대로 314"));
