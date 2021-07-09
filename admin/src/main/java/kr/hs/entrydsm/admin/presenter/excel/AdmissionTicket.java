@@ -13,13 +13,6 @@ public class AdmissionTicket {
     private final HSSFWorkbook workbook = new HSSFWorkbook();
     private final HSSFSheet sheet = workbook.createSheet("admission ticket");
 
-    private final String examCode;
-    private final String name;
-    private final String middleSchool;
-    private final String area;
-    private final String applicationType;
-    private final String receiptCode;
-
     public Workbook getWorkbook() {
         return workbook;
     }
@@ -28,7 +21,7 @@ public class AdmissionTicket {
         return sheet;
     }
 
-    public void format(int rowIndex, int colIndex) {
+    public void format(int rowIndex, int colIndex, String examCode, String name, String middleSchool, String area, String applicationType, String receiptCode) {
         rowIndex *= 17;
         colIndex *= 7;
         sheet.setDefaultColumnWidth(14);

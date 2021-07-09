@@ -28,7 +28,7 @@ public class QualificationExamCase extends ApplicationCase {
     public Integer calculateAttendanceScore() { return MAX_ATTENDANCE_SCORE; }
 
     @Override
-    public BigDecimal[] calculateGradeScores() { return new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO}; }
+    public BigDecimal[] calculateGradeScores() { return new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO}; }
 
     @Override
     public BigDecimal calculateTotalGradeScore() { return gradeScoreFormula(); }

@@ -27,8 +27,8 @@ public class RequestLogger extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }else {
             RequestWrapper requestWrapper = new RequestWrapper(request);
-            logRequest(requestWrapper, response);
             filterChain.doFilter(requestWrapper, response);
+            logRequest(requestWrapper, response);
         }
     }
 
