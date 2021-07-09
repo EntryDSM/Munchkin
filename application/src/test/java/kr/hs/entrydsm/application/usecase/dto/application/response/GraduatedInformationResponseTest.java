@@ -1,13 +1,12 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
-import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraduatedInformationResponseTest {
 
-    private static final Information INFORMATION = Information.builder()
+    private static final InformationResponse INFORMATION = InformationResponse.builder()
             .name("test1")
             .sex("MALE")
             .birthday("20040728")
