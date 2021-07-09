@@ -21,21 +21,15 @@ public class ExcelController {
     private final ExcelService excelService;
 
     @AdminJWTRequired
-    @GetMapping("/admission-ticket/{receipt-code}")
-    public void createAdmissionTicket(HttpServletResponse response, @PathVariable("receipt-code") Long receiptCode) throws IOException {
-        excelService.createAdmissionTicket(response, receiptCode);
+    @GetMapping("/admission-ticket")
+    public void createAdmissionTicket(HttpServletResponse response) throws IOException {
+        excelService.createAdmissionTicket(response);
     }
 
     @AdminJWTRequired
     @GetMapping( "/applicants")
     public void createApplicantInformation(HttpServletResponse response) throws IOException {
         excelService.createApplicantInformation(response);
-    }
-
-    @AdminJWTRequired
-    @GetMapping
-    public void getAllExcels(HttpServletResponse response) throws IOException {
-        excelService.getAllExcels(response);
     }
 
 }
