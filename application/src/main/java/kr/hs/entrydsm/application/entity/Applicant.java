@@ -23,7 +23,7 @@ public class Applicant {
 
     private String educationalStatus;
 
-    private Boolean isDaejeon;
+    private boolean isDaejeon;
 
     private String name;
 
