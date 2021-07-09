@@ -32,10 +32,4 @@ public class ExcelController {
         excelService.createApplicantInformation(response);
     }
 
-    @AdminJWTRequired
-    @GetMapping
-    public void getAllExcels(HttpServletResponse response) throws IOException {
-        excelService.getAllExcels(response);
-    }
-
 }

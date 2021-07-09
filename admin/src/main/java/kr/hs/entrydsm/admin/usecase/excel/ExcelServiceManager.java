@@ -51,28 +51,21 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException {
-        getAdmissionTicket(response, receiptCode);
+        List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
+        LocalDate now = LocalDate.now();
+        Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
+                .orElseThrow(ScheduleNotFoundException::new);
+        if(now.isBefore(endDate.getDate())) {
+            throw new ApplicationPeriodNotOverException();
+        }
+        for(Long receiptCode : applicantReceiptCodes) {
+            getAdmissionTicket(response, receiptCode);
+        }
     }
 
     @Override
     public void createApplicantInformation(HttpServletResponse response) throws IOException {
         getApplicationInformation(response);
-    }
-
-    @Override
-    public void getAllExcels(HttpServletResponse response) throws IOException {
-        List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
-        LocalDate now = LocalDate.now();
-        Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
-                .orElseThrow(ScheduleNotFoundException::new);
-        if(now.isBefore(secondAnnouncement.getDate())) {
-            throw new ApplicationPeriodNotOverException();
-        }
-
-        getApplicationInformation(response);
-        for(Long receiptCode : applicantReceiptCodes) {
-            getAdmissionTicket(response, receiptCode);
-        }
     }
 
     private void getAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException {
