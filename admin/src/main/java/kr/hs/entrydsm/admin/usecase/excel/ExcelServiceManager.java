@@ -83,7 +83,7 @@ public class ExcelServiceManager implements ExcelService {
         String name = userInfo.getName();
         String middleSchool = applicantInfo.getSchoolName();
         String area = userInfo.getIsDaejeon()?"대전":"전국";
-        String applicationType = userInfo.getApplicationType();
+        String applicationType = getApplicationType(userInfo.getApplicationType());
 
         byte[] imageBytes = getObject("images/" + userInfo.getPhotoFileName());
 
@@ -232,6 +232,19 @@ public class ExcelServiceManager implements ExcelService {
     private byte[] getObject(String fileName) throws IOException {
         S3Object object = s3.getObject(bucket, fileName);
         return IOUtils.toByteArray(object.getObjectContent());
+    }
+
+    private String getApplicationType(String applicationType) {
+        switch (applicationType) {
+            case "COMMON":
+                return "일반전형";
+            case "MEISTER":
+                return "마이스터전형";
+            case "SOCIAL":
+                return "사회통합전형";
+            default:
+                return null;
+        }
     }
 
 }
