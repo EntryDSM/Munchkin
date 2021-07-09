@@ -205,6 +205,9 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     private String getApplicationRemark(ApplicationRemark applicationRemark) {
+        if (applicationRemark == null) {
+            return "일반";
+        }
         switch (applicationRemark) {
             case ONE_PARENT :
                 return "한부모가족";
@@ -222,9 +225,8 @@ public class AdminIntegrateUserService implements UserRepository {
                 return "특례입학대상자";
             case NATIONAL_MERIT:
                 return "국가유공자";
-            default:
-                return "일반";
         }
+        return null;
     }
 
 }
