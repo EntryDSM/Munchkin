@@ -1,19 +1,16 @@
-package kr.hs.entrydsm.application.usecase.dto.application;
+package kr.hs.entrydsm.application.usecase.dto.application.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Information {
+public class InformationResponse {
 
     protected static final String TEL_REGEXP = "^\\d{3}\\d{3,4}\\d{4}$";
 

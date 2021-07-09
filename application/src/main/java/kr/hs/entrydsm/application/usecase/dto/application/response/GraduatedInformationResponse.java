@@ -1,7 +1,7 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GraduatedInformationResponse extends Information {
+public class GraduatedInformationResponse extends InformationResponse {
 
     private String schoolTel;
 
@@ -28,7 +28,7 @@ public class GraduatedInformationResponse extends Information {
         this.isGraduated = isGraduated;
     }
 
-    public GraduatedInformationResponse setInformation(Information information) {
+    public GraduatedInformationResponse setInformation(InformationResponse information) {
         this.name = information.getName();
         this.sex = information.getSex();
         this.birthday = information.getBirthday();

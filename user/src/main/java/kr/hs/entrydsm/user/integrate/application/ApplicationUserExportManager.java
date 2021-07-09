@@ -73,7 +73,7 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
                                   String parentName, String parentTel, String telephoneNumber, String homeTel,
                                   String address, String postCode, String detailAddress) {
         User user = findByReceiptCode(receiptCode);
-        user.updateInformation(name, sex, birthday, parentName, parentTel, telephoneNumber,
+        user.updateInformation(user.getName(), sex, birthday, parentName, parentTel, telephoneNumber,
                 homeTel, address, postCode, user.getPhotoFileName(), detailAddress);
         userRepository.save(user);
     }

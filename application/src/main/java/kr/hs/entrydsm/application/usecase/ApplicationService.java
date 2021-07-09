@@ -1,11 +1,12 @@
 package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.entity.School;
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public interface ApplicationService {
 
     GraduatedInformationResponse getGraduatedInformation();
 
-    Information getInformation();
+    InformationResponse getInformation();
 
     String uploadPhoto(MultipartFile multipartFile);
 

@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto.application;
 
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,6 @@ class InformationTest {
 
     private static final Information FIRST_INFORMATION =
             Information.builder()
-            .name("test1")
             .sex("MALE")
             .birthday("20040728")
             .parentName("test1parent")
@@ -20,11 +20,6 @@ class InformationTest {
             .postCode("12345")
             .photoFileName("test.jpg")
             .build();
-
-    @Test
-    void getName() {
-        assertEquals(FIRST_INFORMATION.getName(), "test1");
-    }
 
     @Test
     void getSex() {

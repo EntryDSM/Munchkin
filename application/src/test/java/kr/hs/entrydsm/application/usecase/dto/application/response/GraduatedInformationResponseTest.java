@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

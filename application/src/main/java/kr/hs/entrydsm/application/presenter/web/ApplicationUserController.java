@@ -1,11 +1,12 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationService;
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +55,7 @@ public class ApplicationUserController {
     }
 
     @GetMapping
-    public Information getGedInfo() {
+    public InformationResponse getGedInfo() {
         return applicationService.getInformation();
     }
 

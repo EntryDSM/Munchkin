@@ -4,11 +4,12 @@ import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusUnmatchedException;
@@ -195,10 +196,10 @@ public class ApplicationManager implements ApplicationService {
     }
 
     @Override
-    public Information getInformation() {
+    public InformationResponse getInformation() {
         long receiptCode = authenticationManager.getUserReceiptCode();
 
-        Information result = applicationApplicantRepository.getInformation(receiptCode);
+        InformationResponse result = applicationApplicantRepository.getInformation(receiptCode);
 
         result.setPhotoFileName(getImageUrl(result.getPhotoFileName()));
 
@@ -208,7 +209,7 @@ public class ApplicationManager implements ApplicationService {
     @Override
     public String uploadPhoto(MultipartFile multipartFile) {
         long receiptCode = authenticationManager.getUserReceiptCode();
-        Information result = applicationApplicantRepository.getInformation(receiptCode);
+        InformationResponse result = applicationApplicantRepository.getInformation(receiptCode);
         if(result.getPhotoFileName() != null)
             imageService.delete(result.getPhotoFileName());
         String fileName;

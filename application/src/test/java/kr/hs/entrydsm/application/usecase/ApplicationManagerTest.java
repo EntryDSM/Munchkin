@@ -6,10 +6,11 @@ import kr.hs.entrydsm.application.builder.QualificationExamApplicationBuilder;
 import kr.hs.entrydsm.application.entity.*;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInformationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
 import kr.hs.entrydsm.application.usecase.exception.EducationalStatusUnmatchedException;
 import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
@@ -193,7 +194,6 @@ class ApplicationManagerTest {
     void writeInformation() {
         Information information =
                 Information.builder()
-                        .name("test1")
                         .sex("MALE")
                         .birthday("20040728")
                         .parentName("test1parent")
@@ -274,7 +274,7 @@ class ApplicationManagerTest {
         Mockito.when(applicationApplicantRepository
                 .getInformation(0L))
                 .thenReturn(
-                                Information.builder()
+                                InformationResponse.builder()
                                         .name("test1")
                                         .sex("MALE")
                                         .birthday("20040728")
@@ -301,7 +301,7 @@ class ApplicationManagerTest {
         Mockito.when(applicationApplicantRepository
                 .getInformation(0L))
                 .thenReturn(
-                        Information.builder()
+                        InformationResponse.builder()
                                 .name("test1")
                                 .sex("MALE")
                                 .birthday("20040728")
@@ -326,7 +326,7 @@ class ApplicationManagerTest {
         Mockito.when(applicationApplicantRepository
                 .getInformation(0L))
                 .thenReturn(
-                        Information.builder()
+                        InformationResponse.builder()
                                 .name("test1")
                                 .sex("MALE")
                                 .birthday("20040728")

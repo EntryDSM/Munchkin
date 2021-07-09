@@ -1,9 +1,10 @@
 package kr.hs.entrydsm.main.integrate.application;
 
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
+import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.integrate.application.ApplicationUserExportRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
             birthday = LocalDate.parse(information.getBirthday(), DateTimeFormatter.ofPattern("yyyyMMdd")
                                                                                     .withZone(ZoneId.of("Asia/Seoul")));
 
-        userExportRepository.changeInformation(receiptCode, information.getName(), information.getSex(),
+        userExportRepository.changeInformation(receiptCode, null, information.getSex(),
                 birthday, information.getParentName(), information.getParentTel(),
                 information.getTelephoneNumber(), information.getHomeTel(), information.getAddress(),
                 information.getPostCode(), information.getDetailAddress());
@@ -51,9 +52,9 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     }
 
     @Override
-    public Information getInformation(Long receiptCode) {
+    public InformationResponse getInformation(Long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return Information.builder()
+        return InformationResponse.builder()
                 .name(user.getName())
                 .sex(stringValueOf(user.getSex()))
                 .birthday(stringValueOf(user.getBirthday()))

@@ -1,6 +1,6 @@
 package kr.hs.entrydsm.application.usecase.dto.application.response;
 
-import kr.hs.entrydsm.application.usecase.dto.application.Information;
+import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GedInformationResponse extends Information {
+public class GedInformationResponse extends InformationResponse {
 
     private BigDecimal gedAverageScore;
 
@@ -18,7 +18,7 @@ public class GedInformationResponse extends Information {
         this.photoFileName = photoFileName;
     }
 
-    public GedInformationResponse setInformation(Information information) {
+    public GedInformationResponse setInformation(InformationResponse information) {
         this.name = information.getName();
         this.sex = information.getSex();
         this.birthday = information.getBirthday();
