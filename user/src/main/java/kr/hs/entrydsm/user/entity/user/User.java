@@ -41,7 +41,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EducationalStatus educationalStatus;
 
-    private boolean isDaejeon;
+    private Boolean isDaejeon;
 
     @Column(columnDefinition = "char(5)", nullable = false)
     private String name;
