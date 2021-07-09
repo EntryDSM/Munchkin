@@ -51,7 +51,7 @@ jobs:
     - name: unzip kopub fonts
       working-directory: ./application/src/main/resources
       run: |
-        fastjar xfv kopub_world.zip
+        unzip kopub_world.zip
 
 #    - name: move font files
 #      working-directory: ./application/src/main/resources
