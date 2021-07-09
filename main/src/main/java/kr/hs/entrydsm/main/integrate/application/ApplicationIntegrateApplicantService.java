@@ -22,7 +22,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     @Override
     public void writeApplicationType(Long receiptCode, ApplicationRequest application) {
         userExportRepository.changeApplication(receiptCode, application.getEducationalStatus(),
-                application.getApplicationType(), application.isDaejeon(), application.getApplicationRemark());
+                application.getApplicationType(), application.getIsDaejeon(), application.getApplicationRemark());
 
     }
 
@@ -46,7 +46,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
                 .educationalStatus(stringValueOf(user.getEducationalStatus()))
                 .applicationType(stringValueOf(user.getApplicationType()))
                 .applicationRemark(stringValueOf(user.getApplicationRemark()))
-                .isDaejeon(user.isDaejeon())
+                .isDaejeon(user.getIsDaejeon())
                 .build();
     }
 

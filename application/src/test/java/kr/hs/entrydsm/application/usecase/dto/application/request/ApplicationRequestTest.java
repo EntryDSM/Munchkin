@@ -38,10 +38,10 @@ class ApplicationRequestTest {
 
     @Test
     public void isDaejeon() {
-        assertFalse(PROSPECTIVE_COMMON.isDaejeon());
-        assertTrue(GRADUATE_MEISTER.isDaejeon());
-        assertTrue(QUALIFICATION_SOCIAL.isDaejeon());
-        assertFalse(REQUEST.isDaejeon());
+        assertFalse(PROSPECTIVE_COMMON.getIsDaejeon());
+        assertTrue(GRADUATE_MEISTER.getIsDaejeon());
+        assertTrue(QUALIFICATION_SOCIAL.getIsDaejeon());
+        assertNull(REQUEST.getIsDaejeon());
     }
 
     @Test

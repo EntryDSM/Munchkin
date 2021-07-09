@@ -67,9 +67,9 @@ class ApplicationResponseTest {
 
     @Test
     void isDaejeon() {
-        assertTrue(RESPONSE_1.isDaejeon());
-        assertTrue(RESPONSE_2.isDaejeon());
-        assertFalse(RESPONSE_3.isDaejeon());
+        assertTrue(RESPONSE_1.getIsDaejeon());
+        assertTrue(RESPONSE_2.getIsDaejeon());
+        assertFalse(RESPONSE_3.getIsDaejeon());
     }
 
     @Test

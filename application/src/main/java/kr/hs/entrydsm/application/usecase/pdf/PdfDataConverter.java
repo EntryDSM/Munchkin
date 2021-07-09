@@ -141,8 +141,8 @@ public class PdfDataConverter {
         values.put("isQualificationExam", toBallotBox(applicant.isQualificationExam()));
         values.put("isGraduate", toBallotBox(applicant.isGraduate()));
         values.put("isProspectiveGraduate", toBallotBox(applicant.isProspectiveGraduate()));
-        values.put("isDaejeon", toBallotBox(applicant.isDaejeon()));
-        values.put("isNotDaejeon", toBallotBox(!applicant.isDaejeon()));
+        values.put("isDaejeon", toBallotBox(applicant.getIsDaejeon()));
+        values.put("isNotDaejeon", toBallotBox(!applicant.getIsDaejeon()));
         values.put("isBasicLiving", toBallotBox(applicant.isBasicLiving()));
         values.put("isFromNorth", toBallotBox(applicant.isFromNorth()));
         values.put("isLowestIncome", toBallotBox(applicant.isLowestIncome()));
@@ -184,10 +184,10 @@ public class PdfDataConverter {
     }
 
     private void setRecommendations(Applicant applicant) {
-        values.put("isDaejeonAndMeister", markIfTrue(applicant.isDaejeon() && applicant.isMeisterApplicationType()));
-        values.put("isDaejeonAndSocialMerit", markIfTrue(applicant.isDaejeon() && applicant.isSocialApplicationType()));
-        values.put("isNotDaejeonAndMeister", markIfTrue(!applicant.isDaejeon() && applicant.isMeisterApplicationType()));
-        values.put("isNotDaejeonAndSocialMerit", markIfTrue(!applicant.isDaejeon() && applicant.isSocialApplicationType()));
+        values.put("isDaejeonAndMeister", markIfTrue(applicant.getIsDaejeon() && applicant.isMeisterApplicationType()));
+        values.put("isDaejeonAndSocialMerit", markIfTrue(applicant.getIsDaejeon() && applicant.isSocialApplicationType()));
+        values.put("isNotDaejeonAndMeister", markIfTrue(!applicant.getIsDaejeon() && applicant.isMeisterApplicationType()));
+        values.put("isNotDaejeonAndSocialMerit", markIfTrue(!applicant.getIsDaejeon() && applicant.isSocialApplicationType()));
     }
 
     private void setBase64Image(Applicant applicant) {
