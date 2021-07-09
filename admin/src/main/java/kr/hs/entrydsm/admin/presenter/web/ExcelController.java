@@ -21,9 +21,9 @@ public class ExcelController {
     private final ExcelService excelService;
 
     @AdminJWTRequired
-    @GetMapping("/admission-ticket/{receipt-code}")
-    public void createAdmissionTicket(HttpServletResponse response, @PathVariable("receipt-code") Long receiptCode) throws IOException {
-        excelService.createAdmissionTicket(response, receiptCode);
+    @GetMapping("/admission-ticket")
+    public void createAdmissionTicket(HttpServletResponse response) throws IOException {
+        excelService.createAdmissionTicket(response);
     }
 
     @AdminJWTRequired
