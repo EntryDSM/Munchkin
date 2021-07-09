@@ -99,6 +99,7 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .password(encodedPassword)
                         .selfIntroduce("")
                         .studyPlan("")
+                        .isDaejeon(null)
                         .build()
         );
 
