@@ -54,7 +54,7 @@ public class ExcelServiceManager implements ExcelService {
         AdmissionTicket admissionTicket = new AdmissionTicket();
         
         List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
-        int i = 0, j = 0, count = 1;
+        int x = 0, y = 0, count = 1;
         LocalDate now = LocalDate.now();
         Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
                 .orElseThrow(ScheduleNotFoundException::new);
@@ -73,22 +73,22 @@ public class ExcelServiceManager implements ExcelService {
             String applicationType = getApplicationType(userInfo.getApplicationType());
 
             byte[] imageBytes = getObject("images/" + userInfo.getPhotoFileName());
-
-            admissionTicket.format(i,j, examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
-            count++;
-            if(count % 3 ==0) {
-                i++;
-                j = 0;
-            } else {
-                j++;
-            }
+            admissionTicket.format(x * 17,y * 7, examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
 
             int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
             HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
             HSSFClientAnchor anchor;
-            anchor = new HSSFClientAnchor(i,j,i,j,(short)0,2,(short)2,14);
+            anchor = new HSSFClientAnchor(0, 0, 0, 0, (short) (y * 7),2 + (x * 17), (short) (2 + (y * 7)),14 + (x * 17));
             anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
             patriarch.createPicture(anchor, index);
+
+            count++;
+            if(count % 3 ==0) {
+                x++;
+                y = 0;
+            } else {
+                y++;
+            }
         }
 
         response.setContentType("ms-vnd/excel");

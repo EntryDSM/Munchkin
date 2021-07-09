@@ -22,8 +22,6 @@ public class AdmissionTicket {
     }
 
     public void format(int rowIndex, int colIndex, String examCode, String name, String middleSchool, String area, String applicationType, String receiptCode) {
-        rowIndex *= 17;
-        colIndex *= 7;
         sheet.setDefaultColumnWidth(14);
         CellStyle alignCenter = alignCenter();
         Font bold = bold();
