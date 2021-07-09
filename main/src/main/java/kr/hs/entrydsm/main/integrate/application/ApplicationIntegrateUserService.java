@@ -58,7 +58,7 @@ public class ApplicationIntegrateUserService
                 .applicationType(getNameIfNull(user.getApplicationType()))
                 .applicationRemark(getNameIfNull(user.getApplicationRemark()))
                 .educationalStatus(getNameIfNull(user.getEducationalStatus()))
-                .isDaejeon(user.isDaejeon())
+                .isDaejeon(user.getIsDaejeon())
                 .name(user.getName())
                 .sex(getNameIfNull(user.getSex()))
                 .birthday(user.getBirthday())
