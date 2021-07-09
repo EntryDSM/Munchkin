@@ -30,35 +30,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: make fonts directory
-      run: |
-        mkdir -p ./application/src/main/resources/fonts
-
-    - name: download fonts for pdf
-      working-directory: ./application/src/main/resources
-      run: |
-        wget ${{ secrets.KO_PUB_FONT_URL }} -O kopub_world.zip && \
-        wget ${{ secrets.DEJAVU_SANS_FONT_URL }} -O dejavu_sans.zip
-
-    - name: install fastjar
-      run: sudo apt install fastjar -y
-
-    - name: unzip fonts
-      working-directory: ./application/src/main/resources
-      run: |
-        fastjar xfv dejavu_sans.zip
-
-    - name: unzip kopub fonts
-      working-directory: ./application/src/main/resources
-      run: |
-        fastjar xfv kopub_world.zip
-
-#    - name: move font files
-#      working-directory: ./application/src/main/resources
-#      run: |
-#        mv dejavu-sans-ttf-2.37/ttf/DejaVuSans.ttf ./fonts && mv 'KoPubWorld Dotum Light.ttf' ./fonts && \
-#        mv 'KoPubWorld Dotum Bold.ttf' ./fonts && mv 'KoPubWorld Dotum Medium.ttf' ./fonts
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
