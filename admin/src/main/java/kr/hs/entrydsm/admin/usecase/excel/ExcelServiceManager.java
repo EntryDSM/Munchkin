@@ -86,7 +86,7 @@ public class ExcelServiceManager implements ExcelService {
             int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
             HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
             HSSFClientAnchor anchor;
-            anchor = new HSSFClientAnchor(0,0,0,0,(short)0,2,(short)2,14);
+            anchor = new HSSFClientAnchor(i,j,i,j,(short)0,2,(short)2,14);
             anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
             patriarch.createPicture(anchor, index);
         }

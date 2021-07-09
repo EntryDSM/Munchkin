@@ -17,7 +17,6 @@ public class Information {
 
     protected static final String TEL_REGEXP = "^\\d{3}\\d{3,4}\\d{4}$";
 
-    @NotEmpty
     protected String name;
 
     @Pattern(regexp = "^(MALE|FEMALE)$", message = "INVALID SEX")
@@ -28,7 +27,6 @@ public class Information {
 
     protected String parentName;
 
-    @NotEmpty
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     protected String telephoneNumber;
 
