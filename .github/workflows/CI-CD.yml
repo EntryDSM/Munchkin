@@ -53,11 +53,11 @@ jobs:
       run: |
         fastjar xfv kopub_world.zip
 
-    - name: move font files
-      working-directory: ./application/src/main/resources
-      run: |
-        mv dejavu-sans-ttf-2.37/ttf/DejaVuSans.ttf ./fonts && mv 'KoPubWorld Dotum Light.ttf' ./fonts && \
-        mv 'KoPubWorld Dotum Bold.ttf' ./fonts && mv 'KoPubWorld Dotum Medium.ttf' ./fonts
+#    - name: move font files
+#      working-directory: ./application/src/main/resources
+#      run: |
+#        mv dejavu-sans-ttf-2.37/ttf/DejaVuSans.ttf ./fonts && mv 'KoPubWorld Dotum Light.ttf' ./fonts && \
+#        mv 'KoPubWorld Dotum Bold.ttf' ./fonts && mv 'KoPubWorld Dotum Medium.ttf' ./fonts
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
