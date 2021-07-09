@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ExcelService {
-    void createAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException;
+    void createAdmissionTicket(HttpServletResponse response) throws IOException;
     void createApplicantInformation(HttpServletResponse response) throws IOException;
-    void getAllExcels(HttpServletResponse response) throws IOException;
 }

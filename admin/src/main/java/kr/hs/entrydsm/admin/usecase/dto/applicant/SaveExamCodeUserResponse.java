@@ -13,7 +13,7 @@ public class SaveExamCodeUserResponse {
 
     private String applicationType;
 
-    private boolean isDaejeon;
+    private Boolean isDaejeon;
 
     private String examCode;
 

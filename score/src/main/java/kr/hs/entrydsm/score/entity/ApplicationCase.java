@@ -10,8 +10,10 @@ import java.math.BigDecimal;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Entity
 public abstract class ApplicationCase {
-    protected static final int MAX_VOLUNTEER_TIME = 45;
-    protected static final int MIN_VOLUNTEER_TIME = 10;
+    protected static final BigDecimal COMMON_GRADE_RATE = BigDecimal.valueOf(1.75);
+
+    protected static final int MAX_VOLUNTEER_TIME = 30;
+    protected static final int MIN_VOLUNTEER_TIME = 6;
 
     protected static final int MAX_VOLUNTEER_SCORE = 15;
     protected static final int MIN_VOLUNTEER_SCORE = 3;

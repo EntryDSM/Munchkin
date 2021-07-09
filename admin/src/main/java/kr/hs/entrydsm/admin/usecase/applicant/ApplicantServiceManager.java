@@ -46,14 +46,26 @@ public class ApplicantServiceManager implements ApplicantService {
     public void changePrintArrivedOrNot(long receiptCode, boolean isPrintedArrived) {
         userRepository.changeIsPrintedArrived(receiptCode, isPrintedArrived);
 
-        UserNameAndTelephoneNumber applicant = userRepository.getUserNameAndTel(receiptCode);
+        UserNameAndEmail applicant = userRepository.getUserNameAndEmail(receiptCode);
         String template;
         if(isPrintedArrived) template = "PRINTED_ARRIVED";
         else template = "PRINTED_NOT_ARRIVED";
         Map<String, String> params = new HashMap<>();
         params.put("name", applicant.getName());
 
-        contentSender.sendMessage(applicant.getTelephoneNumber(), template, params);
+        contentSender.sendMessage(applicant.getEmail(), template, params);
+    }
+
+    @Override
+    public void changeIsSubmitFalse(long receiptCode) {
+        userRepository.changeIsSubmitFalse(receiptCode);
+
+        UserNameAndEmail applicant = userRepository.getUserNameAndEmail(receiptCode);
+        String template = "SUBMIT_FALSE";
+        Map<String, String> params = new HashMap<>();
+        params.put("name", applicant.getName());
+
+        contentSender.sendMessage(applicant.getEmail(), template, params);
     }
 
     @Override
@@ -167,7 +179,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 default:
                     examCode.append(3);
             }
-            if (applicant.isDaejeon()) examCode.append(1);
+            if (applicant.getIsDaejeon()) examCode.append(1);
             else examCode.append(2);
 
             applicant.updateExamCode(examCode.toString());

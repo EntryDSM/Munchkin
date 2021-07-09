@@ -99,6 +99,7 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .password(encodedPassword)
                         .selfIntroduce("")
                         .studyPlan("")
+                        .isDaejeon(null)
                         .build()
         );
 
@@ -192,8 +193,8 @@ public class UserServiceManager implements UserAuthService, UserService {
         String accessToken = tokenProvider.generateAccessToken(receiptCode);
         String refreshToken = tokenProvider.generateRefreshToken(receiptCode);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Set-Cookie",
-                String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/; domain=localhost:3002", refreshToken, getExpireDateByString()));
+        headers.add(HttpHeaders.SET_COOKIE,
+                String.format("refresh-token=%s; Expires=%s; HttpOnly; Path=/; Domain=entrydsm.hs.kr", refreshToken, getExpireDateByString()));
 
         refreshTokenRepository.findById(receiptCode)
                 .or(() -> Optional.of(new RefreshToken(receiptCode, refreshToken, refreshTokenExpiration)))
@@ -229,7 +230,7 @@ public class UserServiceManager implements UserAuthService, UserService {
         authCodeRepository.findById(email)
                 .or(() -> Optional.of(new AuthCode(email, randomCode, false, authCodeTtl)))
                 .map(authCode -> authCodeRepository.save(authCode.updateAuthCode(randomCode, authCodeTtl)))
-                .ifPresent(authCode -> contentSender.sendMessage(email, "EntryEmailConfirmTemplate", params));
+                .ifPresent(authCode -> contentSender.sendMessage(email, "MunchkinEmailTemplate", params));
     }
 
     private boolean isOverRequestLimit(String email) {

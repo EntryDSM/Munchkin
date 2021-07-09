@@ -16,15 +16,9 @@ import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +50,7 @@ class ApplicationManagerTest {
             new ApplicationFactory(graduationApplicationRepository,
                     qualificationExamApplicationRepository);
 
-    private ApplicationProcessing applicationProcessing =
+    private ApplicationService applicationService =
             new ApplicationManager(applicationFactory, imageService,
                     applicantDocsService, applicationApplicantRepository,
                     schoolRepository, graduationApplicationRepository,
@@ -101,7 +95,7 @@ class ApplicationManagerTest {
                         )
                 );
 
-        applicationProcessing.writeApplicationType(request);
+        applicationService.writeApplicationType(request);
 
     }
 
@@ -124,7 +118,7 @@ class ApplicationManagerTest {
                         )
                 );
 
-        applicationProcessing.writeApplicationType(request);
+        applicationService.writeApplicationType(request);
     }
 
     @Test
@@ -141,7 +135,7 @@ class ApplicationManagerTest {
                 .findByCode(request.getSchoolCode()))
                 .thenReturn(Optional.of(School.builder().build()));
 
-        applicationProcessing.writeGraduatedInformation(request);
+        applicationService.writeGraduatedInformation(request);
 
     }
 
@@ -157,7 +151,7 @@ class ApplicationManagerTest {
                 .thenReturn("QUALIFICATION_EXAM");
 
         assertThrows(EducationalStatusUnmatchedException.class, () -> {
-            applicationProcessing.writeGraduatedInformation(request);
+            applicationService.writeGraduatedInformation(request);
         });
     }
 
@@ -176,7 +170,7 @@ class ApplicationManagerTest {
                 .thenReturn(Optional.empty());
 
         assertThrows(SchoolNotFoundException.class, () -> {
-            applicationProcessing.writeGraduatedInformation(request);
+            applicationService.writeGraduatedInformation(request);
         });
     }
 
@@ -191,7 +185,7 @@ class ApplicationManagerTest {
                 .thenReturn(null);
 
         assertThrows(EducationalStatusNotFoundException.class, () -> {
-            applicationProcessing.writeGraduatedInformation(request);
+            applicationService.writeGraduatedInformation(request);
         });
     }
 
@@ -212,7 +206,7 @@ class ApplicationManagerTest {
                         .photoFileName("test.jpg")
                         .build();
 
-        applicationProcessing.writeInformation(information);
+        applicationService.writeInformation(information);
 
     }
 
@@ -235,7 +229,7 @@ class ApplicationManagerTest {
                         ApplicationResponse.builder().build()
                 );
 
-        applicationProcessing.getApplicationType();
+        applicationService.getApplicationType();
 
     }
 
@@ -257,7 +251,7 @@ class ApplicationManagerTest {
                         ApplicationResponse.builder().build()
                 );
 
-        applicationProcessing.getApplicationType();
+        applicationService.getApplicationType();
     }
 
     @Test
@@ -295,7 +289,7 @@ class ApplicationManagerTest {
                                         .build()
                 );
 
-        applicationProcessing.getGraduatedInformation();
+        applicationService.getGraduatedInformation();
 
 
 
@@ -322,7 +316,7 @@ class ApplicationManagerTest {
                                 .build()
                 );
 
-        applicationProcessing.getInformation();
+        applicationService.getInformation();
 
     }
 
@@ -347,6 +341,6 @@ class ApplicationManagerTest {
                                 .build()
                 );
 
-        applicationProcessing.uploadPhoto(new MockMultipartFile("test.png", new byte[0]));
+        applicationService.uploadPhoto(new MockMultipartFile("test.png", new byte[0]));
     }
 }

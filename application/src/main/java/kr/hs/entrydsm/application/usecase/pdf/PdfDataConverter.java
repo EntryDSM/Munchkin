@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -66,6 +67,7 @@ public class PdfDataConverter {
         values.put("isMale", toBallotBox(applicant.isMale()));
         values.put("isFemale", toBallotBox(applicant.isFemale()));
         values.put("address", setBlankIfNull(applicant.getAddress()));
+        values.put("detailAddress", setBlankIfNull(applicant.getDetailAddress()));
 
         String birthday = "";
         if (applicant.getBirthday() != null) {
@@ -139,8 +141,8 @@ public class PdfDataConverter {
         values.put("isQualificationExam", toBallotBox(applicant.isQualificationExam()));
         values.put("isGraduate", toBallotBox(applicant.isGraduate()));
         values.put("isProspectiveGraduate", toBallotBox(applicant.isProspectiveGraduate()));
-        values.put("isDaejeon", toBallotBox(applicant.isDaejeon()));
-        values.put("isNotDaejeon", toBallotBox(!applicant.isDaejeon()));
+        values.put("isDaejeon", toBallotBox(applicant.getIsDaejeon()));
+        values.put("isNotDaejeon", toBallotBox(!applicant.getIsDaejeon()));
         values.put("isBasicLiving", toBallotBox(applicant.isBasicLiving()));
         values.put("isFromNorth", toBallotBox(applicant.isFromNorth()));
         values.put("isLowestIncome", toBallotBox(applicant.isLowestIncome()));
@@ -182,16 +184,17 @@ public class PdfDataConverter {
     }
 
     private void setRecommendations(Applicant applicant) {
-        values.put("isDaejeonAndMeister", markIfTrue(applicant.isDaejeon() && applicant.isMeisterApplicationType()));
-        values.put("isDaejeonAndSocialMerit", markIfTrue(applicant.isDaejeon() && applicant.isSocialApplicationType()));
-        values.put("isNotDaejeonAndMeister", markIfTrue(!applicant.isDaejeon() && applicant.isMeisterApplicationType()));
-        values.put("isNotDaejeonAndSocialMerit", markIfTrue(!applicant.isDaejeon() && applicant.isSocialApplicationType()));
+        values.put("isDaejeonAndMeister", markIfTrue(applicant.getIsDaejeon() && applicant.isMeisterApplicationType()));
+        values.put("isDaejeonAndSocialMerit", markIfTrue(applicant.getIsDaejeon() && applicant.isSocialApplicationType()));
+        values.put("isNotDaejeonAndMeister", markIfTrue(!applicant.getIsDaejeon() && applicant.isMeisterApplicationType()));
+        values.put("isNotDaejeonAndSocialMerit", markIfTrue(!applicant.getIsDaejeon() && applicant.isSocialApplicationType()));
     }
 
     private void setBase64Image(Applicant applicant) {
         try {
-            byte[] imageBytes = imageService.getObject(applicant.getPhotoFileName());
-            values.put("base64Image", Arrays.toString(Base64.getEncoder().encode(imageBytes)));
+            byte[] imageBytes = imageService.getObject("images/" + applicant.getPhotoFileName());
+            String base64EncodedImage = new String(Base64.getEncoder().encode(imageBytes), StandardCharsets.UTF_8);
+            values.put("base64Image", base64EncodedImage);
         } catch (IOException ignored) {}
     }
 

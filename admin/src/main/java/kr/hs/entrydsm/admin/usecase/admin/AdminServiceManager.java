@@ -38,7 +38,7 @@ public class AdminServiceManager implements AdminService {
         int socialCount = applicationStatus.getSpecialScores().size();
 
         int totalApplicantCount = commonCount + meisterCount + socialCount;
-        double totalCompetitionRate = totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE;
+        double totalCompetitionRate = Double.parseDouble(String.format("%.2f",totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE));
 
         CommonScoreResponse commonScore = new CommonScoreResponse();
         SpecialScoreResponse meisterScore = new SpecialScoreResponse();
@@ -59,9 +59,9 @@ public class AdminServiceManager implements AdminService {
             meisterScore.addScore(Math.round(score));
         }
 
-        commonScore.updateCountAndRate(commonCount, commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT);
-        meisterScore.updateCountAndRate(meisterCount, meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT);
-        socialScore.updateCountAndRate(socialCount, socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT);
+        commonScore.updateCountAndRate(commonCount, Double.parseDouble(String.format("%.2f", commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)));
+        meisterScore.updateCountAndRate(meisterCount, Double.parseDouble(String.format("%.2f",meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT)));
+        socialScore.updateCountAndRate(socialCount, Double.parseDouble(String.format("%.2f",socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)));
 
 
         return ReceiptStatusResponse.builder()

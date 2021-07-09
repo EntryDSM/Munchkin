@@ -13,13 +13,15 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class ApplicationRequest {
 
+    @NotNull
     private String educationalStatus;
 
+    @NotNull
     private String applicationType;
 
     @NotNull
     @JsonProperty(value = "is_daejeon")
-    private boolean isDaejeon;
+    private Boolean isDaejeon;
 
     private String applicationRemark;
 

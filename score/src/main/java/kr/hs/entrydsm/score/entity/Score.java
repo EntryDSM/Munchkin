@@ -20,10 +20,10 @@ public class Score {
     private int attendanceScore;
 
     @Digits(integer = 2, fraction = 3)
-    private BigDecimal firstGradeScore;
+    private BigDecimal thirdBeforeBeforeScore;
 
     @Digits(integer = 2, fraction = 3)
-    private BigDecimal secondGradeScore;
+    private BigDecimal thirdBeforeScore;
 
     @Digits(integer = 2, fraction = 3)
     private BigDecimal thirdGradeScore;
@@ -40,9 +40,9 @@ public class Score {
         this.attendanceScore = applicationCase.calculateAttendanceScore();
 
         BigDecimal[] gradeScores = applicationCase.calculateGradeScores();
-        this.firstGradeScore = gradeScores[0];
-        this.secondGradeScore = gradeScores[1];
-        this.thirdGradeScore = gradeScores[2];
+        this.thirdBeforeBeforeScore = gradeScores[0];
+        this.thirdBeforeScore = gradeScores[1];
+        this.thirdGradeScore = gradeScores[2].add(gradeScores[3]);
 
         this.totalGradeScore = applicationCase.calculateTotalGradeScore();
         this.totalScore = volunteerScore.add(BigDecimal.valueOf(attendanceScore)).add(totalGradeScore);

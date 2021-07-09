@@ -5,6 +5,7 @@ import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
+import kr.hs.entrydsm.score.usecase.exception.GradeOrScoreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +34,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     @Override
     public ApplicantScore getApplicantScore(Long receiptCode) {
         Scorer scorer = scorerRepository.findByReceiptCode(receiptCode);
-        Score score = scoreRepository.findByReceiptCode(receiptCode);
+        Score score = scoreRepository.findByReceiptCode(receiptCode).orElseThrow(GradeOrScoreNotFoundException::new);
         
         if (scorer.isQualificationExam()) {
             return ApplicantScore.builder()
@@ -48,8 +49,9 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                     .lectureAbsenceCount(0)
                     .latenessCount(0)
                     .dayAbsenceCount(0)
-                    .totalFirstGradeScores(score.getFirstGradeScore())
-                    .totalSecondGradeScores(score.getSecondGradeScore())
+                    .volunteerTime(0)
+                    .totalFirstGradeScores(score.getThirdBeforeBeforeScore())
+                    .totalSecondGradeScores(score.getThirdBeforeScore())
                     .totalThirdGradeScores(score.getThirdGradeScore())
                     .conversionScore(score.getTotalGradeScore())
                     .volunteerScore(score.getVolunteerScore())
@@ -70,8 +72,9 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                     .lectureAbsenceCount(applicationCase.getLectureAbsenceCount())
                     .latenessCount(applicationCase.getLatenessCount())
                     .dayAbsenceCount(applicationCase.getDayAbsenceCount())
-                    .totalFirstGradeScores(score.getFirstGradeScore())
-                    .totalSecondGradeScores(score.getSecondGradeScore())
+                    .volunteerTime(applicationCase.getVolunteerTime())
+                    .totalFirstGradeScores(score.getThirdBeforeBeforeScore())
+                    .totalSecondGradeScores(score.getThirdBeforeScore())
                     .totalThirdGradeScores(score.getThirdGradeScore())
                     .conversionScore(score.getTotalGradeScore())
                     .volunteerScore(score.getVolunteerScore())

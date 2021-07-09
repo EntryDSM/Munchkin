@@ -23,7 +23,7 @@ public class Applicant {
 
     private String educationalStatus;
 
-    private boolean isDaejeon;
+    private Boolean isDaejeon;
 
     private String name;
 
@@ -36,6 +36,8 @@ public class Applicant {
     private String parentTel;
 
     private String address;
+
+    private String detailAddress;
 
     private String postCode;
 

@@ -8,7 +8,6 @@ import kr.hs.entrydsm.application.usecase.dto.*;
 import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.integrate.application.ScoreExportApplicationRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
-import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -56,8 +55,8 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
                 .attendanceScore(score.getAttendanceScore())
                 .volunteerScore(score.getVolunteerScore())
                 .conversionScore(score.getTotalGradeScore())
-                .totalFirstGradeScore(score.getFirstGradeScore())
-                .totalSecondGradeScore(score.getSecondGradeScore())
+                .totalFirstGradeScore(score.getThirdBeforeBeforeScore())
+                .totalSecondGradeScore(score.getThirdBeforeScore())
                 .totalThirdGradeScore(score.getThirdGradeScore())
                 .totalScoreFirstRound(score.getTotalScore())
                 .build();
@@ -83,8 +82,8 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
                 .receiptCode(score.getReceiptCode())
                 .attendanceScore(score.getAttendanceScore())
                 .volunteerScore(score.getVolunteerScore())
-                .totalFirstGradeScore(score.getFirstGradeScore())
-                .totalSecondGradeScore(score.getSecondGradeScore())
+                .totalFirstGradeScore(score.getThirdBeforeBeforeScore())
+                .totalSecondGradeScore(score.getThirdBeforeScore())
                 .totalThirdGradeScore(score.getThirdGradeScore())
                 .conversionScore(score.getTotalGradeScore())
                 .totalScoreFirstRound(score.getTotalScore())

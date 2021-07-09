@@ -30,7 +30,7 @@
             border: none;
             text-align: left;
           "
-                th:text="${entranceYear}학년도 신입생 입학전형"
+                th:text="${entranceYear} + '학년도 신입생 입학전형'"
         >
             2021학년도 신입생 입학전형
         </td>
@@ -119,7 +119,7 @@
         <td
                 colspan="9"
                 style="width: 52.97%"
-                th:text="|${address}|"
+                th:text="|${address} + ' ' + ${detailAddress}|"
         ></td>
     </tr>
     <tr style="height: 30px">
@@ -250,8 +250,8 @@
             text-align: right;
             margin: 40px 0 0 0px;
           "
-                th:text="위 지원자는 ${entranceYear}학년도 대덕소프트웨어마이스터고등학교 신입생
-            입학전형에 합격하여, 귀교"
+                th:text="'위 지원자는 ' + ${entranceYear} + '학년도 대덕소프트웨어마이스터고등학교 신입생'
+            '입학전형에 합격하여, 귀교'"
         >
             위 지원자는 2021학년도 대덕소프트웨어마이스터고등학교 신입생
             입학전형에 합격하여, 귀교

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface ApplicantService {
     void changePrintArrivedOrNot(long receiptCode, boolean isPrintedArrived);
+    void changeIsSubmitFalse(long receiptCode);
     ApplicantsResponse getApplicants(Pageable page, Long receiptCode,
                                      boolean isDaejeon, boolean isNationwide,
                                      String telephoneNumber, String name,

@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
-public class ApplicationManager implements ApplicationProcessing {
+public class ApplicationManager implements ApplicationService {
 
     private final ApplicationFactory applicationFactory;
     private final ImageService imageService;
@@ -129,7 +129,7 @@ public class ApplicationManager implements ApplicationProcessing {
     public ApplicationResponse getApplicationType() {
         long receiptCode = authenticationManager.getUserReceiptCode();
         String educationStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
-        if (!educationStatus.equals("QUALIFICATION_EXAM")) {
+        if (educationStatus != null && !educationStatus.equals("QUALIFICATION_EXAM")) {
             if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
                 GraduationApplication graduationApplication =
                         graduationApplicationRepository.findByReceiptCode(receiptCode)

@@ -29,7 +29,7 @@ import static kr.hs.entrydsm.application.usecase.image.AWS4SignerBase.*;
 
 @Service
 @RequiredArgsConstructor
-public class ImageServiceImpl extends AWS4Signer implements ImageService {
+public class ImageServiceManager extends AWS4Signer implements ImageService {
 
     private static final String SCHEME = "AWS4";
 
@@ -66,7 +66,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
         String randomName = UUID.randomUUID().toString();
         String filename = randomName + "." + ext;
 
-        if (!(ext.contains("jpg") || ext.contains("HEIC") || ext.contains("jpeg") || ext.contains("png") || ext.contains("heic"))) {
+        if (!(ext.equals("jpg") || ext.equals("HEIC") || ext.equals("jpeg") || ext.equals("png") || ext.equals("heic"))) {
             throw new BadFileExtensionException();
         }
 
@@ -137,7 +137,7 @@ public class ImageServiceImpl extends AWS4Signer implements ImageService {
 
         StringBuilder authString = new StringBuilder();
 
-        authString.append(endpointUrl.toString());
+        authString.append(endpointUrl);
         authString.append("?X-Amz-Algorithm=" + queryParameters.get("X-Amz-Algorithm"));
         authString.append("&X-Amz-Credential=" + queryParameters.get("X-Amz-Credential"));
         authString.append("&X-Amz-Date=" + queryParameters.get("X-Amz-Date"));

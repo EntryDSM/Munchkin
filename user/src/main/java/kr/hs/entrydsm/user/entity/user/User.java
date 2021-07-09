@@ -41,7 +41,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private EducationalStatus educationalStatus;
 
-    private boolean isDaejeon;
+    private Boolean isDaejeon;
 
     @Column(columnDefinition = "char(5)", nullable = false)
     private String name;
@@ -120,7 +120,7 @@ public class User {
                                   String parentName, String parentTel, String telephoneNumber, String homeTel,
                                   String address, String postCode, String photoFileName, String detailAddress) {
         this.name = name;
-        this.sex = Sex.valueOf(sex);
+        this.sex = sex == null ? null : Sex.valueOf(sex);
         this.birthday = birthday;
         this.parentName = parentName;
         this.parentTel = parentTel;

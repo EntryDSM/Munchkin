@@ -44,7 +44,7 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void save_exam_code_user_response() {
-        assertTrue(SAVE_EXAM_CODE_USER_RESPONSE.isDaejeon()==true);
+        assertTrue(SAVE_EXAM_CODE_USER_RESPONSE.getIsDaejeon()==true);
         assertFalse(SAVE_EXAM_CODE_USER_RESPONSE.getApplicationType().equals("COMMON"));
         assertFalse(SAVE_EXAM_CODE_USER_RESPONSE.getExamCode().isBlank());
         assertTrue(SAVE_EXAM_CODE_USER_RESPONSE.getAddress().equals("경상북도 상주시 경상대로 314"));
@@ -64,14 +64,14 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void common_score() {
-        assertTrue(COMMON_SCORE.getScore_80() != 0);
-        assertTrue(COMMON_SCORE.getScore81_90() == 0);
-        assertTrue(COMMON_SCORE.getScore91_100() != 0);
-        assertTrue(COMMON_SCORE.getScore101_110() != 0);
-        assertTrue(COMMON_SCORE.getScore111_120() != 0);
-        assertTrue(COMMON_SCORE.getScore121_130() != 0);
-        assertTrue(COMMON_SCORE.getScore131_140() != 0);
-        assertTrue(COMMON_SCORE.getScore141_150() != 0);
+        assertTrue(COMMON_SCORE.getScore_79() != 0);
+        assertTrue(COMMON_SCORE.getScore80_92() == 0);
+        assertTrue(COMMON_SCORE.getScore93_105() != 0);
+        assertTrue(COMMON_SCORE.getScore106_118() != 0);
+        assertTrue(COMMON_SCORE.getScore119_131() != 0);
+        assertTrue(COMMON_SCORE.getScore132_144() != 0);
+        assertTrue(COMMON_SCORE.getScore145_157() != 0);
+        assertTrue(COMMON_SCORE.getScore158_170() != 0);
 
         COMMON_SCORE.addScore(80);
         COMMON_SCORE.addScore(90);
@@ -85,14 +85,14 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
 
     @Test
     public void social_socre() {
-        assertEquals(MEISTER_SCORE.getScore_20(), 1);
-        assertEquals(MEISTER_SCORE.getScore21_30(), 3);
-        assertEquals(MEISTER_SCORE.getScore31_40(), 0);
-        assertEquals(MEISTER_SCORE.getScore41_50(), 5);
-        assertEquals(MEISTER_SCORE.getScore51_60(), 9);
-        assertEquals(MEISTER_SCORE.getScore61_70(), 9);
-        assertEquals(MEISTER_SCORE.getScore71_80(), 7);
-        assertEquals(MEISTER_SCORE.getScore81_90(), 9);
+        assertEquals(MEISTER_SCORE.getScore_19(), 1);
+        assertEquals(MEISTER_SCORE.getScore20_32(), 3);
+        assertEquals(MEISTER_SCORE.getScore33_45(), 0);
+        assertEquals(MEISTER_SCORE.getScore46_58(), 5);
+        assertEquals(MEISTER_SCORE.getScore59_71(), 9);
+        assertEquals(MEISTER_SCORE.getScore72_84(), 9);
+        assertEquals(MEISTER_SCORE.getScore85_97(), 7);
+        assertEquals(MEISTER_SCORE.getScore98_110(), 9);
 
         MEISTER_SCORE.addScore(10);
         MEISTER_SCORE.addScore(20.5);

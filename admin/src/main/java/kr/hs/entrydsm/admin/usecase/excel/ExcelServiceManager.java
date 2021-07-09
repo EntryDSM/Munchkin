@@ -50,60 +50,59 @@ public class ExcelServiceManager implements ExcelService {
     private String bucket;
 
     @Override
-    public void createAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException {
-        getAdmissionTicket(response, receiptCode);
+    public void createAdmissionTicket(HttpServletResponse response) throws IOException {
+        AdmissionTicket admissionTicket = null;
+        
+        List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
+        int i = 0, j = 0, count = 1;
+        LocalDate now = LocalDate.now();
+        Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
+                .orElseThrow(ScheduleNotFoundException::new);
+        if(now.isBefore(endDate.getDate())) {
+            throw new ApplicationPeriodNotOverException();
+        }
+        
+        for(Long receiptCode : applicantReceiptCodes) {
+            UserInfo userInfo = userRepository.getUserInfo(receiptCode);
+            ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
+
+            String examCode = userInfo.getExamCode();
+            String name = userInfo.getName();
+            String middleSchool = applicantInfo.getSchoolName();
+            String area = userInfo.getIsDaejeon()?"대전":"전국";
+            String applicationType = getApplicationType(userInfo.getApplicationType());
+
+            byte[] imageBytes = getObject("images/" + userInfo.getPhotoFileName());
+
+            admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
+            if(count % 3 ==0) {
+                i++;
+                j = 0;
+            } else {
+                j++;
+            } count++;
+            admissionTicket.format(i,j);
+
+            int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
+            HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
+            HSSFClientAnchor anchor;
+            anchor = new HSSFClientAnchor(i,j,i,j,(short)0,2,(short)2,14);
+            anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
+            patriarch.createPicture(anchor, index);
+        }
+
+        response.setContentType("ms-vnd/excel");
+        String formatFilename = "attachment;filename=\"";
+        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년MM월dd일_HH시mm분"));
+        String fileName = new String((formatFilename + time + "수험표.xls\"").getBytes("KSC5601"), "8859_1");
+        response.setHeader("Content-Disposition", fileName);
+
+        admissionTicket.getWorkbook().write(response.getOutputStream());
     }
 
     @Override
     public void createApplicantInformation(HttpServletResponse response) throws IOException {
         getApplicationInformation(response);
-    }
-
-    @Override
-    public void getAllExcels(HttpServletResponse response) throws IOException {
-        List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
-        LocalDate now = LocalDate.now();
-        Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
-                .orElseThrow(ScheduleNotFoundException::new);
-        if(now.isBefore(secondAnnouncement.getDate())) {
-            throw new ApplicationPeriodNotOverException();
-        }
-
-        getApplicationInformation(response);
-        for(Long receiptCode : applicantReceiptCodes) {
-            getAdmissionTicket(response, receiptCode);
-        }
-    }
-
-    private void getAdmissionTicket(HttpServletResponse response, long receiptCode) throws IOException {
-        UserInfo userInfo = userRepository.getUserInfo(receiptCode);
-        ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
-
-        String examCode = userInfo.getExamCode();
-        String name = userInfo.getName();
-        String middleSchool = applicantInfo.getSchoolName();
-        String area = userInfo.getIsDaejeon()?"대전":"전국";
-        String applicationType = userInfo.getApplicationType();
-
-        byte[] imageBytes = getObject(userInfo.getPhotoFileName());
-
-        AdmissionTicket admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
-        admissionTicket.format(0,0);
-
-        int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
-        HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
-        HSSFClientAnchor anchor;
-        anchor = new HSSFClientAnchor(0,0,0,0,(short)0,2,(short)2,14);
-        anchor.setAnchorType(ClientAnchor.AnchorType.DONT_MOVE_AND_RESIZE);
-        patriarch.createPicture(anchor, index);
-
-        response.setContentType("ms-vnd/excel");
-        String formatFilename = "attachment;filename=\"";
-        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy년MM월dd일_HH시mm분"));
-        String fileName = new String((formatFilename + userInfo.getExamCode() +  " 수험표 " + time + ".xls\"").getBytes("KSC5601"), "8859_1");
-        response.setHeader("Content-Disposition", fileName);
-
-        admissionTicket.getWorkbook().write(response.getOutputStream());
     }
 
     private void getApplicationInformation(HttpServletResponse response) throws IOException {
@@ -232,6 +231,19 @@ public class ExcelServiceManager implements ExcelService {
     private byte[] getObject(String fileName) throws IOException {
         S3Object object = s3.getObject(bucket, fileName);
         return IOUtils.toByteArray(object.getObjectContent());
+    }
+
+    private String getApplicationType(String applicationType) {
+        switch (applicationType) {
+            case "COMMON":
+                return "일반전형";
+            case "MEISTER":
+                return "마이스터전형";
+            case "SOCIAL":
+                return "사회통합전형";
+            default:
+                return null;
+        }
     }
 
 }
