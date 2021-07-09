@@ -153,7 +153,11 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public List<Long> getUserReceiptCodes() {
-        return userExportRepository.findAllReceiptCode();
+        List<Long> receiptCodes = new ArrayList<>();
+        for (User user : userExportRepository.findAllIsSubmitTrue()) {
+            receiptCodes.add(user.getReceiptCode());
+        }
+        return receiptCodes;
     }
 
     private String getApplicationType(ApplicationType applicationType) {
