@@ -120,7 +120,7 @@ public class User {
                                   String parentName, String parentTel, String telephoneNumber, String homeTel,
                                   String address, String postCode, String photoFileName, String detailAddress) {
         this.name = name;
-        this.sex = Sex.valueOf(sex);
+        this.sex = sex == null ? null : Sex.valueOf(sex);
         this.birthday = birthday;
         this.parentName = parentName;
         this.parentTel = parentTel;

@@ -63,7 +63,8 @@ public class JWTTokenHandler implements HandlerInterceptor {
         boolean adminJwtRequired = false;
         if (handlerMethod.hasMethodAnnotation(AdminJWTRequired.class) || handlerClass.getDeclaredAnnotation(AdminJWTRequired.class) != null) {
             adminJwtRequired = true;
-        }if (adminJwtRequired) {
+        }
+        if (adminJwtRequired) {
             String token = tokenProvider.resolveAccessToken(request);
             if (tokenProvider.validateToken(token)) {
                 String adminId = tokenProvider.parseAdminToken(token);
@@ -74,6 +75,7 @@ public class JWTTokenHandler implements HandlerInterceptor {
                 securityContext.setAuthentication(authentication);
                 return true;
             }
+            throw new MunchkinException(ErrorCode.UNAUTHENTICATED);
         }
 
         boolean refreshRequired = false;

@@ -124,12 +124,12 @@
             margin-bottom: 40px;
           "
         >
-            <p style="margin: 0 auto; text-align: right; font-size: 22px" th:text="위 학생을 ${entranceYear}학년도 대덕소프트웨어마이스터고등학교 특별전형">
+            <p style="margin: 0 auto; text-align: right; font-size: 22px" th:text="'위 학생을' + ${entranceYear} + '학년도 대덕소프트웨어마이스터고등학교 특별전형'">
                 위 학생을 2021학년도 대덕소프트웨어마이스터고등학교 특별전형
             </p>
             <p style="font-size: 22px">대상자로 추천합니다.</p>
         </div>
-        <div style="text-align: center; font-size: 21px" th:text="${year}년 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일">
+        <div style="text-align: center; font-size: 21px" th:text="${year} + '년 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일'">
             2020년 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일
         </div>
         <div style="text-align: right; font-size: 21px">
@@ -139,7 +139,7 @@
         </div>
         <div style="text-align: center">
             <span style="text-align: center; font-size: 21px; font-weight: 600; margin-top: 40px; letter-spacing: 5px"
-                  th:utext="|${schoolName}장|"></span>
+                  th:utext="'|' + ${schoolName} + '장|'"></span>
             <span style="color: #b8b8b8"><b>(직인)</b></span>
         </div>
         <div style="font-size: 25px; font-weight: 600;margin-top: 40px">
