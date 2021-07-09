@@ -41,12 +41,15 @@ public class QualificationExamCase extends ApplicationCase {
     }
 
     private BigDecimal gradeScoreFormula() {
-        BigDecimal gradeScore = averageScore.subtract(BigDecimal.valueOf(50)).multiply(BigDecimal.valueOf(3));
+        BigDecimal gradeScore = averageScore.subtract(BigDecimal.valueOf(50))
+                .multiply(BigDecimal.valueOf(1.6))
+                .setScale(3, RoundingMode.HALF_UP);
 
         if (scorer.isMeister()) {
-            return gradeScore.multiply(BigDecimal.valueOf(0.6));
-        } else {
             return gradeScore;
+        } else {
+            return gradeScore.multiply(COMMON_GRADE_RATE)
+                    .setScale(3, RoundingMode.HALF_UP);
         }
     }
 }
