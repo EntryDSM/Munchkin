@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 
 @Getter
 @NoArgsConstructor
@@ -50,13 +51,7 @@ public class GraduationCase extends ApplicationCase {
     }
 
     @Transient
-    private final BigDecimal FIRST_SECOND_GRADE_RATE = BigDecimal.valueOf(4.5);
-
-    @Transient
-    private final BigDecimal THIRD_GRADE_RATE = BigDecimal.valueOf(6);
-
-    @Transient
-    private final BigDecimal MEISTER_RATE = BigDecimal.valueOf(0.6);
+    private final BigDecimal GRADE_RATE = BigDecimal.valueOf(4);
 
     @Override
     public BigDecimal calculateVolunteerScore() { return volunteerScoreFormula(); }
@@ -75,8 +70,8 @@ public class GraduationCase extends ApplicationCase {
             return BigDecimal.valueOf(MAX_VOLUNTEER_SCORE);
         } else if (MIN_VOLUNTEER_TIME <= volunteerTime) {
             return BigDecimal.valueOf(volunteerTime)
-                             .subtract(BigDecimal.valueOf(9))
-                             .divide(BigDecimal.valueOf(3), 3, RoundingMode.HALF_UP)
+                             .subtract(BigDecimal.valueOf(6))
+                             .divide(BigDecimal.valueOf(2), 3, RoundingMode.HALF_UP)
                              .add(BigDecimal.valueOf(3));
         } else {
             return BigDecimal.valueOf(MIN_VOLUNTEER_SCORE);
@@ -84,9 +79,9 @@ public class GraduationCase extends ApplicationCase {
     }
 
     private Integer attendanceScoreFormula() {
-        return Math.max((MAX_ATTENDANCE_SCORE -
-                         dayAbsenceCount -
-                         (lectureAbsenceCount + latenessCount + earlyLeaveCount) / 3),
+        return Math.max((MAX_ATTENDANCE_SCORE
+                        - dayAbsenceCount
+                        - (lectureAbsenceCount + latenessCount + earlyLeaveCount) / 3),
                         0);
     }
 
@@ -96,59 +91,68 @@ public class GraduationCase extends ApplicationCase {
         for (BigDecimal score: gradeScoreFormula()) {
             scoresSum = scoresSum.add(score);
         }
-        if (scorer.isMeister()) {
-            scoresSum = scoresSum.multiply(MEISTER_RATE);
+
+        if (!scorer.isMeister()) {
+            scoresSum = scoresSum.multiply(COMMON_GRADE_RATE);
         }
 
         return scoresSum.setScale(3, RoundingMode.HALF_UP);
     }
 
     private BigDecimal[] gradeScoreFormula() {
-        BigDecimal[] gradeScores = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
-        BigDecimal[] scoresPerYear = zeroCheckedScorePerYear();
-        int lastScoreIndex = scoresPerYear().length - 1;
+        BigDecimal[] gradeScores = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+        BigDecimal[] scoresToCalculate = zeroCheckScoresToCalculate();
 
-        for (int i = 0 ; i < lastScoreIndex ; i++) {
-            gradeScores[i] = scoresPerYear[i].multiply(FIRST_SECOND_GRADE_RATE).setScale(3, RoundingMode.HALF_UP);
+        for (int index = 0; index < scoresToCalculate().length; index++) {
+            gradeScores[index] = scoresToCalculate[index].multiply(GRADE_RATE)
+                    .setScale(3, RoundingMode.HALF_UP);
         }
-        gradeScores[lastScoreIndex] = scoresPerYear[lastScoreIndex].multiply(THIRD_GRADE_RATE).setScale(3, RoundingMode.HALF_UP);
 
         return gradeScores;
     }
 
-    private BigDecimal[] zeroCheckedScorePerYear() {
-        BigDecimal[] scoresPerYear = scoresPerYear();
+    private BigDecimal[] zeroCheckScoresToCalculate() {
+        BigDecimal[] scoresToCalculate = scoresToCalculate();
         BigDecimal summedScore = BigDecimal.ZERO;
 
-        for (BigDecimal scorePerYear: scoresPerYear) { summedScore = summedScore.add(scorePerYear); }
-
-        if (scoresPerYear[0].equals(BigDecimal.ZERO) && scoresPerYear[1].equals(BigDecimal.ZERO)) {
-            scoresPerYear[0] = scoresPerYear[2];
-            scoresPerYear[1] = scoresPerYear[2];
-        } else if (scoresPerYear[0].equals(BigDecimal.ZERO)) {
-            scoresPerYear[0] = summedScore.divide(BigDecimal.valueOf(2), 4, RoundingMode.HALF_UP);
-        } else if (scoresPerYear[1].equals(BigDecimal.ZERO)) {
-            scoresPerYear[1] = summedScore.divide(BigDecimal.valueOf(2), 4, RoundingMode.HALF_UP);
+        for (BigDecimal scorePerYear: scoresToCalculate) {
+            summedScore = summedScore.add(scorePerYear);
         }
 
-        return scoresPerYear;
+        if (scoresToCalculate[0].equals(BigDecimal.ZERO) && scoresToCalculate[1].equals(BigDecimal.ZERO)) {
+            BigDecimal scoreToReplace = summedScore.divide(BigDecimal.valueOf(2), 4, RoundingMode.DOWN);
+            scoresToCalculate[0] = scoreToReplace;
+            scoresToCalculate[1] = scoreToReplace;
+        } else if (scoresToCalculate[0].equals(BigDecimal.ZERO)) {
+            scoresToCalculate[0] = summedScore.divide(BigDecimal.valueOf(3), 4, RoundingMode.DOWN);
+        } else if (scoresToCalculate[1].equals(BigDecimal.ZERO)) {
+            scoresToCalculate[1] = summedScore.divide(BigDecimal.valueOf(3), 4, RoundingMode.DOWN);
+        }
+
+        return scoresToCalculate;
     }
 
-    private BigDecimal[] scoresPerYear() {
+    private BigDecimal[] scoresToCalculate() {
         BigDecimal[] scoresPerSemester = scoresPerSemester();
-        BigDecimal[] scoresPerYear = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+        BigDecimal[] scoresToCalculate = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 
-        for (int semester = 0 ; semester < scoresPerSemester.length ; semester += 2) {
-            if (scoresPerSemester[semester].equals(BigDecimal.ZERO)) {
-                scoresPerSemester[semester] = scoresPerSemester[semester + 1];
-            } else if (scoresPerSemester[semester + 1].equals(BigDecimal.ZERO)) {
-                scoresPerSemester[semester + 1] = scoresPerSemester[semester];
-            }
+        int toCalculateLength = scoresToCalculate.length;
+        int semesterLength = scoresPerSemester.length;
 
-            scoresPerYear[semester/2] = scoresPerSemester[semester].add(scoresPerSemester[semester+1]);
+        scoresToCalculate[toCalculateLength - 1] = scoresPerSemester[semesterLength - 1];
+        if (scoresToCalculate[toCalculateLength - 1].equals(BigDecimal.ZERO)) {
+            scoresToCalculate[toCalculateLength - 1] = scoresPerSemester[semesterLength - 2];
         }
 
-        return scoresPerYear;
+        for (int semesterIndex = semesterLength - 2, scoreIndex = toCalculateLength - 2;
+             semesterIndex >= 0 && scoreIndex >= 0;
+             semesterIndex--) {
+            if (!scoresPerSemester[semesterIndex].equals(BigDecimal.ZERO)) {
+                scoresToCalculate[scoreIndex--] = scoresPerSemester[semesterIndex];
+            }
+        }
+
+        return scoresToCalculate;
     }
 
     private BigDecimal[] scoresPerSemester() {
@@ -183,7 +187,7 @@ public class GraduationCase extends ApplicationCase {
             }
         }
 
-        if (!scorer.isGraduated()) gradesPerSemester[5] = gradesPerSemester[4];
+        if (scorer.isProspectiveGraduate()) gradesPerSemester[5] = gradesPerSemester[4];
 
         return gradesPerSemester;
     }
@@ -213,7 +217,7 @@ public class GraduationCase extends ApplicationCase {
         return BigDecimal.valueOf(semesterScore)
                          .divide(BigDecimal.valueOf(subjectCount),
                            4,
-                                 RoundingMode.HALF_UP);
+                                 RoundingMode.DOWN);
     }
 
 }
