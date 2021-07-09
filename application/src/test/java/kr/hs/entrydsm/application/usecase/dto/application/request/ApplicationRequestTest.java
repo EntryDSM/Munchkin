@@ -41,7 +41,7 @@ class ApplicationRequestTest {
         assertFalse(PROSPECTIVE_COMMON.getIsDaejeon());
         assertTrue(GRADUATE_MEISTER.getIsDaejeon());
         assertTrue(QUALIFICATION_SOCIAL.getIsDaejeon());
-        assertFalse(REQUEST.getIsDaejeon());
+        assertNull(REQUEST.getIsDaejeon());
     }
 
     @Test
