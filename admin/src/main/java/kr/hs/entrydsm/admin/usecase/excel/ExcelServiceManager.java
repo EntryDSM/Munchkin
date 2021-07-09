@@ -51,7 +51,7 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(HttpServletResponse response) throws IOException {
-        AdmissionTicket admissionTicket = null;
+        AdmissionTicket admissionTicket = new AdmissionTicket();
         
         List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
         int i = 0, j = 0, count = 1;
@@ -74,14 +74,14 @@ public class ExcelServiceManager implements ExcelService {
 
             byte[] imageBytes = getObject("images/" + userInfo.getPhotoFileName());
 
-            admissionTicket = new AdmissionTicket(examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
+            admissionTicket.format(i,j, examCode, name, middleSchool, area, applicationType, String.valueOf(receiptCode));
+            count++;
             if(count % 3 ==0) {
                 i++;
                 j = 0;
             } else {
                 j++;
-            } count++;
-            admissionTicket.format(i,j);
+            }
 
             int index = admissionTicket.getWorkbook().addPicture(imageBytes, HSSFWorkbook.PICTURE_TYPE_PNG);
             HSSFPatriarch patriarch = admissionTicket.getSheet().createDrawingPatriarch();
