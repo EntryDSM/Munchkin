@@ -81,14 +81,13 @@ public class AdminIntegrateUserService implements UserRepository {
     @Override
     public UserInfo getUserInfo(long receiptCode) {
         User user = userExportRepository.findByReceiptCode((int) receiptCode);
-        String applicationType = getApplicationType(user.getApplicationType());
 
         return UserInfo.builder()
                 .receiptCode(user.getReceiptCode())
                 .name(user.getName())
                 .photoFileName(user.getPhotoFileName())
                 .email(user.getEmail())
-                .applicationType(applicationType)
+                .applicationType(String.valueOf(user.getApplicationType()))
                 .address(user.getAddress())
                 .detailAddress(user.getDetailAddress())
                 .birthDate(user.getBirthday())
