@@ -10,6 +10,7 @@ import kr.hs.entrydsm.score.usecase.dto.UpdateGraduationRequest;
 import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
 import kr.hs.entrydsm.score.usecase.exception.ApplicationTypeUnmatchedException;
 import kr.hs.entrydsm.score.usecase.exception.GradeNotFoundException;
+import kr.hs.entrydsm.score.usecase.exception.GradeOrScoreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -75,7 +76,7 @@ public class ScoreServiceManager implements ScoreService {
 
     @Override
     public Score findByReceiptCode(long receiptCode) {
-        return scoreRepository.findByReceiptCode(receiptCode);
+        return scoreRepository.findByReceiptCode(receiptCode).orElseThrow(GradeOrScoreNotFoundException::new);
     }
 
     @Override

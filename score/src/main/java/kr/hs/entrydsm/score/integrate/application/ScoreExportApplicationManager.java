@@ -2,6 +2,7 @@ package kr.hs.entrydsm.score.integrate.application;
 
 import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.entity.ScoreRepository;
+import kr.hs.entrydsm.score.usecase.exception.GradeOrScoreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,6 @@ public class ScoreExportApplicationManager implements ScoreExportApplicationRepo
 
     @Override
     public Score findByReceiptCode(long receiptCode) {
-        return scoreRepository.findByReceiptCode(receiptCode);
+        return scoreRepository.findByReceiptCode(receiptCode).orElseThrow(GradeOrScoreNotFoundException::new);
     }
 }
