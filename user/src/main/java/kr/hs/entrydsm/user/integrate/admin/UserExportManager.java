@@ -66,6 +66,7 @@ public class UserExportManager implements UserExportRepository {
     @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         userRepository.findByReceiptCode(receiptCode)
+                .filter(user -> statusRepository.findById(receiptCode).get().isSubmit())
                 .map(user -> user.setPrintedArrived(isPrintedArrived))
                 .ifPresent(userRepository::save);
     }
