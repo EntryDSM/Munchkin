@@ -84,6 +84,7 @@ public class AdminIntegrateUserService implements UserRepository {
 
         return UserInfo.builder()
                 .receiptCode(user.getReceiptCode())
+                .examCode(user.getExamCode())
                 .name(user.getName())
                 .photoFileName(user.getPhotoFileName())
                 .email(user.getEmail())
@@ -100,6 +101,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .selfIntroduce(user.getSelfIntroduce())
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
+                .educationalStatus(user.getEducationalStatus().toString())
                 .build();
     }
 
@@ -153,7 +155,11 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public List<Long> getUserReceiptCodes() {
-        return userExportRepository.findAllReceiptCode();
+        List<Long> receiptCodes = new ArrayList<>();
+        for (User user : userExportRepository.findAllIsSubmitTrue()) {
+            receiptCodes.add(user.getReceiptCode());
+        }
+        return receiptCodes;
     }
 
     private String getApplicationType(ApplicationType applicationType) {
