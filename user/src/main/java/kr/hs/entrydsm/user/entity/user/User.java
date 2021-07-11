@@ -153,4 +153,8 @@ public class User {
         return this;
     }
 
+    public void setSubmitFalse() {
+        this.status.setSubmitStatus(false);
+    }
+
 }

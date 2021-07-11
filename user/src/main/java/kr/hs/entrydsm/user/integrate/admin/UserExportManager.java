@@ -21,7 +21,7 @@ public class UserExportManager implements UserExportRepository {
     private final StatusRepositoryManager statusRepository;
 
     @Override
-    public User findByReceiptCode(int receiptCode) {
+    public User findByReceiptCode(long receiptCode) {
         return userRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(UserNotFoundException::new);
     }
@@ -60,7 +60,9 @@ public class UserExportManager implements UserExportRepository {
 
     @Override
     public void changeIsSubmitFalse(long receiptCode) {
-        //지원자의 isSubmit 상태를 false로 바꾸기
+        User user = findByReceiptCode(receiptCode);
+        user.setSubmitFalse();
+        userRepository.save(user);
     }
 
     @Override
