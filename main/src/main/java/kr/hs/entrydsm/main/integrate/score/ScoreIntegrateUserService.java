@@ -19,7 +19,7 @@ public class ScoreIntegrateUserService implements ScorerRepository {
 
     @Override
     public Scorer findByReceiptCode(long receiptCode) {
-        User user = userExportRepository.findByReceiptCode(Long.valueOf(receiptCode).intValue());
+        User user = userExportRepository.findByReceiptCode(receiptCode);
         return Scorer.builder().receiptCode(user.getReceiptCode())
                 .applicationType(getApplicationType(user.getApplicationType()))
                 .educationalStatus(getEducationalStatus(user.getEducationalStatus()))
