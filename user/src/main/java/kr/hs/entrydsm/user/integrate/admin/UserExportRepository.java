@@ -9,7 +9,7 @@ import java.util.List;
 
 @Published
 public interface UserExportRepository {
-    User findByReceiptCode(int receiptCode);
+    User findByReceiptCode(long receiptCode);
     Page<User> findAll(Pageable page, Long receiptCode,
                        boolean isDaejeon, boolean isNationwide,
                        String telephoneNumber, String name,

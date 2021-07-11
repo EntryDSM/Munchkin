@@ -45,7 +45,7 @@ public class UserExportManager implements UserExportRepository {
         String nameQuery = "%" + name + "%";
 
         String isPrintedArrivedQuery = "%%";
-        if (isPrintedArrived != null) isPrintedArrivedQuery = isPrintedArrivedQuery.toString();
+        if (isPrintedArrived != null) isPrintedArrivedQuery = isPrintedArrived ? "1" : "0";
 
         return userRepository.findAllByUserInfo(receiptCodeQuery, isDaejeonQuery, telephoneNumberQuery,
                 nameQuery, isCommon, isMeister, isSocial, isPrintedArrivedQuery, page);
