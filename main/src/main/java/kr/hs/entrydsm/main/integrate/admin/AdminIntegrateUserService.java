@@ -50,13 +50,13 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public void changeExamCode(long receiptCode, String examCode) {
-        User user = userExportRepository.findByReceiptCode((int)receiptCode);
+        User user = userExportRepository.findByReceiptCode(receiptCode);
         userExportRepository.changeExamCode(user.getReceiptCode(), examCode);
     }
 
     @Override
     public void changeIsSubmitFalse(long receiptCode) {
-
+        userExportRepository.changeIsSubmitFalse(receiptCode);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public UserInfo getUserInfo(long receiptCode) {
-        User user = userExportRepository.findByReceiptCode((int) receiptCode);
+        User user = userExportRepository.findByReceiptCode(receiptCode);
 
         return UserInfo.builder()
                 .receiptCode(user.getReceiptCode())
@@ -111,7 +111,7 @@ public class AdminIntegrateUserService implements UserRepository {
 
     @Override
     public UserNameAndEmail getUserNameAndEmail(long receiptCode) {
-        User user = userExportRepository.findByReceiptCode((int)receiptCode);
+        User user = userExportRepository.findByReceiptCode(receiptCode);
         return new UserNameAndEmail(user.getName(), user.getEmail());
     }
 
