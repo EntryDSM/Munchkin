@@ -22,7 +22,7 @@ public class ExcelController {
 
     @AdminJWTRequired
     @GetMapping("/admission-ticket")
-    public void createAdmissionTicket(HttpServletResponse response) throws IOException {
+    public void createAdmissionTicket(HttpServletResponse response) throws Exception {
         excelService.createAdmissionTicket(response);
     }
 
