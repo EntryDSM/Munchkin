@@ -86,7 +86,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     }
 
     @Override
-    public FirstRoundSuccessfulCandidate getSuccessfulCandidate() {
+    public FirstRoundSuccessfulCandidate getSuccessfulCandidateReceiptCodes() {
         return null;
     }
 
