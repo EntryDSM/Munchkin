@@ -11,9 +11,11 @@ import lombok.Getter;
 public class Scorer extends ExternalEntity {
     @Builder
     public static Scorer initializer(long receiptCode,
+                                     boolean isDaejeon,
                                      ApplicationType applicationType,
                                      EducationalStatus educationalStatus) {
         Scorer scorer = new Scorer(receiptCode,
+                isDaejeon,
                 applicationType,
                 educationalStatus);
         return nullCheck(scorer);
@@ -21,12 +23,13 @@ public class Scorer extends ExternalEntity {
 
     private final long receiptCode;
 
+    private final boolean isDaejeon;
+
     private final ApplicationType applicationType;
 
     public enum ApplicationType {
         COMMON, MEISTER, SOCIAL
     }
-
 
     private final EducationalStatus educationalStatus;
 
@@ -34,8 +37,16 @@ public class Scorer extends ExternalEntity {
         PROSPECTIVE_GRADUATE, GRADUATE, QUALIFICATION_EXAM
     }
 
+    public boolean isDaejeon() {
+        return isDaejeon;
+    }
+
     public boolean isMeister() {
         return applicationType == ApplicationType.MEISTER;
+    }
+
+    public boolean isCommon() {
+        return applicationType == ApplicationType.COMMON;
     }
 
     public boolean isQualificationExam() {

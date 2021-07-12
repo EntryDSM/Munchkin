@@ -11,6 +11,8 @@ import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
 public class ScoreIntegrateUserService implements ScorerRepository {
@@ -20,10 +22,17 @@ public class ScoreIntegrateUserService implements ScorerRepository {
     @Override
     public Scorer findByReceiptCode(long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
-        return Scorer.builder().receiptCode(user.getReceiptCode())
+        return Scorer.builder()
+                .receiptCode(user.getReceiptCode())
+                .isDaejeon(user.getIsDaejeon())
                 .applicationType(getApplicationType(user.getApplicationType()))
                 .educationalStatus(getEducationalStatus(user.getEducationalStatus()))
                 .build();
+    }
+
+    @Override
+    public List<Scorer> findByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
+        return null;
     }
 
     private Scorer.ApplicationType getApplicationType(ApplicationType applicationType) {
