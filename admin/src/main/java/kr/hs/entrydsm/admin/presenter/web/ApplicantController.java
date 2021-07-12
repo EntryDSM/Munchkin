@@ -55,10 +55,4 @@ public class ApplicantController {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
     }
 
-    @AdminJWTRequired
-    @PatchMapping("/applicants/examcode")
-    public void saveExamCode() throws Exception {
-        applicantService.saveAllApplicantsExamCode() ;
-    }
-
 }

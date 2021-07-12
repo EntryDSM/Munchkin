@@ -13,5 +13,4 @@ public interface ApplicantService {
                                      boolean isCommon, boolean isMeister, boolean isSocial,
                                      Boolean isPrintedArrived);
     ResponseEntity getDetailApplicantInfo(int receiptCode);
-    void saveAllApplicantsExamCode() throws Exception;
 }

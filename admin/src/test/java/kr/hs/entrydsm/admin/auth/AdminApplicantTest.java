@@ -201,11 +201,6 @@ public class AdminApplicantTest extends AdminApplicantBaseTest {
     }
 
     @Test
-    public void saveExamCode() throws Exception {
-        applicantService.saveAllApplicantsExamCode();
-    }
-
-    @Test
     public void getDetail() {
         applicantService.getDetailApplicantInfo(123456);
     }
