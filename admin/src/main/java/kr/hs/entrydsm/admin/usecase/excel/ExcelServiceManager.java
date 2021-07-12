@@ -76,7 +76,7 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(HttpServletResponse response) throws Exception {
-        FirstRoundSuccessfulCandidates successfulCandidates = scoreRepository.getSuccessfulCandidate();
+        FirstRoundSuccessfulCandidates successfulCandidates = scoreRepository.getSuccessfulCandidateReceiptCodes();
 
         List<Long> applicantReceiptCodes = new ArrayList<>();
         applicantReceiptCodes.addAll(successfulCandidates.getDaejeonCommonApplicants());
