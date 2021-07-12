@@ -3,9 +3,11 @@ package kr.hs.entrydsm.main.integrate.admin;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicationStatus;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
+import kr.hs.entrydsm.admin.usecase.dto.score.FirstRoundSuccessfulCandidates;
 import kr.hs.entrydsm.score.integrate.admin.ScoreExportAdminRepository;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
+import kr.hs.entrydsm.score.usecase.dto.FirstRoundSuccessfulCandidate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -49,6 +51,19 @@ public class AdminIntegrateScoreService implements ScoreRepository {
                 .conversionScore(score.getConversionScore())
                 .attendanceScore(score.getAttendanceScore())
                 .totalScoreFirstRound(score.getTotalScoreFirstRound())
+                .build();
+    }
+
+    @Override
+    public FirstRoundSuccessfulCandidates getSuccessfulCandidate() {
+        FirstRoundSuccessfulCandidate successfulCandidates = scoreExportRepository.getSuccessfulCandidate();
+        return FirstRoundSuccessfulCandidates.builder()
+                .DaejeonCommonApplicants(successfulCandidates.getDaejeonCommonApplicants())
+                .NationwideCommonApplicants(successfulCandidates.getNationwideCommonApplicants())
+                .DaejeonMeisterApplicants(successfulCandidates.getDaejeonMeisterApplicants())
+                .NationwideMeisterApplicants(successfulCandidates.getNationwideMeisterApplicants())
+                .DaejeonSocialApplicants(successfulCandidates.getDaejeonSocialApplicants())
+                .NationwideSocialApplicants(successfulCandidates.getNationwideSocialApplicants())
                 .build();
     }
 

@@ -5,6 +5,7 @@ import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
 import kr.hs.entrydsm.score.usecase.dto.ApplicantScore;
 import kr.hs.entrydsm.score.usecase.dto.ApplicationStatusResponse;
+import kr.hs.entrydsm.score.usecase.dto.FirstRoundSuccessfulCandidate;
 import kr.hs.entrydsm.score.usecase.exception.GradeOrScoreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -82,6 +83,11 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                     .totalScoreFirstRound(score.getTotalScore())
                     .build();
         }
+    }
+
+    @Override
+    public FirstRoundSuccessfulCandidate getSuccessfulCandidate() {
+        return null;
     }
 
     private List<BigDecimal> getScores(Scorer.ApplicationType applicationType) {
