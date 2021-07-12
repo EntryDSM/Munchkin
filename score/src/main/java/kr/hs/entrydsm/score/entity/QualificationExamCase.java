@@ -45,11 +45,11 @@ public class QualificationExamCase extends ApplicationCase {
                 .multiply(BigDecimal.valueOf(1.6))
                 .setScale(3, RoundingMode.HALF_UP);
 
-        if (scorer.isMeister()) {
-            return gradeScore;
-        } else {
+        if (scorer.isCommon()) {
             return gradeScore.multiply(COMMON_GRADE_RATE)
                     .setScale(3, RoundingMode.HALF_UP);
+        } else {
+            return gradeScore;
         }
     }
 }

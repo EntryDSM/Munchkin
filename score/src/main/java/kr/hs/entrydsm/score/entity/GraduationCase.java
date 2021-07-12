@@ -92,7 +92,7 @@ public class GraduationCase extends ApplicationCase {
             scoresSum = scoresSum.add(score);
         }
 
-        if (!scorer.isMeister()) {
+        if (scorer.isCommon()) {
             scoresSum = scoresSum.multiply(COMMON_GRADE_RATE);
         }
 
