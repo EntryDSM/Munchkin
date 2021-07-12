@@ -196,7 +196,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
 
     private void getScoresByApplication(Application application, List<Score> spareQueue) {
         ApplicationType type = application.applicationType;
-        List<Score> sortedScores = scorerRepository.findByRegionAndType(type.isDaejeon, type.applicationType)
+        List<Score> sortedScores = scorerRepository.findFinalSubmittedByRegionAndType(type.isDaejeon, type.applicationType)
                 .stream()
                 .map(scorer -> scoreRepository.findByReceiptCode(scorer.getReceiptCode()).orElseThrow(GradeNotFoundException::new))
                 .sorted(Comparator.comparing(Score::getTotalScore).reversed())

@@ -31,7 +31,7 @@ public class ScoreIntegrateUserService implements ScorerRepository {
     }
 
     @Override
-    public List<Scorer> findByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
+    public List<Scorer> findFinalSubmittedByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
         return null;
     }
 
