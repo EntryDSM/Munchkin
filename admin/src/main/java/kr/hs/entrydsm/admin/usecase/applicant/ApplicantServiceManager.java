@@ -92,7 +92,7 @@ public class ApplicantServiceManager implements ApplicantService {
 
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicant notSubmitApplicant
-                    = new NotSubmitApplicant(userInfo.getTelephoneNumber(), userInfo.getParentTel(), userInfo.getHomeTel(), applicantInfo.getSchoolTel());
+                    = new NotSubmitApplicant(userInfo.getEmail(), userInfo.getTelephoneNumber(), userInfo.getParentTel(), userInfo.getHomeTel(), applicantInfo.getSchoolTel());
             return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
         }
 

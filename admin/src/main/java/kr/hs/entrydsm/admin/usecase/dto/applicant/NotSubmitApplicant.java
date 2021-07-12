@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NotSubmitApplicant {
 
+    private String email;
+
     private String applicantTel;
 
     private String parentTel;
