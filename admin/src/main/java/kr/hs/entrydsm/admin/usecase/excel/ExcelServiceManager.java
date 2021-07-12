@@ -19,6 +19,7 @@ import kr.hs.entrydsm.admin.integrate.user.UserRepository;
 import kr.hs.entrydsm.admin.presenter.excel.AdmissionTicket;
 import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
+import kr.hs.entrydsm.admin.usecase.dto.score.FirstRoundSuccessfulCandidates;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.Coordinate;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteBody;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceRequest;
@@ -75,18 +76,37 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(HttpServletResponse response) throws Exception {
-        AdmissionTicket admissionTicket = new AdmissionTicket();
-        saveAllApplicantsExamCode();
-        
-        List<Long> applicantReceiptCodes = userRepository.getUserReceiptCodes();
-        int x = 0, y = 0, count = 1;
+        FirstRoundSuccessfulCandidates successfulCandidates = scoreRepository.getSuccessfulCandidate();
+
+        List<Long> applicantReceiptCodes = new ArrayList<>();
+        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonCommonApplicants());
+        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonMeisterApplicants());
+        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonSocialApplicants());
+        applicantReceiptCodes.addAll(successfulCandidates.getNationwideCommonApplicants());
+        applicantReceiptCodes.addAll(successfulCandidates.getNationwideMeisterApplicants());
+        applicantReceiptCodes.addAll(successfulCandidates.getNationwideSocialApplicants());
+
         LocalDate now = LocalDate.now();
         Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
                 .orElseThrow(ScheduleNotFoundException::new);
         if(now.isBefore(endDate.getDate())) {
             throw new ApplicationPeriodNotOverException();
+        } else {
+            saveAllApplicantsExamCode();
+            getAdmissionTicket(response, applicantReceiptCodes);
         }
-        
+
+    }
+
+    @Override
+    public void createApplicantInformation(HttpServletResponse response) throws IOException {
+        getApplicationInformation(response);
+    }
+
+    private void getAdmissionTicket(HttpServletResponse response, List<Long> applicantReceiptCodes) throws IOException {
+        AdmissionTicket admissionTicket = new AdmissionTicket();
+        int x = 0, y = 0, count = 1;
+
         for(Long receiptCode : applicantReceiptCodes) {
             UserInfo userInfo = userRepository.getUserInfo(receiptCode);
             ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
@@ -123,11 +143,6 @@ public class ExcelServiceManager implements ExcelService {
         response.setHeader("Content-Disposition", fileName);
 
         admissionTicket.getWorkbook().write(response.getOutputStream());
-    }
-
-    @Override
-    public void createApplicantInformation(HttpServletResponse response) throws IOException {
-        getApplicationInformation(response);
     }
 
     private void getApplicationInformation(HttpServletResponse response) throws IOException {
