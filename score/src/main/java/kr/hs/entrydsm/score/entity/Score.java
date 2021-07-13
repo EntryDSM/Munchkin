@@ -42,7 +42,7 @@ public class Score {
         BigDecimal[] gradeScores = applicationCase.calculateGradeScores();
         this.thirdBeforeBeforeScore = gradeScores[0];
         this.thirdBeforeScore = gradeScores[1];
-        this.thirdGradeScore = gradeScores[2].add(gradeScores[3]);
+        this.thirdGradeScore = gradeScores[2];
 
         this.totalGradeScore = applicationCase.calculateTotalGradeScore();
         this.totalScore = volunteerScore.add(BigDecimal.valueOf(attendanceScore)).add(totalGradeScore);

@@ -44,10 +44,10 @@ public class GraduationCaseTest extends EntityTest {
 
     @Test
     void calculateGradeScore() {
-        assertEquals(BigDecimal.valueOf(123.998), graduationCase(prospectiveGraduateCommon).calculateTotalGradeScore());
-        assertEquals(BigDecimal.valueOf(70.856), graduationCase(prospectiveGraduateMeister).calculateTotalGradeScore());
-        assertEquals(BigDecimal.valueOf(120.498), graduationCase(graduateCommon).calculateTotalGradeScore());
-        assertEquals(BigDecimal.valueOf(68.856), graduationCase(graduateMeister).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(124).setScale(3), graduationCase(prospectiveGraduateCommon).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(70.857), graduationCase(prospectiveGraduateMeister).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(120.5).setScale(3), graduationCase(graduateCommon).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(68.857), graduationCase(graduateMeister).calculateTotalGradeScore());
     }
 
     private GraduationCase fromForeignCase(Scorer scorer) {
@@ -65,9 +65,9 @@ public class GraduationCaseTest extends EntityTest {
 
     @Test
     void calculateGradeScoreFromForeign() {
-        assertEquals(BigDecimal.valueOf(130.664), fromForeignCase(prospectiveGraduateCommon).calculateTotalGradeScore());
-        assertEquals(BigDecimal.valueOf(74.665), fromForeignCase(prospectiveGraduateMeister).calculateTotalGradeScore());
-        assertEquals(BigDecimal.valueOf(125.998), fromForeignCase(graduateCommon).calculateTotalGradeScore());
-        assertEquals(BigDecimal.valueOf(71.999), fromForeignCase(graduateMeister).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(130.667), fromForeignCase(prospectiveGraduateCommon).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(74.667), fromForeignCase(prospectiveGraduateMeister).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(126).setScale(3), fromForeignCase(graduateCommon).calculateTotalGradeScore());
+        assertEquals(BigDecimal.valueOf(72).setScale(3), fromForeignCase(graduateMeister).calculateTotalGradeScore());
     }
 }

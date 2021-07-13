@@ -100,13 +100,15 @@ public class GraduationCase extends ApplicationCase {
     }
 
     private BigDecimal[] gradeScoreFormula() {
-        BigDecimal[] gradeScores = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+        BigDecimal[] gradeScores = new BigDecimal[]{BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
         BigDecimal[] scoresToCalculate = zeroCheckScoresToCalculate();
 
-        for (int index = 0; index < scoresToCalculate().length; index++) {
-            gradeScores[index] = scoresToCalculate[index].multiply(GRADE_RATE)
-                    .setScale(3, RoundingMode.HALF_UP);
+        for (int index = 0; index < scoresToCalculate.length - 2; index++) {
+            gradeScores[index] = scoresToCalculate[index].multiply(GRADE_RATE);
         }
+        gradeScores[gradeScores.length - 1] = scoresToCalculate[scoresToCalculate.length - 2]
+                .add(scoresToCalculate[scoresToCalculate.length - 1])
+                .multiply(GRADE_RATE);
 
         return gradeScores;
     }
@@ -120,13 +122,13 @@ public class GraduationCase extends ApplicationCase {
         }
 
         if (scoresToCalculate[0].equals(BigDecimal.ZERO) && scoresToCalculate[1].equals(BigDecimal.ZERO)) {
-            BigDecimal scoreToReplace = summedScore.divide(BigDecimal.valueOf(2), 4, RoundingMode.DOWN);
+            BigDecimal scoreToReplace = summedScore.divide(BigDecimal.valueOf(2), 5, RoundingMode.DOWN);
             scoresToCalculate[0] = scoreToReplace;
             scoresToCalculate[1] = scoreToReplace;
         } else if (scoresToCalculate[0].equals(BigDecimal.ZERO)) {
-            scoresToCalculate[0] = summedScore.divide(BigDecimal.valueOf(3), 4, RoundingMode.DOWN);
+            scoresToCalculate[0] = summedScore.divide(BigDecimal.valueOf(3), 5, RoundingMode.DOWN);
         } else if (scoresToCalculate[1].equals(BigDecimal.ZERO)) {
-            scoresToCalculate[1] = summedScore.divide(BigDecimal.valueOf(3), 4, RoundingMode.DOWN);
+            scoresToCalculate[1] = summedScore.divide(BigDecimal.valueOf(3), 5, RoundingMode.DOWN);
         }
 
         return scoresToCalculate;
@@ -216,7 +218,7 @@ public class GraduationCase extends ApplicationCase {
 
         return BigDecimal.valueOf(semesterScore)
                          .divide(BigDecimal.valueOf(subjectCount),
-                           4,
+                           5,
                                  RoundingMode.DOWN);
     }
 
