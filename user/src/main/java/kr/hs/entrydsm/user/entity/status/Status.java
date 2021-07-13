@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -31,6 +32,10 @@ public class Status {
 
     @Column(columnDefinition = "char(5)")
     private String examCode;
+
+    @ColumnDefault("N")
+    @Column(columnDefinition = "char(1)")
+    private String pass_status;
 
     public void setExamCode(String examCode) {
         this.examCode = examCode;
