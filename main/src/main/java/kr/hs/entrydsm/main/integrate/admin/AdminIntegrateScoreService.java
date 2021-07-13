@@ -55,16 +55,8 @@ public class AdminIntegrateScoreService implements ScoreRepository {
     }
 
     @Override
-    public FirstRoundSuccessfulCandidates getSuccessfulCandidateReceiptCodes() {
-        FirstRoundSuccessfulCandidate successfulCandidates = scoreExportRepository.getSuccessfulCandidateReceiptCodes();
-        return FirstRoundSuccessfulCandidates.builder()
-                .DaejeonCommonApplicants(successfulCandidates.getDaejeonCommonApplicants())
-                .NationwideCommonApplicants(successfulCandidates.getNationwideCommonApplicants())
-                .DaejeonMeisterApplicants(successfulCandidates.getDaejeonMeisterApplicants())
-                .NationwideMeisterApplicants(successfulCandidates.getNationwideMeisterApplicants())
-                .DaejeonSocialApplicants(successfulCandidates.getDaejeonSocialApplicants())
-                .NationwideSocialApplicants(successfulCandidates.getNationwideSocialApplicants())
-                .build();
+    public void getSuccessfulCandidateReceiptCodes() {
+        scoreExportRepository.getSuccessfulCandidateReceiptCodes();
     }
 
 }

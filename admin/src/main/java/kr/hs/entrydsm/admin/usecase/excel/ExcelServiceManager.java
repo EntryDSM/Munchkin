@@ -76,15 +76,9 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(HttpServletResponse response) throws Exception {
-        FirstRoundSuccessfulCandidates successfulCandidates = scoreRepository.getSuccessfulCandidateReceiptCodes();
+        scoreRepository.getSuccessfulCandidateReceiptCodes();
 
         List<Long> applicantReceiptCodes = userRepository.findAllIsFirstRoundPassTrue();
-        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonCommonApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonMeisterApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonSocialApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getNationwideCommonApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getNationwideMeisterApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getNationwideSocialApplicants());
 
         LocalDate now = LocalDate.now();
         Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
