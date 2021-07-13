@@ -17,6 +17,7 @@ public interface UserRepository {
     void changeExamCode(long receiptCode, String examCode);
     void changeIsSubmitFalse(long receiptCode);
     List<SaveExamCodeUserResponse> findAllIsFirstRoundPassTrue();
+    List<Long> findAllReceiptCodeIsFirstRoundPassTrue();
     UserInfo getUserInfo(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     UserNameAndEmail getUserNameAndEmail(long receiptCode);

@@ -78,6 +78,17 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     @Override
+    public List<Long> findAllReceiptCodeIsFirstRoundPassTrue() {
+        List<User> users = userExportRepository.findAllPassStatusTrue();
+        List<Long> applicants = new ArrayList<>();
+        for (User user : users) {
+            applicants.add(user.getReceiptCode());
+        }
+
+        return applicants;
+    }
+
+    @Override
     public UserInfo getUserInfo(long receiptCode) {
         User user = userExportRepository.findByReceiptCode(receiptCode);
 
