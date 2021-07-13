@@ -35,7 +35,7 @@ public class Status {
 
     @ColumnDefault("N")
     @Column(columnDefinition = "char(1)")
-    private String pass_status;
+    private String passStatus;
 
     public void setExamCode(String examCode) {
         this.examCode = examCode;
@@ -47,6 +47,10 @@ public class Status {
 
     public void setSubmitStatus(boolean isSubmit) {
         this.isSubmit = isSubmit;
+    }
+
+    public void setPassStatus(String passStatus) {
+        this.passStatus = passStatus;
     }
 
 }
