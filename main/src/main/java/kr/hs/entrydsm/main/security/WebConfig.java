@@ -32,6 +32,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .formLogin().disable()
                 .headers()
                     .frameOptions()
