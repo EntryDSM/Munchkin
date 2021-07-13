@@ -8,20 +8,34 @@ import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
 import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
+import kr.hs.entrydsm.user.integrate.score.UserIntegrateScoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Repository
 public class ScoreIntegrateUserService implements ScorerRepository {
 
-    private final UserExportRepository userExportRepository;
+    private final UserIntegrateScoreRepository userIntegrateScoreRepository;
 
     @Override
     public Scorer findByReceiptCode(long receiptCode) {
-        User user = userExportRepository.findByReceiptCode(receiptCode);
+        User user = userIntegrateScoreRepository.findByReceiptCode(receiptCode);
+        return convertUserToScorer(user);
+    }
+
+    @Override
+    public List<Scorer> findFinalSubmittedByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
+        return userIntegrateScoreRepository
+                .findFinalSubmittedByRegionAndType(isDaejeon, getApplicationType(applicationType))
+                .stream().map(this::convertUserToScorer)
+                .collect(Collectors.toList());
+    }
+
+    private Scorer convertUserToScorer(User user) {
         return Scorer.builder()
                 .receiptCode(user.getReceiptCode())
                 .isDaejeon(user.getIsDaejeon())
@@ -30,22 +44,12 @@ public class ScoreIntegrateUserService implements ScorerRepository {
                 .build();
     }
 
-    @Override
-    public List<Scorer> findFinalSubmittedByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
-        return null;
+    private ApplicationType getApplicationType(Scorer.ApplicationType applicationType) {
+        return ApplicationType.valueOf(applicationType.name());
     }
 
     private Scorer.ApplicationType getApplicationType(ApplicationType applicationType) {
-        switch (applicationType) {
-            case COMMON:
-                return Scorer.ApplicationType.COMMON;
-            case MEISTER:
-                return Scorer.ApplicationType.MEISTER;
-            case SOCIAL:
-                return Scorer.ApplicationType.SOCIAL;
-            default:
-                throw new ApplicationTypeUnmatchedException();
-        }
+        return Scorer.ApplicationType.valueOf(applicationType.name());
     }
 
     private Scorer.EducationalStatus getEducationalStatus(EducationalStatus educationalStatus) {
