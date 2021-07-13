@@ -79,4 +79,9 @@ public class UserExportManager implements UserExportRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<User> findAllPassStatusTrue() {
+        return null;
+    }
+
 }

@@ -60,8 +60,8 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     @Override
-    public List<SaveExamCodeUserResponse> findAllIsSubmitTrue() {
-        List<User> users = userExportRepository.findAllIsSubmitTrue();
+    public List<SaveExamCodeUserResponse> findAllPassStatusTrue() {
+        List<User> users = userExportRepository.findAllPassStatusTrue();
         List<SaveExamCodeUserResponse> applicants = new ArrayList<>();
         for (User user : users) {
             applicants.add(
@@ -149,15 +149,6 @@ public class AdminIntegrateUserService implements UserRepository {
         }
 
         return excelUsers;
-    }
-
-    @Override
-    public List<Long> getUserReceiptCodes() {
-        List<Long> receiptCodes = new ArrayList<>();
-        for (User user : userExportRepository.findAllIsSubmitTrue()) {
-            receiptCodes.add(user.getReceiptCode());
-        }
-        return receiptCodes;
     }
 
     private String getApplicationType(ApplicationType applicationType) {

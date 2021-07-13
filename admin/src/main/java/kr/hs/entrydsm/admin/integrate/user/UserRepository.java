@@ -16,10 +16,9 @@ public interface UserRepository {
                                                 Boolean isPrintedArrived);
     void changeExamCode(long receiptCode, String examCode);
     void changeIsSubmitFalse(long receiptCode);
-    List<SaveExamCodeUserResponse> findAllIsSubmitTrue();
+    List<SaveExamCodeUserResponse> findAllPassStatusTrue();
     UserInfo getUserInfo(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     UserNameAndEmail getUserNameAndEmail(long receiptCode);
     List<ExcelUser> findAllForExcel();
-    List<Long> getUserReceiptCodes();
 }

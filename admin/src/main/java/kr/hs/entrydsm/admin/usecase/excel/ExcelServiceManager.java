@@ -95,7 +95,6 @@ public class ExcelServiceManager implements ExcelService {
             saveAllApplicantsExamCode();
             getAdmissionTicket(response, applicantReceiptCodes);
         }
-
     }
 
     @Override
@@ -287,7 +286,7 @@ public class ExcelServiceManager implements ExcelService {
     }
 
     private void saveAllApplicantsExamCode() throws Exception {
-        List<SaveExamCodeUserResponse> applicants = userRepository.findAllIsSubmitTrue();
+        List<SaveExamCodeUserResponse> applicants = userRepository.findAllPassStatusTrue();
         List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>(applicants);
         int commonDaejeon = 1, commonNationwide = 1, meisterDaejeon = 1,
                 meisterNationwide = 1, socialDaejeon = 1, socialNationwide = 1;

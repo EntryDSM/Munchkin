@@ -19,4 +19,5 @@ public interface UserExportRepository {
     void changeIsSubmitFalse(long receiptCode);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     List<User> findAllIsSubmitTrue();
+    List<User> findAllPassStatusTrue();
 }
