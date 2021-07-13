@@ -60,7 +60,7 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     @Override
-    public List<SaveExamCodeUserResponse> findAllPassStatusTrue() {
+    public List<SaveExamCodeUserResponse> findAllIsFirstRoundPassTrue() {
         List<User> users = userExportRepository.findAllPassStatusTrue();
         List<SaveExamCodeUserResponse> applicants = new ArrayList<>();
         for (User user : users) {

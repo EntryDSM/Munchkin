@@ -78,7 +78,7 @@ public class ExcelServiceManager implements ExcelService {
     public void createAdmissionTicket(HttpServletResponse response) throws Exception {
         FirstRoundSuccessfulCandidates successfulCandidates = scoreRepository.getSuccessfulCandidateReceiptCodes();
 
-        List<Long> applicantReceiptCodes = new ArrayList<>();
+        List<Long> applicantReceiptCodes = userRepository.findAllIsFirstRoundPassTrue();
         applicantReceiptCodes.addAll(successfulCandidates.getDaejeonCommonApplicants());
         applicantReceiptCodes.addAll(successfulCandidates.getDaejeonMeisterApplicants());
         applicantReceiptCodes.addAll(successfulCandidates.getDaejeonSocialApplicants());
@@ -286,7 +286,7 @@ public class ExcelServiceManager implements ExcelService {
     }
 
     private void saveAllApplicantsExamCode() throws Exception {
-        List<SaveExamCodeUserResponse> applicants = userRepository.findAllPassStatusTrue();
+        List<SaveExamCodeUserResponse> applicants = userRepository.findAllIsFirstRoundPassTrue();
         List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>(applicants);
         int commonDaejeon = 1, commonNationwide = 1, meisterDaejeon = 1,
                 meisterNationwide = 1, socialDaejeon = 1, socialNationwide = 1;
