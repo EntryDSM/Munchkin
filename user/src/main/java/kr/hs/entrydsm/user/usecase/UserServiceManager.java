@@ -23,6 +23,7 @@ import kr.hs.entrydsm.user.usecase.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -193,8 +194,14 @@ public class UserServiceManager implements UserAuthService, UserService {
         String accessToken = tokenProvider.generateAccessToken(receiptCode);
         String refreshToken = tokenProvider.generateRefreshToken(receiptCode);
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.SET_COOKIE,
-                String.format("refresh-token=%s; Path=/; Expires=%s; HttpOnly", refreshToken, getExpireDateByString()));
+        ResponseCookie tokenCookie = ResponseCookie.from("refresh-token", refreshToken)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(60)
+                .domain("apply.entrydsm.hs.kr")
+                .build();
+        headers.add(HttpHeaders.SET_COOKIE, tokenCookie.toString());
 
         refreshTokenRepository.findById(receiptCode)
                 .or(() -> Optional.of(new RefreshToken(receiptCode, refreshToken, refreshTokenExpiration)))
