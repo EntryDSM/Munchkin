@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface StatusRepositoryManager extends CrudRepository<Status, Long>, StatusRepository {
     List<Status> findAllByIsSubmitTrue();
+    List<Status> findAllByIsFirstRoundPassTrue();
 }

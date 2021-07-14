@@ -81,7 +81,9 @@ public class UserExportManager implements UserExportRepository {
 
     @Override
     public List<User> findAllPassStatusTrue() {
-        return null;
+        return statusRepository.findAllByIsSubmitTrue()
+                .stream().map(Status::getUser)
+                .collect(Collectors.toList());
     }
 
 }
