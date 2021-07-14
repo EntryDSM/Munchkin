@@ -63,7 +63,7 @@ public class UserServiceManager implements UserAuthService, UserService {
     private long refreshTokenExpiration;
 
     @Override
-    public ResponseEntity<AccessTokenResponse> auth(AccountRequest accountRequest) {
+    public AccessTokenResponse auth(AccountRequest accountRequest) {
         return userRepository.findByEmail(accountRequest.getEmail())
                 .filter(user -> passwordEncoder.matches(accountRequest.getPassword(), user.getPassword()))
                 .map(User::getReceiptCode)
@@ -72,7 +72,7 @@ public class UserServiceManager implements UserAuthService, UserService {
     }
 
     @Override
-    public ResponseEntity<AccessTokenResponse> refreshToken(String refreshToken) {
+    public AccessTokenResponse refreshToken(String refreshToken) {
         if (tokenProvider.validateToken(refreshToken) && tokenProvider.isRefreshToken(refreshToken)) {
             long receiptCode = tokenProvider.parseRefreshToken(refreshToken);
             return refreshTokenRepository.findById(receiptCode)
@@ -83,7 +83,7 @@ public class UserServiceManager implements UserAuthService, UserService {
     }
 
     @Override
-    public ResponseEntity<AccessTokenResponse> registerUser(SignupRequest signupRequest) {
+    public AccessTokenResponse registerUser(SignupRequest signupRequest) {
         String email = signupRequest.getEmail();
         String name = signupRequest.getName();
         String password = signupRequest.getPassword();
@@ -190,32 +190,14 @@ public class UserServiceManager implements UserAuthService, UserService {
                 .ifPresent(userRepository::save);
     }
 
-    private ResponseEntity<AccessTokenResponse> getAccessToken(long receiptCode) {
+    private AccessTokenResponse getAccessToken(long receiptCode) {
         String accessToken = tokenProvider.generateAccessToken(receiptCode);
         String refreshToken = tokenProvider.generateRefreshToken(receiptCode);
-        HttpHeaders headers = new HttpHeaders();
-        ResponseCookie tokenCookie = ResponseCookie.from("refresh-token", refreshToken)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(60)
-                .domain("apply.entrydsm.hs.kr")
-                .build();
-        headers.add(HttpHeaders.SET_COOKIE, tokenCookie.toString());
-
         refreshTokenRepository.findById(receiptCode)
                 .or(() -> Optional.of(new RefreshToken(receiptCode, refreshToken, refreshTokenExpiration)))
                 .ifPresent(token -> refreshTokenRepository.save(token.update(refreshToken, refreshTokenExpiration)));
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .body(new AccessTokenResponse(accessToken));
-    }
-
-    private String getExpireDateByString() {
-        Date date = new Date(System.currentTimeMillis() + (refreshTokenExpiration * 1000));
-        SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
-        return format.format(date);
+        return new AccessTokenResponse(accessToken, refreshToken);
     }
 
     private String randomCode() {
