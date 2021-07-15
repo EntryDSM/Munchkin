@@ -54,7 +54,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowedMethods("*")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .allowCredentials(true);
     }
 
 }

@@ -11,7 +11,6 @@ import kr.hs.entrydsm.user.usecase.dto.response.AccessTokenResponse;
 import kr.hs.entrydsm.user.usecase.dto.response.UserStatusResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +25,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<AccessTokenResponse> registerUser(@RequestBody @Valid SignupRequest signupRequest) {
+    public AccessTokenResponse registerUser(@RequestBody @Valid SignupRequest signupRequest) {
         return userService.registerUser(signupRequest);
     }
 

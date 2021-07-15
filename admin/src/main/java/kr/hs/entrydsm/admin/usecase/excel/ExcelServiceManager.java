@@ -76,15 +76,9 @@ public class ExcelServiceManager implements ExcelService {
 
     @Override
     public void createAdmissionTicket(HttpServletResponse response) throws Exception {
-        FirstRoundSuccessfulCandidates successfulCandidates = scoreRepository.getSuccessfulCandidateReceiptCodes();
+        scoreRepository.getSuccessfulCandidateReceiptCodes();
 
-        List<Long> applicantReceiptCodes = new ArrayList<>();
-        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonCommonApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonMeisterApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getDaejeonSocialApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getNationwideCommonApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getNationwideMeisterApplicants());
-        applicantReceiptCodes.addAll(successfulCandidates.getNationwideSocialApplicants());
+        List<Long> applicantReceiptCodes = userRepository.findAllReceiptCodeIsFirstRoundPassTrue();
 
         LocalDate now = LocalDate.now();
         Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
@@ -95,7 +89,6 @@ public class ExcelServiceManager implements ExcelService {
             saveAllApplicantsExamCode();
             getAdmissionTicket(response, applicantReceiptCodes);
         }
-
     }
 
     @Override
@@ -287,7 +280,7 @@ public class ExcelServiceManager implements ExcelService {
     }
 
     private void saveAllApplicantsExamCode() throws Exception {
-        List<SaveExamCodeUserResponse> applicants = userRepository.findAllIsSubmitTrue();
+        List<SaveExamCodeUserResponse> applicants = userRepository.findAllIsFirstRoundPassTrue();
         List<SaveExamCodeUserResponse> applicantSort = new ArrayList<>(applicants);
         int commonDaejeon = 1, commonNationwide = 1, meisterDaejeon = 1,
                 meisterNationwide = 1, socialDaejeon = 1, socialNationwide = 1;

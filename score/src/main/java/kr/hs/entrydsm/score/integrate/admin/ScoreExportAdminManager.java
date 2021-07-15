@@ -104,7 +104,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     }
 
     @Override
-    public FirstRoundSuccessfulCandidate getSuccessfulCandidateReceiptCodes() {
+    public void getSuccessfulCandidateReceiptCodes() {
         Application[] applications = {
                 new Application(ApplicationType.DAEJEON_COMMON),
                 new Application(ApplicationType.DAEJEON_MEISTER),
@@ -141,7 +141,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
             }
         }
 
-        return FirstRoundSuccessfulCandidate.builder()
+         FirstRoundSuccessfulCandidate.builder()
                 .DaejeonCommonApplicants(getReceiptsByScores(applications[0].passed))
                 .DaejeonMeisterApplicants(getReceiptsByScores(applications[1].passed))
                 .DaejeonSocialApplicants(getReceiptsByScores(applications[2].passed))

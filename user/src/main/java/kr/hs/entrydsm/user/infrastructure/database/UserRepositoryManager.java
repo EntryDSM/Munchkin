@@ -2,6 +2,7 @@ package kr.hs.entrydsm.user.infrastructure.database;
 
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.UserRepository;
+import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,6 @@ public interface UserRepositoryManager extends CrudRepository<User, Long>, UserR
     User save(User user);
 
     List<User> findAllBy();
+    List<User> findAllByIsDaejeonAndApplicationType(boolean isDaejeon, ApplicationType applicationType);
+
 }

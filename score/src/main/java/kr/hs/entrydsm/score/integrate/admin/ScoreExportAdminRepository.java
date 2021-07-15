@@ -9,5 +9,5 @@ import kr.hs.entrydsm.score.usecase.dto.FirstRoundSuccessfulCandidate;
 public interface ScoreExportAdminRepository {
     ApplicationStatusResponse getApplicationStatus();
     ApplicantScore getApplicantScore(Long receiptCode);
-    FirstRoundSuccessfulCandidate getSuccessfulCandidateReceiptCodes();
+    void getSuccessfulCandidateReceiptCodes();
 }

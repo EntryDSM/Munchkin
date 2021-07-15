@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -31,6 +33,10 @@ public class Status {
 
     @Column(columnDefinition = "char(5)")
     private String examCode;
+
+    @ColumnDefault("0")
+    @Column(nullable = false)
+    private boolean isFirstRoundPass;
 
     public void setExamCode(String examCode) {
         this.examCode = examCode;

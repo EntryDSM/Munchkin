@@ -60,4 +60,5 @@ public class Scorer extends ExternalEntity {
     public boolean isGraduated() {
         return educationalStatus == EducationalStatus.GRADUATE;
     }
+
 }
