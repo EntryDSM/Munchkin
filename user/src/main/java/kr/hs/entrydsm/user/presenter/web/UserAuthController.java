@@ -25,7 +25,7 @@ public class UserAuthController {
 
     @RefreshRequired
     @PutMapping
-    public AccessTokenResponse refreshToken(@RequestHeader("X-Refresh-Token") String refreshToken) {
+    public AccessTokenResponse refreshToken(@RequestHeader("x-refresh-token") String refreshToken) {
         return userAuthService.refreshToken(refreshToken);
     }
 
