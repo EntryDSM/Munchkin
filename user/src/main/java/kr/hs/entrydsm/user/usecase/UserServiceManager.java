@@ -109,6 +109,7 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .receiptCode(user.getReceiptCode())
                         .isPrintedArrived(false)
                         .isSubmit(false)
+                        .isFirstRoundPass(false)
                         .build()
         );
 

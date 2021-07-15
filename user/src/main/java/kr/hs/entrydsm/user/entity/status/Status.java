@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -34,7 +35,8 @@ public class Status {
     private String examCode;
 
     @ColumnDefault("0")
-    private Boolean isFirstRoundPass;
+    @Column(nullable = false)
+    private boolean isFirstRoundPass;
 
     public void setExamCode(String examCode) {
         this.examCode = examCode;
