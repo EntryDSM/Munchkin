@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Arrays;
 
 @Getter
 @NoArgsConstructor
@@ -54,35 +53,39 @@ public class GraduationCase extends ApplicationCase {
     private final BigDecimal GRADE_RATE = BigDecimal.valueOf(4);
 
     @Override
-    public BigDecimal calculateVolunteerScore() { return volunteerScoreFormula(); }
-
-    @Override
-    public Integer calculateAttendanceScore() { return attendanceScoreFormula(); }
-
-    @Override
-    public BigDecimal[] calculateGradeScores() { return gradeScoreFormula(); }
-
-    @Override
-    public BigDecimal calculateTotalGradeScore() { return totalGradeScoreFormula(); }
-
-    private BigDecimal volunteerScoreFormula() {
+    public BigDecimal calculateVolunteerScore() {
         if (volunteerTime >= MAX_VOLUNTEER_TIME) {
             return BigDecimal.valueOf(MAX_VOLUNTEER_SCORE);
         } else if (MIN_VOLUNTEER_TIME <= volunteerTime) {
             return BigDecimal.valueOf(volunteerTime)
-                             .subtract(BigDecimal.valueOf(6))
-                             .divide(BigDecimal.valueOf(2), 3, RoundingMode.HALF_UP)
-                             .add(BigDecimal.valueOf(3));
+                    .subtract(BigDecimal.valueOf(6))
+                    .divide(BigDecimal.valueOf(2), 3, RoundingMode.HALF_UP)
+                    .add(BigDecimal.valueOf(3));
         } else {
             return BigDecimal.valueOf(MIN_VOLUNTEER_SCORE);
         }
     }
 
-    private Integer attendanceScoreFormula() {
+    @Override
+    public Integer calculateAttendanceScore() {
         return Math.max((MAX_ATTENDANCE_SCORE
                         - dayAbsenceCount
                         - (lectureAbsenceCount + latenessCount + earlyLeaveCount) / 3),
-                        0);
+                0);
+    }
+
+    @Override
+    public BigDecimal[] calculateGradeScores() {
+        BigDecimal[] gradeScores = gradeScoreFormula();
+        for (int i = 0; i < gradeScores.length; i++) {
+            gradeScores[i] = gradeScores[i].setScale(3, RoundingMode.HALF_UP);
+        }
+        return gradeScores;
+    }
+
+    @Override
+    public BigDecimal calculateTotalGradeScore() {
+        return totalGradeScoreFormula();
     }
 
     private BigDecimal totalGradeScoreFormula() {
