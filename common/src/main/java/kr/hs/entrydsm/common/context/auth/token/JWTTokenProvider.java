@@ -62,14 +62,7 @@ public class JWTTokenProvider {
     }
 
     public String resolveRefreshToken(HttpServletRequest request) {
-        if(request.getCookies() != null) {
-            return Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals("refresh-token"))
-                    .findFirst()
-                    .map(Cookie::getValue)
-                    .orElse(null);
-        }
-        return null;
+        return request.getHeader("x-refresh-token");
     }
 
     public boolean validateToken(String token) {
