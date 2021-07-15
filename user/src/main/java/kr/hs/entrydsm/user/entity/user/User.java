@@ -26,7 +26,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long receiptCode;
 
-    @Column(columnDefinition = "char(36)", nullable = false)
+    @Column(columnDefinition = "char(36)", nullable = false, unique = true)
     private String email;
 
     @Column(columnDefinition = "char(60)", nullable = false)
