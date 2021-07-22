@@ -22,7 +22,7 @@ public class UserIntegrateScoreManager implements UserIntegrateScoreRepository {
     }
 
     @Override
-    public List<User> findFinalSubmittedByRegionAndType(boolean isDaejeon, ApplicationType applicationType) {
+    public List<User> findCandidatesByRegionAndType(boolean isDaejeon, ApplicationType applicationType) {
         return userRepository.findAllByIsDaejeonAndApplicationType(isDaejeon, applicationType);
     }
 

@@ -2,12 +2,10 @@ package kr.hs.entrydsm.main.integrate.score;
 
 import kr.hs.entrydsm.score.integrate.user.Scorer;
 import kr.hs.entrydsm.score.integrate.user.ScorerRepository;
-import kr.hs.entrydsm.score.usecase.exception.ApplicationTypeUnmatchedException;
 import kr.hs.entrydsm.score.usecase.exception.GradeNotFoundException;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.integrate.admin.UserExportRepository;
 import kr.hs.entrydsm.user.integrate.score.UserIntegrateScoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -28,9 +26,9 @@ public class ScoreIntegrateUserService implements ScorerRepository {
     }
 
     @Override
-    public List<Scorer> findFinalSubmittedByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
+    public List<Scorer> findCandidatesByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
         return userIntegrateScoreRepository
-                .findFinalSubmittedByRegionAndType(isDaejeon, getApplicationType(applicationType))
+                .findCandidatesByRegionAndType(isDaejeon, getApplicationType(applicationType))
                 .stream().map(this::convertUserToScorer)
                 .collect(Collectors.toList());
     }
