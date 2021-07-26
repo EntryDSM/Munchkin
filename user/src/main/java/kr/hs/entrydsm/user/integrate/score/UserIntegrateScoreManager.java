@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,7 +24,9 @@ public class UserIntegrateScoreManager implements UserIntegrateScoreRepository {
 
     @Override
     public List<User> findCandidatesByRegionAndType(boolean isDaejeon, ApplicationType applicationType) {
-        return userRepository.findAllByIsDaejeonAndApplicationType(isDaejeon, applicationType);
+        return userRepository.findAllByIsDaejeonAndApplicationType(isDaejeon, applicationType)
+                .stream().filter(user -> user.getStatus().isSubmit())
+                .collect(Collectors.toList());
     }
 
 }
