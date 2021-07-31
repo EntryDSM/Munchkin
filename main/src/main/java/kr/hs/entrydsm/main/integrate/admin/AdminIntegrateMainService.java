@@ -36,7 +36,6 @@ public class AdminIntegrateMainService implements MainRepository {
     @Transactional
     public void deleteAll() {
         scheduleRepositoryManager.deleteAll();
-        schoolRepositoryManager.deleteAll();
 
         scoreRepositoryManager.deleteAll();
 
@@ -44,6 +43,8 @@ public class AdminIntegrateMainService implements MainRepository {
 
         qualificationExamApplicationRepositoryManager.deleteAll();
         graduationApplicationRepositoryManager.deleteAll();
+
+        schoolRepositoryManager.deleteAll();
 
         statusRepositoryManager.deleteAll();
         userRepositoryManager.deleteAll();
