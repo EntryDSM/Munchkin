@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Entity(name = "tbl_qualification_exam_application")
 public class QualificationExamApplication extends Application {
 
-
     private LocalDate qualifiedAt;
 
     public QualificationExamApplication(long receiptCode) {

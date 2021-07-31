@@ -6,6 +6,8 @@ import kr.hs.entrydsm.application.infrastructure.database.ApplicationRepositoryM
 import kr.hs.entrydsm.application.infrastructure.database.GraduationApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.QualificationExamApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.SchoolRepositoryManager;
+import kr.hs.entrydsm.score.infrastructure.database.GraduationCaseRepositoryManager;
+import kr.hs.entrydsm.score.infrastructure.database.QualificationExamCaseRepositoryManager;
 import kr.hs.entrydsm.score.infrastructure.database.ScoreRepositoryManager;
 import kr.hs.entrydsm.user.infrastructure.database.StatusRepositoryManager;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
@@ -28,7 +30,10 @@ public class AdminIntegrateMainService implements MainRepository {
     private final ApplicationRepositoryManager applicationRepositoryManager;
 
     private final GraduationApplicationRepositoryManager graduationApplicationRepositoryManager;
+    private final GraduationCaseRepositoryManager graduationCaseRepositoryManager;
+
     private final QualificationExamApplicationRepositoryManager qualificationExamApplicationRepositoryManager;
+    private final QualificationExamCaseRepositoryManager qualificationExamCaseRepositoryManager;
     private final SchoolRepositoryManager schoolRepositoryManager;
 
 
@@ -40,6 +45,9 @@ public class AdminIntegrateMainService implements MainRepository {
         scoreRepositoryManager.deleteAll();
 
         applicationRepositoryManager.deleteAll();
+
+        qualificationExamCaseRepositoryManager.deleteAll();
+        graduationCaseRepositoryManager.deleteAll();
 
         qualificationExamApplicationRepositoryManager.deleteAll();
         graduationApplicationRepositoryManager.deleteAll();
