@@ -208,7 +208,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
             return;
         }
 
-        application.passed = sortedScores.subList(0, capacity);
+        application.passed = sortedScores.subList(0, Math.min(capacity, sortedScores.size() - 1));
     }
 
     private List<Long> getReceiptsByScores(List<Score> scores) {
