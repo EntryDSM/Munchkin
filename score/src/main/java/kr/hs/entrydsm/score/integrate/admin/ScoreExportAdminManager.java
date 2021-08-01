@@ -205,6 +205,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
 
         if (sortedScores.size() > capacity) {
             spareQueue.addAll(sortedScores.subList(capacity, sortedScores.size() - 1));
+            return;
         }
 
         application.passed = sortedScores.subList(0, capacity);
