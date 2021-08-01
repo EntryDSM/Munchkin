@@ -201,6 +201,10 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                 .map(scorer -> scoreRepository.findByReceiptCode(scorer.getReceiptCode()).orElseThrow(GradeNotFoundException::new))
                 .sorted(Comparator.comparing(Score::getTotalScore).reversed())
                 .collect(Collectors.toList());
+        if (sortedScores.size() == 0) {
+            return;
+        }
+
         int capacity = type.capacity;
 
         if (sortedScores.size() > capacity) {
