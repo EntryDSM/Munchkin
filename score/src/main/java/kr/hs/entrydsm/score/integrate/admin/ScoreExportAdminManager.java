@@ -133,6 +133,9 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
             int lackApplicationCount = application.applicationType.capacity - application.passed.size();
             if (lackApplicationCount > 0) {
                 for (int i = 0; i < lackApplicationCount; i++) {
+                    if (spareApplicationQueue.size() == 0) {
+                        continue;
+                    }
                     Score score = spareApplicationQueue.remove(0);
                     applications[getIndexByScorer(scorerRepository.findByReceiptCode(score.getReceiptCode()))]
                             .passed
