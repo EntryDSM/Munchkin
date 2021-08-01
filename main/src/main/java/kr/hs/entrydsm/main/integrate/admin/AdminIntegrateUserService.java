@@ -162,6 +162,11 @@ public class AdminIntegrateUserService implements UserRepository {
         return excelUsers;
     }
 
+    @Override
+    public void changeIsFirstRoundPass(List<Long> applicationReceiptCode) {
+        userExportRepository.changeIsFirstRoundPass(applicationReceiptCode);
+    }
+
     private String getApplicationType(ApplicationType applicationType) {
         switch (applicationType) {
             case COMMON:

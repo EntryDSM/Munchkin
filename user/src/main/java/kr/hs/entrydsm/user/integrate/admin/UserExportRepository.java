@@ -17,6 +17,7 @@ public interface UserExportRepository {
                        Boolean isPrintedArrived);
     void changeExamCode(long receiptCode, String examCode);
     void changeIsSubmitFalse(long receiptCode);
+    void changeIsFirstRoundPass(List<Long> receiptCodes);
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     List<User> findAllIsSubmitTrue();
     List<User> findAllPassStatusTrue();

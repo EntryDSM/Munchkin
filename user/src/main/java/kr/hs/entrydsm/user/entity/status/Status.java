@@ -50,4 +50,8 @@ public class Status {
         this.isSubmit = isSubmit;
     }
 
+    public void setFirstRoundPass() {
+        this.isFirstRoundPass = true;
+    }
+
 }

@@ -66,6 +66,15 @@ public class UserExportManager implements UserExportRepository {
     }
 
     @Override
+    public void changeIsFirstRoundPass(List<Long> receiptCodes) {
+        for (Long receiptCode : receiptCodes) {
+            userRepository.findByReceiptCode(receiptCode)
+                    .map(User::setFirstRoundPass)
+                    .ifPresent(userRepository::save);
+        }
+    }
+
+    @Override
     public void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived) {
         userRepository.findByReceiptCode(receiptCode)
                 .map(user -> user.setPrintedArrived(isPrintedArrived))

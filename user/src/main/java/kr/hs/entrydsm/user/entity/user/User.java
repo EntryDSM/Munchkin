@@ -107,6 +107,11 @@ public class User {
         return this;
     }
 
+    public User setFirstRoundPass() {
+        this.status.setFirstRoundPass();
+        return this;
+    }
+
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
                                       boolean isDaejeon, ApplicationRemark applicationRemark) {
         this.educationalStatus = educationalStatus;

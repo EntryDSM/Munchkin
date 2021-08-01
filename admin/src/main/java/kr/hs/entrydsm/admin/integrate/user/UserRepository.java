@@ -22,4 +22,5 @@ public interface UserRepository {
     void changeIsPrintedArrived(long receiptCode, boolean isPrintedArrived);
     UserNameAndEmail getUserNameAndEmail(long receiptCode);
     List<ExcelUser> findAllForExcel();
+    void changeIsFirstRoundPass(List<Long> applicationReceiptCode);
 }
