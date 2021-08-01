@@ -76,7 +76,7 @@ public class ScheduleServiceManager implements ScheduleService {
         if(now.isBefore(startDate.getDate())) {
             return "NOT_APPLICATION_PERIOD";
         } else if(!now.isAfter(endDate.getDate())) {
-            return startDate.getType().toString();
+            return "APPLICATION_PERIOD";
         } else if(now.isBefore(firstAnnounce.getDate())) {
             return "BEFORE_FIRST_ANNOUNCEMENT";
         } else if(now.isEqual(firstAnnounce.getDate())) {
