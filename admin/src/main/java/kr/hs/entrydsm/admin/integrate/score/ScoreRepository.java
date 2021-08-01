@@ -7,5 +7,5 @@ import kr.hs.entrydsm.admin.usecase.dto.score.FirstRoundSuccessfulCandidates;
 public interface ScoreRepository {
     ApplicationStatus getScore();
     ExcelUserScore findUserScore(Long receiptCode);
-    void getSuccessfulCandidateReceiptCodes();
+    FirstRoundSuccessfulCandidates getSuccessfulCandidateReceiptCodes();
 }
