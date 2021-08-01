@@ -204,6 +204,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                 .map(scorer -> scoreRepository.findByReceiptCode(scorer.getReceiptCode()).orElseThrow(GradeNotFoundException::new))
                 .sorted(Comparator.comparing(Score::getTotalScore).reversed())
                 .collect(Collectors.toList());
+        System.out.println(sortedScores);
         if (sortedScores.size() == 0) {
             return;
         }
@@ -211,11 +212,11 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
         int capacity = type.capacity;
 
         if (sortedScores.size() > capacity) {
-            spareQueue.addAll(sortedScores.subList(capacity, sortedScores.size() - 1));
+            spareQueue.addAll(sortedScores.subList(capacity, sortedScores.size()));
             return;
         }
 
-        application.passed = sortedScores.subList(0, Math.min(capacity, sortedScores.size() - 1));
+        application.passed = sortedScores.subList(0, sortedScores.size());
     }
 
     private List<Long> getReceiptsByScores(List<Score> scores) {
