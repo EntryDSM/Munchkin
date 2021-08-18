@@ -37,7 +37,7 @@ public class RequestLogger extends OncePerRequestFilter {
         // 2021-05-18 15:51:24.102 :: 127.0.0.1 [POST] (/user/auth?asd=asd 200) {asd: asd}
         String requestTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
-        String requestIP = Optional.ofNullable(request.getHeader("X-Real-IP"))
+        String requestIP = Optional.ofNullable(request.getHeader("X-Forwarded-For"))
                 .orElse("127.0.0.1");
         String method = request.getMethod();
         String url = request.getRequestURI();
