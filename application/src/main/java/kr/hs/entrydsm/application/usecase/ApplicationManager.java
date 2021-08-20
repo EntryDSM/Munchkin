@@ -2,7 +2,10 @@ package kr.hs.entrydsm.application.usecase;
 
 import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
+import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
@@ -10,10 +13,7 @@ import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInfor
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
-import kr.hs.entrydsm.application.usecase.exception.ApplicationNotFoundException;
-import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNotFoundException;
-import kr.hs.entrydsm.application.usecase.exception.EducationalStatusUnmatchedException;
-import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
+import kr.hs.entrydsm.application.usecase.exception.*;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +33,7 @@ import java.time.format.DateTimeFormatter;
 public class ApplicationManager implements ApplicationService {
 
     private final ApplicationFactory applicationFactory;
+    private final ApplicantRepository applicantRepository;
     private final ImageService imageService;
     private final ApplicantDocsService applicantDocsService;
     private final ApplicationApplicantRepository applicationApplicantRepository;
@@ -40,6 +41,8 @@ public class ApplicationManager implements ApplicationService {
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
     private final AuthenticationManager authenticationManager;
+    private final ScoreCalculator scoreCalculator;
+    private final ApplicantStatusService applicantStatusService;
 
     @Override
     public void writeSelfIntroduce(String content) {
@@ -223,7 +226,63 @@ public class ApplicationManager implements ApplicationService {
         return fileName;
     }
 
-//    @Override
+    @Override
+    public void finalSubmit() {
+        Applicant applicant = applicantRepository.findByReceiptCode(authenticationManager.getUserReceiptCode());
+        if (!checkType(applicant) || !checkInfo(applicant) || !checkScore(applicant)) {
+            throw new ProcessNotCompletedException();
+        }
+        applicantStatusService.finalSubmit(applicant.getReceiptCode());
+    }
+
+    private boolean checkType(Applicant applicant) {
+        if (applicant.isQualificationExam()) {
+            return qualificationExamApplicationRepository.findByReceiptCode(applicant.getReceiptCode())
+                    .map(application -> (application.getQualifiedAt() != null) && isFilledType(applicant))
+                    .orElse(false);
+        }
+
+        if (applicant.isGraduate()) {
+            return graduationApplicationRepository.findByReceiptCode(applicant.getReceiptCode())
+                    .map(application -> (application.getGraduatedAt() != null) && isFilledType(applicant))
+                    .orElse(false);
+        }
+
+        return isFilledType(applicant);
+    }
+
+    private boolean isFilledType(Applicant applicant) {
+        return !applicant.isEducationalStatusEmpty() && applicant.getApplicationType() != null
+                && !isApplicationEmpty(applicant);
+    }
+
+    private boolean isApplicationEmpty(Applicant applicant) {
+        if (applicant.isQualificationExam()) {
+            return !qualificationExamApplicationRepository.existsByReceiptCode(applicant.getReceiptCode());
+        } else if (applicant.isProspectiveGraduate() || applicant.isGraduate()) {
+            return !graduationApplicationRepository.existsByReceiptCode(applicant.getReceiptCode());
+        }
+        return true;
+    }
+
+    private boolean checkInfo(Applicant applicant) {
+        if (!checkType(applicant)) return false;
+
+        if (applicant.isGraduate() || applicant.isProspectiveGraduate()) {
+            GraduationApplication application = graduationApplicationRepository.findByReceiptCode(applicant.getReceiptCode())
+                    .orElseThrow(ApplicationNotFoundException::new);
+            return application.isFilledStudentInfo() && applicant.isFilledInfo();
+        }
+
+        return applicant.isFilledInfo();
+    }
+
+    private boolean checkScore(Applicant applicant) {
+        if (!checkType(applicant)) return false;
+        return scoreCalculator.isExists(applicant.getReceiptCode());
+    }
+
+    //    @Override
 //    public void updateSubjectScore(SubjectScoreRequest score) {
 //        scoreService.updateSubjectScore(score);
 //    }

@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.application.usecase;
 
+import kr.hs.entrydsm.application.entity.Applicant;
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
@@ -36,6 +37,8 @@ public interface ApplicationService {
     InformationResponse getInformation();
 
     String uploadPhoto(MultipartFile multipartFile);
+
+    void finalSubmit();
 
 //    void updateSubjectScore(SubjectScoreRequest score);
 //

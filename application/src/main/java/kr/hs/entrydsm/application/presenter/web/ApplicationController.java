@@ -41,6 +41,11 @@ public class ApplicationController {
         return applicationService.getStudyPlan();
     }
 
+    @PostMapping
+    public void finalSubmit() {
+        applicationService.finalSubmit();
+    }
+
 //    @PatchMapping("/score/subject")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    public void updateSubjectScore(@RequestBody @Valid SubjectScoreRequest score) {
