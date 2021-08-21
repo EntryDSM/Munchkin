@@ -1,22 +1,23 @@
 package kr.hs.entrydsm.common.context.auth.manager;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 
-@Component
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuthenticationManager {
 
-    public long getUserReceiptCode() {
+    public static long getUserReceiptCode() {
         return (long) getAuthentication().getPrincipal();
     }
 
-    public String getAdminId() {
+    public static String getAdminId() {
         return (String) getAuthentication().getPrincipal();
     }
 
-    private Authentication getAuthentication() {
+    private static Authentication getAuthentication() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         return securityContext.getAuthentication();
     }

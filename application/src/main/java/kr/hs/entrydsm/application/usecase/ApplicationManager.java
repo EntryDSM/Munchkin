@@ -40,31 +40,30 @@ public class ApplicationManager implements ApplicationService {
     private final SchoolRepository schoolRepository;
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final QualificationExamApplicationRepository qualificationExamApplicationRepository;
-    private final AuthenticationManager authenticationManager;
     private final ScoreCalculator scoreCalculator;
     private final ApplicantStatusService applicantStatusService;
 
     @Override
     public void writeSelfIntroduce(String content) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         applicantDocsService.writeSelfIntroduce(receiptCode, content);
     }
 
     @Override
     public void writeStudyPlan(String content) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         applicantDocsService.writeStudyPlan(receiptCode, content);
     }
 
     @Override
     public String getSelfIntroduce() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         return applicantDocsService.getSelfIntroduce(receiptCode);
     }
 
     @Override
     public String getStudyPlan() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         return applicantDocsService.getStudyPlan(receiptCode);
     }
 
@@ -75,7 +74,7 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public void writeApplicationType(ApplicationRequest applicationRequest) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
 
         if (applicationRequest.getEducationalStatus().equals("QUALIFICATION_EXAM")) {
             QualificationExamApplication qualificationExamApplication =
@@ -106,7 +105,7 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public void writeGraduatedInformation(GraduatedInformationRequest information) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         String educationalStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
 
         if (educationalStatus == null)
@@ -125,13 +124,13 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public void writeInformation(Information information) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         applicationApplicantRepository.writeInformation(receiptCode, information);
     }
 
     @Override
     public ApplicationResponse getApplicationType() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         String educationStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
         if (educationStatus != null && !educationStatus.equals("QUALIFICATION_EXAM")) {
             if (graduationApplicationRepository.findByReceiptCode(receiptCode).isPresent()) {
@@ -166,7 +165,7 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public GraduatedInformationResponse getGraduatedInformation() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         String educationalStatus = applicationApplicantRepository.getEducationalStatus(receiptCode);
 
         if (educationalStatus == null)
@@ -200,7 +199,7 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public InformationResponse getInformation() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
 
         InformationResponse result = applicationApplicantRepository.getInformation(receiptCode);
 
@@ -211,7 +210,7 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public String uploadPhoto(MultipartFile multipartFile) {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         InformationResponse result = applicationApplicantRepository.getInformation(receiptCode);
         if(result.getPhotoFileName() != null)
             imageService.delete(result.getPhotoFileName());
@@ -228,7 +227,7 @@ public class ApplicationManager implements ApplicationService {
 
     @Override
     public void finalSubmit() {
-        Applicant applicant = applicantRepository.findByReceiptCode(authenticationManager.getUserReceiptCode());
+        Applicant applicant = applicantRepository.findByReceiptCode(AuthenticationManager.getUserReceiptCode());
         if (!checkType(applicant) || !checkInfo(applicant) || !checkScore(applicant)) {
             throw new ProcessNotCompletedException();
         }

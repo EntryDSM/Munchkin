@@ -24,7 +24,6 @@ public class AuthServiceManager implements AuthService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private final AuthenticationManager authenticationManager;
     private final AdminRefreshTokenRepositoryManager refreshTokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -63,7 +62,7 @@ public class AuthServiceManager implements AuthService {
 
     @Override
     public String checkPassword(String password) {
-        Admin admin = adminRepository.findById(authenticationManager.getAdminId())
+        Admin admin = adminRepository.findById(AuthenticationManager.getAdminId())
                 .orElseThrow(AdminNotFoundException::new);
 
         if(!passwordEncoder.matches(password, admin.getPassword())) {
