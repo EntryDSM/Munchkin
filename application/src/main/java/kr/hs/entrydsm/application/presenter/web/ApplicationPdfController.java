@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.application.presenter.web;
 
-import kr.hs.entrydsm.application.usecase.dto.application.response.PdfResponse;
 import kr.hs.entrydsm.application.usecase.pdf.ApplicationPdfService;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
@@ -24,18 +23,14 @@ public class ApplicationPdfController {
     private final ApplicationPdfService applicationPdfService;
 
     @GetMapping(value = "/preview", produces = MediaType.APPLICATION_PDF_VALUE)
-    public PdfResponse getPreviewApplicationPdf() {
-        return new PdfResponse(
-                applicationPdfService.getPreviewApplicationPdf()
-        );
+    public byte[] getPreviewApplicationPdf() {
+        return applicationPdfService.getPreviewApplicationPdf();
     }
 
     @GetMapping(value = "/final", produces = MediaType.APPLICATION_PDF_VALUE)
-    public PdfResponse getFinalApplicationPdf(HttpServletResponse response) {
+    public byte[] getFinalApplicationPdf(HttpServletResponse response) {
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.pdf\"", encodeFileName(FILE_NAME)));
-        return new PdfResponse(
-                applicationPdfService.getFinalApplicationPdf()
-        );
+        return applicationPdfService.getFinalApplicationPdf();
     }
 
     private String encodeFileName(String fileName) {
