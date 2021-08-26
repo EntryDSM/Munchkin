@@ -42,9 +42,6 @@ class ApplicationManagerTest {
     private QualificationExamApplicationRepository qualificationExamApplicationRepository =
             Mockito.mock(QualificationExamApplicationRepository.class);
 
-    private AuthenticationManager authenticationManager =
-            Mockito.mock(AuthenticationManager.class);
-
     private ImageService imageService =
             Mockito.mock(ImageService.class);
 
@@ -68,7 +65,7 @@ class ApplicationManagerTest {
             new ApplicationManager(applicationFactory, applicantRepository, imageService,
                     applicantDocsService, applicationApplicantRepository,
                     schoolRepository, graduationApplicationRepository,
-                    qualificationExamApplicationRepository, authenticationManager,
+                    qualificationExamApplicationRepository,
                     scoreCalculator, applicantStatusService
                     );
 

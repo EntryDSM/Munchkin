@@ -10,7 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthenticationManager {
 
     public static long getUserReceiptCode() {
-        return (long) getAuthentication().getPrincipal();
+        return getAuthentication() != null ? (long) getAuthentication().getPrincipal() : 0L;
     }
 
     public static String getAdminId() {
