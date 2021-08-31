@@ -9,8 +9,8 @@ public class CalculatedScoreBuilder {
     public static CalculatedScore build() {
         return CalculatedScore.builder()
                 .receiptCode(1)
-                .totalFirstGradeScore(BigDecimal.ONE)
-                .totalSecondGradeScore(BigDecimal.ONE)
+                .totalThirdBeforeBeforeScore(BigDecimal.ONE)
+                .totalThirdBeforeScore(BigDecimal.ONE)
                 .totalThirdGradeScore(BigDecimal.ONE)
                 .volunteerScore(BigDecimal.ONE)
                 .conversionScore(BigDecimal.ONE)

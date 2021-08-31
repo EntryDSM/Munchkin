@@ -54,4 +54,9 @@ public class Status {
         this.isFirstRoundPass = true;
     }
 
+    public void finalSubmit() {
+        this.isSubmit = true;
+        this.submittedAt = LocalDateTime.now();
+    }
+
 }

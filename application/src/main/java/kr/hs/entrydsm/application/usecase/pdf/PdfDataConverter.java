@@ -157,8 +157,8 @@ public class PdfDataConverter {
     }
 
     private void setGradeScore(Applicant applicant, CalculatedScore calculatedScore) {
-        values.put("conversionScore1st", applicant.isQualificationExam() ? "" : calculatedScore.getTotalFirstGradeScore().toString());
-        values.put("conversionScore2nd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalSecondGradeScore().toString());
+        values.put("conversionScore1st", applicant.isQualificationExam() ? "" : calculatedScore.getTotalThirdBeforeBeforeScore().toString());
+        values.put("conversionScore2nd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalThirdBeforeScore().toString());
         values.put("conversionScore3rd", applicant.isQualificationExam() ? "" : calculatedScore.getTotalThirdGradeScore().toString());
         values.put("conversionScore", calculatedScore.getConversionScore().toString());
         values.put("attendanceScore", String.valueOf(calculatedScore.getAttendanceScore()));

@@ -21,7 +21,6 @@ public class ScoreServiceManager implements ScoreService {
     private final ScorerRepository scorerRepository;
     private final GraduationCaseRepository graduationCaseRepository;
     private final QualificationExamCaseRepository qualificationExamCaseRepository;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     public QueryGraduationResponse queryGraduation() {
@@ -90,6 +89,6 @@ public class ScoreServiceManager implements ScoreService {
     }
 
     private Scorer currentScorer() {
-        return scorerRepository.findByReceiptCode(authenticationManager.getUserReceiptCode());
+        return scorerRepository.findByReceiptCode(AuthenticationManager.getUserReceiptCode());
     }
 }

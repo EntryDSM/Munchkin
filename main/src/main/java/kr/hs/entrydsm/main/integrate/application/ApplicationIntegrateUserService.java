@@ -50,6 +50,11 @@ public class ApplicationIntegrateUserService
     }
 
     @Override
+    public void finalSubmit(long receiptCode) {
+        applicationUserStatusExportRepository.finalSubmit(receiptCode);
+    }
+
+    @Override
     public Applicant findByReceiptCode(long receiptCode) {
         User user = applicationUserExportRepository.findByReceiptCode(receiptCode);
         return Applicant.builder()

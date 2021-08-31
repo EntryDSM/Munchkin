@@ -6,6 +6,7 @@ import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,13 +33,20 @@ public class ApplicationController {
     }
 
     @GetMapping("/intro")
-    public String getIntro() {
-        return applicationService.getSelfIntroduce();
+    public ResponseEntity<String> getIntro() {
+        return new ResponseEntity<>(
+                applicationService.getSelfIntroduce(), HttpStatus.OK);
     }
 
     @GetMapping("/study-plan")
-    public String getStudyPlan() {
-        return applicationService.getStudyPlan();
+    public ResponseEntity<String> getStudyPlan() {
+        return new ResponseEntity<>(
+                applicationService.getStudyPlan(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public void finalSubmit() {
+        applicationService.finalSubmit();
     }
 
 //    @PatchMapping("/score/subject")
