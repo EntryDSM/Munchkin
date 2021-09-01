@@ -22,7 +22,7 @@ public class Status {
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "receipt_code")
+    @JoinColumn(name = "receipt_code", referencedColumnName = "receipt_code")
     private User user;
 
     private boolean isPrintedArrived;
