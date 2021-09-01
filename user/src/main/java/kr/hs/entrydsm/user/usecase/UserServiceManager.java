@@ -100,7 +100,8 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .isDaejeon(null)
                         .build()
         );
-        authCodeRepository.deleteByEmail(email);
+
+        authCodeRepository.deleteById(email);
 
         statusRepository.save(
                 Status.builder()
@@ -110,7 +111,7 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .isFirstRoundPass(false)
                         .build()
         );
-        
+
 
         return getAccessToken(user.getReceiptCode());
     }
