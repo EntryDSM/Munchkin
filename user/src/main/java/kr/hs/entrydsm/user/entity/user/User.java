@@ -85,7 +85,6 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
     private Status status;
 
     public String getExamCode() {
