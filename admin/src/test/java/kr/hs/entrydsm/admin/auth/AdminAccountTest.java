@@ -24,12 +24,7 @@ public class AdminAccountTest extends AdminBaseTest {
     @Test
     public void add_account() {
         assertTrue(addAccount(
-                Admin.builder()
-                        .id("test1234")
-                        .name("tcher")
-                        .password("testPassword")
-                        .build()
-                )
+                new Admin("test1234", "tcher", "testPassword"))
         );
     }
 
