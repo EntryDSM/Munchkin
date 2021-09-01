@@ -101,6 +101,9 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .build()
         );
 
+        System.out.println(user.getReceiptCode());
+        authCodeRepository.deleteByEmail(email);
+
         statusRepository.save(
                 Status.builder()
                         .receiptCode(user.getReceiptCode())
@@ -109,8 +112,7 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .isFirstRoundPass(false)
                         .build()
         );
-
-        authCodeRepository.deleteByEmail(email);
+        
 
         return getAccessToken(user.getReceiptCode());
     }
