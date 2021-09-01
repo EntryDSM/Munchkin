@@ -24,7 +24,7 @@ public class AdminAccountTest extends AdminBaseTest {
     @Test
     public void add_account() {
         assertTrue(addAccount(
-                new Admin("test1234", "tcher", "testPassword"))
+                new Admin("test1234","testPassword", "tcher"))
         );
     }
 
