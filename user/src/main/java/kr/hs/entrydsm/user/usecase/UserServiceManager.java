@@ -100,8 +100,6 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .isDaejeon(null)
                         .build()
         );
-
-        System.out.println(user.getReceiptCode());
         authCodeRepository.deleteByEmail(email);
 
         statusRepository.save(
