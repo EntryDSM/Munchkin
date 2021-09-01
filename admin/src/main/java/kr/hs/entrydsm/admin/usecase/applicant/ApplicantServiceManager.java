@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -63,25 +64,21 @@ public class ApplicantServiceManager implements ApplicantService {
         }
 
         Page<ApplicantsInformationResponse> applicants = userRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
-        List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
-        
-        for (ApplicantsInformationResponse applicant : applicants) {
-            applicantsInformationResponses.add(
-                    ApplicantsInformationResponse.builder()
-                            .receiptCode(applicant.getReceiptCode())
-                            .name(applicant.getName())
-                            .isDaejeon(applicant.getIsDaejeon())
-                            .applicationType(applicant.getApplicationType())
-                            .isPrintedArrived(applicant.getIsPrintedArrived())
-                            .isSubmit(applicant.getIsSubmit())
-                            .build()
-            );
-        }
 
         return  ApplicantsResponse.builder()
                 .totalElements(applicants.getTotalElements())
                 .totalPages(applicants.getTotalPages())
-                .applicantsInformationResponses(applicantsInformationResponses)
+                .applicantsInformationResponses(
+                        applicants.stream().map(
+                                applicant -> ApplicantsInformationResponse.builder()
+                                        .receiptCode(applicant.getReceiptCode())
+                                        .name(applicant.getName())
+                                        .isDaejeon(applicant.getIsDaejeon())
+                                        .applicationType(applicant.getApplicationType())
+                                        .isPrintedArrived(applicant.getIsPrintedArrived())
+                                        .isSubmit(applicant.getIsSubmit())
+                                        .build()
+                        ).collect(Collectors.toList()))
                 .build();
     }
 

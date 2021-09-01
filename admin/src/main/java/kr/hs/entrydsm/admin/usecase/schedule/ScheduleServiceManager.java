@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -36,24 +36,18 @@ public class ScheduleServiceManager implements ScheduleService {
 
     @Override
     public ScheduleResponse getSchedules() {
-
         if (scheduleRepository.findAllBy().size() == 0) {
             createSchedules();
         }
         List<Schedule> schedule = scheduleRepository.findAllBy();
-        List<Schedules> schedules = new ArrayList<>();
-
-        for (Schedule s : schedule) {
-            schedules.add(
-                    Schedules.builder()
-                            .type(s.getType())
-                            .date(s.getDate().toString())
-                            .build()
-            );
-        }
 
         return ScheduleResponse.builder()
-                .schedules(schedules)
+                .schedules(schedule.stream()
+                        .map(s -> Schedules.builder()
+                                .type(s.getType())
+                                .date(s.getDate().toString())
+                                .build()
+                        ).collect(Collectors.toList()))
                 .currentStatus(getCurrentStatus())
                 .build();
     }
