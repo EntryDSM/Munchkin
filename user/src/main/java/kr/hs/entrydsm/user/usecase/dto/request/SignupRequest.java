@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class SignupRequest extends AccountRequest {
 
-    @Pattern(regexp = "[곽-힇]{2,10}")
+    @Pattern(regexp = "[가-힇]{2,10}")
     @NotNull
     private String name;
 
