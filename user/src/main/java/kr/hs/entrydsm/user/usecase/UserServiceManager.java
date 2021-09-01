@@ -110,6 +110,8 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .build()
         );
 
+        authCodeRepository.deleteByEmail(email);
+
         return getAccessToken(user.getReceiptCode());
     }
 
