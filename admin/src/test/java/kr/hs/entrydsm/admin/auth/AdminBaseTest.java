@@ -23,11 +23,8 @@ public abstract class AdminBaseTest {
         }
     };
 
-    protected static final Admin TEACHER_ADMIN = Admin.builder()
-            .id("asdf1234")
-            .password(passwordEncoder.encode("teacheradmin"))
-            .name("본부교무실")
-            .build();
+    protected static final Admin TEACHER_ADMIN =
+            new Admin("asdf1234", "teacheradmin", "본부교무실");
 
     protected static final JwtTokenProvider JWT_TOKEN_PROVIDER = new MockJwtTokenProvider();
 
