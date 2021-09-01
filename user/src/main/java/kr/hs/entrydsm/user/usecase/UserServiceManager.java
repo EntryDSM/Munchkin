@@ -101,18 +101,18 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .build()
         );
 
-        System.out.println(user.getReceiptCode());
-        authCodeRepository.deleteByEmail(email);
+        authCodeRepository.deleteById(email);
 
         statusRepository.save(
                 Status.builder()
                         .receiptCode(user.getReceiptCode())
+                        .user(user)
                         .isPrintedArrived(false)
                         .isSubmit(false)
                         .isFirstRoundPass(false)
                         .build()
         );
-        
+
 
         return getAccessToken(user.getReceiptCode());
     }
