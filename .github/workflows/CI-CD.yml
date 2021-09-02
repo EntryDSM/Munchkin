@@ -40,7 +40,7 @@ jobs:
       run: docker build -t munchkin .
 
     - name: publish to Registry
-      uses: leeseojune53/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@3.04
       with:
         name: munchkin
         username: ${{ secrets.DOCKER_USERNAME }}
