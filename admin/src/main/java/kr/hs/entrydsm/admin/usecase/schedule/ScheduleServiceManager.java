@@ -28,8 +28,7 @@ public class ScheduleServiceManager implements ScheduleService {
             String year = schedule.getDate().substring(0, 4);
             Schedule updateSchedule = scheduleRepository.findByYearAndType(year, Type.valueOf(schedule.getType().toString()))
                     .orElseThrow(ScheduleNotFoundException::new);
-            String[] date = schedule.getDate().split("-");
-            updateSchedule.update(year, LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
+            updateSchedule.update(year, parseLocalDate(schedule.getDate()));
             scheduleRepositoryManager.save(updateSchedule);
         }
     }
@@ -50,6 +49,11 @@ public class ScheduleServiceManager implements ScheduleService {
                         ).collect(Collectors.toList()))
                 .currentStatus(getCurrentStatus())
                 .build();
+    }
+
+    private LocalDate parseLocalDate(String date) {
+        String[] day = date.split("-");
+        return LocalDate.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]));
     }
 
     private String getCurrentStatus() {
