@@ -24,7 +24,6 @@ public class ApplicationRequest {
     @JsonProperty(value = "is_daejeon")
     private Boolean isDaejeon;
 
-    @NotEmpty(message = "applicationRemark은 Null 또는 공백을 허용하지 않습니다.")
     private String applicationRemark;
 
     @Length(min = 6, max = 6, message = "INVALID DATE")
