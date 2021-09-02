@@ -1,10 +1,7 @@
 package kr.hs.entrydsm.user.entity.user;
 
 import kr.hs.entrydsm.user.entity.status.Status;
-import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
-import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
-import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
+import kr.hs.entrydsm.user.entity.user.enumeration.*;
 import kr.hs.entrydsm.user.usecase.exception.EmptyContentException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +38,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private EducationalStatus educationalStatus;
+
+    @Enumerated(EnumType.STRING)
+    private Headcount headcount;
 
     private Boolean isDaejeon;
 
@@ -113,11 +113,12 @@ public class User {
     }
 
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
-                                      boolean isDaejeon, ApplicationRemark applicationRemark) {
+                                      boolean isDaejeon, ApplicationRemark applicationRemark, Headcount headcount) {
         this.educationalStatus = educationalStatus;
         this.applicationType = applicationType;
         this.isDaejeon = isDaejeon;
         this.applicationRemark = applicationRemark;
+        this.headcount = headcount;
         return this;
     }
 
