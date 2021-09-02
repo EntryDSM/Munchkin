@@ -35,7 +35,6 @@ public class Information {
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     protected String parentTel;
 
-    @NotEmpty(message = "home_tel은 Null 또는 공백을 허용하지 않습니다.")
     @Length(max = 11)
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     protected String homeTel;
