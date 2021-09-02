@@ -4,6 +4,7 @@ import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
 import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
 import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
+import kr.hs.entrydsm.user.entity.user.enumeration.Headcount;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import kr.hs.entrydsm.user.usecase.exception.InvalidEnumConstantException;
 import kr.hs.entrydsm.user.usecase.exception.UserNotFoundException;
@@ -26,31 +27,40 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
 
     @Override
     public void changeApplication(long receiptCode, String educationalStatus, String applicationType,
-                                  boolean isDaejeon,String applicationRemark) {
+                                  boolean isDaejeon,String applicationRemark, String headcount) {
+
         User user = findByReceiptCode(receiptCode);
-        EducationalStatus educationalStatusValue;
-        ApplicationType applicationTypeValue;
-        ApplicationRemark applicationRemarkValue;
+        EducationalStatus educationalStatusValue = null;
+        ApplicationType applicationTypeValue = null;
+        ApplicationRemark applicationRemarkValue = null;
+        Headcount headcountValue = null;
+
         try{
             educationalStatusValue = EducationalStatus.valueOf(educationalStatus);
-        }catch(NullPointerException e) {
-            educationalStatusValue = null;
+        }catch(NullPointerException ignored) {
         }catch (IllegalArgumentException e) {
             throw new InvalidEnumConstantException();
         }
         try{
             applicationTypeValue = ApplicationType.valueOf(applicationType);
-        }catch(NullPointerException e) {
-            applicationTypeValue = null;
+        }catch(NullPointerException ignored) {
         }catch (IllegalArgumentException e) {
             throw new InvalidEnumConstantException();
         }
         try{
             applicationRemarkValue = ApplicationRemark.valueOf(applicationRemark);
-        }catch(NullPointerException e) {
-            applicationRemarkValue = null;
+        }catch(NullPointerException ignored) {
         }catch (IllegalArgumentException e) {
             throw new InvalidEnumConstantException();
+        }
+
+        if(!applicationTypeValue.equals(ApplicationType.SOCIAL)){
+            try{
+                headcountValue = Headcount.valueOf(headcount);
+            }catch(NullPointerException ignored) {
+            }catch (IllegalArgumentException e) {
+                throw new InvalidEnumConstantException();
+            }
         }
 
         try{
@@ -59,7 +69,8 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
                             educationalStatusValue,
                             applicationTypeValue,
                             isDaejeon,
-                            applicationRemarkValue
+                            applicationRemarkValue,
+                            headcountValue
                     )
             );
         }catch (IllegalArgumentException e) {
