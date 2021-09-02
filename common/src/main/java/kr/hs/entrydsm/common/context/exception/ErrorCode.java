@@ -34,6 +34,7 @@ public enum ErrorCode {
     INVALID_ENUM_CONSTANT(400, "APPLICATION400-1", "The enum constant is invalid"),
     EDUCATIONAL_STATUS_UNMATCHED(400, "APPLICATION400-2", "Education Status is unmatched"),
     BAD_FILE_EXTENSION(400, "APPLICATION400-3", "File Extension is invalid"),
+    EMPTY_CONTENT(400, "APPLICATION400-4", "Content is empty."),
     APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found"),
     SCHOOL_NOT_FOUND(404, "APPLICATION404-1", "The school could not be found"),
     EDUCATIONAL_STATUS_NOT_FOUND(404, "APPLICATION404-2", "The educational status could not be found"),
