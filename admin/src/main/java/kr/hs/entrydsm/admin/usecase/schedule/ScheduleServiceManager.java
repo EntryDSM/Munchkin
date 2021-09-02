@@ -28,8 +28,8 @@ public class ScheduleServiceManager implements ScheduleService {
             String year = schedule.getDate().substring(0, 4);
             Schedule updateSchedule = scheduleRepository.findByYearAndType(year, Type.valueOf(schedule.getType().toString()))
                     .orElseThrow(ScheduleNotFoundException::new);
-
-            updateSchedule.update(year, schedule.getDate());
+            String[] date = schedule.getDate().split("-");
+            updateSchedule.update(year, LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
             scheduleRepositoryManager.save(updateSchedule);
         }
     }
