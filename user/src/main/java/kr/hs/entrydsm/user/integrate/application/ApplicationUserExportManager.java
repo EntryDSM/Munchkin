@@ -54,7 +54,8 @@ public class ApplicationUserExportManager implements ApplicationUserExportReposi
             throw new InvalidEnumConstantException();
         }
 
-        if(!applicationTypeValue.equals(ApplicationType.SOCIAL)){
+        if(applicationTypeValue != null &&
+                !applicationTypeValue.equals(ApplicationType.SOCIAL)){
             try{
                 headcountValue = Headcount.valueOf(headcount);
             }catch(NullPointerException ignored) {
