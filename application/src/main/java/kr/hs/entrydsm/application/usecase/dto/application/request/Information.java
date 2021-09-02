@@ -23,6 +23,7 @@ public class Information {
     @Length(min = 8, max = 8, message = "INVALID DATE")
     protected String birthday;
 
+    @Length(max = 5, message = "TOO LONG NAME")
     protected String parentName;
 
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
