@@ -23,7 +23,8 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
     @Override
     public void writeApplicationType(Long receiptCode, ApplicationRequest application) {
         userExportRepository.changeApplication(receiptCode, application.getEducationalStatus(),
-                application.getApplicationType(), application.getIsDaejeon(), application.getApplicationRemark());
+                application.getApplicationType(), application.getIsDaejeon(),
+                application.getApplicationRemark(), application.getHeadcount());
 
     }
 
