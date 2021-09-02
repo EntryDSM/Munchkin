@@ -27,9 +27,9 @@ public class Schedule {
     @Column(nullable = false)
     private LocalDate date;
 
-    public void update(String year, String date) {
+    public void update(String year, LocalDate date) {
         this.year = year;
-        this.date = LocalDate.parse(date);
+        this.date = date;
     }
 
 }
