@@ -95,7 +95,7 @@ class ApplicationManagerTest {
         ApplicationRequest request =
                 new ApplicationRequest("GRADUATE", "MEISTER",
                         false, null,
-                        "202003");
+                        "202003", "IN_OF_HEADCOUNT");
         Mockito.when(graduationApplicationRepository.existsByReceiptCode(0L))
                 .thenReturn(true);
         Mockito.when(graduationApplicationRepository.findByReceiptCode(0L))
@@ -116,7 +116,7 @@ class ApplicationManagerTest {
         ApplicationRequest request =
                 new ApplicationRequest("QUALIFICATION_EXAM", "MEISTER",
                         false, null,
-                        "202003");
+                        "202003", "IN_OF_HEADCOUNT");
 
         Mockito.when(qualificationExamApplicationRepository.existsByReceiptCode(0L))
                 .thenReturn(true);
