@@ -41,7 +41,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                     .anyRequest().permitAll().and()
-                .addFilterAfter(requestLogger, FilterSecurityInterceptor.class);
+                .addFilterBefore(requestLogger, FilterSecurityInterceptor.class);
     }
 
     @Bean
