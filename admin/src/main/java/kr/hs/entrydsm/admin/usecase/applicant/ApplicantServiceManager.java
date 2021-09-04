@@ -107,7 +107,7 @@ public class ApplicantServiceManager implements ApplicantService {
         PersonalData personalData = PersonalData.builder()
                 .photoFileName(userInfo.getPhotoFileName())
                 .name(userInfo.getName())
-                .birthDate(userInfo.getBirthDate())
+                .birthDate(userInfo.getBirthDate().toString())
                 .schoolName(applicantInfo.getSchoolName())
                 .email(userInfo.getEmail())
                 .isGraduated(applicantInfo.getIsGraduated())
