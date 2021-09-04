@@ -120,7 +120,7 @@ public class AdminApplicantBaseTest {
             .zipcode("1교시")
             .build();
 
-    protected static final NotSubmitApplicant NOT_SUBMIT_APPLICANT = NotSubmitApplicant.builder()
+    protected static final NotSubmitApplicantResponse NOT_SUBMIT_APPLICANT = NotSubmitApplicantResponse.builder()
             .applicantTel("010-0000-0000")
             .parentTel("010-0000-0000")
             .homeTel("010-0000-0000")
