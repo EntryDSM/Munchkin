@@ -49,6 +49,7 @@ public class ApplicationIntegrateApplicantService implements ApplicationApplican
                 .applicationType(stringValueOf(user.getApplicationType()))
                 .applicationRemark(stringValueOf(user.getApplicationRemark()))
                 .isDaejeon(user.getIsDaejeon())
+				.headcount(stringValueOf(user.getHeadcount()))
                 .build();
     }
 

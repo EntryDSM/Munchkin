@@ -22,6 +22,8 @@ public class ApplicationResponse {
 
     private String graduatedAt;
 
+    private String headcount;
+
     @JsonProperty(value = "is_graduated")
     protected boolean isGraduated;
 
@@ -34,4 +36,9 @@ public class ApplicationResponse {
         this.graduatedAt = graduatedAt;
         return this;
     }
+
+    public ApplicationResponse setHeadcount(String headcount) {
+    	this.headcount = headcount;
+    	return this;
+	}
 }
