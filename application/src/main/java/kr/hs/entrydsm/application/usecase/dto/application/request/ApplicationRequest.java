@@ -29,6 +29,6 @@ public class ApplicationRequest {
     @Length(min = 6, max = 6, message = "INVALID DATE")
     private String graduatedAt;
 
-    private String Headcount;
+    private String headcount;
 
 }
