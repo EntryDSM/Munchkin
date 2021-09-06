@@ -20,8 +20,7 @@ public class PersonalData {
 
     private String email;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthDate;
+    private String birthDate;
 
     private String schoolName;
 

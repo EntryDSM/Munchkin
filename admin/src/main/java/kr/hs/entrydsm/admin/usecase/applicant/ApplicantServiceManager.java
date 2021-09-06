@@ -88,8 +88,14 @@ public class ApplicantServiceManager implements ApplicantService {
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
 
         if(!userInfo.getIsSubmit()) {
-            NotSubmitApplicant notSubmitApplicant
-                    = new NotSubmitApplicant(userInfo.getEmail(), userInfo.getTelephoneNumber(), userInfo.getParentTel(), userInfo.getHomeTel(), applicantInfo.getSchoolTel());
+            NotSubmitApplicantResponse notSubmitApplicant
+                    = new NotSubmitApplicantResponse(NotSubmitApplicantDto.builder()
+                    .email(userInfo.getEmail())
+                    .schoolTel(applicantInfo.getSchoolTel())
+                    .applicantTel(userInfo.getTelephoneNumber())
+                    .parentTel(userInfo.getParentTel())
+                    .homeTel(userInfo.getHomeTel())
+                    .build());
             return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
         }
 
@@ -101,7 +107,7 @@ public class ApplicantServiceManager implements ApplicantService {
         PersonalData personalData = PersonalData.builder()
                 .photoFileName(userInfo.getPhotoFileName())
                 .name(userInfo.getName())
-                .birthDate(userInfo.getBirthDate())
+                .birthDate(userInfo.getBirthDate().toString())
                 .schoolName(applicantInfo.getSchoolName())
                 .email(userInfo.getEmail())
                 .isGraduated(applicantInfo.getIsGraduated())
@@ -127,11 +133,12 @@ public class ApplicantServiceManager implements ApplicantService {
                 .studyPlan(userInfo.getStudyPlan())
                 .build();
 
-        ApplicantDetailResponse applicantDetailResponse = ApplicantDetailResponse.builder()
-                .status(status)
+        ApplicantDetailResponse applicantDetailResponse = new ApplicantDetailResponse(ApplicantDetailDto.builder()
                 .personalData(personalData)
+                .status(status)
                 .evaluation(evaluation)
-                .build();
+                .build());
+        
         return new ResponseEntity<>(applicantDetailResponse, HttpStatus.OK);
     }
     
