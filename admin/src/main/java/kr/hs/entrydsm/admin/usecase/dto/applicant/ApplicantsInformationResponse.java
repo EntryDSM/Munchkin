@@ -15,6 +15,8 @@ public class ApplicantsInformationResponse {
 
     private String name;
 
+    private String email;
+
     private Boolean isDaejeon;
 
     private String applicationType;
