@@ -24,7 +24,7 @@ public class PersonalData {
 
     private String schoolName;
 
-    private boolean isGraduated;
+    private Boolean isGraduated;
 
     private String educationalStatus;
 

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Status {
 
-    private boolean isPrintedArrived;
+    private Boolean isPrintedArrived;
 
-    private boolean isSubmit;
+    private Boolean isSubmit;
 
 }
