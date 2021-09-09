@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.common.context.exception;
 
+import java.util.Arrays;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +19,7 @@ public class MunchkinExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
 	protected ResponseEntity<ErrorResponse> handleRuntimeException(final RuntimeException e) {
-		return new ResponseEntity<>(new ErrorResponse(500, "Internal Server Error", "Internal Server Error"),
+		return new ResponseEntity<>(new ErrorResponse(500, "Internal Server Error", Arrays.toString(e.getStackTrace())),
 				HttpStatus.valueOf(500));
 	}
 
