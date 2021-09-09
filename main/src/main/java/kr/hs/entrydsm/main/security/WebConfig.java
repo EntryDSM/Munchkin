@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -41,7 +42,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                     .anyRequest().permitAll().and()
-                .addFilterBefore(requestLogger, FilterSecurityInterceptor.class);
+                .addFilterBefore(requestLogger, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
