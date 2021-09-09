@@ -24,9 +24,8 @@ public class UserIntegrateScoreManager implements UserIntegrateScoreRepository {
 
     @Override
     public List<User> findCandidatesByRegionAndType(boolean isDaejeon, ApplicationType applicationType) {
-        return userRepository.findAllByIsDaejeonAndApplicationType(isDaejeon, applicationType)
-                .stream().filter(user -> user.getStatus().isSubmit())
-                .filter(user -> user.getStatus().isPrintedArrived())
+        return userRepository.findAllByIsDaejeonAndApplicationTypeAndStatus_IsSubmitTrue(isDaejeon, applicationType)
+                .stream().filter(user -> user.getStatus().isPrintedArrived())
                 .collect(Collectors.toList());
     }
 

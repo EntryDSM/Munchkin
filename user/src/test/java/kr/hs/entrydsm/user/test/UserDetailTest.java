@@ -48,7 +48,7 @@ public class UserDetailTest extends UserBaseTest {
 
     @Test
     public void 유저상태_조회() {
-        assertFalse(TEST_USER.getStatus().isSubmit());
+        assertFalse(TEST_USER.getStatus().getIsSubmit());
         assertFalse(TEST_USER.getStatus().isPrintedArrived());
     }
 
