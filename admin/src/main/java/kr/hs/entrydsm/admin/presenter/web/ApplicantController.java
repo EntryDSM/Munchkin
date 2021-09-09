@@ -23,7 +23,7 @@ public class ApplicantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping("/applicant/{receipt-code}")
     public void changeIsPrintedArrived(@PathVariable(name = "receipt-code") long receiptCode,
-                                       @RequestParam(name = "is-printed-arrived") boolean isPrintedArrived) {
+                                       @RequestParam(name = "is_printed_arrived") boolean isPrintedArrived) {
         applicantService.changePrintArrivedOrNot(receiptCode, isPrintedArrived);
     }
 

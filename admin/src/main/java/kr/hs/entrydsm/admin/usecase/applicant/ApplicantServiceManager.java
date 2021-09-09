@@ -73,6 +73,7 @@ public class ApplicantServiceManager implements ApplicantService {
                                 applicant -> ApplicantsInformationResponse.builder()
                                         .receiptCode(applicant.getReceiptCode())
                                         .name(applicant.getName())
+                                        .email(applicant.getEmail())
                                         .isDaejeon(applicant.getIsDaejeon())
                                         .applicationType(applicant.getApplicationType())
                                         .isPrintedArrived(applicant.getIsPrintedArrived())
