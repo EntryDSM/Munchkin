@@ -7,4 +7,5 @@ public interface GraduationApplicationRepository {
     Optional<GraduationApplication> findByReceiptCode(Long receiptCode);
     GraduationApplication save(GraduationApplication graduationApplication);
     boolean existsByReceiptCode(Long receiptCode);
+    void delete(GraduationApplication graduationApplication);
 }

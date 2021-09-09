@@ -23,12 +23,14 @@ public class ApplicationFactory {
 
     private GraduationApplication saveGraduationApplicationIfNotExists(long receiptCode) {
         GraduationApplication graduationApplication = createGraduationApplicationIfNotExists(receiptCode);
+        qualificationExamApplicationRepository.findByReceiptCode(receiptCode).ifPresent(qualificationExamApplicationRepository::delete);
         graduationApplicationRepository.save(graduationApplication);
         return graduationApplication;
     }
 
     private QualificationExamApplication saveQualificationExamApplicationIfNotExists(long receiptCode) {
         QualificationExamApplication qualificationExamApplication = createQualificationExamApplicationIfNotExists(receiptCode);
+        graduationApplicationRepository.findByReceiptCode(receiptCode).ifPresent(graduationApplicationRepository::delete);
         qualificationExamApplicationRepository.save(qualificationExamApplication);
         return qualificationExamApplication;
     }
