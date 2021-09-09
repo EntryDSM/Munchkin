@@ -36,7 +36,7 @@ public class ScoreIntegrateUserService implements ScorerRepository {
     private Scorer convertUserToScorer(User user) {
         return Scorer.builder()
                 .receiptCode(user.getReceiptCode())
-                .isDaejeon(user.getIsDaejeon())
+                .isDaejeon(user.getIsDaejeon() != null && user.getIsDaejeon())
                 .applicationType(getApplicationType(user.getApplicationType()))
                 .educationalStatus(getEducationalStatus(user.getEducationalStatus()))
                 .build();

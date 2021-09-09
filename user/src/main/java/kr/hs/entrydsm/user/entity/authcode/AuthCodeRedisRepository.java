@@ -5,4 +5,5 @@ import java.util.Optional;
 public interface AuthCodeRedisRepository {
     Optional<AuthCode> findById(String email);
     AuthCode save(AuthCode authCode);
+    void deleteById(String email);
 }

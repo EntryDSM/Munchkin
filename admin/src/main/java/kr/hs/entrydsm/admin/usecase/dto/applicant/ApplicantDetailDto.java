@@ -9,15 +9,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotSubmitApplicant {
+public class ApplicantDetailDto {
 
-    private String email;
+    private Evaluation evaluation;
 
-    private String applicantTel;
+    private PersonalData personalData;
 
-    private String parentTel;
+    private Status status;
 
-    private String homeTel;
-
-    private String schoolTel;
 }

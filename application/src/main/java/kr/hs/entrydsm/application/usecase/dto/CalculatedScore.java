@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 @Builder
 public class CalculatedScore {
     private long receiptCode;
-    private BigDecimal totalFirstGradeScore; //1학년 성적 총합
-    private BigDecimal totalSecondGradeScore; //2학년 성적 총합
-    private BigDecimal totalThirdGradeScore; //3학년 성적 총합
+    private BigDecimal totalThirdBeforeBeforeScore;
+    private BigDecimal totalThirdBeforeScore;
+    private BigDecimal totalThirdGradeScore;
     private BigDecimal volunteerScore; //봉사점수 총합
     private BigDecimal conversionScore; //교과 성적 환산 점수
     private Integer attendanceScore; //출석 점수
@@ -24,8 +24,8 @@ public class CalculatedScore {
     public static CalculatedScore emptyScore(long receiptCode) {
         return CalculatedScore.builder()
                 .receiptCode(receiptCode)
-                .totalFirstGradeScore(null)
-                .totalSecondGradeScore(null)
+                .totalThirdBeforeBeforeScore(null)
+                .totalThirdBeforeScore(null)
                 .totalThirdGradeScore(null)
                 .volunteerScore(null)
                 .conversionScore(null)

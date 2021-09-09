@@ -1,10 +1,8 @@
 package kr.hs.entrydsm.user.entity.user;
 
 import kr.hs.entrydsm.user.entity.status.Status;
-import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationRemark;
-import kr.hs.entrydsm.user.entity.user.enumeration.ApplicationType;
-import kr.hs.entrydsm.user.entity.user.enumeration.EducationalStatus;
-import kr.hs.entrydsm.user.entity.user.enumeration.Sex;
+import kr.hs.entrydsm.user.entity.user.enumeration.*;
+import kr.hs.entrydsm.user.usecase.exception.EmptyContentException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,6 +38,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private EducationalStatus educationalStatus;
+
+    @Enumerated(EnumType.STRING)
+    private Headcount headcount;
 
     private Boolean isDaejeon;
 
@@ -85,7 +86,6 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
     private Status status;
 
     public String getExamCode() {
@@ -113,11 +113,12 @@ public class User {
     }
 
     public User updateUserApplication(EducationalStatus educationalStatus, ApplicationType applicationType,
-                                      boolean isDaejeon, ApplicationRemark applicationRemark) {
+                                      boolean isDaejeon, ApplicationRemark applicationRemark, Headcount headcount) {
         this.educationalStatus = educationalStatus;
         this.applicationType = applicationType;
         this.isDaejeon = isDaejeon;
         this.applicationRemark = applicationRemark;
+        this.headcount = headcount;
         return this;
     }
 
@@ -144,12 +145,16 @@ public class User {
     public void updateSelfIntroduce(String selfIntroduce) {
         if (!selfIntroduce.isBlank() && !selfIntroduce.isEmpty()) {
             this.selfIntroduce = selfIntroduce;
+        } else {
+            throw new EmptyContentException();
         }
     }
 
     public void updateStudyPlan(String studyPlan) {
         if (!studyPlan.isBlank() && !studyPlan.isEmpty()) {
             this.studyPlan = studyPlan;
+        } else {
+            throw new EmptyContentException();
         }
     }
 

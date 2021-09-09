@@ -8,15 +8,15 @@ class ApplicationRequestTest {
 
     private static final ApplicationRequest PROSPECTIVE_COMMON =
             new ApplicationRequest("PROSPECTIVE_GRADUATE", "COMMON", false,
-                    "ONE_PARENT", "202106");
+                    "ONE_PARENT", "202106", "IN_OF_HEADCOUNT");
 
     private static final ApplicationRequest GRADUATE_MEISTER =
             new ApplicationRequest("GRADUATE", "MEISTER", true,
-                    "FROM_NORTH", "202107");
+                    "FROM_NORTH", "202107", "IN_OF_HEADCOUNT");
 
     private static final ApplicationRequest QUALIFICATION_SOCIAL =
             new ApplicationRequest("QUALIFICATION_EXAM", "SOCIAL", true,
-                    "BASIC_LIVING", "202108");
+                    "BASIC_LIVING", "202108", "IN_OF_HEADCOUNT");
 
     private static final ApplicationRequest REQUEST = new ApplicationRequest();
 

@@ -66,4 +66,11 @@ public class GraduationApplication extends Application {
         return schoolClass;
     }
 
+    public boolean isFilledStudentInfo() {
+        return isExists(studentNumber) && school != null && isExists(schoolTel);
+    }
+
+    private boolean isExists(String target) {
+        return target != null && !target.isBlank();
+    }
 }

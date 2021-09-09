@@ -4,7 +4,10 @@ import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.builder.GraduationApplicationBuilder;
 import kr.hs.entrydsm.application.builder.QualificationExamApplicationBuilder;
 import kr.hs.entrydsm.application.entity.*;
+import kr.hs.entrydsm.application.integrate.score.ScoreCalculator;
 import kr.hs.entrydsm.application.integrate.user.ApplicantDocsService;
+import kr.hs.entrydsm.application.integrate.user.ApplicantRepository;
+import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;
 import kr.hs.entrydsm.application.integrate.user.ApplicationApplicantRepository;
 import kr.hs.entrydsm.application.usecase.dto.application.request.Information;
 import kr.hs.entrydsm.application.usecase.dto.application.request.ApplicationRequest;
@@ -17,6 +20,7 @@ import kr.hs.entrydsm.application.usecase.exception.SchoolNotFoundException;
 import kr.hs.entrydsm.application.usecase.image.ImageService;
 import kr.hs.entrydsm.common.context.auth.manager.AuthenticationManager;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
 
@@ -38,9 +42,6 @@ class ApplicationManagerTest {
     private QualificationExamApplicationRepository qualificationExamApplicationRepository =
             Mockito.mock(QualificationExamApplicationRepository.class);
 
-    private AuthenticationManager authenticationManager =
-            Mockito.mock(AuthenticationManager.class);
-
     private ImageService imageService =
             Mockito.mock(ImageService.class);
 
@@ -51,11 +52,21 @@ class ApplicationManagerTest {
             new ApplicationFactory(graduationApplicationRepository,
                     qualificationExamApplicationRepository);
 
+    private ApplicantRepository applicantRepository =
+            Mockito.mock(ApplicantRepository.class);
+
+    private ScoreCalculator scoreCalculator =
+            Mockito.mock(ScoreCalculator.class);
+
+    private ApplicantStatusService applicantStatusService =
+            Mockito.mock(ApplicantStatusService.class);
+
     private ApplicationService applicationService =
-            new ApplicationManager(applicationFactory, imageService,
+            new ApplicationManager(applicationFactory, applicantRepository, imageService,
                     applicantDocsService, applicationApplicantRepository,
                     schoolRepository, graduationApplicationRepository,
-                    qualificationExamApplicationRepository, authenticationManager
+                    qualificationExamApplicationRepository,
+                    scoreCalculator, applicantStatusService
                     );
 
 
@@ -84,7 +95,7 @@ class ApplicationManagerTest {
         ApplicationRequest request =
                 new ApplicationRequest("GRADUATE", "MEISTER",
                         false, null,
-                        "202003");
+                        "202003", "IN_OF_HEADCOUNT");
         Mockito.when(graduationApplicationRepository.existsByReceiptCode(0L))
                 .thenReturn(true);
         Mockito.when(graduationApplicationRepository.findByReceiptCode(0L))
@@ -105,7 +116,7 @@ class ApplicationManagerTest {
         ApplicationRequest request =
                 new ApplicationRequest("QUALIFICATION_EXAM", "MEISTER",
                         false, null,
-                        "202003");
+                        "202003", "IN_OF_HEADCOUNT");
 
         Mockito.when(qualificationExamApplicationRepository.existsByReceiptCode(0L))
                 .thenReturn(true);

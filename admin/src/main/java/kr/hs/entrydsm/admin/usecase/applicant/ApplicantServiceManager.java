@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -63,25 +64,22 @@ public class ApplicantServiceManager implements ApplicantService {
         }
 
         Page<ApplicantsInformationResponse> applicants = userRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
-        List<ApplicantsInformationResponse> applicantsInformationResponses= new ArrayList<>();
-        
-        for (ApplicantsInformationResponse applicant : applicants) {
-            applicantsInformationResponses.add(
-                    ApplicantsInformationResponse.builder()
-                            .receiptCode(applicant.getReceiptCode())
-                            .name(applicant.getName())
-                            .isDaejeon(applicant.getIsDaejeon())
-                            .applicationType(applicant.getApplicationType())
-                            .isPrintedArrived(applicant.getIsPrintedArrived())
-                            .isSubmit(applicant.getIsSubmit())
-                            .build()
-            );
-        }
 
         return  ApplicantsResponse.builder()
                 .totalElements(applicants.getTotalElements())
                 .totalPages(applicants.getTotalPages())
-                .applicantsInformationResponses(applicantsInformationResponses)
+                .applicantsInformationResponses(
+                        applicants.stream().map(
+                                applicant -> ApplicantsInformationResponse.builder()
+                                        .receiptCode(applicant.getReceiptCode())
+                                        .name(applicant.getName())
+                                        .email(applicant.getEmail())
+                                        .isDaejeon(applicant.getIsDaejeon())
+                                        .applicationType(applicant.getApplicationType())
+                                        .isPrintedArrived(applicant.getIsPrintedArrived())
+                                        .isSubmit(applicant.getIsSubmit())
+                                        .build()
+                        ).collect(Collectors.toList()))
                 .build();
     }
 
@@ -91,8 +89,14 @@ public class ApplicantServiceManager implements ApplicantService {
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
 
         if(!userInfo.getIsSubmit()) {
-            NotSubmitApplicant notSubmitApplicant
-                    = new NotSubmitApplicant(userInfo.getEmail(), userInfo.getTelephoneNumber(), userInfo.getParentTel(), userInfo.getHomeTel(), applicantInfo.getSchoolTel());
+            NotSubmitApplicantResponse notSubmitApplicant
+                    = new NotSubmitApplicantResponse(NotSubmitApplicantDto.builder()
+                    .email(userInfo.getEmail())
+                    .schoolTel(applicantInfo.getSchoolTel())
+                    .applicantTel(userInfo.getTelephoneNumber())
+                    .parentTel(userInfo.getParentTel())
+                    .homeTel(userInfo.getHomeTel())
+                    .build());
             return new ResponseEntity<>(notSubmitApplicant, HttpStatus.LOCKED);
         }
 
@@ -104,7 +108,7 @@ public class ApplicantServiceManager implements ApplicantService {
         PersonalData personalData = PersonalData.builder()
                 .photoFileName(userInfo.getPhotoFileName())
                 .name(userInfo.getName())
-                .birthDate(userInfo.getBirthDate())
+                .birthDate(userInfo.getBirthDate().toString())
                 .schoolName(applicantInfo.getSchoolName())
                 .email(userInfo.getEmail())
                 .isGraduated(applicantInfo.getIsGraduated())
@@ -130,11 +134,12 @@ public class ApplicantServiceManager implements ApplicantService {
                 .studyPlan(userInfo.getStudyPlan())
                 .build();
 
-        ApplicantDetailResponse applicantDetailResponse = ApplicantDetailResponse.builder()
-                .status(status)
+        ApplicantDetailResponse applicantDetailResponse = new ApplicantDetailResponse(ApplicantDetailDto.builder()
                 .personalData(personalData)
+                .status(status)
                 .evaluation(evaluation)
-                .build();
+                .build());
+        
         return new ResponseEntity<>(applicantDetailResponse, HttpStatus.OK);
     }
     

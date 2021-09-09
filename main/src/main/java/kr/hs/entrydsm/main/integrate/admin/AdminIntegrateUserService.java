@@ -38,6 +38,7 @@ public class AdminIntegrateUserService implements UserRepository {
                     ApplicantsInformationResponse.builder()
                             .receiptCode(user.getReceiptCode())
                             .name(user.getName())
+                            .email(user.getEmail())
                             .isDaejeon(user.getIsDaejeon())
                             .applicationType(String.valueOf(user.getApplicationType()))
                             .isPrintedArrived(user.getStatus().isPrintedArrived())

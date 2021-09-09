@@ -18,6 +18,7 @@ public enum ErrorCode {
     USER_ALREADY_EXISTS(409, "USER409-0", "User Already Exists"),
     AUTH_CODE_ALREADY_VERIFIED(409, "USER409-1", "Auth Code Already Verified"),
     AUTH_CODE_REQUEST_OVER_LIMIT(429, "USER429-0", "Auth Code Request Over Limit"),
+    STATUS_NOT_FOUND(404, "USER404-1", "Status Not Found"),
 
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
     GRADE_OR_SCORE_NOT_FOUND(404, "SCORE404-0", "The score does not exist"),
@@ -33,12 +34,14 @@ public enum ErrorCode {
     INVALID_ENUM_CONSTANT(400, "APPLICATION400-1", "The enum constant is invalid"),
     EDUCATIONAL_STATUS_UNMATCHED(400, "APPLICATION400-2", "Education Status is unmatched"),
     BAD_FILE_EXTENSION(400, "APPLICATION400-3", "File Extension is invalid"),
+    EMPTY_CONTENT(400, "APPLICATION400-4", "Content is empty."),
     APPLICATION_NOT_FOUND(404, "APPLICATION404-0","The application could not be found"),
     SCHOOL_NOT_FOUND(404, "APPLICATION404-1", "The school could not be found"),
     EDUCATIONAL_STATUS_NOT_FOUND(404, "APPLICATION404-2", "The educational status could not be found"),
     FINAL_SUBMIT_REQUIRED(406, "APPLICATION406-0", "Final submit required"),
     SCORE_NOT_FOUND(400, "APPLICATION400-3", "Score not found"),
     EDUCATIONAL_STATUS_NULL(400, "APPLICATION400-4", "Educational status is null"),
+    PROCESS_NOT_COMPLETED(406, "APPLICATION406-1", "Application process is not completed"),
 
     GRADE_NOT_FOUND(404, "SCORE-404-0", "User's grade could not be found")
     ;

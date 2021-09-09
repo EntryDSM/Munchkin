@@ -23,11 +23,14 @@ public class Information {
     @Length(min = 8, max = 8, message = "INVALID DATE")
     protected String birthday;
 
+    @Length(max = 5, message = "TOO LONG NAME")
     protected String parentName;
 
+    @NotEmpty(message = "telephone_number는 Null 또는 공백을 허용하지 않습니다.")
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     protected String telephoneNumber;
 
+    @NotEmpty(message = "parent_tel은 Null 또는 공백을 허용하지 않습니다.")
     @Length(max = 11)
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     protected String parentTel;
@@ -36,9 +39,11 @@ public class Information {
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     protected String homeTel;
 
+    @NotEmpty(message = "address는 Null 또는 공백을 허용하지 않습니다.")
     @Length(max = 300, message = "TOO LONG ADDRESS")
     protected String address;
 
+    @NotEmpty(message = "detailAddress는 Null 또는 공백을 허용하지 않습니다.")
     @Length(max = 100, message = "TOO LONG DETAIL_ADDRESS")
     protected String detailAddress;
 

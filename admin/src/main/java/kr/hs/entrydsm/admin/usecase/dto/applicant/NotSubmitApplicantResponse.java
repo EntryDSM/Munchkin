@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicantDetailResponse {
+public class NotSubmitApplicantResponse {
 
-    private ApplicantDetailDto submittedApplicant;
+    private NotSubmitApplicantDto notSubmittedApplicant;
 
 }

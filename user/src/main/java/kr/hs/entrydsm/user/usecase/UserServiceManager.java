@@ -22,20 +22,17 @@ import kr.hs.entrydsm.user.usecase.dto.response.UserStatusResponse;
 import kr.hs.entrydsm.user.usecase.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
 public class UserServiceManager implements UserAuthService, UserService {
-
-    private final AuthenticationManager authenticationManager;
 
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -104,21 +101,24 @@ public class UserServiceManager implements UserAuthService, UserService {
                         .build()
         );
 
+        authCodeRepository.deleteById(email);
+
         statusRepository.save(
                 Status.builder()
-                        .receiptCode(user.getReceiptCode())
+                        .user(user)
                         .isPrintedArrived(false)
                         .isSubmit(false)
                         .isFirstRoundPass(false)
                         .build()
         );
 
+
         return getAccessToken(user.getReceiptCode());
     }
 
     @Override
     public UserStatusResponse getUserStatus() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         User user = userRepository.findByReceiptCode(receiptCode)
                 .orElseThrow(UserNotFoundException::new);
         Status status = user.getStatus();
@@ -185,7 +185,7 @@ public class UserServiceManager implements UserAuthService, UserService {
 
     @Override
     public void submitFinally() {
-        long receiptCode = authenticationManager.getUserReceiptCode();
+        long receiptCode = AuthenticationManager.getUserReceiptCode();
         userRepository.findByReceiptCode(receiptCode)
                 .map(User::submitFinally)
                 .ifPresent(userRepository::save);

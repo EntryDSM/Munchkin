@@ -15,4 +15,10 @@ public class MunchkinExceptionHandler {
                 HttpStatus.valueOf(errorCode.getStatus()));
     }
 
+    @ExceptionHandler(RuntimeException.class)
+	protected ResponseEntity<ErrorResponse> handleRuntimeException(final RuntimeException e) {
+		return new ResponseEntity<>(new ErrorResponse(500, "Internal Server Error", "Internal Server Error"),
+				HttpStatus.valueOf(500));
+	}
+
 }

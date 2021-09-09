@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,6 +20,7 @@ public class Status {
     @Id
     private long receiptCode;
 
+    @MapsId
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "receipt_code")
     private User user;
@@ -57,6 +57,11 @@ public class Status {
 
     public void setFirstRoundPass() {
         this.isFirstRoundPass = true;
+    }
+
+    public void finalSubmit() {
+        this.isSubmit = true;
+        this.submittedAt = LocalDateTime.now();
     }
 
 }

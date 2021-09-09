@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Getter
@@ -16,6 +16,7 @@ public class GraduatedInformationRequest {
     private static final String TEL_REGEXP = "^\\d{3}\\d{3,4}\\d{4}$";
 
     @Length(max = 11)
+    @NotEmpty(message = "school_tel은 Null 또는 공백을 허용하지 않습니다.")
     @Pattern(regexp = TEL_REGEXP, message = "INVALID TEL")
     private String schoolTel;
 

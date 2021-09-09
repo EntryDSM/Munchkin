@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -28,34 +28,32 @@ public class ScheduleServiceManager implements ScheduleService {
             String year = schedule.getDate().substring(0, 4);
             Schedule updateSchedule = scheduleRepository.findByYearAndType(year, Type.valueOf(schedule.getType().toString()))
                     .orElseThrow(ScheduleNotFoundException::new);
-
-            updateSchedule.update(year, schedule.getDate());
+            updateSchedule.update(year, parseLocalDate(schedule.getDate()));
             scheduleRepositoryManager.save(updateSchedule);
         }
     }
 
     @Override
     public ScheduleResponse getSchedules() {
-
         if (scheduleRepository.findAllBy().size() == 0) {
             createSchedules();
         }
         List<Schedule> schedule = scheduleRepository.findAllBy();
-        List<Schedules> schedules = new ArrayList<>();
-
-        for (Schedule s : schedule) {
-            schedules.add(
-                    Schedules.builder()
-                            .type(s.getType())
-                            .date(s.getDate().toString())
-                            .build()
-            );
-        }
 
         return ScheduleResponse.builder()
-                .schedules(schedules)
+                .schedules(schedule.stream()
+                        .map(s -> Schedules.builder()
+                                .type(s.getType())
+                                .date(s.getDate().toString())
+                                .build()
+                        ).collect(Collectors.toList()))
                 .currentStatus(getCurrentStatus())
                 .build();
+    }
+
+    private LocalDate parseLocalDate(String date) {
+        String[] day = date.split("-");
+        return LocalDate.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]));
     }
 
     private String getCurrentStatus() {

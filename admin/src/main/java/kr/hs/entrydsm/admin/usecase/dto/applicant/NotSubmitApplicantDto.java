@@ -9,20 +9,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplicantsInformationResponse {
-
-    private Long receiptCode;
-
-    private String name;
+public class NotSubmitApplicantDto {
 
     private String email;
 
-    private Boolean isDaejeon;
+    private String applicantTel;
 
-    private String applicationType;
+    private String parentTel;
 
-    private Boolean isPrintedArrived;
+    private String homeTel;
 
-    private Boolean isSubmit;
+    private String schoolTel;
 
 }

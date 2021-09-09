@@ -129,11 +129,21 @@ public class Applicant {
         return !isEducationalStatusEmpty() && !isCommonApplicationType() && !isProspectiveGraduate();
     }
 
+    public boolean isFilledInfo() {
+        return isExists(name) && sex != null && birthday != null && isExists(telephoneNumber) && isExists(parentTel)
+                && isExists(parentName) && isExists(address) && isExists(detailAddress) && isExists(postCode)
+                && photoFileName != null;
+    }
+
     public boolean isGraduation() {
         return isGraduate() || isProspectiveGraduate();
     }
 
     private <T> boolean getFalseIfNull(T object, T comparison) {
         return object != null && object.equals(comparison);
+    }
+
+    private boolean isExists(String target) {
+        return target != null && !target.isBlank();
     }
 }
