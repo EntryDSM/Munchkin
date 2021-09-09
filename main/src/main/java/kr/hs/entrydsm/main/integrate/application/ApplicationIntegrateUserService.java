@@ -46,7 +46,7 @@ public class ApplicationIntegrateUserService
     @Override
     public boolean isFinalSubmit(long receiptCode) {
         Status status = applicationUserStatusExportRepository.findByReceiptCode(receiptCode);
-        return status.isSubmit();
+        return status.getIsSubmit();
     }
 
     @Override

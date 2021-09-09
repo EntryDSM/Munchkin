@@ -127,7 +127,7 @@ public class UserServiceManager implements UserAuthService, UserService {
                     .name(user.getName())
                     .phoneNumber(user.getTelephoneNumber())
                     .email(user.getEmail())
-                    .isSubmit(status.isSubmit())
+                    .isSubmit(status.getIsSubmit())
                     .isPrintedArrived(status.isPrintedArrived())
                     .applicationType(user.getApplicationType())
                     .selfIntroduce(user.getSelfIntroduce().length())

@@ -42,7 +42,7 @@ public class AdminIntegrateUserService implements UserRepository {
                             .isDaejeon(user.getIsDaejeon())
                             .applicationType(String.valueOf(user.getApplicationType()))
                             .isPrintedArrived(user.getStatus().isPrintedArrived())
-                            .isSubmit(user.getStatus().isSubmit())
+                            .isSubmit(user.getStatus().getIsSubmit())
                             .build()
             );
         }
@@ -105,7 +105,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .birthDate(user.getBirthday())
                 .isDaejeon(user.getIsDaejeon())
                 .isPrintedArrived(user.getStatus().isPrintedArrived())
-                .isSubmit(user.getStatus().isSubmit())
+                .isSubmit(user.getStatus().getIsSubmit())
                 .telephoneNumber(user.getTelephoneNumber())
                 .parentTel(user.getParentTel())
                 .homeTel(user.getHomeTel())

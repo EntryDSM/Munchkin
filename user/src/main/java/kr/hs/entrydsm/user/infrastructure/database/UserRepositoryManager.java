@@ -19,6 +19,6 @@ public interface UserRepositoryManager extends CrudRepository<User, Long>, UserR
     @Override
     User save(User user);
 
-    List<User> findAllByIsDaejeonAndApplicationType(boolean isDaejeon, ApplicationType applicationType);
+    List<User> findAllByIsDaejeonAndApplicationTypeAndStatus_IsSubmitTrue(boolean isDaejeon, ApplicationType applicationType);
 
 }

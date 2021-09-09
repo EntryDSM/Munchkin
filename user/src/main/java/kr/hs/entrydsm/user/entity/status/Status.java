@@ -27,7 +27,8 @@ public class Status {
 
     private boolean isPrintedArrived;
 
-    private boolean isSubmit;
+    @ColumnDefault("0")
+    private Boolean isSubmit;
 
     private LocalDateTime submittedAt;
 
