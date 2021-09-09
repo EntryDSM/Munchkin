@@ -44,11 +44,10 @@ public class AdminIntegrateMainService implements MainRepository {
     public void deleteAll() {
         scoreRepositoryManager.deleteAll();
         schoolRepositoryManager.deleteAll();
-        graduationApplicationRepositoryManager.deleteAll();
-        graduationApplicationRepositoryManager.deleteAll();
         graduationCaseRepositoryManager.deleteAll();
-        qualificationExamApplicationRepositoryManager.deleteAll();
+        graduationApplicationRepositoryManager.deleteAll();
         qualificationExamCaseRepositoryManager.deleteAll();
+        qualificationExamApplicationRepositoryManager.deleteAll();
         scheduleRepositoryManager.deleteAll();
         statusRepositoryManager.deleteAll();
         userRepositoryManager.deleteAll();
