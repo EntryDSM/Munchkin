@@ -37,23 +37,19 @@ public class AdminIntegrateMainService implements MainRepository {
     private final SchoolRepositoryManager schoolRepositoryManager;
 
 
+
+
     @Override
     @Transactional
     public void deleteAll() {
-        scheduleRepositoryManager.deleteAll();
-
         scoreRepositoryManager.deleteAll();
-
-        applicationRepositoryManager.deleteAll();
-
-        qualificationExamCaseRepositoryManager.deleteAll();
-        graduationCaseRepositoryManager.deleteAll();
-
-        qualificationExamApplicationRepositoryManager.deleteAll();
-        graduationApplicationRepositoryManager.deleteAll();
-
         schoolRepositoryManager.deleteAll();
-
+        graduationApplicationRepositoryManager.deleteAll();
+        graduationApplicationRepositoryManager.deleteAll();
+        graduationCaseRepositoryManager.deleteAll();
+        qualificationExamApplicationRepositoryManager.deleteAll();
+        qualificationExamCaseRepositoryManager.deleteAll();
+        scheduleRepositoryManager.deleteAll();
         statusRepositoryManager.deleteAll();
         userRepositoryManager.deleteAll();
     }
