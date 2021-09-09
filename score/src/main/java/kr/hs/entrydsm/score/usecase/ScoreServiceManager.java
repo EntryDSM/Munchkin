@@ -42,6 +42,9 @@ public class ScoreServiceManager implements ScoreService {
             throw new ApplicationTypeUnmatchedException();
         }
 
+        qualificationExamCaseRepository.findByReceiptCode(currentScorer().getReceiptCode())
+            .ifPresent(qualificationExamCaseRepository::delete);
+
         GraduationCase graduationCase = GraduationCase.builder()
                                                       .scorer(currentScorer())
                                                       .volunteerTime(request.getVolunteerTime())
@@ -64,6 +67,9 @@ public class ScoreServiceManager implements ScoreService {
     @Override
     public Score updateQualificationExam(UpdateQualificationExamRequest request) {
         if (!currentScorer().isQualificationExam()) throw new ApplicationTypeUnmatchedException();
+
+        graduationCaseRepository.findByReceiptCode(currentScorer().getReceiptCode())
+            .ifPresent(graduationCaseRepository::delete);
 
         QualificationExamCase qualificationExamCase = QualificationExamCase.builder()
                                                                            .scorer(currentScorer())
