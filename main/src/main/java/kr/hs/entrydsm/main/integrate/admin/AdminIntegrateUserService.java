@@ -112,7 +112,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .selfIntroduce(user.getSelfIntroduce())
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
-                .educationalStatus(user.getEducationalStatus().toString())
+                .educationalStatus(getEducationalStatus(user))
                 .build();
     }
 
@@ -179,6 +179,12 @@ public class AdminIntegrateUserService implements UserRepository {
             default:
                 return null;
         }
+    }
+
+    private String getEducationalStatus(User user) {
+        EducationalStatus status = user.getEducationalStatus();
+        if (status == null) return "";
+        return status.toString();
     }
 
     private String getArea(Boolean isDaejeon) {
