@@ -48,6 +48,11 @@ public class Status {
 
     public void setSubmitStatus(boolean isSubmit) {
         this.isSubmit = isSubmit;
+        if (isSubmit) {
+            this.submittedAt = LocalDateTime.now();
+        } else {
+            this.submittedAt = null;
+        }
     }
 
     public void setFirstRoundPass() {
