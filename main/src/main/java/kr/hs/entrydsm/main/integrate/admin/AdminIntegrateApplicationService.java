@@ -45,8 +45,8 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
     }
 
     @Override
-    public String getPhotoUrl(long receiptCode) {
-        return applicationExportRepository.getFileUrl(receiptCode);
+    public String getPhotoUrl(String photoFileName) {
+        return applicationExportRepository.getFileUrl(photoFileName);
     }
 
 }

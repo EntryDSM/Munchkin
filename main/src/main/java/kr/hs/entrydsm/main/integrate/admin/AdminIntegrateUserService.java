@@ -109,6 +109,7 @@ public class AdminIntegrateUserService implements UserRepository {
                 .parentTel(user.getParentTel())
                 .homeTel(user.getHomeTel())
                 .selfIntroduce(user.getSelfIntroduce())
+                .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
                 .educationalStatus(getEducationalStatus(user))
                 .build();

@@ -50,7 +50,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
     }
 
     @Override
-    public String getFileUrl(long receiptCode) {
+    public String getFileUrl(String photoFileName) {
         return null;
     }
 

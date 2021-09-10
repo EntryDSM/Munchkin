@@ -87,7 +87,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public ResponseEntity getDetailApplicantInfo(int receiptCode) {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
-        String fileUrl = applicationRepository.getPhotoUrl(receiptCode);
+        String fileUrl = applicationRepository.getPhotoUrl(userInfo.getPhotoFileName());
 
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicantResponse notSubmitApplicant

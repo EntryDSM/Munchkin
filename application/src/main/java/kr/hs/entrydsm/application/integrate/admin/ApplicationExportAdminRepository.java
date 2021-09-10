@@ -8,5 +8,5 @@ import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 public interface ApplicationExportAdminRepository {
     ReportCard getReportCard(long receiptCode);
     MiddleSchoolInfo getMiddleSchoolInfo(long receiptCode);
-    String getFileUrl(long receiptCode);
+    String getFileUrl(String photoFileName);
 }

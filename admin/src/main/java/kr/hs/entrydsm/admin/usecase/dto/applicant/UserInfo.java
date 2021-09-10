@@ -23,6 +23,8 @@ public class UserInfo {
 
     private Boolean isDaejeon;
 
+    private String photoFileName;
+
     private LocalDate birthDate;
 
     private Boolean isPrintedArrived;
