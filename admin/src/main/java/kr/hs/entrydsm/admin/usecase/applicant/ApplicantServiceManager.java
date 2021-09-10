@@ -3,6 +3,7 @@ package kr.hs.entrydsm.admin.usecase.applicant;
 import kr.hs.entrydsm.admin.integrate.applicaton.ApplicationRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
 import kr.hs.entrydsm.admin.integrate.user.UserRepository;
+import kr.hs.entrydsm.admin.usecase.exception.PathNotExistsException;
 import kr.hs.entrydsm.common.context.sender.ContentSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -93,7 +94,7 @@ public class ApplicantServiceManager implements ApplicantService {
         try {
 			fileUrl = applicationRepository.getPhotoUrl(userInfo.getPhotoFileName());
 		} catch (MalformedURLException e) {
-
+            throw new PathNotExistsException();
 		}
 
 
