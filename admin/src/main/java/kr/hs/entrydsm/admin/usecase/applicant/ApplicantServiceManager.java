@@ -87,6 +87,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public ResponseEntity getDetailApplicantInfo(int receiptCode) {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
+        String fileUrl = applicationRepository.getPhotoUrl(receiptCode);
 
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicantResponse notSubmitApplicant
@@ -106,7 +107,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
 
         PersonalData personalData = PersonalData.builder()
-                .photoFileName(userInfo.getPhotoFileName())
+                .photoUrl(fileUrl)
                 .name(userInfo.getName())
                 .birthDate(userInfo.getBirthDate().toString())
                 .schoolName(applicantInfo.getSchoolName())

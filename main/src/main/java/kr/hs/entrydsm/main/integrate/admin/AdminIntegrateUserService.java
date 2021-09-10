@@ -97,7 +97,6 @@ public class AdminIntegrateUserService implements UserRepository {
                 .receiptCode(user.getReceiptCode())
                 .examCode(user.getExamCode())
                 .name(user.getName())
-                .photoFileName(user.getPhotoFileName())
                 .email(user.getEmail())
                 .applicationType(String.valueOf(user.getApplicationType()))
                 .address(user.getAddress())
@@ -110,7 +109,6 @@ public class AdminIntegrateUserService implements UserRepository {
                 .parentTel(user.getParentTel())
                 .homeTel(user.getHomeTel())
                 .selfIntroduce(user.getSelfIntroduce())
-                .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
                 .educationalStatus(getEducationalStatus(user))
                 .build();

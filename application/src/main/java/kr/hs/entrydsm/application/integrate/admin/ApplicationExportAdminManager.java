@@ -49,4 +49,9 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
                 .build();
     }
 
+    @Override
+    public String getFileUrl(long receiptCode) {
+        return null;
+    }
+
 }

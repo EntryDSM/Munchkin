@@ -44,4 +44,9 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
                 .build();
     }
 
+    @Override
+    public String getPhotoUrl(long receiptCode) {
+        return applicationExportRepository.getFileUrl(receiptCode);
+    }
+
 }
