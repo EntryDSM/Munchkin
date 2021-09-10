@@ -39,8 +39,16 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
     public ExcelUserInfo getExcelUserInfo(long receiptCode) {
         MiddleSchoolInfo middleSchoolInfo = applicationExportRepository.getMiddleSchoolInfo(receiptCode);
 
+        if (middleSchoolInfo == null) {
+            return ExcelUserInfo.builder()
+                    .yearOfGraduation("")
+                    .middleSchool("")
+                    .middleSchoolStudentNumber("")
+                    .build();
+        }
+
         return ExcelUserInfo.builder()
-                .yearOfGraduation(middleSchoolInfo.getYearOfGraduation())
+                .yearOfGraduation(middleSchoolInfo.getYearOfGraduation().toString())
                 .middleSchool(middleSchoolInfo.getMiddleSchool())
                 .middleSchoolStudentNumber(middleSchoolInfo.getMiddleSchoolStudentNumber())
                 .build();
