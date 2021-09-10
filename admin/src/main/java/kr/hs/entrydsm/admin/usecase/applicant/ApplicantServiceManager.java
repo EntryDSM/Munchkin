@@ -90,7 +90,7 @@ public class ApplicantServiceManager implements ApplicantService {
     public ResponseEntity getDetailApplicantInfo(int receiptCode) {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
-		String fileUrl = null;
+		String fileUrl;
         try {
 			fileUrl = applicationRepository.getPhotoUrl(userInfo.getPhotoFileName());
 		} catch (MalformedURLException e) {

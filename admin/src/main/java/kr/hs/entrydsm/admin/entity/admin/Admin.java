@@ -1,7 +1,6 @@
 package kr.hs.entrydsm.admin.entity.admin;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
