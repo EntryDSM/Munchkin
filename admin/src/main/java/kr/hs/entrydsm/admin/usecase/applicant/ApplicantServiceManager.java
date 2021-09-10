@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+
+import java.net.MalformedURLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -87,7 +89,13 @@ public class ApplicantServiceManager implements ApplicantService {
     public ResponseEntity getDetailApplicantInfo(int receiptCode) {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
-        String fileUrl = applicationRepository.getPhotoUrl(userInfo.getPhotoFileName());
+		String fileUrl = null;
+        try {
+			fileUrl = applicationRepository.getPhotoUrl(userInfo.getPhotoFileName());
+		} catch (MalformedURLException e) {
+
+		}
+
 
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicantResponse notSubmitApplicant

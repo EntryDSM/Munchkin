@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
+import java.net.MalformedURLException;
+
 import kr.hs.entrydsm.admin.integrate.applicaton.ApplicationRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantInfo;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ExcelUserInfo;
@@ -45,7 +47,7 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
     }
 
     @Override
-    public String getPhotoUrl(String photoFileName) {
+    public String getPhotoUrl(String photoFileName) throws MalformedURLException {
         return applicationExportRepository.getFileUrl(photoFileName);
     }
 

@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.application.integrate.admin;
 
+import java.net.MalformedURLException;
+
 import kr.hs.entrydsm.application.ApplicationFactory;
 import kr.hs.entrydsm.application.entity.Applicant;
 import kr.hs.entrydsm.application.entity.Application;
@@ -11,8 +13,7 @@ import kr.hs.entrydsm.application.integrate.user.ApplicantStatusService;
 import kr.hs.entrydsm.application.usecase.dto.CalculatedScore;
 import kr.hs.entrydsm.application.usecase.dto.MiddleSchoolInfo;
 import kr.hs.entrydsm.application.usecase.dto.ReportCard;
-import kr.hs.entrydsm.application.usecase.exception.EducationalStatusNullException;
-import kr.hs.entrydsm.application.usecase.exception.ScoreNotFoundException;
+import kr.hs.entrydsm.application.usecase.image.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
     private final ApplicantStatusService applicantStatusService;
     private final GraduationApplicationRepository graduationApplicationRepository;
     private final ScoreCalculator scoreCalculator;
+    private final ImageService imageService;
 
     @Override
     public ReportCard getReportCard(long receiptCode) {
@@ -50,8 +52,8 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
     }
 
     @Override
-    public String getFileUrl(String photoFileName) {
-        return null;
+    public String getFileUrl(String photoFileName) throws MalformedURLException {
+        return imageService.generateObjectUrl(photoFileName);
     }
 
 }
