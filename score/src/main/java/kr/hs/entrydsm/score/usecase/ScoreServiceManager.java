@@ -37,6 +37,20 @@ public class ScoreServiceManager implements ScoreService {
     }
 
     @Override
+    public QueryGraduationResponse queryGraduationByReceiptCode(long receiptCode) {
+        GraduationCase graduationCase = graduationCaseRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(GradeNotFoundException::new);
+        return new QueryGraduationResponse(graduationCase);
+    }
+
+    @Override
+    public QueryQualificationExamResponse queryQualificationExamByReceiptCode(long receiptCode) {
+        QualificationExamCase qualificationExamCase = qualificationExamCaseRepository.findByReceiptCode(receiptCode)
+                .orElseThrow(GradeNotFoundException::new);
+        return new QueryQualificationExamResponse(qualificationExamCase);
+    }
+
+    @Override
     public Score updateGraduation(UpdateGraduationRequest request) {
         if (!currentScorer().isGraduated() && !currentScorer().isProspectiveGraduate()) {
             throw new ApplicationTypeUnmatchedException();

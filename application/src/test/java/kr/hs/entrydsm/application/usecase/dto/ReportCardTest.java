@@ -17,11 +17,6 @@ public class ReportCardTest {
             .isGraduated(false)
             .schoolName("대전하기중학교")
             .schoolTel("0420000000")
-            .volunteerTime(20)
-            .latenessCount(0)
-            .earlyLeaveCount(0)
-            .lectureAbsenceCount(0)
-            .dayAbsenceCount(0)
             .calculatedScore(
                     CalculatedScore.builder()
                             .receiptCode(1)
@@ -32,6 +27,11 @@ public class ReportCardTest {
                             .totalThirdBeforeScore(BigDecimal.TEN)
                             .totalThirdGradeScore(BigDecimal.TEN)
                             .totalScoreFirstRound(BigDecimal.TEN)
+                            .volunteerTime(20)
+                            .latenessCount(0)
+                            .earlyLeaveCount(0)
+                            .lectureAbsenceCount(0)
+                            .dayAbsenceCount(0)
                             .build()
             ).build();
 

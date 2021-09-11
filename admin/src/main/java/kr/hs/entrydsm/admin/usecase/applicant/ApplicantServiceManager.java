@@ -3,12 +3,15 @@ package kr.hs.entrydsm.admin.usecase.applicant;
 import kr.hs.entrydsm.admin.integrate.applicaton.ApplicationRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.*;
 import kr.hs.entrydsm.admin.integrate.user.UserRepository;
+import kr.hs.entrydsm.admin.usecase.exception.PathNotExistsException;
 import kr.hs.entrydsm.common.context.sender.ContentSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+
+import java.net.MalformedURLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -87,6 +90,12 @@ public class ApplicantServiceManager implements ApplicantService {
     public ResponseEntity getDetailApplicantInfo(int receiptCode) {
         UserInfo userInfo = userRepository.getUserInfo(receiptCode);
         ApplicantInfo applicantInfo = applicationRepository.getApplicantInfo(receiptCode);
+		String fileUrl;
+        try {
+			fileUrl = applicationRepository.getPhotoUrl(userInfo.getPhotoFileName());
+		} catch (MalformedURLException e) {
+            throw new PathNotExistsException();
+		}
 
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicantResponse notSubmitApplicant
@@ -106,7 +115,7 @@ public class ApplicantServiceManager implements ApplicantService {
                 .build();
 
         PersonalData personalData = PersonalData.builder()
-                .photoFileName(userInfo.getPhotoFileName())
+                .photoUrl(fileUrl)
                 .name(userInfo.getName())
                 .birthDate(userInfo.getBirthDate().toString())
                 .schoolName(applicantInfo.getSchoolName())
@@ -124,7 +133,7 @@ public class ApplicantServiceManager implements ApplicantService {
 
         Evaluation evaluation = Evaluation.builder()
                 .volunteerTime(applicantInfo.getVolunteerTime())
-                .conversionScore(applicantInfo.getAverageScore())
+                .conversionScore(applicantInfo.getConversionScore())
                 .dayAbsenceCount(applicantInfo.getDayAbsenceCount())
                 .lectureAbsenceCount(applicantInfo.getLectureAbsenceCount())
                 .earlyLeaveCount(applicantInfo.getEarlyLeaveCount())

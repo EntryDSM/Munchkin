@@ -1,5 +1,7 @@
 package kr.hs.entrydsm.main.integrate.admin;
 
+import java.net.MalformedURLException;
+
 import kr.hs.entrydsm.admin.integrate.applicaton.ApplicationRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantInfo;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ExcelUserInfo;
@@ -30,6 +32,7 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
                 .lectureAbsenceCount(reportCard.getLectureAbsenceCount())
                 .dayAbsenceCount(reportCard.getDayAbsenceCount())
                 .conversionScore(reportCard.getTotalScore())
+                .averageScore(reportCard.getAverageScore())
                 .build();
     }
 
@@ -37,11 +40,24 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
     public ExcelUserInfo getExcelUserInfo(long receiptCode) {
         MiddleSchoolInfo middleSchoolInfo = applicationExportRepository.getMiddleSchoolInfo(receiptCode);
 
+        if (middleSchoolInfo == null) {
+            return ExcelUserInfo.builder()
+                    .yearOfGraduation("")
+                    .middleSchool("")
+                    .middleSchoolStudentNumber("")
+                    .build();
+        }
+
         return ExcelUserInfo.builder()
-                .yearOfGraduation(middleSchoolInfo.getYearOfGraduation())
+                .yearOfGraduation(middleSchoolInfo.getYearOfGraduation().toString())
                 .middleSchool(middleSchoolInfo.getMiddleSchool())
                 .middleSchoolStudentNumber(middleSchoolInfo.getMiddleSchoolStudentNumber())
                 .build();
+    }
+
+    @Override
+    public String getPhotoUrl(String photoFileName) throws MalformedURLException {
+        return applicationExportRepository.getFileUrl(photoFileName);
     }
 
 }

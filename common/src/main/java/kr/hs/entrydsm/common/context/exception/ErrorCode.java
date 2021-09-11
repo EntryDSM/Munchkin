@@ -28,6 +28,7 @@ public enum ErrorCode {
     APPLICATION_PERIOD_NOT_OVER(400, "ADMIN400-0","The application period is not over"),
     ADMIN_NOT_FOUND(404, "ADMIN404-0","The account does not exist"),
     SCHEDULE_NOT_FOUND(404, "ADMIN404-2","The schedule does not exist"),
+    IMAGE_PATH_NOT_FOUND(404, "ADMIN404-3", "The user's image file could not be found."),
     ALREADY_EXIST_ADMIN_ID(409, "ADMIN409-0", "Already admin id exist"),
 
     FILE_IS_EMPTY(400, "APPLICATION400-0", "The file could not be found"),

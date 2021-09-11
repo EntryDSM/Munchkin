@@ -11,6 +11,8 @@ import kr.hs.entrydsm.score.usecase.dto.UpdateQualificationExamRequest;
 public interface ScoreService {
     QueryGraduationResponse queryGraduation();
     QueryQualificationExamResponse queryQualificationExam();
+    QueryGraduationResponse queryGraduationByReceiptCode(long receiptCode);
+    QueryQualificationExamResponse queryQualificationExamByReceiptCode(long receiptCode);
 
     Score updateGraduation(UpdateGraduationRequest request);
     Score updateQualificationExam(UpdateQualificationExamRequest request);

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ExcelUserInfo {
 
-    private Integer yearOfGraduation;
+    private String yearOfGraduation;
 
     private String middleSchoolStudentNumber;
 

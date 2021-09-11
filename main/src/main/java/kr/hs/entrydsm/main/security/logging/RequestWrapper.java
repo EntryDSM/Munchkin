@@ -79,8 +79,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 
     public String getParamsString() {
         StringBuilder params = new StringBuilder();
-        getParameterMap().forEach((key, value) -> params.append(key).append("=").append(value[0]));
+        getParameterMap().forEach((key, value) -> params.append(key).append("=").append(value[0]).append("&"));
         if (params.length() == 0) return "";
+		params.deleteCharAt(params.lastIndexOf("&"));
         return params.insert(0, "?").toString();
     }
 

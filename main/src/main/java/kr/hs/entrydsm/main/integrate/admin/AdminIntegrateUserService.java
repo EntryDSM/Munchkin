@@ -97,7 +97,6 @@ public class AdminIntegrateUserService implements UserRepository {
                 .receiptCode(user.getReceiptCode())
                 .examCode(user.getExamCode())
                 .name(user.getName())
-                .photoFileName(user.getPhotoFileName())
                 .email(user.getEmail())
                 .applicationType(String.valueOf(user.getApplicationType()))
                 .address(user.getAddress())

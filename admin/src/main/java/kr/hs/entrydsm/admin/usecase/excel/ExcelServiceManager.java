@@ -50,6 +50,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -150,11 +151,11 @@ public class ExcelServiceManager implements ExcelService {
 
     private void getApplicationInformation(HttpServletResponse response) throws IOException {
         ApplicantInformation applicantInformation = new ApplicantInformation();
-        applicantInformation.format();
         Sheet sheet = applicantInformation.getSheet();
+        applicantInformation.format();
         List<ExcelUser> excelApplicants = userRepository.findAllForExcel();
 
-        for(int i = 0; i < excelApplicants.size() ; i++) {
+        for(int i = 1; i < excelApplicants.size() ; i++) {
             ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i).getReceiptCode());
             ExcelUserInfo excelUserInfo = applicationRepository.getExcelUserInfo(excelApplicants.get(i).getReceiptCode());
 
@@ -178,7 +179,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(14).setCellValue(excelApplicants.get(i).getParentName());
             row.createCell(15).setCellValue(excelApplicants.get(i).getParentTel());
 
-            String[] koreanScore = excelUserScore.getKoreanGrade().split("");
+            String[] koreanScore = getSplitScores(excelUserScore.getKoreanGrade());
 
             row.createCell(16).setCellValue(koreanScore[0]);
             row.createCell(17).setCellValue(koreanScore[1]);
@@ -187,7 +188,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(20).setCellValue(koreanScore[4]);
             row.createCell(21).setCellValue(koreanScore[5]);
 
-            String[] socialScore = excelUserScore.getSocialGrade().split("");
+            String[] socialScore = getSplitScores(excelUserScore.getSocialGrade());
 
             row.createCell(22).setCellValue(socialScore[0]);
             row.createCell(23).setCellValue(socialScore[1]);
@@ -196,7 +197,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(26).setCellValue(socialScore[4]);
             row.createCell(27).setCellValue(socialScore[5]);
 
-            String[] historyScore = excelUserScore.getHistoryGrade().split("");
+            String[] historyScore = getSplitScores(excelUserScore.getHistoryGrade());
 
             row.createCell(28).setCellValue(historyScore[0]);
             row.createCell(29).setCellValue(historyScore[1]);
@@ -205,7 +206,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(32).setCellValue(historyScore[4]);
             row.createCell(33).setCellValue(historyScore[5]);
 
-            String[] mathScore = excelUserScore.getMathGrade().split("");
+            String[] mathScore = getSplitScores(excelUserScore.getMathGrade());
 
             row.createCell(34).setCellValue(mathScore[0]);
             row.createCell(35).setCellValue(mathScore[1]);
@@ -214,7 +215,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(38).setCellValue(mathScore[4]);
             row.createCell(39).setCellValue(mathScore[5]);
 
-            String[] scienceScore = excelUserScore.getScienceGrade().split("");
+            String[] scienceScore = getSplitScores(excelUserScore.getScienceGrade());
 
             row.createCell(40).setCellValue(scienceScore[0]);
             row.createCell(41).setCellValue(scienceScore[1]);
@@ -223,7 +224,7 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(44).setCellValue(scienceScore[4]);
             row.createCell(45).setCellValue(scienceScore[5]);
 
-            String[] techAndHomeScore = excelUserScore.getTechAndHomeGrade().split("");
+            String[] techAndHomeScore = getSplitScores(excelUserScore.getTechAndHomeGrade());
 
             row.createCell(46).setCellValue(techAndHomeScore[0]);
             row.createCell(47).setCellValue(techAndHomeScore[1]);
@@ -232,29 +233,29 @@ public class ExcelServiceManager implements ExcelService {
             row.createCell(50).setCellValue(techAndHomeScore[4]);
             row.createCell(51).setCellValue(techAndHomeScore[5]);
 
-            String[] englishScore = excelUserScore.getEnglishGrade().split("");
+            String[] englishScore = getSplitScores(excelUserScore.getEnglishGrade());
 
             row.createCell(52).setCellValue(englishScore[0]);
-            row.createCell(53).setCellValue(englishScore[0]);
-            row.createCell(54).setCellValue(englishScore[0]);
-            row.createCell(55).setCellValue(englishScore[0]);
-            row.createCell(56).setCellValue(englishScore[0]);
-            row.createCell(57).setCellValue(englishScore[0]);
+            row.createCell(53).setCellValue(englishScore[1]);
+            row.createCell(54).setCellValue(englishScore[2]);
+            row.createCell(55).setCellValue(englishScore[3]);
+            row.createCell(56).setCellValue(englishScore[4]);
+            row.createCell(57).setCellValue(englishScore[5]);
 
-            row.createCell(58).setCellValue(excelUserScore.getTotalFirstGradeScores().toString());
-            row.createCell(59).setCellValue(excelUserScore.getTotalSecondGradeScores().toString());
-            row.createCell(60).setCellValue(excelUserScore.getTotalThirdGradeScores().toString());
-            row.createCell(61).setCellValue(excelUserScore.getConversionScore().toString());
+            row.createCell(58).setCellValue(nullOrString(excelUserScore.getTotalFirstGradeScores().toString()));
+            row.createCell(59).setCellValue(nullOrString((excelUserScore.getTotalSecondGradeScores().toString())));
+            row.createCell(60).setCellValue(nullOrString(excelUserScore.getTotalThirdGradeScores().toString()));
+            row.createCell(61).setCellValue(nullOrString(excelUserScore.getConversionScore().toString()));
 
-            row.createCell(62).setCellValue(excelUserScore.getVolunteerTime());
-            row.createCell(63).setCellValue(excelUserScore.getVolunteerScore().toString());
+            row.createCell(62).setCellValue(nullOrString(excelUserScore.getVolunteerTime().toString()));
+            row.createCell(63).setCellValue(nullOrString((excelUserScore.getVolunteerScore().toString())));
 
-            row.createCell(64).setCellValue(excelUserScore.getDayAbsenceCount());
-            row.createCell(65).setCellValue(excelUserScore.getLatenessCount());
-            row.createCell(66).setCellValue(excelUserScore.getLectureAbsenceCount());
-            row.createCell(67).setCellValue(excelUserScore.getEarlyLeaveCount());
+            row.createCell(64).setCellValue(nullOrString(excelUserScore.getDayAbsenceCount().toString()));
+            row.createCell(65).setCellValue(nullOrString(excelUserScore.getLatenessCount().toString()));
+            row.createCell(66).setCellValue(nullOrString(excelUserScore.getLectureAbsenceCount().toString()));
+            row.createCell(67).setCellValue(nullOrString(excelUserScore.getEarlyLeaveCount().toString()));
 
-            row.createCell(68).setCellValue(excelUserScore.getAttendanceScore());
+            row.createCell(68).setCellValue(nullOrString(excelUserScore.getAttendanceScore().toString()));
 
             row.createCell(69).setCellValue(excelUserScore.getTotalScoreFirstRound().toString());
 
@@ -394,6 +395,18 @@ public class ExcelServiceManager implements ExcelService {
         List<RouteGuidanceResponse> map =
                 Arrays.asList(mapper.readValue(mapper.writeValueAsString(response.get("features")), RouteGuidanceResponse[].class));
         return map.get(0);
+    }
+
+    private String[] getSplitScores(String scores) {
+        if(scores.equals("")) {
+            return  Stream.of("", "", "", "", "", "").toArray(String[]::new);
+        } else {
+            return scores.split("");
+        }
+    }
+
+    private String nullOrString(String str) {
+        return str == null ? "" : str;
     }
 
 }

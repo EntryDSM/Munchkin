@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class PersonalData {
 
-    private String photoFileName;
+    private String photoUrl;
 
     private String name;
 

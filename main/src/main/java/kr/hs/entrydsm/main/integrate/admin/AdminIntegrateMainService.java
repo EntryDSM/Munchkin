@@ -2,7 +2,6 @@ package kr.hs.entrydsm.main.integrate.admin;
 
 import kr.hs.entrydsm.admin.infrastructure.database.ScheduleRepositoryManager;
 import kr.hs.entrydsm.admin.integrate.main.MainRepository;
-import kr.hs.entrydsm.application.infrastructure.database.ApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.GraduationApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.QualificationExamApplicationRepositoryManager;
 import kr.hs.entrydsm.application.infrastructure.database.SchoolRepositoryManager;
@@ -27,8 +26,6 @@ public class AdminIntegrateMainService implements MainRepository {
 
     private final ScoreRepositoryManager scoreRepositoryManager;
 
-    private final ApplicationRepositoryManager applicationRepositoryManager;
-
     private final GraduationApplicationRepositoryManager graduationApplicationRepositoryManager;
     private final GraduationCaseRepositoryManager graduationCaseRepositoryManager;
 
@@ -43,7 +40,6 @@ public class AdminIntegrateMainService implements MainRepository {
     @Transactional
     public void deleteAll() {
         scoreRepositoryManager.deleteAll();
-        schoolRepositoryManager.deleteAll();
         graduationCaseRepositoryManager.deleteAll();
         graduationApplicationRepositoryManager.deleteAll();
         qualificationExamCaseRepositoryManager.deleteAll();
