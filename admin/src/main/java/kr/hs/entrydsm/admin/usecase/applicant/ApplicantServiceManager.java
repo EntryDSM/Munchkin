@@ -97,7 +97,6 @@ public class ApplicantServiceManager implements ApplicantService {
             throw new PathNotExistsException();
 		}
 
-
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicantResponse notSubmitApplicant
                     = new NotSubmitApplicantResponse(NotSubmitApplicantDto.builder()

@@ -32,6 +32,7 @@ public class AdminIntegrateApplicationService implements ApplicationRepository {
                 .lectureAbsenceCount(reportCard.getLectureAbsenceCount())
                 .dayAbsenceCount(reportCard.getDayAbsenceCount())
                 .conversionScore(reportCard.getTotalScore())
+                .averageScore(reportCard.getAverageScore())
                 .build();
     }
 
