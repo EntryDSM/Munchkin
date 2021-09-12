@@ -55,7 +55,8 @@ public class JWTTokenProvider {
 
     public String resolveAccessToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(accessTokenHeader);
-        if (bearerToken != null && bearerToken.startsWith(prefix)) {
+        if (bearerToken != null && bearerToken.startsWith(prefix)
+		&& bearerToken.length() > prefix.length() + 1) {
             return bearerToken.substring(prefix.length() + 1);
         }
         return null;
