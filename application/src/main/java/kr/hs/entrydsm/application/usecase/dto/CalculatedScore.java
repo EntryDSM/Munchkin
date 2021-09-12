@@ -21,6 +21,12 @@ public class CalculatedScore {
     private Integer attendanceScore; //출석 점수
     private BigDecimal totalScoreFirstRound; //1차 전형 총점
 
+    private Integer volunteerTime;
+    private Integer dayAbsenceCount;
+    private Integer lectureAbsenceCount;
+    private Integer earlyLeaveCount;
+    private Integer latenessCount;
+
     public static CalculatedScore emptyScore(long receiptCode) {
         return CalculatedScore.builder()
                 .receiptCode(receiptCode)
@@ -31,6 +37,11 @@ public class CalculatedScore {
                 .conversionScore(null)
                 .attendanceScore(null)
                 .totalScoreFirstRound(null)
+                .volunteerScore(null)
+                .dayAbsenceCount(null)
+                .lectureAbsenceCount(null)
+                .earlyLeaveCount(null)
+                .latenessCount(null)
                 .build();
     }
 }

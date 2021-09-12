@@ -97,7 +97,6 @@ public class ApplicantServiceManager implements ApplicantService {
             throw new PathNotExistsException();
 		}
 
-
         if(!userInfo.getIsSubmit()) {
             NotSubmitApplicantResponse notSubmitApplicant
                     = new NotSubmitApplicantResponse(NotSubmitApplicantDto.builder()
@@ -134,7 +133,7 @@ public class ApplicantServiceManager implements ApplicantService {
 
         Evaluation evaluation = Evaluation.builder()
                 .volunteerTime(applicantInfo.getVolunteerTime())
-                .conversionScore(applicantInfo.getAverageScore())
+                .conversionScore(applicantInfo.getConversionScore())
                 .dayAbsenceCount(applicantInfo.getDayAbsenceCount())
                 .lectureAbsenceCount(applicantInfo.getLectureAbsenceCount())
                 .earlyLeaveCount(applicantInfo.getEarlyLeaveCount())

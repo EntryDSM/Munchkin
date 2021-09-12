@@ -32,12 +32,15 @@ public class ApplicationExportAdminManager implements ApplicationExportAdminRepo
     public ReportCard getReportCard(long receiptCode) {
         Applicant applicant = applicantRepository.findByReceiptCode(receiptCode);
         Application application = applicationFactory.saveAndGetApplicationFrom(applicant);
-
-        CalculatedScore calculatedScore = CalculatedScore.emptyScore(receiptCode);
-        if (applicantStatusService.isFinalSubmit(receiptCode))
-            calculatedScore = scoreCalculator.calculateScore(application);
-
+        CalculatedScore calculatedScore = getCalculatedScore(application);
         return ReportCard.from(application, calculatedScore);
+    }
+
+    private CalculatedScore getCalculatedScore(Application application) {
+        if (applicantStatusService.isFinalSubmit(application.getReceiptCode())) {
+            return scoreCalculator.calculateScore(application);
+        }
+        return CalculatedScore.emptyScore(application.getReceiptCode());
     }
 
     @Override

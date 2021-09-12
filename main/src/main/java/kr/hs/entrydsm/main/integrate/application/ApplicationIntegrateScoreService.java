@@ -8,6 +8,7 @@ import kr.hs.entrydsm.application.usecase.dto.*;
 import kr.hs.entrydsm.score.entity.Score;
 import kr.hs.entrydsm.score.integrate.application.ScoreExportApplicationRepository;
 import kr.hs.entrydsm.score.usecase.ScoreService;
+import kr.hs.entrydsm.score.usecase.dto.QueryGraduationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,7 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
 
     private CalculatedScore getGraduationScore(GraduationApplication application) {
         Score score = scoreService.findByReceiptCode(application.getReceiptCode());
+        QueryGraduationResponse graduationCase = scoreService.queryGraduationByReceiptCode(application.getReceiptCode());
 
         return CalculatedScore.builder()
                 .receiptCode(application.getReceiptCode())
@@ -59,6 +61,11 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
                 .totalThirdBeforeScore(score.getThirdBeforeScore())
                 .totalThirdGradeScore(score.getThirdGradeScore())
                 .totalScoreFirstRound(score.getTotalScore())
+                .volunteerTime(graduationCase.getVolunteerTime())
+                .dayAbsenceCount(graduationCase.getDayAbsenceCount())
+                .lectureAbsenceCount(graduationCase.getLectureAbsenceCount())
+                .earlyLeaveCount(graduationCase.getEarlyLeaveCount())
+                .latenessCount(graduationCase.getLatenessCount())
                 .build();
     }
 
@@ -74,6 +81,11 @@ public class ApplicationIntegrateScoreService implements ScoreCalculator {
                 .totalThirdBeforeScore(null)
                 .totalThirdGradeScore(null)
                 .totalScoreFirstRound(score.getTotalScore())
+                .volunteerTime(null)
+                .dayAbsenceCount(null)
+                .lectureAbsenceCount(null)
+                .earlyLeaveCount(null)
+                .latenessCount(null)
                 .build();
     }
 

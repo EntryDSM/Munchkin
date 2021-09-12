@@ -17,27 +17,16 @@ public class ReportCard {
     private final Boolean isGraduated;
     private final String schoolName;
     private final String schoolTel;
-    private final Integer volunteerTime;
-    private final Integer latenessCount;
-    private final Integer earlyLeaveCount;
-    private final Integer lectureAbsenceCount;
-    private final Integer dayAbsenceCount;
 
     private final BigDecimal averageScore;
 
     @Builder(builderMethodName = "graduationBuilder", builderClassName = "GraduationBuilder")
-    public ReportCard(long receiptCode, CalculatedScore calculatedScore, boolean isGraduated, String schoolName, String schoolTel,
-                      int volunteerTime, int latenessCount, int earlyLeaveCount, int lectureAbsenceCount, int dayAbsenceCount) {
+    public ReportCard(long receiptCode, CalculatedScore calculatedScore, boolean isGraduated, String schoolName, String schoolTel) {
         this.receiptCode = receiptCode;
         this.calculatedScore = calculatedScore;
         this.isGraduated = isGraduated;
         this.schoolName = schoolName;
         this.schoolTel = schoolTel;
-        this.volunteerTime = volunteerTime;
-        this.latenessCount = latenessCount;
-        this.earlyLeaveCount = earlyLeaveCount;
-        this.lectureAbsenceCount = lectureAbsenceCount;
-        this.dayAbsenceCount = dayAbsenceCount;
         this.averageScore = null;
     }
 
@@ -49,11 +38,6 @@ public class ReportCard {
         this.isGraduated = null;
         this.schoolName = null;
         this.schoolTel = null;
-        this.volunteerTime = null;
-        this.latenessCount = null;
-        this.earlyLeaveCount = null;
-        this.lectureAbsenceCount = null;
-        this.dayAbsenceCount = null;
     }
 
     public static ReportCard from(Application application, CalculatedScore calculatedScore) {
@@ -87,6 +71,26 @@ public class ReportCard {
 
     public BigDecimal getGradeScore() {
         return calculatedScore.getConversionScore();
+    }
+
+    public Integer getVolunteerTime() {
+        return calculatedScore.getVolunteerTime();
+    }
+
+    public Integer getDayAbsenceCount() {
+        return calculatedScore.getDayAbsenceCount();
+    }
+
+    public Integer getLectureAbsenceCount() {
+        return calculatedScore.getLectureAbsenceCount();
+    }
+
+    public Integer getEarlyLeaveCount() {
+        return calculatedScore.getEarlyLeaveCount();
+    }
+
+    public Integer getLatenessCount() {
+        return calculatedScore.getLatenessCount();
     }
 
     public int getAttendanceScore() {
