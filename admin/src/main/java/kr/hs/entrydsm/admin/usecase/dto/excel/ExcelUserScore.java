@@ -27,9 +27,9 @@ public class ExcelUserScore {
 
     private String techAndHomeGrade;
 
-    private BigDecimal totalFirstGradeScores;
+    private BigDecimal morePreviousSemesterScores;
 
-    private BigDecimal totalSecondGradeScores;
+    private BigDecimal previousSemesterScores;
 
     private BigDecimal totalThirdGradeScores;
 
