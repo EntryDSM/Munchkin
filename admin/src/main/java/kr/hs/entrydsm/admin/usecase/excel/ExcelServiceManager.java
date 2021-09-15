@@ -181,52 +181,52 @@ public class ExcelServiceManager implements ExcelService {
 
             String[] koreanScore = getSplitScores(excelUserScore.getKoreanGrade());
 
-            row.createCell(16).setCellValue(koreanScore[0]);
-            row.createCell(17).setCellValue(koreanScore[1]);
-            row.createCell(18).setCellValue(koreanScore[2]);
-            row.createCell(19).setCellValue(koreanScore[3]);
+            row.createCell(16).setCellValue(koreanScore[2]);
+            row.createCell(17).setCellValue(koreanScore[3]);
+            row.createCell(18).setCellValue(koreanScore[4]);
+            row.createCell(19).setCellValue(koreanScore[5]);
 
             String[] socialScore = getSplitScores(excelUserScore.getSocialGrade());
 
-            row.createCell(20).setCellValue(socialScore[0]);
-            row.createCell(21).setCellValue(socialScore[1]);
-            row.createCell(22).setCellValue(socialScore[2]);
-            row.createCell(23).setCellValue(socialScore[3]);
+            row.createCell(20).setCellValue(socialScore[2]);
+            row.createCell(21).setCellValue(socialScore[3]);
+            row.createCell(22).setCellValue(socialScore[4]);
+            row.createCell(23).setCellValue(socialScore[5]);
 
             String[] historyScore = getSplitScores(excelUserScore.getHistoryGrade());
 
-            row.createCell(24).setCellValue(historyScore[0]);
-            row.createCell(25).setCellValue(historyScore[1]);
-            row.createCell(26).setCellValue(historyScore[2]);
-            row.createCell(27).setCellValue(historyScore[3]);
+            row.createCell(24).setCellValue(historyScore[2]);
+            row.createCell(25).setCellValue(historyScore[3]);
+            row.createCell(26).setCellValue(historyScore[4]);
+            row.createCell(27).setCellValue(historyScore[5]);
 
             String[] mathScore = getSplitScores(excelUserScore.getMathGrade());
 
-            row.createCell(28).setCellValue(mathScore[0]);
-            row.createCell(29).setCellValue(mathScore[1]);
-            row.createCell(30).setCellValue(mathScore[2]);
-            row.createCell(31).setCellValue(mathScore[3]);
+            row.createCell(28).setCellValue(mathScore[2]);
+            row.createCell(29).setCellValue(mathScore[3]);
+            row.createCell(30).setCellValue(mathScore[4]);
+            row.createCell(31).setCellValue(mathScore[5]);
 
             String[] scienceScore = getSplitScores(excelUserScore.getScienceGrade());
 
-            row.createCell(32).setCellValue(scienceScore[0]);
-            row.createCell(33).setCellValue(scienceScore[1]);
-            row.createCell(34).setCellValue(scienceScore[2]);
-            row.createCell(35).setCellValue(scienceScore[3]);
+            row.createCell(32).setCellValue(scienceScore[2]);
+            row.createCell(33).setCellValue(scienceScore[3]);
+            row.createCell(34).setCellValue(scienceScore[4]);
+            row.createCell(35).setCellValue(scienceScore[5]);
 
             String[] techAndHomeScore = getSplitScores(excelUserScore.getTechAndHomeGrade());
 
-            row.createCell(36).setCellValue(techAndHomeScore[0]);
-            row.createCell(37).setCellValue(techAndHomeScore[1]);
-            row.createCell(38).setCellValue(techAndHomeScore[2]);
-            row.createCell(39).setCellValue(techAndHomeScore[3]);
+            row.createCell(36).setCellValue(techAndHomeScore[2]);
+            row.createCell(37).setCellValue(techAndHomeScore[3]);
+            row.createCell(38).setCellValue(techAndHomeScore[4]);
+            row.createCell(39).setCellValue(techAndHomeScore[5]);
 
             String[] englishScore = getSplitScores(excelUserScore.getEnglishGrade());
 
-            row.createCell(40).setCellValue(englishScore[0]);
-            row.createCell(41).setCellValue(englishScore[1]);
-            row.createCell(42).setCellValue(englishScore[2]);
-            row.createCell(43).setCellValue(englishScore[3]);
+            row.createCell(40).setCellValue(englishScore[2]);
+            row.createCell(41).setCellValue(englishScore[3]);
+            row.createCell(42).setCellValue(englishScore[4]);
+            row.createCell(43).setCellValue(englishScore[5]);
 
             row.createCell(44).setCellValue(nullOrString(excelUserScore.getMorePreviousSemesterScores().toString()));
             row.createCell(45).setCellValue(nullOrString((excelUserScore.getPreviousSemesterScores().toString())));
@@ -384,7 +384,7 @@ public class ExcelServiceManager implements ExcelService {
 
     private String[] getSplitScores(String scores) {
         if(scores.equals("")) {
-            return  Stream.of("", "", "", "").toArray(String[]::new);
+            return  Stream.of("", "", "", "", "", "").toArray(String[]::new);
         } else {
             return scores.split("");
         }
