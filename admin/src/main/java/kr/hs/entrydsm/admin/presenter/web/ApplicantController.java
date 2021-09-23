@@ -51,8 +51,8 @@ public class ApplicantController {
                                             @RequestParam(name = "is_common") boolean isCommon,
                                             @RequestParam(name = "is_meister") boolean isMeister,
                                             @RequestParam(name = "is_social") boolean isSocial,
-                                            @RequestParam(name = "is_in") boolean inOfHeadcount,
-                                            @RequestParam(name = "is_out") boolean outOfHeadcount,
+                                            @RequestParam(name = "is_in", defaultValue = "false") boolean inOfHeadcount,
+                                            @RequestParam(name = "is_out", defaultValue = "false") boolean outOfHeadcount,
                                             @RequestParam(name = "is_printed_arrived", defaultValue = "") @Nullable Boolean isPrintedArrived) {
         return applicantService.getApplicants(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, inOfHeadcount, outOfHeadcount, isPrintedArrived);
     }

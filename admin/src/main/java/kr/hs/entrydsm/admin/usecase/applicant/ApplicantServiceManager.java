@@ -67,11 +67,6 @@ public class ApplicantServiceManager implements ApplicantService {
             isSocial = true;
         }
 
-        if (!inOfHeadcount && !outOfHeadcount) {
-            inOfHeadcount = true;
-            outOfHeadcount = true;
-        }
-
         Page<ApplicantsInformationResponse> applicants = userRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, inOfHeadcount, outOfHeadcount, isPrintedArrived);
 
         return  ApplicantsResponse.builder()
