@@ -29,8 +29,9 @@ public class AdminIntegrateUserService implements UserRepository {
                                                        boolean isDaejeon, boolean isNationwide,
                                                        String telephoneNumber, String name,
                                                        boolean isCommon, boolean isMeister, boolean isSocial,
+                                                       boolean inOfHeadcount, boolean outOfHeadcount,
                                                        Boolean isPrintedArrived) {
-        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
+        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, inOfHeadcount, outOfHeadcount, isPrintedArrived);
         long totalElements = users.getTotalElements();
         List<ApplicantsInformationResponse> applicants = new ArrayList<>();
         for (User user : users) {
