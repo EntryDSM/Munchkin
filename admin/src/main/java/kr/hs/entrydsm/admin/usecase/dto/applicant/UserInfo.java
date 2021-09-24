@@ -53,4 +53,8 @@ public class UserInfo {
 
     private Double distance;
 
+    private String applicationRemark;
+
+    private String headcount;
+
 }

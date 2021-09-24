@@ -44,7 +44,6 @@ public class AdminIntegrateUserService implements UserRepository {
                             .applicationType(String.valueOf(user.getApplicationType()))
                             .isPrintedArrived(user.getStatus().isPrintedArrived())
                             .isSubmit(user.getStatus().getIsSubmit())
-                            .headcount(user.getHeadcount() == null ? null : user.getHeadcount().toString())
                             .build()
             );
         }
@@ -114,6 +113,8 @@ public class AdminIntegrateUserService implements UserRepository {
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
                 .educationalStatus(getEducationalStatus(user))
+                .applicationRemark(user.getApplicationRemark() == null ? null : user.getApplicationRemark().toString())
+                .headcount(user.getHeadcount() == null ? null : user.getHeadcount().toString())
                 .build();
     }
 

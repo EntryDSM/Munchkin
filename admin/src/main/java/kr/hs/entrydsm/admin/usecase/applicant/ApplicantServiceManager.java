@@ -82,7 +82,6 @@ public class ApplicantServiceManager implements ApplicantService {
                                         .applicationType(applicant.getApplicationType())
                                         .isPrintedArrived(applicant.getIsPrintedArrived())
                                         .isSubmit(applicant.getIsSubmit())
-                                        .headcount(applicant.getHeadcount())
                                         .build()
                         ).collect(Collectors.toList()))
                 .build();
@@ -131,6 +130,9 @@ public class ApplicantServiceManager implements ApplicantService {
                 .parentTel(userInfo.getParentTel())
                 .schoolTel(applicantInfo.getSchoolTel())
                 .homeTel(userInfo.getHomeTel())
+                .applicationRemark(userInfo.getApplicationType())
+                .applicationRemark(userInfo.getApplicationRemark())
+                .headcount(userInfo.getHeadcount())
                 .build();
 
         Evaluation evaluation = Evaluation.builder()
