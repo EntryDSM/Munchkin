@@ -25,4 +25,6 @@ public class ApplicantsInformationResponse {
 
     private Boolean isSubmit;
 
+    private String headcount;
+
 }
