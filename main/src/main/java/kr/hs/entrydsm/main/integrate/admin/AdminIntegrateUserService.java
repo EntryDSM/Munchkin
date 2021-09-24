@@ -44,7 +44,7 @@ public class AdminIntegrateUserService implements UserRepository {
                             .applicationType(String.valueOf(user.getApplicationType()))
                             .isPrintedArrived(user.getStatus().isPrintedArrived())
                             .isSubmit(user.getStatus().getIsSubmit())
-                            .headcount(user.getHeadcount().toString())
+                            .headcount(user.getHeadcount() == null ? null : user.getHeadcount().toString())
                             .build()
             );
         }
