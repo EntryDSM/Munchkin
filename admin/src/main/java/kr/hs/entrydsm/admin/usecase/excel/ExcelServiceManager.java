@@ -91,7 +91,7 @@ public class ExcelServiceManager implements ExcelService {
 
         List<Long> applicantReceiptCodes = userRepository.findAllReceiptCodeIsFirstRoundPassTrue();
 
-        LocalDate now = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         Schedule endDate = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.END_DATE)
                 .orElseThrow(ScheduleNotFoundException::new);
         if(now.isBefore(endDate.getDate())) {
