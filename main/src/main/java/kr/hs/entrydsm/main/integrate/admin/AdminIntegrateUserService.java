@@ -29,8 +29,9 @@ public class AdminIntegrateUserService implements UserRepository {
                                                        boolean isDaejeon, boolean isNationwide,
                                                        String telephoneNumber, String name,
                                                        boolean isCommon, boolean isMeister, boolean isSocial,
+                                                       boolean inOfHeadcount, boolean outOfHeadcount,
                                                        Boolean isPrintedArrived) {
-        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
+        Page<User> users = userExportRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, inOfHeadcount, outOfHeadcount, isPrintedArrived);
         long totalElements = users.getTotalElements();
         List<ApplicantsInformationResponse> applicants = new ArrayList<>();
         for (User user : users) {
@@ -112,6 +113,8 @@ public class AdminIntegrateUserService implements UserRepository {
                 .photoFileName(user.getPhotoFileName())
                 .studyPlan(user.getStudyPlan())
                 .educationalStatus(getEducationalStatus(user))
+                .applicationRemark(user.getApplicationRemark() == null ? null : user.getApplicationRemark().toString())
+                .headcount(user.getHeadcount() == null ? null : user.getHeadcount().toString())
                 .build();
     }
 

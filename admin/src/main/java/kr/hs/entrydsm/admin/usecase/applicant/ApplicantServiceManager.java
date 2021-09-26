@@ -55,6 +55,7 @@ public class ApplicantServiceManager implements ApplicantService {
                                             boolean isDaejeon, boolean isNationwide,
                                             String telephoneNumber, String name,
                                             boolean isCommon, boolean isMeister, boolean isSocial,
+                                            boolean inOfHeadcount, boolean outOfHeadcount,
                                             Boolean isPrintedArrived) {
         if(!isDaejeon && !isNationwide) {
             isDaejeon = true;
@@ -66,7 +67,7 @@ public class ApplicantServiceManager implements ApplicantService {
             isSocial = true;
         }
 
-        Page<ApplicantsInformationResponse> applicants = userRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, isPrintedArrived);
+        Page<ApplicantsInformationResponse> applicants = userRepository.findAll(page, receiptCode, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, inOfHeadcount, outOfHeadcount, isPrintedArrived);
 
         return  ApplicantsResponse.builder()
                 .totalElements(applicants.getTotalElements())
@@ -129,6 +130,9 @@ public class ApplicantServiceManager implements ApplicantService {
                 .parentTel(userInfo.getParentTel())
                 .schoolTel(applicantInfo.getSchoolTel())
                 .homeTel(userInfo.getHomeTel())
+                .applicationRemark(userInfo.getApplicationType())
+                .applicationRemark(userInfo.getApplicationRemark())
+                .headcount(userInfo.getHeadcount())
                 .build();
 
         Evaluation evaluation = Evaluation.builder()

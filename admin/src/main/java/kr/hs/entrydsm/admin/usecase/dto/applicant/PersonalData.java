@@ -42,4 +42,8 @@ public class PersonalData {
 
     private String homeTel;
 
+    private String applicationRemark;
+
+    private String headcount;
+
 }

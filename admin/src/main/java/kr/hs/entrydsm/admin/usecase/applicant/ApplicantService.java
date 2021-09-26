@@ -11,6 +11,7 @@ public interface ApplicantService {
                                      boolean isDaejeon, boolean isNationwide,
                                      String telephoneNumber, String name,
                                      boolean isCommon, boolean isMeister, boolean isSocial,
+                                     boolean inOfHeadcount, boolean outOfHeadcount,
                                      Boolean isPrintedArrived);
     ResponseEntity getDetailApplicantInfo(int receiptCode);
 }
