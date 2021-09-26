@@ -228,7 +228,7 @@ public class ApplicationManager implements ApplicationService {
     @Override
     public void finalSubmit() {
         Applicant applicant = applicantRepository.findByReceiptCode(AuthenticationManager.getUserReceiptCode());
-        if (!checkType(applicant) || !checkInfo(applicant) || !checkScore(applicant)) {
+        if (!checkType(applicant) || !checkInfo(applicant) || !checkScore(applicant) || !checkPhoto(applicant)) {
             throw new ProcessNotCompletedException();
         }
         applicantStatusService.finalSubmit(applicant.getReceiptCode());
@@ -280,6 +280,10 @@ public class ApplicationManager implements ApplicationService {
         if (!checkType(applicant)) return false;
         return scoreCalculator.isExists(applicant.getReceiptCode());
     }
+
+    private boolean checkPhoto(Applicant applicant) {
+		return applicant.getPhotoFileName() != null;
+	}
 
     //    @Override
 //    public void updateSubjectScore(SubjectScoreRequest score) {
