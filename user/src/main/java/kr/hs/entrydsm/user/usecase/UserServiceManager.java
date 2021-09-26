@@ -183,14 +183,6 @@ public class UserServiceManager implements UserAuthService, UserService {
                 .orElseThrow(InvalidAuthCodeException::new);
     }
 
-    @Override
-    public void submitFinally() {
-        long receiptCode = AuthenticationManager.getUserReceiptCode();
-        userRepository.findByReceiptCode(receiptCode)
-                .map(User::submitFinally)
-                .ifPresent(userRepository::save);
-    }
-
     private AccessTokenResponse getAccessToken(long receiptCode) {
         String accessToken = tokenProvider.generateAccessToken(receiptCode);
         String refreshToken = tokenProvider.generateRefreshToken(receiptCode);
