@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -75,7 +76,7 @@ public class AdminServiceManager implements AdminService {
 
     @Override
     public void deleteAllTables() {
-        LocalDate now = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         Schedule secondAnnouncement = scheduleRepository.findByYearAndType(String.valueOf(now.getYear()), Type.SECOND_ANNOUNCEMENT)
                 .orElseThrow(ScheduleNotFoundException::new);
         if(now.isBefore(secondAnnouncement.getDate())) {
