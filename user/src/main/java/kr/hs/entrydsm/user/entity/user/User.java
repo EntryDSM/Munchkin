@@ -158,11 +158,6 @@ public class User {
         }
     }
 
-    public User submitFinally() {
-        this.status.setSubmitStatus(true);
-        return this;
-    }
-
     public void setSubmitFalse() {
         this.status.setSubmitStatus(false);
     }
