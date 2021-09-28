@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class ScheduleServiceManager implements ScheduleService {
             String year = schedule.getDate().substring(0, 4);
             Schedule updateSchedule = scheduleRepository.findByYearAndType(year, Type.valueOf(schedule.getType().toString()))
                     .orElseThrow(ScheduleNotFoundException::new);
-            updateSchedule.update(year, parseLocalDate(schedule.getDate()));
+            updateSchedule.update(year, parseLocalDateTime(schedule.getType(), schedule.getDate()));
             scheduleRepositoryManager.save(updateSchedule);
         }
     }
@@ -51,13 +52,13 @@ public class ScheduleServiceManager implements ScheduleService {
                 .build();
     }
 
-    private LocalDate parseLocalDate(String date) {
+    private LocalDateTime parseLocalDateTime(Type type, String date) {
         String[] day = date.split("-");
-        return LocalDate.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]));
+        return LocalDateTime.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]), 0, 0);
     }
 
     private String getCurrentStatus() {
-        LocalDate now = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         String year = String.valueOf(now.getYear());
 
         Schedule startDate = scheduleRepository.findByYearAndType(year, Type.START_DATE)
@@ -98,7 +99,7 @@ public class ScheduleServiceManager implements ScheduleService {
             scheduleRepository.save(Schedule.builder()
                     .year(String.valueOf(LocalDate.now().getYear()))
                     .type(Type.valueOf(type))
-                    .date(LocalDate.now())
+                    .date(LocalDateTime.now())
                     .build());
         }
     }

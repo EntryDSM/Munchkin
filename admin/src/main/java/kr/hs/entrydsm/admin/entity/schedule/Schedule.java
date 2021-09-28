@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -25,9 +25,9 @@ public class Schedule {
     private Type type;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
-    public void update(String year, LocalDate date) {
+    public void update(String year, LocalDateTime date) {
         this.year = year;
         this.date = date;
     }
