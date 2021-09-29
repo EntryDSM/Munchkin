@@ -25,10 +25,4 @@ public class MunchkinExceptionHandler {
 //				HttpStatus.valueOf(500));
 //	}
 
-	@ExceptionHandler(SizeLimitExceededException.class)
-	protected ResponseEntity<ErrorResponse> handleSizeLimitExceededException(SizeLimitExceededException e) {
-    	return new ResponseEntity<>(new ErrorResponse(400, "APPLICATION400-5", "File size too big."),
-				HttpStatus.BAD_REQUEST);
-	}
-
 }
