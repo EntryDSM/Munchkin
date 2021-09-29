@@ -43,3 +43,4 @@ munchkin:
     size: 10 # 10mb
   font:
     path: ${FONT_PATH:/fonts}
+  year: ${YEAR:2021}
