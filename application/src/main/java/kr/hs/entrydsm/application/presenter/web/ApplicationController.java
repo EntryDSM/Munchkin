@@ -2,6 +2,7 @@ package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.ApplicationService;
 import kr.hs.entrydsm.application.usecase.dto.application.request.UpdateDocsRequest;
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @Published
 @JWTRequired
+@ScheduleInRequired
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application")

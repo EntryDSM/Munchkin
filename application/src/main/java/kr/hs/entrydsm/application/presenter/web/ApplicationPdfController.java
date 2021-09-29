@@ -1,6 +1,7 @@
 package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.usecase.pdf.ApplicationPdfService;
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ApplicationPdfController {
     private final static String FILE_NAME = "대덕소프트웨어마이스터고등학교_입학원서";
     private final ApplicationPdfService applicationPdfService;
 
+    @ScheduleInRequired
     @GetMapping(value = "/preview", produces = MediaType.APPLICATION_PDF_VALUE)
     public byte[] getPreviewApplicationPdf() {
         return applicationPdfService.getPreviewApplicationPdf();

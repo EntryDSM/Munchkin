@@ -7,6 +7,7 @@ import kr.hs.entrydsm.application.usecase.dto.application.request.GraduatedInfor
 import kr.hs.entrydsm.application.usecase.dto.application.response.ApplicationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.GraduatedInformationResponse;
 import kr.hs.entrydsm.application.usecase.dto.application.response.InformationResponse;
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import javax.validation.Valid;
 
 @Published
 @JWTRequired
+@ScheduleInRequired
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/application/users")

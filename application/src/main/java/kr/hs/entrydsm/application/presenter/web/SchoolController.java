@@ -2,6 +2,7 @@ package kr.hs.entrydsm.application.presenter.web;
 
 import kr.hs.entrydsm.application.entity.School;
 import kr.hs.entrydsm.application.entity.SchoolRepository;
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotBlank;
 @RestController
 @RequiredArgsConstructor
 @JWTRequired
+@ScheduleInRequired
 @RequestMapping("/application")
 public class SchoolController {
 
