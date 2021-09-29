@@ -1,7 +1,13 @@
 package kr.hs.entrydsm.main.security.handler;
 
+import java.time.LocalDateTime;
+
 import kr.hs.entrydsm.admin.entity.admin.Admin;
+import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
+import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.infrastructure.database.AdminRepositoryManager;
+import kr.hs.entrydsm.admin.usecase.exception.ScheduleNotFoundException;
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTTokenProvider;
@@ -13,6 +19,8 @@ import kr.hs.entrydsm.main.security.auth.UserAuthentication;
 import kr.hs.entrydsm.user.entity.user.User;
 import kr.hs.entrydsm.user.infrastructure.database.UserRepositoryManager;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +38,10 @@ public class JWTTokenHandler implements HandlerInterceptor {
     private final JWTTokenProvider tokenProvider;
     private final UserRepositoryManager userRepositoryManager;
     private final AdminRepositoryManager adminRepositoryManager;
+    private final ScheduleRepository scheduleRepository;
+
+    @Value("${munchkin.year}")
+	private String year;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -41,6 +53,17 @@ public class JWTTokenHandler implements HandlerInterceptor {
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Class<?> handlerClass = handlerMethod.getBeanType();
+
+        if(handlerMethod.hasMethodAnnotation(ScheduleInRequired.class) ||
+				handlerClass.getDeclaredAnnotation(ScheduleInRequired.class) != null) {
+        	if( !scheduleRepository.findByYearAndType(year, Type.START_DATE)
+					.orElseThrow(ScheduleNotFoundException::new)
+					.getDate().isBefore(LocalDateTime.now()) |
+				!scheduleRepository.findByYearAndType(year, Type.END_DATE)
+					.orElseThrow(ScheduleNotFoundException::new)
+					.getDate().isAfter(LocalDateTime.now()))
+        		throw new MunchkinException(ErrorCode.INVALID_DATE);
+		}
 
         boolean jwtRequired = false;
         if (handlerMethod.hasMethodAnnotation(JWTRequired.class) || handlerClass.getDeclaredAnnotation(JWTRequired.class) != null) {
