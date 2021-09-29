@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.score.presenter.web;
 
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.score.usecase.ScoreService;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Published
 @JWTRequired
+@ScheduleInRequired
 @RestController
 @RequestMapping("/score")
 public class ScoreController {
