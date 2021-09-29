@@ -29,6 +29,7 @@ public class ApplicationPdfController {
         return applicationPdfService.getPreviewApplicationPdf();
     }
 
+    @ScheduleInRequired
     @GetMapping(value = "/final", produces = MediaType.APPLICATION_PDF_VALUE)
     public byte[] getFinalApplicationPdf(HttpServletResponse response) {
         response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s.pdf\"", encodeFileName(FILE_NAME)));
