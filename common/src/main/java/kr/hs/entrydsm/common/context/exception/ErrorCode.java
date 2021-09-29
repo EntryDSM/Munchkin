@@ -8,7 +8,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ErrorCode {
-    INVALID_TOKEN(401, "COMMON401-0", "Invalid Token"),
+	INVALID_DATE(400, "COMMON400-0", "Date was invalid"),
+	INVALID_TOKEN(401, "COMMON401-0", "Invalid Token"),
     UNAUTHENTICATED(401, "COMMON401-1", "UnAuthenticated"),
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
 
