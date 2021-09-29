@@ -19,10 +19,10 @@ public class MunchkinExceptionHandler {
                 HttpStatus.valueOf(errorCode.getStatus()));
     }
 
-//    @ExceptionHandler(RuntimeException.class)
-//	protected ResponseEntity<ErrorResponse> handleRuntimeException(final RuntimeException e) {
-//		return new ResponseEntity<>(new ErrorResponse(500, "Internal Server Error", Arrays.toString(e.getStackTrace())),
-//				HttpStatus.valueOf(500));
-//	}
+    @ExceptionHandler(RuntimeException.class)
+	protected ResponseEntity<ErrorResponse> handleRuntimeException(final RuntimeException e) {
+		return new ResponseEntity<>(new ErrorResponse(500, "Internal Server Error", Arrays.toString(e.getStackTrace())),
+				HttpStatus.valueOf(500));
+	}
 
 }
