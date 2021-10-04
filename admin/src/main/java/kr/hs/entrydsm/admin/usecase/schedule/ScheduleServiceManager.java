@@ -54,11 +54,10 @@ public class ScheduleServiceManager implements ScheduleService {
 
     private LocalDateTime parseLocalDateTime(Type type, String date) {
         String[] day = date.split("-");
-        if(type.equals(Type.START_DATE))
-        	return LocalDateTime.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]), 8, 0);
-        else if(type.equals(Type.END_DATE))
-        	return LocalDateTime.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]), 17, 0);
-        return LocalDateTime.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]), 0, 0);
+        int hour = 0;
+        if(type.equals(Type.START_DATE)) hour = 8;
+        else if(type.equals(Type.END_DATE)) hour = 17;
+        return LocalDateTime.of(Integer.parseInt(day[0]), Integer.parseInt(day[1]), Integer.parseInt(day[2]), hour, 0);
     }
 
     private String getCurrentStatus() {

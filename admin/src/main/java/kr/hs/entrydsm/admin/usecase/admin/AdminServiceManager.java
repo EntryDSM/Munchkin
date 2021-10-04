@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -46,24 +45,18 @@ public class AdminServiceManager implements AdminService {
         SpecialScoreResponse socialScore = new SpecialScoreResponse();
 
         for(BigDecimal scoreDecimal : applicationStatus.getCommonScores()) {
-            double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            commonScore.addScore(Math.round(score));
+            commonScore.addScore(Math.round(scoreDecimal.doubleValue()));
         }
-
         for(BigDecimal scoreDecimal : applicationStatus.getMeisterScores()) {
-            double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            meisterScore.addScore(Math.round(score));
+            meisterScore.addScore(Math.round(scoreDecimal.doubleValue()));
         }
-
         for(BigDecimal scoreDecimal : applicationStatus.getSpecialScores()) {
-            double score = Double.parseDouble(String.valueOf(scoreDecimal));
-            meisterScore.addScore(Math.round(score));
+            meisterScore.addScore(Math.round(scoreDecimal.doubleValue()));
         }
 
         commonScore.updateCountAndRate(commonCount, Double.parseDouble(String.format("%.2f", commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)));
         meisterScore.updateCountAndRate(meisterCount, Double.parseDouble(String.format("%.2f",meisterCount/MEISTER_ADMISSION_NUMBER_OF_RECRUITMENT)));
         socialScore.updateCountAndRate(socialCount, Double.parseDouble(String.format("%.2f",socialCount/SOCIAL_ADMISSION_NUMBER_OF_RECRUITMENT)));
-
 
         return ReceiptStatusResponse.builder()
                 .totalApplicantCount(totalApplicantCount)
