@@ -71,7 +71,7 @@ public class UserServiceManager implements UserAuthService, UserService {
     @Override
     public AccessTokenResponse refreshToken(String refreshToken) {
         if (tokenProvider.validateToken(refreshToken) && tokenProvider.isRefreshToken(refreshToken)) {
-            return refreshTokenRepository.findByToken(refreshToken)
+            return refreshTokenRepository.findByRefreshToken(refreshToken)
                     .map(token -> getAccessToken(token.getReceiptCode()))
                     .orElseThrow(ExpiredRefreshTokenException::new);
         }
