@@ -4,6 +4,6 @@ import java.util.Optional;
 
 public interface RefreshTokenRepository {
     Optional<RefreshToken> findById(long receiptCode);
-    Optional<RefreshToken> findByToken(String token);
+    Optional<RefreshToken> findByRefreshToken(String token);
     RefreshToken save(RefreshToken refreshToken);
 }
