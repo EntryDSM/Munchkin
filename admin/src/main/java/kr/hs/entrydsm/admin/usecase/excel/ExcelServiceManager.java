@@ -158,7 +158,7 @@ public class ExcelServiceManager implements ExcelService {
             ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i).getReceiptCode());
             ExcelUserInfo excelUserInfo = applicationRepository.getExcelUserInfo(excelApplicants.get(i).getReceiptCode());
 
-            Row row = sheet.createRow(i);
+            Row row = sheet.createRow(i + 1);
 
             row.createCell(0).setCellValue(excelApplicants.get(i).getExamCode());
             row.createCell(1).setCellValue(excelApplicants.get(i).getReceiptCode());
