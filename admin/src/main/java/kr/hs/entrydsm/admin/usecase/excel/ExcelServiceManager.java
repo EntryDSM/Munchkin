@@ -154,7 +154,8 @@ public class ExcelServiceManager implements ExcelService {
         applicantInformation.format();
         List<ExcelUser> excelApplicants = userRepository.findAllForExcel();
 
-        for(int i = 1; i <= excelApplicants.size() ; i++) {
+        System.out.println(excelApplicants.size());
+        for(int i = 1; i < excelApplicants.size(); i++) {
             ExcelUserScore excelUserScore = scoreRepository.findUserScore(excelApplicants.get(i).getReceiptCode());
             ExcelUserInfo excelUserInfo = applicationRepository.getExcelUserInfo(excelApplicants.get(i).getReceiptCode());
 
