@@ -31,15 +31,19 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
+	@Column(length = 6)
     private ApplicationType applicationType;
 
     @Enumerated(EnumType.STRING)
+	@Column(length = 20)
     private ApplicationRemark applicationRemark;
 
     @Enumerated(EnumType.STRING)
+	@Column(length = 20)
     private EducationalStatus educationalStatus;
 
     @Enumerated(EnumType.STRING)
+	@Column(length = 16)
     private Headcount headcount;
 
     private Boolean isDaejeon;
@@ -48,6 +52,7 @@ public class User {
     private String name;
 
     @Enumerated(EnumType.STRING)
+	@Column(length = 6)
     private Sex sex;
 
     private LocalDate birthday;

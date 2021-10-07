@@ -22,6 +22,7 @@ public class Schedule {
 
     @Enumerated(EnumType.STRING)
     @Id
+	@Column(length = 19)
     private Type type;
 
     @Column(nullable = false)

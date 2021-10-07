@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ public class ScheduleId implements Serializable {
     private String year;
 
     @Enumerated(EnumType.STRING)
+	@Column(length = 19)
     @Id
     private Type type;
 
