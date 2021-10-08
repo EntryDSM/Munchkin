@@ -5,6 +5,8 @@ spring:
   datasource:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maxLifetime: 580000
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
