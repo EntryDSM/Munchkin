@@ -84,21 +84,27 @@ public class UserServiceManager implements UserAuthService, UserService {
         String name = signupRequest.getName();
         String password = signupRequest.getPassword();
         String encodedPassword = passwordEncoder.encode(password);
+		User user;
 
         authCodeRepository.findById(email)
                 .filter(AuthCode::isVerified)
                 .orElseThrow(InvalidAuthCodeException::new);
 
-        User user = userRepository.save(
-                User.builder()
-                        .email(email)
-                        .name(name)
-                        .password(encodedPassword)
-                        .selfIntroduce("")
-                        .studyPlan("")
-                        .isDaejeon(null)
-                        .build()
-        );
+		try{
+			user = userRepository.save(
+					User.builder()
+							.email(email)
+							.name(name)
+							.password(encodedPassword)
+							.selfIntroduce("")
+							.studyPlan("")
+							.isDaejeon(null)
+							.build()
+			);
+		} catch (RuntimeException e) {
+			throw new UserAlreadyExistsException();
+		}
+
 
         authCodeRepository.deleteById(email);
 
