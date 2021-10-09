@@ -190,8 +190,6 @@ public class PdfDataConverter {
 
     private void setBase64Image(Applicant applicant, Map<String, Object> values) {
         try {
-			System.out.println(applicant.getReceiptCode());
-			System.out.println(applicant.getPhotoFileName());
             byte[] imageBytes = imageService.getObject("images/" + applicant.getPhotoFileName());
             String base64EncodedImage = new String(Base64.getEncoder().encode(imageBytes), StandardCharsets.UTF_8);
             values.put("base64Image", base64EncodedImage);
