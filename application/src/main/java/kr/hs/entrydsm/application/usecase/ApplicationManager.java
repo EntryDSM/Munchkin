@@ -284,72 +284,7 @@ public class ApplicationManager implements ApplicationService {
     private boolean checkPhoto(Applicant applicant) {
 		return applicant.getPhotoFileName() != null;
 	}
-
-    //    @Override
-//    public void updateSubjectScore(SubjectScoreRequest score) {
-//        scoreService.updateSubjectScore(score);
-//    }
-//
-//    @Override
-//    public void updateEtcScore(EtcScoreRequest score) {
-//        scoreService.updateEtcScore(score);
-//    }
-//
-//    @Override
-//    public void updateGedScore(GedScoreRequest score) {
-//        scoreService.updateGedScore(score);
-//    }
-//
-//    @Override
-//    public SubjectScoreResponse getSubjectScore() {
-//        long receiptCode = authenticationManager.getUserReceiptCode();
-//        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
-//
-//        if(educationalStatus == null)
-//            throw new EducationalStatusNotFoundException();
-//        if(educationalStatus.equals("QUALIFICATION_EXAM"))
-//            throw new EducationalStatusUnmatchedException();
-//        return scoreService.getSubjectScore();
-//    }
-//
-//    @Override
-//    public EtcScoreResponse getEtcScore() {
-//        long receiptCode = authenticationManager.getUserReceiptCode();
-//        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
-//
-//        if(educationalStatus == null)
-//            throw new EducationalStatusNotFoundException();
-//        if(educationalStatus.equals("QUALIFICATION_EXAM"))
-//            throw new EducationalStatusUnmatchedException();
-//        return scoreService.getEtcScore();
-//    }
-//
-//    @Override
-//    public GedScoreResponse getGedScore() {
-//        long receiptCode = authenticationManager.getUserReceiptCode();
-//        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
-//
-//        if(educationalStatus == null)
-//            throw new EducationalStatusNotFoundException();
-//        if(!educationalStatus.equals("QUALIFICATION_EXAM"))
-//            throw new EducationalStatusUnmatchedException();
-//
-//        return scoreService.getGedScore();
-//    }
-//
-//    @Override
-//    public TotalScoreResponse getScore() {
-//        long receiptCode = authenticationManager.getUserReceiptCode();
-//        String educationalStatus = applicantExportService.getEducationalStatus(receiptCode);
-//
-//        if(educationalStatus == null)
-//            throw new EducationalStatusNotFoundException();
-//        if(educationalStatus.equals("QUALIFICATION_EXAM"))
-//            throw new EducationalStatusUnmatchedException();
-//        return scoreService.getScore();
-//    }
-//
-//
+	
     private String getImageUrl(String photoFileName) {
         try {
             return (photoFileName != null) ? imageService.generateObjectUrl(photoFileName) : null;

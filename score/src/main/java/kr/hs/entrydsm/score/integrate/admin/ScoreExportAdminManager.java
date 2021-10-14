@@ -204,7 +204,6 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                 .map(scorer -> scoreRepository.findByReceiptCode(scorer.getReceiptCode()).orElseThrow(GradeNotFoundException::new))
                 .sorted(Comparator.comparing(Score::getTotalScore).reversed())
                 .collect(Collectors.toList());
-        System.out.println(sortedScores);
         if (sortedScores.size() == 0) {
             return;
         }
