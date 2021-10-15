@@ -35,7 +35,7 @@ public class UserExportManager implements UserExportRepository {
                               Boolean isPrintedArrived) {
 
         String receiptCodeQuery = "%%";
-        if (receiptCode != null) receiptCodeQuery = receiptCode.toString();
+        if (receiptCode != null) receiptCodeQuery = "%" + receiptCode.toString() + "%";
 
         Boolean isDaejeonQuery;
         if (isDaejeon && isNationwide) isDaejeonQuery = null;
