@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 	INVALID_DATE(400, "COMMON400-0", "Date was invalid"),
+	REQUEST_BODY_IS_NULL(400, "COMMON400-1", "request body is null."),
 	INVALID_TOKEN(401, "COMMON401-0", "Invalid Token"),
     UNAUTHENTICATED(401, "COMMON401-1", "UnAuthenticated"),
     NOT_FOUND(404, "COMMON404-0", "Not Found"),
