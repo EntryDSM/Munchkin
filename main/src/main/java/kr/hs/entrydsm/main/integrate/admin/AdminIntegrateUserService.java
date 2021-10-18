@@ -171,7 +171,7 @@ public class AdminIntegrateUserService implements UserRepository {
     }
 
     @Override
-    public Integer countSubmittedApplicantCount() {
+    public int countSubmittedApplicantCount() {
         return userExportRepository.findAllIsSubmitTrue().size();
     }
 
