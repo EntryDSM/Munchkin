@@ -26,12 +26,6 @@ public class ScoreIntegrateUserService implements ScorerRepository {
     }
 
     @Override
-    public Scorer findByReceiptCodeAndIsSubmitTrue(long receiptCode) {
-        User user = userIntegrateScoreRepository.findByReceiptCodeAndIsSubmitTrue(receiptCode);
-        return convertUserToScorer(user);
-    }
-
-    @Override
     public List<Scorer> findCandidatesByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType) {
         return userIntegrateScoreRepository
                 .findCandidatesByRegionAndType(isDaejeon, getApplicationType(applicationType))
