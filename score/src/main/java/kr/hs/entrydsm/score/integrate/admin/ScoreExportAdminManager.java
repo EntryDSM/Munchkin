@@ -46,13 +46,13 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                 .map(Score::getTotalScore).collect(Collectors.toList());
     }
 
-    private Scorer.ApplicationType getScorerType(Score score) {
-        return scorerRepository.findByReceiptCodeAndIsSubmitTrue(score.getReceiptCode()).getApplicationType();
+    private Scorer getScorerType(Score score) {
+        return scorerRepository.findByReceiptCode(score.getReceiptCode());
     }
 
     @Override
     public ApplicantScore getApplicantScore(Long receiptCode) {
-        Scorer scorer = scorerRepository.findByReceiptCodeAndIsSubmitTrue(receiptCode);
+        Scorer scorer = scorerRepository.findByReceiptCode(receiptCode);
         Score score = scoreRepository.findByReceiptCode(receiptCode).orElseThrow(GradeOrScoreNotFoundException::new);
 
         if (scorer.isQualificationExam()) {
@@ -123,7 +123,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
         spareApplicationQueue.sort(Comparator.comparing(o -> {
             Score score = (Score) o;
             BigDecimal totalScore = score.getTotalScore();
-            if (!scorerRepository.findByReceiptCodeAndIsSubmitTrue(score.getReceiptCode()).isCommon()) {
+            if (!scorerRepository.findByReceiptCode(score.getReceiptCode()).isCommon()) {
                 totalScore = totalScore.multiply(BigDecimal.valueOf(1.75)).setScale(3, RoundingMode.HALF_UP);
             }
             return totalScore;
@@ -137,7 +137,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
                         continue;
                     }
                     Score score = spareApplicationQueue.remove(0);
-                    applications[getIndexByScorer(scorerRepository.findByReceiptCodeAndIsSubmitTrue(score.getReceiptCode()))]
+                    applications[getIndexByScorer(scorerRepository.findByReceiptCode(score.getReceiptCode()))]
                             .passed
                             .add(score);
                 }
