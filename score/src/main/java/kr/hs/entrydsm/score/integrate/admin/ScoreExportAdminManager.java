@@ -42,7 +42,7 @@ public class ScoreExportAdminManager implements ScoreExportAdminRepository {
     private List<BigDecimal> getScores(Scorer.ApplicationType applicationType) {
         return scoreRepository.findAll()
                 .stream()
-                .filter(score -> getScorerType(score).equals(applicationType))
+                .filter(score -> getScorerType(score).getApplicationType().equals(applicationType))
                 .map(Score::getTotalScore).collect(Collectors.toList());
     }
 
