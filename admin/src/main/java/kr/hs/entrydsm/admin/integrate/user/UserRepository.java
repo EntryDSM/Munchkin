@@ -23,4 +23,5 @@ public interface UserRepository {
     UserNameAndEmail getUserNameAndEmail(long receiptCode);
     List<ExcelUser> findAllForExcel();
     void changeIsFirstRoundPass(List<Long> applicationReceiptCode);
+    int countSubmittedApplicantCount();
 }

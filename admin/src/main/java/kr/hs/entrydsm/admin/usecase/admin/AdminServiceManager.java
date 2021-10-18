@@ -5,6 +5,7 @@ import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
 import kr.hs.entrydsm.admin.integrate.main.MainRepository;
 import kr.hs.entrydsm.admin.integrate.score.ScoreRepository;
+import kr.hs.entrydsm.admin.integrate.user.UserRepository;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicationStatus;
 import kr.hs.entrydsm.admin.usecase.dto.score.CommonScoreResponse;
 import kr.hs.entrydsm.admin.usecase.dto.score.SpecialScoreResponse;
@@ -24,6 +25,7 @@ public class AdminServiceManager implements AdminService {
     private final ScoreRepository scoreRepository;
     private final MainRepository mainRepository;
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     private static final double RECRUITMENT_NUMBER_OF_PEOPLE = 72.0;
     private static final double COMMON_ADMISSION_NUMBER_OF_RECRUITMENT = 40.0;
@@ -38,7 +40,8 @@ public class AdminServiceManager implements AdminService {
         int socialCount = applicationStatus.getSpecialScores().size();
 
         int totalApplicantCount = commonCount + meisterCount + socialCount;
-        double totalCompetitionRate = Double.parseDouble(String.format("%.2f",totalApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE));
+        int totalSubmittedApplicantCount = userRepository.countSubmittedApplicantCount();
+        double totalCompetitionRate = Double.parseDouble(String.format("%.2f", totalSubmittedApplicantCount / RECRUITMENT_NUMBER_OF_PEOPLE));
 
         CommonScoreResponse commonScore = new CommonScoreResponse();
         SpecialScoreResponse meisterScore = new SpecialScoreResponse();
@@ -60,6 +63,7 @@ public class AdminServiceManager implements AdminService {
 
         return ReceiptStatusResponse.builder()
                 .totalApplicantCount(totalApplicantCount)
+                .totalSubmittedApplicantCount(totalSubmittedApplicantCount)
                 .totalCompetitionRate(totalCompetitionRate)
                 .commonScore(commonScore)
                 .meisterScore(meisterScore)
