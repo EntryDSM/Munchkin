@@ -26,7 +26,7 @@ public class UserIntegrateScoreManager implements UserIntegrateScoreRepository {
     public User findByReceiptCodeAndIsSubmitTrue(long receiptCode) {
         return userRepository.findByReceiptCode(receiptCode)
                 .filter(user -> user.getStatus().getIsSubmit())
-                .orElse(null);
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override
