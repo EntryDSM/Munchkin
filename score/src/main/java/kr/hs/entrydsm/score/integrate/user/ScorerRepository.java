@@ -4,5 +4,6 @@ import java.util.List;
 
 public interface ScorerRepository {
     Scorer findByReceiptCode(long receiptCode);
+    Scorer findByReceiptCodeAndIsSubmitTrue(long receiptCode);
     List<Scorer> findCandidatesByRegionAndType(boolean isDaejeon, Scorer.ApplicationType applicationType);
 }

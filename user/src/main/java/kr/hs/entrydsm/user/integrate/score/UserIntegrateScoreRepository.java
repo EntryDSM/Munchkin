@@ -9,5 +9,6 @@ import java.util.List;
 @Published
 public interface UserIntegrateScoreRepository {
     User findByReceiptCode(long receiptCode);
+    User findByReceiptCodeAndIsSubmitTrue(long receiptCode);
     List<User> findCandidatesByRegionAndType(boolean isDaejeon, ApplicationType applicationType);
 }
