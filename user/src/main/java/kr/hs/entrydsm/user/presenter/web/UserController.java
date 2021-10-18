@@ -1,5 +1,6 @@
 package kr.hs.entrydsm.user.presenter.web;
 
+import kr.hs.entrydsm.common.context.auth.time.ScheduleInRequired;
 import kr.hs.entrydsm.common.context.auth.token.JWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import kr.hs.entrydsm.user.usecase.UserService;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @Published
+@ScheduleInRequired
 @RestController
 public class UserController {
 
