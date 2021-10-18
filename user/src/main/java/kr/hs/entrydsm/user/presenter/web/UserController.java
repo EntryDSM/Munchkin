@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("/email/verify")
-    public void verifyAuthCode(@RequestBody AuthCodeRequest authCodeRequest) {
+    public void verifyAuthCode(@RequestBody @Valid AuthCodeRequest authCodeRequest) {
         userService.verifyAuthCode(authCodeRequest);
     }
 
