@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 
 @Published
 @RequiredArgsConstructor
-@ScheduleInRequired
 @JWTRequired
 @RestController
 @RequestMapping("/pdf")
