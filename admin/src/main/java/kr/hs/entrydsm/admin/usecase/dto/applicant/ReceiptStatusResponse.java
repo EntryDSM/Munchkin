@@ -15,6 +15,8 @@ public class ReceiptStatusResponse {
 
     private Integer totalApplicantCount;
 
+    private Integer totalSubmittedApplicantCount;
+
     private Double totalCompetitionRate;
 
     private CommonScoreResponse commonScore;

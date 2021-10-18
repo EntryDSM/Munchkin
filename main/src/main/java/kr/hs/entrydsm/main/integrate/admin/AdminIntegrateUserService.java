@@ -170,6 +170,11 @@ public class AdminIntegrateUserService implements UserRepository {
         userExportRepository.changeIsFirstRoundPass(applicationReceiptCode);
     }
 
+    @Override
+    public Integer countSubmittedApplicantCount() {
+        return userExportRepository.findAllIsSubmitTrue().size();
+    }
+
     private String getApplicationType(ApplicationType applicationType) {
         switch (applicationType) {
             case COMMON:
