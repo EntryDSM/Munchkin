@@ -54,7 +54,7 @@ public class AdminServiceManager implements AdminService {
             meisterScore.addScore(Math.round(scoreDecimal.doubleValue()));
         }
         for(BigDecimal scoreDecimal : applicationStatus.getSpecialScores()) {
-            meisterScore.addScore(Math.round(scoreDecimal.doubleValue()));
+            socialScore.addScore(Math.round(scoreDecimal.doubleValue()));
         }
 
         commonScore.updateCountAndRate(commonCount, Double.parseDouble(String.format("%.2f", commonCount/COMMON_ADMISSION_NUMBER_OF_RECRUITMENT)));
