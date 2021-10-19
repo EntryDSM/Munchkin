@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
 import kr.hs.entrydsm.application.usecase.exception.BadFileExtensionException;
 import kr.hs.entrydsm.application.usecase.exception.FileIsEmptyException;
+import kr.hs.entrydsm.application.usecase.exception.ImageNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
@@ -148,9 +149,14 @@ public class ImageServiceManager extends AWS4Signer implements ImageService {
         return authString.toString();
     }
 
-    public byte[] getObject(String fileName) throws IOException {
-        S3Object object = s3.getObject(bucket, fileName);
-        return IOUtils.toByteArray(object.getObjectContent());
+    public byte[] getObject(String fileName) {
+    	try {
+			S3Object object = s3.getObject(bucket, fileName);
+			return IOUtils.toByteArray(object.getObjectContent());
+		} catch (RuntimeException | IOException e) {
+    		throw new ImageNotFoundException();
+		}
+
     }
 
     private BufferedImage makeThumbnail(MultipartFile file) throws IOException {
