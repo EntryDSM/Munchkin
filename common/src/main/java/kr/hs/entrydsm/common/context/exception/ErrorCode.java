@@ -25,6 +25,7 @@ public enum ErrorCode {
     APPLICATION_TYPE_UNMATCHED(403, "SCORE403-0", "Application Type is unmatched"),
     GRADE_OR_SCORE_NOT_FOUND(404, "SCORE404-0", "The score does not exist"),
 
+    INVALID_KEYWORD(400, "ADMIN400-0", "It's a wrong keyword."),
     INVALID_ADMIN_TOKEN(401, "ADMIN401-0","This token is invalid"),
     INVALID_ADMIN_PASSWORD(401, "ADMIN401-1", "The password is not valid"),
     APPLICATION_PERIOD_NOT_OVER(400, "ADMIN400-0","The application period is not over"),

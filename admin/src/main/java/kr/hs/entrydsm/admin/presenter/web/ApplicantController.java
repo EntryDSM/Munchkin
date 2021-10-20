@@ -3,6 +3,7 @@ package kr.hs.entrydsm.admin.presenter.web;
 import kr.hs.entrydsm.admin.usecase.applicant.ApplicantService;
 import kr.hs.entrydsm.admin.usecase.dto.applicant.ApplicantsResponse;
 import kr.hs.entrydsm.admin.usecase.exception.AdminNotFoundException;
+import kr.hs.entrydsm.admin.usecase.exception.InvalidKeywordException;
 import kr.hs.entrydsm.common.context.auth.token.AdminJWTRequired;
 import kr.hs.entrydsm.common.context.beans.Published;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +61,7 @@ public class ApplicantController {
     		if(receiptCode != null)
 				code = Long.valueOf(receiptCode);
 		} catch (Exception e) {
-    		throw new AdminNotFoundException();
+    		throw new InvalidKeywordException();
 		}
         return applicantService.getApplicants(page, code, isDaejeon, isNationwide, telephoneNumber, name, isCommon, isMeister, isSocial, inOfHeadcount, outOfHeadcount, isPrintedArrived);
     }
