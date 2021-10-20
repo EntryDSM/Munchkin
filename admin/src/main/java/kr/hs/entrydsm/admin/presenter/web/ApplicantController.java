@@ -58,7 +58,7 @@ public class ApplicantController {
                                             @RequestParam(name = "is_printed_arrived", defaultValue = "") @Nullable Boolean isPrintedArrived) {
 		Long code = null;
     	try {
-    		if(receiptCode != null)
+    		if(receiptCode != null && telephoneNumber == null && name == null)
 				code = Long.valueOf(receiptCode);
 		} catch (Exception e) {
     		throw new InvalidKeywordException();
