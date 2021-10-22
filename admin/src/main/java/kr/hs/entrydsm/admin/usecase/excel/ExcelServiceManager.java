@@ -292,8 +292,6 @@ public class ExcelServiceManager implements ExcelService {
         for (SaveExamCodeUserResponse applicant : applicants) {
             Coordinate coordinate = getCoordinate(applicant.getAddress());
             RouteGuidanceRequest request = RouteGuidanceRequest.builder()
-                    .lng(SCHOOL_LONGITUDE)
-                    .lat(SCHOOL_LATITUDE)
                     .startX(Double.parseDouble(coordinate.getLon()))
                     .startY(Double.parseDouble(coordinate.getLat()))
                     .build();
@@ -350,8 +348,8 @@ public class ExcelServiceManager implements ExcelService {
         HttpHeaders headers = new HttpHeaders();
 
         RouteBody routeBody = RouteBody.builder()
-                .endX(request.getLng())
-                .endY(request.getLat())
+                .endX(SCHOOL_LONGITUDE)
+                .endY(SCHOOL_LATITUDE)
                 .startX(request.getStartX())
                 .startY(request.getStartY())
                 .totalValue(2)

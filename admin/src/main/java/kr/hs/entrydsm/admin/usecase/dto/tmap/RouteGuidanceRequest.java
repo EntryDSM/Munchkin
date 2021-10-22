@@ -11,10 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RouteGuidanceRequest {
 
-    private double lng;
-
-    private double lat;
-
     private double startX;
 
     private double startY;
