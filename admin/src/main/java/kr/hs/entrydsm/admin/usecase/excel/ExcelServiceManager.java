@@ -292,8 +292,8 @@ public class ExcelServiceManager implements ExcelService {
         for (SaveExamCodeUserResponse applicant : applicants) {
             Coordinate coordinate = getCoordinate(applicant.getAddress());
             RouteGuidanceRequest request = RouteGuidanceRequest.builder()
-                    .startX(Double.parseDouble(coordinate.getLon()))
-                    .startY(Double.parseDouble(coordinate.getLat()))
+                    .startX(Double.parseDouble(coordinate.getLat()))
+                    .startY(Double.parseDouble(coordinate.getLon()))
                     .build();
             RouteGuidanceResponse distance = routeGuidance(request);
             applicant.updateDistance(distance.getProperties().getTotalDistance());
