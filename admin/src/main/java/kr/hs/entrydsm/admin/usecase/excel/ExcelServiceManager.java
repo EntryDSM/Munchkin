@@ -370,6 +370,7 @@ public class ExcelServiceManager implements ExcelService {
         try {
             response = restTemplate.postForObject(url, rq, String.class);
         } catch(Exception e) {
+            System.out.println(routeBody);
             System.out.println(Objects.requireNonNull(rq.getBody()));
         }
         JsonNode document = mapper.readTree(response).path("features").get(0);
