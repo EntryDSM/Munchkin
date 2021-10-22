@@ -1,6 +1,5 @@
 package kr.hs.entrydsm.admin.usecase.dto.tmap;
 
-import kr.hs.entrydsm.admin.usecase.dto.tmap.Properties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
