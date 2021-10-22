@@ -340,8 +340,6 @@ public class ExcelServiceManager implements ExcelService {
                 mapper.readValue(mapper.writeValueAsString(response.get("coordinateInfo")), Map.class);
         List<Coordinate> info = Arrays.asList(mapper.readValue(mapper.writeValueAsString(coordinate.get("coordinate")), Coordinate[].class));
 
-        System.out.println(info.get(0).getLat());
-        System.out.println(info.get(0).getLon());
         return info.get(0);
     }
 
@@ -366,10 +364,11 @@ public class ExcelServiceManager implements ExcelService {
         ObjectMapper mapper = new ObjectMapper();
         HttpEntity<RouteBody> rq = new HttpEntity<>(routeBody, headers);
         Map<String, Map> response = restTemplate.postForObject(url, rq, Map.class);
+        System.out.println(response.get("features"));
+        System.out.println(response);
 
         List<RouteGuidanceResponse> map =
                 Arrays.asList(mapper.readValue(mapper.writeValueAsString(response.get("features")), RouteGuidanceResponse[].class));
-        System.out.println(map.get(0).getType());
         return map.get(0);
     }
 
