@@ -363,7 +363,7 @@ public class ExcelServiceManager implements ExcelService {
 
         ObjectMapper mapper = new ObjectMapper();
         HttpEntity<RouteBody> rq = new HttpEntity<>(routeBody, headers);
-        Map<String, Map> response = restTemplate.postForObject(url, rq, Map.class);
+        Map response = restTemplate.postForObject(url, rq, Map.class);
         System.out.println(response.get("features"));
         System.out.println(response);
 
