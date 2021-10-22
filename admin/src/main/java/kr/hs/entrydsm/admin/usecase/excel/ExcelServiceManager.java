@@ -4,7 +4,9 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import kr.hs.entrydsm.admin.entity.schedule.Schedule;
 import kr.hs.entrydsm.admin.entity.schedule.ScheduleRepository;
 import kr.hs.entrydsm.admin.entity.schedule.Type;
@@ -21,6 +23,7 @@ import kr.hs.entrydsm.admin.presenter.excel.ApplicantInformation;
 import kr.hs.entrydsm.admin.usecase.dto.excel.ExcelUserScore;
 import kr.hs.entrydsm.admin.usecase.dto.score.FirstRoundSuccessfulCandidates;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.Coordinate;
+import kr.hs.entrydsm.admin.usecase.dto.tmap.Properties;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteBody;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceRequest;
 import kr.hs.entrydsm.admin.usecase.dto.tmap.RouteGuidanceResponse;
@@ -360,16 +363,24 @@ public class ExcelServiceManager implements ExcelService {
         headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 
         URI url = new URI(ROUTE_URL);
-
         ObjectMapper mapper = new ObjectMapper();
-        HttpEntity<RouteBody> rq = new HttpEntity<>(routeBody, headers);
-        Map response = restTemplate.postForObject(url, rq, Map.class);
-        System.out.println(response.get("features"));
-        System.out.println(response);
 
-        List<RouteGuidanceResponse> map =
-                Arrays.asList(mapper.readValue(mapper.writeValueAsString(response.get("features")), RouteGuidanceResponse[].class));
-        return map.get(0);
+        HttpEntity<RouteBody> rq = new HttpEntity<>(routeBody, headers);
+        String response = restTemplate.postForObject(url, rq, String.class);
+        JsonNode document = mapper.readTree(response).path("features").get(0);
+        JsonNode properties = document.path("properties");
+
+        return RouteGuidanceResponse.builder()
+                .type(document.path("type").toString())
+                .properties(
+                        Properties.builder()
+                                .totalTime(properties.path("totalTime").asInt())
+                                .totalDistance(properties.path("totalDistance").asDouble())
+                                .taxiFare(properties.path("taxiFare").asInt())
+                                .totalFare(properties.path("totalFare").asInt())
+                                .build()
+                )
+                .build();
     }
 
     private String[] getSplitScores(String scores) {
