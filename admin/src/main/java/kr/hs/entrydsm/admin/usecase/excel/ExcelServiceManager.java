@@ -348,8 +348,8 @@ public class ExcelServiceManager implements ExcelService {
         HttpHeaders headers = new HttpHeaders();
 
         RouteBody routeBody = RouteBody.builder()
-                .endX(SCHOOL_LONGITUDE)
-                .endY(SCHOOL_LATITUDE)
+                .endX(SCHOOL_LATITUDE)
+                .endY(SCHOOL_LONGITUDE)
                 .startX(request.getStartX())
                 .startY(request.getStartY())
                 .totalValue(2)
